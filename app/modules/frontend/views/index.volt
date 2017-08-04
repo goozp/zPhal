@@ -10,7 +10,7 @@
     </head>
     <body>
         <div class="container">
-            <?= $this->getContent() ?>
+            {{ content() }}
         </div>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
