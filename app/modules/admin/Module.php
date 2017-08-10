@@ -1,5 +1,5 @@
 <?php
-namespace ZPhal\Modules\Frontend;
+namespace ZPhal\Modules\Admin;
 
 use Phalcon\DiInterface;
 use Phalcon\Loader;
@@ -19,9 +19,8 @@ class Module implements ModuleDefinitionInterface
         $loader = new Loader();
 
         $loader->registerNamespaces([
-            'ZPhal\Modules\Frontend\Controllers' => __DIR__ . '/controllers/',
-            'ZPhal\Modules\Frontend\Models' => __DIR__ . '/models/',
-            'ZPhal\Modules\Frontend\Plugins' => __DIR__ . '/plugins/',
+            'ZPhal\Modules\Admin\Controllers' => __DIR__ . '/controllers/',
+            'ZPhal\Modules\Admin\Models' => __DIR__ . '/models/',
         ]);
 
         $loader->register();
@@ -40,7 +39,7 @@ class Module implements ModuleDefinitionInterface
         $di->set('view', function () {
             $view = new View();
             $view->setDI($this);
-            $view->setViewsDir(BASE_PATH . '/themes/default/');
+            $view->setViewsDir(__DIR__ . '/views/');
 
             $view->registerEngines([
                 '.volt'  => 'voltShared',

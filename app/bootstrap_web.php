@@ -46,6 +46,7 @@ try {
      */
     $application->registerModules([
         'frontend' => ['className' => 'ZPhal\Modules\Frontend\Module'],
+        'admin' => ['className' => 'ZPhal\Modules\Admin\Module']
     ]);
 
     /**
