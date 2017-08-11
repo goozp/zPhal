@@ -3,6 +3,14 @@
 $router = $di->getRouter();
 
 $router->add(
+    '/',
+    [
+        'module'     => 'frontend',
+        'controller' => 'index',
+        'action'     => 'index',
+    ]
+);
+$router->add(
     '/admin/:controller/:action/:params',
     [
         'module'     => 'admin',
@@ -36,3 +44,21 @@ $router->add(
         'action'     => 'index',
     ]
 );
+
+$router->add(
+    '/articles/{:int}',
+    [
+        'module'     => 'frontend',
+        'controller' => 'articles',
+        'action'     => 'index',
+        'id'         => 1
+    ]
+);
+
+/*$router->notfound(
+    [
+        'module'     => 'frontend',
+        'controller' => 'error',
+        'action'     => 'route404',
+    ]
+);*/

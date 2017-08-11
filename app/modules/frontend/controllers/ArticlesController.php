@@ -7,9 +7,8 @@ class ArticlesController extends ControllerBase
 
     public function indexAction()
     {
-        echo $this->request->get('id');
-        print_r($_GET);
-        //echo 1;
+        $array = $this -> dispatcher -> getParams('id');
+        print_r($array);exit;
     }
 
 }
