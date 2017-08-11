@@ -4,6 +4,7 @@ namespace ZPhal\Modules\Frontend;
 use Phalcon\DiInterface;
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
+use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\ModuleDefinitionInterface;
 
@@ -48,6 +49,15 @@ class Module implements ModuleDefinitionInterface
             ]);
 
             return $view;
+        });
+
+        /**
+         * Registering a dispatcher
+         */
+        $di->set('dispatcher', function () {
+            $dispatcher = new Dispatcher();
+            $dispatcher->setDefaultNamespace('ZPhal\Modules\Frontend\Controllers\\');
+            return $dispatcher;
         });
     }
 }

@@ -12,12 +12,15 @@ use Phalcon\Flash\Direct as Flash;
  * Registering a router
  */
 $di->setShared('router', function () {
-    $router = new Router();
+    $router = new Router(false);
 
-    $router->setDefaultModule('frontend');
+    $router->setDefaultModule("frontend");
+    $router->setDefaultController("index");
+    $router->setDefaultAction("index");
 
     return $router;
 });
+
 
 /**
  * The URL component is used to generate all kinds of URLs in the application
@@ -53,11 +56,3 @@ $di->set('flash', function () {
     ]);
 });
 
-/**
-* Set the default namespace for dispatcher
-*/
-$di->setShared('dispatcher', function() {
-    $dispatcher = new Dispatcher();
-    $dispatcher->setDefaultNamespace('ZPhal\Modules\Frontend\Controllers');
-    return $dispatcher;
-});

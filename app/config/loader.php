@@ -22,3 +22,4 @@ $loader->registerClasses([
 ]);
 
 $loader->register();
+
