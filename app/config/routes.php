@@ -2,40 +2,31 @@
 
 $router = $di->getRouter();
 
-$router->add(
-    '/',
-    [
-        'module'     => 'frontend',
+foreach ($application->getModules() as $key => $module) {
+    $namespace = preg_replace('/Module$/', 'Controllers', $module["className"]);
+    $router->add('/'.$key.'/:params', [
+        'namespace' => $namespace,
+        'module' => $key,
         'controller' => 'index',
-        'action'     => 'index',
-    ]
-);
-$router->add(
-    '/admin/:controller/:action/:params',
-    [
-        'module'     => 'admin',
+        'action' => 'index',
+        'params' => 1
+    ])->setName($key);
+    $router->add('/'.$key.'/:controller/:params', [
+        'namespace' => $namespace,
+        'module' => $key,
         'controller' => 1,
-        'action'     => 2,
-    ]
-);
-$router->add(
-    '/admin/:params',
-    [
-        'module'     => 'admin',
-        'controller' => 'index',
-        'action'     => 'index',
-        'params'     => 1
-    ]
-);
-$router->add(
-    '/admin/:controller/:params',
-    [
-        'module'     => 'admin',
+        'action' => 'index',
+        'params' => 2
+    ]);
+    $router->add('/'.$key.'/:controller/:action/:params', [
+        'namespace' => $namespace,
+        'module' => $key,
         'controller' => 1,
-        'action'     => 'index',
-        'params'     => 2
-    ]
-);
+        'action' => 2,
+        'params' => 3
+    ]);
+}
+
 $router->add(
     '/login',
     [
@@ -46,19 +37,12 @@ $router->add(
 );
 
 $router->add(
-    '/articles/{:int}',
+    '/articles/:int',
     [
         'module'     => 'frontend',
-        'controller' => 'articles',
+        'controller' => 'Articles',
         'action'     => 'index',
-        'id'         => 1
+        'aid'         => 1
     ]
 );
 
-/*$router->notfound(
-    [
-        'module'     => 'frontend',
-        'controller' => 'error',
-        'action'     => 'route404',
-    ]
-);*/

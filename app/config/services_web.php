@@ -12,11 +12,11 @@ use Phalcon\Flash\Direct as Flash;
  * Registering a router
  */
 $di->setShared('router', function () {
-    $router = new Router(false);
+    $router = new Router();
 
     $router->setDefaultModule("frontend");
-    $router->setDefaultController("index");
-    $router->setDefaultAction("index");
+    /*$router->setDefaultController("index");
+    $router->setDefaultAction("index");*/
 
     return $router;
 });
@@ -55,4 +55,3 @@ $di->set('flash', function () {
         'warning' => 'alert alert-warning'
     ]);
 });
-
