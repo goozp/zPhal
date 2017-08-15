@@ -41,7 +41,7 @@ class Module implements ModuleDefinitionInterface
         $di->set('view', function () {
             $view = new View();
             $view->setDI($this);
-            $view->setViewsDir(BASE_PATH . '/themes/default/');
+            $view->setViewsDir(BASE_PATH . '/public/themes/default/');
 
             $view->registerEngines([
                 '.volt'  => 'voltShared',

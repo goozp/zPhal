@@ -24,9 +24,9 @@ class IndexController extends ControllerBase
         $footerCollection->addJs("public/library/jquery/jquery.min.js", false,  false);; // jQuery 3
         $footerCollection->addJs("public/library/bootstrap/js/bootstrap.min.js", false,  false); // Bootstrap 3.3.7
         $footerCollection->addJs("public/library/jquery-slimscroll/jquery.slimscroll.min.js", false,  false); // SlimScroll
-        $footerCollection->addJs("public/library/fastclick/lib/fastclick.js", false,  false); // FastClick
+        $footerCollection->addJs("public/library/fastclick/lib/fastclick.js", false,  true); // FastClick
         $footerCollection->addJs("public/library/AdminLTE/js/adminlte.min.js", false,  false); // AdminLTE App
-        $footerCollection->addJs("public/library/AdminLTE/js/demo.js", false,  false); // AdminLTE for demo purposes
+        $footerCollection->addJs("public/library/AdminLTE/js/demo.js", false,  true); // AdminLTE for demo purposes
     }
 }
 

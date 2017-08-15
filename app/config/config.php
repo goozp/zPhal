@@ -5,6 +5,7 @@
  */
 defined('BASE_PATH') || define('BASE_PATH', getenv('BASE_PATH') ?: realpath(dirname(__FILE__) . '/../..'));
 defined('APP_PATH') || define('APP_PATH', BASE_PATH . '/app');
+defined('THEMES_PATH') || define('THEMES_PATH', BASE_PATH . '/public/themes');
 
 return new \Phalcon\Config([
     'version' => '1.0',
@@ -23,6 +24,7 @@ return new \Phalcon\Config([
         'modelsDir'      => APP_PATH . '/common/models/',
         'migrationsDir'  => APP_PATH . '/migrations/',
         'cacheDir'       => BASE_PATH . '/cache/',
+        'themesDir'      => THEMES_PATH. '/', // 主题目录
 
         // This allows the baseUri to be understand project paths that are not in the root directory
         // of the webpspace.  This will break if the public/index.php entry point is moved or
