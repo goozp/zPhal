@@ -1,0 +1,35 @@
+/*
+ * Globals
+ */
+
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #fff;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: #333;
+}
+body {
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
+}
+
+
+@media (min-width: 48em) {
+
+}
+
+
+@media (min-width: 40em) {
+
+}
+
+@media (min-width: 62em) {
+
+}
