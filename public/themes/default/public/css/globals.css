@@ -2,34 +2,89 @@
  * Globals
  */
 
-/* Links */
-a,
-a:focus,
-a:hover {
-  color: #fff;
-}
-
 html,
 body {
   height: 100%;
-  background-color: #333;
+  /*background-image: url(../images/background.png);*/
 }
 body {
-  color: #fff;
-  text-align: center;
+  font-size: 16px;
+}
+
+.right{
+  position:relative;
+}
+
+/* Links */
+a{
+  color: #28A745;
+}
+a:focus,
+a:hover {
+  color: #218838;
+}
+
+/**
+ * author
+ */
+.container-fluid .row{
+  height: 100%;
+}
+
+.author{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  border-top: 3px solid #DC3545;
+  background-color: #FFE484;
+}
+
+.author a{
+  color: #0b2e13;
+}
+
+.author-name{
+  font-size: 22px;
+}
+
+.author-word{
+  font-size: 14px;
+}
+
+.right{
+
+}
+
+/**
+ * footer
+ */
+.footer{
+  color: #f000;
+  text-align: left;
   text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
 }
 
-
-@media (min-width: 48em) {
-
-}
-
-
-@media (min-width: 40em) {
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
 
 }
 
-@media (min-width: 62em) {
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
 
 }
