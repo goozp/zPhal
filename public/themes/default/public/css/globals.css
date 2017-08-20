@@ -27,11 +27,8 @@ a:hover {
 /**
  * author
  */
-.container-fluid .row{
-  height: 100%;
-}
-
 .author{
+  color: #ffffff;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -40,12 +37,12 @@ a:hover {
   padding: 20px;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-  border-top: 3px solid #DC3545;
-  background-color: #FFE484;
+  border-top: 3px solid #007BFF;
+  background-color: #4C4C4C;
 }
 
 .author a{
-  color: #0b2e13;
+  color: #ffffff;
 }
 
 .author-name{
@@ -56,8 +53,38 @@ a:hover {
   font-size: 14px;
 }
 
-.right{
+.author-motto{
+  font-size: 14px;
+  position: absolute;
+  bottom: 10px;
+  margin: 0 10px 0 10px;
+}
 
+
+.right{
+  background-color: #ECEFF1;
+}
+
+.right-top{
+  padding: 0;
+}
+
+/**
+ * article card
+ */
+.article-card{
+  margin-top: 10px;
+}
+
+.article-card-img{
+  margin-top: 10px;
+}
+.article-card-img .card-body{
+  padding-right: 20px;
+  padding-bottom: 0;
+}
+.article-card-img img{
+  margin: 20px;
 }
 
 /**
@@ -67,6 +94,7 @@ a:hover {
   color: #f000;
   text-align: left;
   text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
+  margin-top: 10px;
 }
 
 /* Small devices (landscape phones, 576px and up) */
