@@ -17,66 +17,88 @@ body {
 
 /* Links */
 a{
-  color: #28A745;
+  color: #007BFF;
 }
 a:focus,
 a:hover {
-  color: #218838;
+  color: #0062CC;
 }
 
 /**
  * author
  */
 .author{
-    /*color: #ffffff;*/
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
+  background-color: #ffffff;
   z-index: 1000;
   padding: 20px;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   border-top: 3px solid #1D2124;
-  border-right: 2px solid #1D2124;
   /*background-color: #4C4C4C;*/
 }
-
-.author a{
-  color: #000;
+.author-top img, .author-top p{
+  display: block;
+  float: left;
 }
 
+.author-top p{
+  width: 50%;
+  padding: 10px 0 0 20px;
+}
+.author-name{
+  font-size: 16px;
+}
+.author-subname{
+  font-size: 14px;
+}
+.author-nav a{
+  display: inline-block;
+  float: left;
+}
+.author a{
+  color: #1D2124;
+}
+.author a .active{
+  color: #007BFF;
+}
+.author a:hover {
+  color: #0062CC;
+}
 .author-name{
   font-size: 22px;
 }
-
 .author-word{
   font-size: 14px;
 }
-
 .author-motto{
   font-size: 14px;
-  position: absolute;
-  bottom: 10px;
-  margin: 0 10px 0 10px;
+  margin: 10px 10px 0 20px;
+}
+.author-motto p{
+  margin: 0;
 }
 
+/**
+ * 右主面板
+ */
 
 .right{
   background-color: #ECEFF1;
 }
-
+/* TODO right 部分不一样, 适当拆分 */
 .right-top{
-  padding: 0;
+  margin-top: 10px;
 }
+
 .right-top a{
-  color: #ffffff;
+
 }
 .right-top-text{
-  padding: 2px 5px 3px 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .right-top-text button{
-  height: 20px;
+  cursor: pointer;
   padding: 0 5px 0 5px;
 }
 
@@ -84,11 +106,11 @@ a:hover {
  * article card
  */
 .article-card{
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .article-card-img{
-  margin-top: 10px;
+  margin-top: 20px;
 }
 .article-card-img .card-body{
   padding-right: 40px;
@@ -100,11 +122,15 @@ a:hover {
 /**
  * sidebar
  */
-.sidebar-tags{
+.sidebar-main{
   width: auto;
   position: fixed;
-  top: 25px;
+  top: 55px;
   margin-right: 15px;
+}
+
+.sidebar-search{
+
 }
 
 /**
@@ -124,7 +150,41 @@ a:hover {
 
 /*Medium devices (tablets, 768px and up)*/
 @media (min-width: 768px) {
+  .author{
+    background-color: #ffffff;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    border-top: 3px solid #1D2124;
+    border-right: 2px solid #1D2124;
+  }
+  .author-motto{
+    font-size: 14px;
+    position: absolute;
+    bottom: 10px;
+    margin: 0 10px 0 10px;
+  }
+  .author-top img, .author-top p{
+    display: block;
+    float: none;
+  }
+  .author-top p{
+    padding: 0;
+    width: 100%;
+  }
+  .author-name{
+    margin-top: 10px;
+  }
 
+  .right-top{
+    padding: 0;
+    margin-top: 0;
+  }
 }
 
 /*Large devices (desktops, 992px and up)*/

@@ -11,17 +11,18 @@
     <?php
     /* HTML 头部资源 */
     echo $this->tag->stylesheetLink("themes/default/public/library/bootstrap/css/bootstrap.min.css"); // Bootstrap
+    echo $this->tag->stylesheetLink("themes/default/public/library/font-awesome-4.7.0/css/font-awesome.min.css"); // Bootstrap
     echo $this->tag->stylesheetLink("themes/default/public/css/globals.css");
     ?>
 </head>
 <body
     <div class="container-fluid">
         <div class="row">
-            <div class="author col-sm-12 col-md-2 ">
+            <div class="author col-12 d-sm-block col-md-2 col-md-2 col-xl-1 flex-lg-column">
                 <?php $this->partial("shared/author"); ?>
             </div>
 
-            <div class="right col-sm-12 ml-sm-auto col-md-10" role="main">
+            <div class="right col-12 d-sm-block ml-sm-auto col-md-10 col-xl-11" role="main">
                 <div class="row">
                     <!-- 加载common模块 -->
                     <?php echo $this->getContent(); ?>
