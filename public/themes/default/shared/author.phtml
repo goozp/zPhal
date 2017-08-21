@@ -10,12 +10,29 @@
 </div>
 
 <nav class="author-nav nav flex-column text-center">
-    <a class="nav-link active" href="#">首页</a>
+    <a class="nav-link active" href="#">博客</a>
+    <a class="nav-link" href="#">专题</a>
     <a class="nav-link" href="#">作品</a>
     <a class="nav-link" href="#">归档</a>
     <a class="nav-link" href="#">友链</a>
-    <a class="nav-link" href="#">关于</a>
+    <div class="dropdown show">
+        <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            关于
+        </a>
+        <div class="dropdown-menu dropdown-menu-right bg-primary" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#">我</a>
+            <a class="dropdown-item" href="#">博客历程</a>
+        </div>
+    </div>
 </nav>
+
+<div class="input-group">
+    <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
+    <span class="input-group-btn">
+        <button class="btn btn-outline-dark" type="button">Go!</button>
+    </span>
+</div>
+
 
 <div class="author-motto">
     <p>“当你发现自己的才华撑不起野心时，就请安静下来学习吧。”</p>

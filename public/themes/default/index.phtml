@@ -23,24 +23,10 @@
 
             <div class="right col-sm-12 ml-sm-auto col-md-10" role="main">
                 <div class="row">
-                    <div class="right-top col-sm-12">
-                        <div class="col-sm-12 no-gutters bg-primary text-white sticky-top">
-                            <a href="#">全部</a>
-                            <a href="#">PHP</a>
-                            <a href="#">前端</a>
-                            <a href="#">后端</a>
-                            <a href="#">Git</a>
-                            <a href="#">Linux</a>
-                        </div>
-                    </div>
+                    <!-- 加载common模块 -->
+                    <?php echo $this->getContent(); ?>
 
-                    <div class="content col-sm-10">
-                        <?php echo $this->getContent(); ?>
-                    </div>
-
-                    <div class="content col-sm-2">
-                    </div>
-
+                    <!-- 加载footer -->
                     <footer class="footer col-sm-12">
                         <?php $this->partial("shared/footer"); ?>
                     </footer>
