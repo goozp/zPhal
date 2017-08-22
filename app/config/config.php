@@ -15,7 +15,8 @@ return new \Phalcon\Config([
         'host'     => 'localhost',
         'username' => 'root',
         'password' => '',
-        'dbname'   => 'zPhal',
+        'dbname'   => 'zphaldb',
+        'dbprefix' => 'zp_',
         'charset'  => 'utf8',
     ],
 
