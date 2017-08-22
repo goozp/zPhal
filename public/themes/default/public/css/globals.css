@@ -9,6 +9,8 @@ body {
 }
 body {
   font-size: 16px;
+  font-family: "Lucida Grande", Lucida Sans Unicode, Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 .right{
@@ -34,7 +36,6 @@ a:hover {
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   border-top: 3px solid #1D2124;
-  /*background-color: #4C4C4C;*/
 }
 .author-top img, .author-top p{
   display: block;
@@ -105,17 +106,23 @@ a:hover {
 /**
  * article card
  */
-.article-card{
+.article-card, .article-card-img{
   margin-top: 20px;
+  line-height: 22px;
 }
-
-.article-card-img{
-  margin-top: 20px;
+.card-title{
+  line-height: 30px;
+}
+.article-card .card-body{
+  padding-bottom:10px;
 }
 .article-card-img .card-body{
+  padding-left: 40px;
   padding-right: 40px;
+  padding-bottom:10px;
 }
 .article-card-img img{
+  max-width: 70%;
   margin: 20px;
 }
 
@@ -184,6 +191,9 @@ a:hover {
   .right-top{
     padding: 0;
     margin-top: 0;
+  }
+  .article-card-img img{
+    max-width: 100%;
   }
 }
 
