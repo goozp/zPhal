@@ -4,8 +4,7 @@
 
 html,
 body {
-  height: 100%;
-  /*background-image: url(../images/background.png);*/
+  background-color: #F4F4F4;
 }
 body {
   font-size: 16px;
@@ -13,142 +12,52 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.right{
-  position:relative;
+.container-fluid{
+  padding: 0;
 }
 
 /* Links */
 a{
-  color: #007BFF;
+  color: #2196F3;
 }
 a:focus,
 a:hover {
-  color: #0062CC;
+  color: #FF5722;
 }
 
 /**
- * author
+ * top
  */
-.author{
+.top{
+  padding: 0;
   background-color: #ffffff;
-  z-index: 1000;
-  padding: 20px;
-  overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-  border-top: 3px solid #1D2124;
+  border-top: solid 4px #000000;
+  border-bottom: solid 1px #DDDDDD;
 }
-.author-top img, .author-top p{
-  display: block;
-  float: left;
-}
-
-.author-top p{
-  width: 50%;
-  padding: 10px 0 0 20px;
-}
-.author-name{
-  font-size: 16px;
-}
-.author-subname{
-  font-size: 14px;
-}
-.author-nav a{
-  display: inline-block;
-  float: left;
-}
-.author a{
-  color: #1D2124;
-}
-.author a .active{
-  color: #007BFF;
-}
-.author a:hover {
-  color: #0062CC;
-}
-.author-name{
-  font-size: 22px;
+.author{
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .author-word{
-  font-size: 14px;
+  padding: 20px 0 20px 0;
 }
-.author-motto{
-  font-size: 14px;
-  margin: 10px 10px 0 20px;
+.author-name, .author-desc{
+  margin-top: 5px;
 }
-.author-motto p{
-  margin: 0;
-}
-
-/**
- * 右主面板
- */
-
-.right{
-  background-color: #ECEFF1;
-}
-/* TODO right 部分不一样, 适当拆分 */
-.right-top{
-  margin-top: 10px;
-}
-
-.right-top a{
-
-}
-.right-top-text{
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-.right-top-text button{
-  cursor: pointer;
-  padding: 0 5px 0 5px;
-}
-
-/**
- * article card
- */
-.article-card, .article-card-img{
-  margin-top: 20px;
-  line-height: 22px;
-}
-.card-title{
-  line-height: 30px;
-}
-.article-card .card-body{
-  padding-bottom:10px;
-}
-.article-card-img .card-body{
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-bottom:10px;
-}
-.article-card-img img{
-  max-width: 70%;
-  margin: 20px;
-}
-
-/**
- * sidebar
- */
-.sidebar-main{
-  width: auto;
-  position: fixed;
-  top: 55px;
+.nav-item{
   margin-right: 15px;
 }
-
-.sidebar-search{
-
+.navbar{
+  border-top: solid 1px #DDDDDD;
 }
 
 /**
  * footer
  */
 .footer{
-  color: #f000;
-  text-align: left;
-  text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
-  margin-top: 10px;
+  background-color: #607D8B;
 }
+
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
@@ -157,44 +66,7 @@ a:hover {
 
 /*Medium devices (tablets, 768px and up)*/
 @media (min-width: 768px) {
-  .author{
-    background-color: #ffffff;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    border-top: 3px solid #1D2124;
-    border-right: 2px solid #1D2124;
-  }
-  .author-motto{
-    font-size: 14px;
-    position: absolute;
-    bottom: 10px;
-    margin: 0 10px 0 10px;
-  }
-  .author-top img, .author-top p{
-    display: block;
-    float: none;
-  }
-  .author-top p{
-    padding: 0;
-    width: 100%;
-  }
-  .author-name{
-    margin-top: 10px;
-  }
 
-  .right-top{
-    padding: 0;
-    margin-top: 0;
-  }
-  .article-card-img img{
-    max-width: 100%;
-  }
 }
 
 /*Large devices (desktops, 992px and up)*/

@@ -15,22 +15,25 @@
     echo $this->tag->stylesheetLink("themes/default/public/css/globals.css");
     ?>
 </head>
-<body>
+<body
     <div class="container-fluid">
-        <!-- 加载header -->
-        <div class="top col-md-auto">
-            <?php $this->partial("shared/header"); ?>
+        <div class="row">
+            <div class="author col-12 d-sm-block col-md-2 col-md-2 col-xl-1 flex-lg-column">
+                <?php $this->partial("shared/author"); ?>
+            </div>
+
+            <div class="right col-12 d-sm-block ml-sm-auto col-md-10 col-xl-11" role="main">
+                <div class="row">
+                    <!-- 加载common模块 -->
+                    <?php echo $this->getContent(); ?>
+
+                    <!-- 加载footer -->
+                    <footer class="footer col-sm-12">
+                        <?php $this->partial("shared/footer"); ?>
+                    </footer>
+                </div>
+            </div>
         </div>
-
-        <!-- 加载content -->
-        <div class="content">
-
-        </div>
-
-        <!-- 加载footer -->
-        <footer class="footer col-12">
-            <?php $this->partial("shared/footer"); ?>
-        </footer>
     </div>
 
     <?php

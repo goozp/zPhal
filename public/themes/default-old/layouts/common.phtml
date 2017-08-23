@@ -1,0 +1,18 @@
+<div class="right-top col-12 sticky-top">
+    <div class="right-top-text col-sm-12 no-gutters bg-dark">
+        <button type="button" class="btn btn-outline-primary btn-sm active">全部</button>
+        <button type="button" class="btn btn-outline-primary btn-sm">PHP</button>
+        <button type="button" class="btn btn-outline-primary btn-sm">前端</button>
+        <button type="button" class="btn btn-outline-primary btn-sm">后端</button>
+        <button type="button" class="btn btn-outline-primary btn-sm">Git</button>
+        <button type="button" class="btn btn-outline-primary btn-sm">Linux</button>
+    </div>
+</div>
+
+<div class="right-content col-12 col-xl-10">
+    <?php echo $this->getContent(); ?>
+</div>
+
+<div class="right-sidebar d-none col-xl-2 d-xl-block">
+    <?php $this->partial("shared/sidebar"); ?>
+</div>
