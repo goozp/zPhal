@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="row">
+        <div class="main-contain col-9" style="background-color: #00a7d0">
+            <!-- 加载主内容 -->
+            <?php echo $this->getContent(); ?>
+        </div>
+        <div class="right-sidebar col-3" style="background-color: #00a157">
+            <?php $this->partial("shared/sidebar"); ?>
+        </div>
+    </div>
+</div>

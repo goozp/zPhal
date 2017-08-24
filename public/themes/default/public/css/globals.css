@@ -52,10 +52,21 @@ a:hover {
 }
 
 /**
+ * content
+ */
+.content{
+  margin: 10px;
+}
+
+/**
  * footer
  */
 .footer{
+  height: 50px;
   background-color: #607D8B;
+}
+.footer p{
+  margin: 0;
 }
 
 
