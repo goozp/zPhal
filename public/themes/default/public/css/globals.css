@@ -1,7 +1,6 @@
 /*
  * Globals
  */
-
 html,
 body {
   background-color: #F4F4F4;
@@ -35,11 +34,12 @@ a:hover {
   border-bottom: solid 1px #DDDDDD;
 }
 .author{
+  width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
 }
 .author-word{
-  padding: 20px 0 20px 0;
+  padding: 20px 0 0 0;
 }
 .author-name, .author-desc{
   margin-top: 5px;
@@ -55,37 +55,98 @@ a:hover {
  * content
  */
 .content{
-  margin: 10px;
+  margin-top: 10px;
+  margin-right: 20px;
 }
+/* article-card */
+.article-card{
+  background-color: #ffffff;
+  margin: 10px 10px 10px 10px;
+  border: solid 1px #DDDDDD;
+}
+.article-card-body a{
+  color: #000000;
+}
+.card-subtitle{
+  margin: 4px 0 4px 0;
+  line-height: 1.2em;
+}
+.card-subtitle a{
+  color: #868E96;
+}
+.article-card a:hover{
+  color: #2196F3;
+  text-decoration:none;
+}
+.flex-column-item{
+  border-bottom: solid 1px #DDDDDD;
+}
+.button-detail{
+  cursor: pointer;
+  border-radius: 0;
+  border: none;
+}
+
+/**
+ * sidebar
+ */
+.right-sidebar{
+  padding: 10px;
+}
+
 
 /**
  * footer
  */
 .footer{
-  height: 50px;
+  margin-top: 20px;
+  padding: 10px 0 10px 0;
+  color: #dddddd;
   background-color: #607D8B;
 }
 .footer p{
-  margin: 0;
+  margin: 5px;
+}
+.footer a{
+  color: #d4d4d4;
+  text-decoration: none;
+}
+.footer a:hover{
+  color: #2196F3;
 }
 
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
-
+  .button-detail{
+    border-left: solid 1px #DDDDDD;
+  }
 }
 
 /*Medium devices (tablets, 768px and up)*/
 @media (min-width: 768px) {
-
+  .author-word{
+    padding: 20px 0 20px 0;
+  }
+  .article-img-card .article-card-body{
+    padding-right: 5px;
+    padding-left: 15px;
+  }
 }
 
 /*Large devices (desktops, 992px and up)*/
 @media (min-width: 992px) {
-
+  .card-subtitle{
+    line-height: 1.2em;
+  }
+  .article-img-card .article-card-body{
+    padding-left: 0;
+  }
 }
 
 /*Extra large devices (large desktops, 1200px and up)*/
 @media (min-width: 1200px) {
-
+  .card-subtitle{
+    line-height: 1em;
+  }
 }
