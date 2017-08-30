@@ -10,14 +10,14 @@ class Posts extends \Phalcon\Mvc\Model
      * @var integer
      * @Primary
      * @Identity
-     * @Column(type="integer", length=20, nullable=false)
+     * @Column(type="integer", length=11, nullable=false)
      */
     protected $Id;
 
     /**
      *
      * @var integer
-     * @Column(type="integer", length=20, nullable=false)
+     * @Column(type="integer", length=11, nullable=false)
      */
     protected $Post_author;
 
@@ -87,7 +87,7 @@ class Posts extends \Phalcon\Mvc\Model
     /**
      *
      * @var integer
-     * @Column(type="integer", length=20, nullable=false)
+     * @Column(type="integer", length=11, nullable=false)
      */
     protected $Post_parent;
 
@@ -97,13 +97,6 @@ class Posts extends \Phalcon\Mvc\Model
      * @Column(type="string", length=255, nullable=false)
      */
     protected $Guid;
-
-    /**
-     *
-     * @var integer
-     * @Column(type="integer", length=11, nullable=false)
-     */
-    protected $Menu_order;
 
     /**
      *
@@ -122,7 +115,7 @@ class Posts extends \Phalcon\Mvc\Model
     /**
      *
      * @var integer
-     * @Column(type="integer", length=20, nullable=false)
+     * @Column(type="integer", length=11, nullable=false)
      */
     protected $Comment_count;
 
@@ -296,19 +289,6 @@ class Posts extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Method to set the value of field Menu_order
-     *
-     * @param integer $Menu_order
-     * @return $this
-     */
-    public function setMenuOrder($Menu_order)
-    {
-        $this->Menu_order = $Menu_order;
-
-        return $this;
-    }
-
-    /**
      * Method to set the value of field Post_type
      *
      * @param string $Post_type
@@ -475,16 +455,6 @@ class Posts extends \Phalcon\Mvc\Model
     public function getGuid()
     {
         return $this->Guid;
-    }
-
-    /**
-     * Returns the value of field Menu_order
-     *
-     * @return integer
-     */
-    public function getMenuOrder()
-    {
-        return $this->Menu_order;
     }
 
     /**
