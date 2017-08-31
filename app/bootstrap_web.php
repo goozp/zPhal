@@ -46,8 +46,14 @@ try {
      * Register application modules
      */
     $application->registerModules([
-        'frontend' => ['className' => 'ZPhal\Modules\Frontend\Module'],
-        'admin' => ['className' => 'ZPhal\Modules\Admin\Module']
+        'frontend' => [
+            'className' => 'ZPhal\Modules\Frontend\Module',
+            'path'      => APP_PATH . '/modules/frontend/Module.php',
+        ],
+        'admin' => [
+            'className' => 'ZPhal\Modules\Admin\Module',
+            'path'      => APP_PATH . '/modules/admin/Module.php',
+        ]
     ]);
 
     /**
