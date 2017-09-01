@@ -14,7 +14,7 @@ return new \Phalcon\Config([
         'adapter'  => 'Mysql',
         'host'     => 'localhost',
         'username' => 'root',
-        'password' => '',
+        'password' => 'root',
         'dbname'   => 'zphaldb',
         'dbprefix' => 'zp_',
         'charset'  => 'utf8',
