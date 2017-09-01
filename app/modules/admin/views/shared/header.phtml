@@ -1,6 +1,6 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="/admin/index/index" class="logo">
+    <a href="<?php echo $this->url->get("admin"); ?>" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>Z</b>P</span>
         <!-- logo for regular state and mobile devices -->
@@ -155,7 +155,7 @@
                 </ul>
             </li>-->
 
-            <li class="treeview">
+            <li class="treeview <?php if ($controllerName=='user') echo 'active'; ?>">
                 <a href="#">
                     <i class="fa fa-user"></i> <span>用户</span>
                     <span class="pull-right-container">
@@ -163,9 +163,21 @@
                         </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="admin/user/index"><i class="fa fa-circle-o"></i> 所有用户</a></li>
-                    <li><a href="admin/user/new"><i class="fa fa-circle-o"></i> 添加用户</a></li>
-                    <li><a href="admin/user/self"><i class="fa fa-circle-o"></i> 我的个人资料</a></li>
+                    <li <?php if ($actionName=='index') echo 'class="active"'; ?>>
+                        <a href="<?php echo $this->url->get("admin/user"); ?>">
+                            <i class="fa fa-circle-o"></i> 所有用户
+                        </a>
+                    </li>
+                    <li <?php if ($actionName=='new') echo 'class="active"'; ?>>
+                        <a href="<?php echo $this->url->get("admin/user/new"); ?>">
+                            <i class="fa fa-circle-o"></i> 添加用户
+                        </a>
+                    </li>
+                    <li <?php if ($actionName=='self') echo 'class="active"'; ?>>
+                        <a href="<?php echo $this->url->get("admin/user/self"); ?>">
+                            <i class="fa fa-circle-o"></i> 我的个人资料
+                        </a>
+                    </li>
                 </ul>
             </li>
 
