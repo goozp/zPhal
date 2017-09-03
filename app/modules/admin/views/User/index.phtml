@@ -41,7 +41,25 @@
                                 <td><?php echo $v->user_login ?></td>
                                 <td><?php echo $v->user_email ?></td>
                                 <td><?php echo $v->user_registered ?></td>
-                                <td> <span class="label label-success"><?php echo $v->user_status?></span></td>
+                                <td>
+                                    <span class="label
+                                    <?php if($v->user_status == 0){
+                                        echo ' label-success';
+                                    } elseif($v->user_status == 1){
+                                        echo ' label-warning';
+                                    }elseif($v->user_status == 2){
+                                        echo ' label-danger';
+                                    }?>
+                                    ">
+                                        <?php if($v->user_status == 0){
+                                            echo '正常';
+                                        } elseif($v->user_status == 1){
+                                            echo '冻结';
+                                        }elseif($v->user_status == 2){
+                                            echo '失效';
+                                        }?>
+                                    </span>
+                                </td>
                             </tr>
                         <?php }  ?>
                     </table>

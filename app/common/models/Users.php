@@ -5,76 +5,24 @@ namespace ZPhal\Models;
 class Users extends \Phalcon\Mvc\Model
 {
 
-    /**
-     *
-     * @var integer
-     * @Primary
-     * @Identity
-     * @Column(type="integer", length=20, nullable=false)
-     */
     protected $Id;
 
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=60, nullable=false)
-     */
     protected $User_login;
 
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=255, nullable=false)
-     */
     protected $User_pass;
 
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=50, nullable=false)
-     */
     protected $User_nicename;
 
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=100, nullable=false)
-     */
     protected $User_email;
 
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=100, nullable=false)
-     */
     protected $User_url;
 
-    /**
-     *
-     * @var string
-     * @Column(type="string", nullable=false)
-     */
     protected $User_registered;
 
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=255, nullable=false)
-     */
     protected $User_activation_key;
 
-    /**
-     *
-     * @var integer
-     * @Column(type="integer", length=11, nullable=false)
-     */
     protected $User_status;
 
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=250, nullable=false)
-     */
     protected $Display_name;
 
     /**
