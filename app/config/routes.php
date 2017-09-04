@@ -47,6 +47,13 @@ $router->add('/admin/user/new',
         'action'     => 'new',
     ]
 );
+$router->add('/admin/user/save',
+    [
+        'module'     => 'admin',
+        'controller' => 'user',
+        'action'     => 'save',
+    ]
+);
 $router->add('/admin/user/self',
     [
         'module'     => 'admin',

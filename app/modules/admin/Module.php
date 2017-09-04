@@ -65,15 +65,15 @@ class Module implements ModuleDefinitionInterface
         /**
          * Register the session flash service with the Twitter Bootstrap classes
          */
-        $di->set('newFlash', function () {
+        $di->set('flash', function () {
             $flash = new NewFlash([
                 'error'   => 'alert alert-danger alert-dismissible fade in',
                 'success' => 'alert alert-success alert-dismissible fade in',
                 'notice'  => 'alert alert-info alert-dismissible fade in',
                 'warning' => 'alert alert-warning alert-dismissible fade in'
-
             ]);
-            $flash->setImplicitFlush(true);
+            $flash->setAutoescape(true);
+
             return $flash;
         });
     }

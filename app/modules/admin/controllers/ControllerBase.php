@@ -7,6 +7,7 @@ class ControllerBase extends Controller
 {
     public function initialize()
     {
+        // 菜单栏固定
         $controllerName = $this->dispatcher->getControllerName();
         $actionName = $this->dispatcher->getActionName();
         $this->view->setVars(

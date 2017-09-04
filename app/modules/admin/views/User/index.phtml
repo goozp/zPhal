@@ -7,7 +7,7 @@
     <br>
     <div class="msgTip col-md-12">
         <div class="row">
-            <?php $this->newFlash->output(); ?>
+            <?php $this->flash->output(); ?>
         </div>
     </div>
 </section>
@@ -21,13 +21,15 @@
                     <h3 class="box-title">user</h3>
 
                     <div class="box-tools">
-                        <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="table_search" class="form-control pull-right" placeholder="搜索">
+                        <form action="<?= $this->url->get("admin/user"); ?>" method="POST">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="user_search" class="form-control pull-right" placeholder="搜索" value="<?= $userSearch ?>">
 
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
 
@@ -41,7 +43,7 @@
                             <th>状态</th>
                         </tr>
                         <?php
-                        foreach ($users as $k => $v){ ?>
+                        foreach ($page->items as $v){ ?>
                             <tr>
                                 <td><?php echo $v->ID ?></td>
                                 <td><?php echo $v->user_login ?></td>
@@ -72,13 +74,16 @@
                 </div>
 
                 <div class="box-footer clearfix">
-                    <ul class="pagination pagination-sm no-margin pull-right">
-                        <li><a href="#">&laquo;</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">&raquo;</a></li>
-                    </ul>
+                    <?php echo '当前第 ', $page->current, ' 页，共 ', $page->total_pages,' 页，共 ',$page->total_items,' 条数据'; ?>
+                    <?php if($page->total_pages > 1):?>
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                            <li class="<?php echo $page->current <= 1?'disabled':''; ?>"><a href="<?php echo $this->url->get('admin/user',array('page'=>$page->before));?>">&laquo;</a></li>
+                            <?php for($i = 1;$i <= $page->total_pages;$i++):?>
+                                <li class="<?php echo $page->current == $i?'active':''; ?>"><a href="<?php echo $this->url->get('admin/user',array('page'=>$i));?>"><?php echo $i; ?></a></li>
+                            <?php endfor; ?>
+                            <li class="<?php echo $page->current >= $page->total_pages?'disabled':''; ?>"><a href="<?php echo $this->url->get('admin/user',array('page'=>$page->next));?>">&raquo;</a></li>
+                        </ul>
+                    <?php endif;?>
                 </div>
             </div>
         </div>

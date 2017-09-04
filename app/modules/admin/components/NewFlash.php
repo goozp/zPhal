@@ -18,33 +18,27 @@ class NewFlash extends Flash
         parent::__construct($cssClasses);
     }
 
-    public function message($type, $message)
+    /*public function message($type, $message)
     {
         switch ($type){
             case 'success':
-                $messageType = '信息';
+                $messageType = "信息";
                 break;
             case 'notice':
-                $messageType = '提示';
+                $messageType = "提示";
                 break;
             case 'warning':
-                $messageType = '警告';
+                $messageType = "警告";
                 break;
             case 'error':
-                $messageType = '错误';
+                $messageType = "错误";
                 break;
             default:
-                $messageType = '信息';
+                $messageType = "信息";
                 break;
         }
-        $button = "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-                <h4><i class='icon fa fa-ban'></i> ".$messageType."</h4>";
+        $button = "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button><h4><i class=\"icon fa fa-ban\"></i>".$messageType."</h4>";
         $message = $button.$message;
         parent::message($type, $message);
-    }
-
-    public function output($remove = true)
-    {
-        parent::output($remove);
-    }
+    }*/
 }

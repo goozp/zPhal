@@ -5,255 +5,25 @@ namespace ZPhal\Models;
 class Users extends \Phalcon\Mvc\Model
 {
 
-    protected $Id;
+    public $Id;
 
-    protected $User_login;
+    public $User_login;
 
-    protected $User_pass;
+    public $User_pass;
 
-    protected $User_nicename;
+    public $User_nicename;
 
-    protected $User_email;
+    public $User_email;
 
-    protected $User_url;
+    public $User_url;
 
-    protected $User_registered;
+    public $User_registered;
 
-    protected $User_activation_key;
+    public $User_activation_key;
 
-    protected $User_status;
+    public $User_status;
 
-    protected $Display_name;
-
-    /**
-     * Method to set the value of field Id
-     *
-     * @param integer $Id
-     * @return $this
-     */
-    public function setId($Id)
-    {
-        $this->Id = $Id;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field User_login
-     *
-     * @param string $User_login
-     * @return $this
-     */
-    public function setUserLogin($User_login)
-    {
-        $this->User_login = $User_login;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field User_pass
-     *
-     * @param string $User_pass
-     * @return $this
-     */
-    public function setUserPass($User_pass)
-    {
-        $this->User_pass = $User_pass;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field User_nicename
-     *
-     * @param string $User_nicename
-     * @return $this
-     */
-    public function setUserNicename($User_nicename)
-    {
-        $this->User_nicename = $User_nicename;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field User_email
-     *
-     * @param string $User_email
-     * @return $this
-     */
-    public function setUserEmail($User_email)
-    {
-        $this->User_email = $User_email;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field User_url
-     *
-     * @param string $User_url
-     * @return $this
-     */
-    public function setUserUrl($User_url)
-    {
-        $this->User_url = $User_url;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field User_registered
-     *
-     * @param string $User_registered
-     * @return $this
-     */
-    public function setUserRegistered($User_registered)
-    {
-        $this->User_registered = $User_registered;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field User_activation_key
-     *
-     * @param string $User_activation_key
-     * @return $this
-     */
-    public function setUserActivationKey($User_activation_key)
-    {
-        $this->User_activation_key = $User_activation_key;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field User_status
-     *
-     * @param integer $User_status
-     * @return $this
-     */
-    public function setUserStatus($User_status)
-    {
-        $this->User_status = $User_status;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field Display_name
-     *
-     * @param string $Display_name
-     * @return $this
-     */
-    public function setDisplayName($Display_name)
-    {
-        $this->Display_name = $Display_name;
-
-        return $this;
-    }
-
-    /**
-     * Returns the value of field Id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->Id;
-    }
-
-    /**
-     * Returns the value of field User_login
-     *
-     * @return string
-     */
-    public function getUserLogin()
-    {
-        return $this->User_login;
-    }
-
-    /**
-     * Returns the value of field User_pass
-     *
-     * @return string
-     */
-    public function getUserPass()
-    {
-        return $this->User_pass;
-    }
-
-    /**
-     * Returns the value of field User_nicename
-     *
-     * @return string
-     */
-    public function getUserNicename()
-    {
-        return $this->User_nicename;
-    }
-
-    /**
-     * Returns the value of field User_email
-     *
-     * @return string
-     */
-    public function getUserEmail()
-    {
-        return $this->User_email;
-    }
-
-    /**
-     * Returns the value of field User_url
-     *
-     * @return string
-     */
-    public function getUserUrl()
-    {
-        return $this->User_url;
-    }
-
-    /**
-     * Returns the value of field User_registered
-     *
-     * @return string
-     */
-    public function getUserRegistered()
-    {
-        return $this->User_registered;
-    }
-
-    /**
-     * Returns the value of field User_activation_key
-     *
-     * @return string
-     */
-    public function getUserActivationKey()
-    {
-        return $this->User_activation_key;
-    }
-
-    /**
-     * Returns the value of field User_status
-     *
-     * @return integer
-     */
-    public function getUserStatus()
-    {
-        return $this->User_status;
-    }
-
-    /**
-     * Returns the value of field Display_name
-     *
-     * @return string
-     */
-    public function getDisplayName()
-    {
-        return $this->Display_name;
-    }
+    public $Display_name;
 
     /**
      * Initialize method for model.
@@ -272,6 +42,23 @@ class Users extends \Phalcon\Mvc\Model
     public function getSource()
     {
         return 'zp_users';
+    }
+
+    /**
+     * TODO 没有生效
+     */
+    public function beforeCreate()
+    {
+        if (!$this->User_nicename){
+            $this->User_nicename = $this->User_login;
+        }
+
+        if (!$this->Display_name){
+            $this->Display_name  = $this->user_login;
+        }
+
+        $this->User_status   = 0;
+        $this->User_registered = date('Y-m-d H:i:s', time());
     }
 
     /**
