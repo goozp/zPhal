@@ -7,6 +7,8 @@ use Phalcon\Mvc\View;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\ModuleDefinitionInterface;
+/*use Phalcon\Flash\Direct as Flash;*/
+use ZPhal\Modules\Admin\Components\NewFlash;
 
 class Module implements ModuleDefinitionInterface
 {
@@ -22,6 +24,7 @@ class Module implements ModuleDefinitionInterface
         $loader->registerNamespaces([
             'ZPhal\Modules\Admin\Controllers' => __DIR__ . '/controllers/',
             'ZPhal\Modules\Admin\Models' => __DIR__ . '/models/',
+            'ZPhal\Modules\Admin\Components' => __DIR__ . '/components/',
         ]);
 
         $loader->register();
@@ -35,7 +38,7 @@ class Module implements ModuleDefinitionInterface
     public function registerServices(DiInterface $di)
     {
         /**
-         * Setting up the view component
+         * Setting up the view components
          */
         $di->set('view', function () {
             $view = new View();
@@ -57,6 +60,21 @@ class Module implements ModuleDefinitionInterface
             $dispatcher = new Dispatcher();
             $dispatcher->setDefaultNamespace('ZPhal\Modules\Admin\Controllers\\');
             return $dispatcher;
+        });
+
+        /**
+         * Register the session flash service with the Twitter Bootstrap classes
+         */
+        $di->set('newFlash', function () {
+            $flash = new NewFlash([
+                'error'   => 'alert alert-danger alert-dismissible fade in',
+                'success' => 'alert alert-success alert-dismissible fade in',
+                'notice'  => 'alert alert-info alert-dismissible fade in',
+                'warning' => 'alert alert-warning alert-dismissible fade in'
+
+            ]);
+            $flash->setImplicitFlush(true);
+            return $flash;
         });
     }
 }

@@ -6,7 +6,7 @@ use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
-use Phalcon\Flash\Direct as Flash;
+
 
 /**
  * Registering a router
@@ -23,7 +23,7 @@ $di->setShared('router', function () {
 
 
 /**
- * The URL component is used to generate all kinds of URLs in the application
+ * The URL components is used to generate all kinds of URLs in the application
  */
 $di->setShared('url', function () {
     $config = $this->getConfig();
@@ -35,7 +35,7 @@ $di->setShared('url', function () {
 });
 
 /**
- * Starts the session the first time some component requests the session service
+ * Starts the session the first time some components requests the session service
  */
 $di->setShared('session', function () {
     $session = new SessionAdapter();
@@ -44,14 +44,3 @@ $di->setShared('session', function () {
     return $session;
 });
 
-/**
- * Register the session flash service with the Twitter Bootstrap classes
- */
-$di->set('flash', function () {
-    return new Flash([
-        'error'   => 'alert alert-danger',
-        'success' => 'alert alert-success',
-        'notice'  => 'alert alert-info',
-        'warning' => 'alert alert-warning'
-    ]);
-});

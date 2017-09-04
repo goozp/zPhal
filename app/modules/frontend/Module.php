@@ -36,7 +36,7 @@ class Module implements ModuleDefinitionInterface
     public function registerServices(DiInterface $di)
     {
         /**
-         * Setting up the view component
+         * Setting up the view components
          */
         $di->set('view', function () {
             $view = new View();
