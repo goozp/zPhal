@@ -2,28 +2,33 @@
 
 namespace ZPhal\Models;
 
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness as UniquenessValidator;;
+use Phalcon\Validation\Validator\InclusionIn as InclusionValidator;
+use Phalcon\Validation\Validator\Email as EmailValidator;
+
 class Users extends \Phalcon\Mvc\Model
 {
 
-    public $Id;
+    public $ID;
 
-    public $User_login;
+    public $user_login;
 
-    public $User_pass;
+    public $user_pass;
 
-    public $User_nicename;
+    public $user_nicename;
 
-    public $User_email;
+    public $user_email;
 
-    public $User_url;
+    public $user_url;
 
-    public $User_registered;
+    public $user_registered;
 
-    public $User_activation_key;
+    public $user_activation_key;
 
-    public $User_status;
+    public $user_status;
 
-    public $Display_name;
+    public $display_name;
 
     /**
      * Initialize method for model.
@@ -44,21 +49,59 @@ class Users extends \Phalcon\Mvc\Model
         return 'zp_users';
     }
 
+    public function validation()
+    {
+        $validator = new Validation();
+
+        $validator->add(
+            'user_email',
+            new EmailValidator([
+                'message' => '错误的邮箱格式。'
+            ])
+        );
+
+        $validator->add(
+            'user_email',
+            new UniquenessValidator([
+                'message' => '邮箱已存在！'
+            ])
+        );
+
+        $validator->add(
+            'user_login',
+            new UniquenessValidator([
+                'message' => '用户名已存在！'
+            ])
+        );
+
+        /*$validator->add(
+            "type",
+            new InclusionValidator([
+                "domain" => [
+                    "Mechanical",
+                    "Virtual",
+                ]
+            ])
+        );*/
+
+        return $this->validate($validator);
+    }
+
     /**
-     * TODO 没有生效
+     * 插入新数据前
      */
     public function beforeCreate()
     {
-        if (!$this->User_nicename){
-            $this->User_nicename = $this->User_login;
+        if (!$this->user_nicename){
+            $this->user_nicename = $this->user_login;
         }
 
-        if (!$this->Display_name){
-            $this->Display_name  = $this->user_login;
+        if (!$this->display_name){
+            $this->display_name  = $this->user_login;
         }
 
-        $this->User_status   = 0;
-        $this->User_registered = date('Y-m-d H:i:s', time());
+        $this->user_status   = 0;
+        $this->user_registered = date('Y-m-d H:i:s', time());
     }
 
     /**
