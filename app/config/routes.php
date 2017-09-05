@@ -33,6 +33,14 @@ $router->add('/admin',
     ]
 )->setName('admin-root');
 
+$router->add('/admin/session/login',
+    [
+        'module'     => 'admin',
+        'controller' => 'session',
+        'action'     => 'login',
+    ]
+);
+
 $router->add('/admin/user',
     [
         'module'     => 'admin',

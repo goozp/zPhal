@@ -5,127 +5,13 @@ namespace ZPhal\Models;
 class Options extends \Phalcon\Mvc\Model
 {
 
-    /**
-     *
-     * @var integer
-     * @Primary
-     * @Identity
-     * @Column(type="integer", length=20, nullable=false)
-     */
-    protected $Option_id;
+    public $Option_id;
 
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=191, nullable=false)
-     */
-    protected $Option_name;
+    public $Option_name;
 
-    /**
-     *
-     * @var string
-     * @Column(type="string", nullable=false)
-     */
-    protected $Option_value;
+    public $Option_value;
 
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=20, nullable=false)
-     */
-    protected $Autoload;
-
-    /**
-     * Method to set the value of field Option_id
-     *
-     * @param integer $Option_id
-     * @return $this
-     */
-    public function setOptionId($Option_id)
-    {
-        $this->Option_id = $Option_id;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field Option_name
-     *
-     * @param string $Option_name
-     * @return $this
-     */
-    public function setOptionName($Option_name)
-    {
-        $this->Option_name = $Option_name;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field Option_value
-     *
-     * @param string $Option_value
-     * @return $this
-     */
-    public function setOptionValue($Option_value)
-    {
-        $this->Option_value = $Option_value;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field Autoload
-     *
-     * @param string $Autoload
-     * @return $this
-     */
-    public function setAutoload($Autoload)
-    {
-        $this->Autoload = $Autoload;
-
-        return $this;
-    }
-
-    /**
-     * Returns the value of field Option_id
-     *
-     * @return integer
-     */
-    public function getOptionId()
-    {
-        return $this->Option_id;
-    }
-
-    /**
-     * Returns the value of field Option_name
-     *
-     * @return string
-     */
-    public function getOptionName()
-    {
-        return $this->Option_name;
-    }
-
-    /**
-     * Returns the value of field Option_value
-     *
-     * @return string
-     */
-    public function getOptionValue()
-    {
-        return $this->Option_value;
-    }
-
-    /**
-     * Returns the value of field Autoload
-     *
-     * @return string
-     */
-    public function getAutoload()
-    {
-        return $this->Autoload;
-    }
+    public $Autoload;
 
     /**
      * Initialize method for model.

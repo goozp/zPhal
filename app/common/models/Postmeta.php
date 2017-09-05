@@ -5,127 +5,13 @@ namespace ZPhal\Models;
 class Postmeta extends \Phalcon\Mvc\Model
 {
 
-    /**
-     *
-     * @var integer
-     * @Primary
-     * @Identity
-     * @Column(type="integer", length=20, nullable=false)
-     */
-    protected $Meta_id;
+    public $Meta_id;
 
-    /**
-     *
-     * @var integer
-     * @Column(type="integer", length=20, nullable=false)
-     */
-    protected $Post_id;
+    public $Post_id;
 
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=255, nullable=true)
-     */
-    protected $Meta_key;
+    public $Meta_key;
 
-    /**
-     *
-     * @var string
-     * @Column(type="string", nullable=true)
-     */
-    protected $Meta_value;
-
-    /**
-     * Method to set the value of field Meta_id
-     *
-     * @param integer $Meta_id
-     * @return $this
-     */
-    public function setMetaId($Meta_id)
-    {
-        $this->Meta_id = $Meta_id;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field Post_id
-     *
-     * @param integer $Post_id
-     * @return $this
-     */
-    public function setPostId($Post_id)
-    {
-        $this->Post_id = $Post_id;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field Meta_key
-     *
-     * @param string $Meta_key
-     * @return $this
-     */
-    public function setMetaKey($Meta_key)
-    {
-        $this->Meta_key = $Meta_key;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field Meta_value
-     *
-     * @param string $Meta_value
-     * @return $this
-     */
-    public function setMetaValue($Meta_value)
-    {
-        $this->Meta_value = $Meta_value;
-
-        return $this;
-    }
-
-    /**
-     * Returns the value of field Meta_id
-     *
-     * @return integer
-     */
-    public function getMetaId()
-    {
-        return $this->Meta_id;
-    }
-
-    /**
-     * Returns the value of field Post_id
-     *
-     * @return integer
-     */
-    public function getPostId()
-    {
-        return $this->Post_id;
-    }
-
-    /**
-     * Returns the value of field Meta_key
-     *
-     * @return string
-     */
-    public function getMetaKey()
-    {
-        return $this->Meta_key;
-    }
-
-    /**
-     * Returns the value of field Meta_value
-     *
-     * @return string
-     */
-    public function getMetaValue()
-    {
-        return $this->Meta_value;
-    }
+    public $Meta_value;
 
     /**
      * Initialize method for model.

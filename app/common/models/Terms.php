@@ -5,127 +5,13 @@ namespace ZPhal\Models;
 class Terms extends \Phalcon\Mvc\Model
 {
 
-    /**
-     *
-     * @var integer
-     * @Primary
-     * @Identity
-     * @Column(type="integer", length=20, nullable=false)
-     */
-    protected $Term_id;
+    public $Term_id;
 
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=200, nullable=false)
-     */
-    protected $Name;
+    public $Name;
 
-    /**
-     *
-     * @var string
-     * @Column(type="string", length=200, nullable=false)
-     */
-    protected $Slug;
+    public $Slug;
 
-    /**
-     *
-     * @var integer
-     * @Column(type="integer", length=10, nullable=false)
-     */
-    protected $Term_group;
-
-    /**
-     * Method to set the value of field Term_id
-     *
-     * @param integer $Term_id
-     * @return $this
-     */
-    public function setTermId($Term_id)
-    {
-        $this->Term_id = $Term_id;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field Name
-     *
-     * @param string $Name
-     * @return $this
-     */
-    public function setName($Name)
-    {
-        $this->Name = $Name;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field Slug
-     *
-     * @param string $Slug
-     * @return $this
-     */
-    public function setSlug($Slug)
-    {
-        $this->Slug = $Slug;
-
-        return $this;
-    }
-
-    /**
-     * Method to set the value of field Term_group
-     *
-     * @param integer $Term_group
-     * @return $this
-     */
-    public function setTermGroup($Term_group)
-    {
-        $this->Term_group = $Term_group;
-
-        return $this;
-    }
-
-    /**
-     * Returns the value of field Term_id
-     *
-     * @return integer
-     */
-    public function getTermId()
-    {
-        return $this->Term_id;
-    }
-
-    /**
-     * Returns the value of field Name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->Name;
-    }
-
-    /**
-     * Returns the value of field Slug
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->Slug;
-    }
-
-    /**
-     * Returns the value of field Term_group
-     *
-     * @return integer
-     */
-    public function getTermGroup()
-    {
-        return $this->Term_group;
-    }
+    public $Term_group;
 
     /**
      * Initialize method for model.

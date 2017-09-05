@@ -16,7 +16,7 @@ class Users extends \Phalcon\Mvc\Model
 
     public $user_pass;
 
-    public $user_nicename;
+    public $user_nickname;
 
     public $user_email;
 
@@ -29,6 +29,8 @@ class Users extends \Phalcon\Mvc\Model
     public $user_status;
 
     public $display_name;
+
+    public $user_role;
 
     /**
      * Initialize method for model.
@@ -74,15 +76,20 @@ class Users extends \Phalcon\Mvc\Model
             ])
         );
 
-        /*$validator->add(
-            "type",
-            new InclusionValidator([
-                "domain" => [
-                    "Mechanical",
-                    "Virtual",
+        $validator->add(
+            "user_role",
+            new InclusionValidator(
+                [
+                    "message" => "角色只能为subscriber，writer，editor或者administrator。",
+                    "domain" => [
+                        "subscriber",
+                        "writer",
+                        "editor",
+                        "administrator",
+                        ]
                 ]
-            ])
-        );*/
+            )
+        );
 
         return $this->validate($validator);
     }
@@ -92,8 +99,8 @@ class Users extends \Phalcon\Mvc\Model
      */
     public function beforeCreate()
     {
-        if (!$this->user_nicename){
-            $this->user_nicename = $this->user_login;
+        if (!$this->user_nickname){
+            $this->user_nickname = $this->user_login;
         }
 
         if (!$this->display_name){

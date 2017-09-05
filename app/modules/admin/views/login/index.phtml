@@ -8,10 +8,10 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <?php
     /* HTML 头部资源 */
-    echo $this->tag->stylesheetLink("public/package/bootstrap/css/bootstrap.min.css");
-    echo $this->tag->stylesheetLink("public/package/font-awesome/css/font-awesome.min.css");
-    echo $this->tag->stylesheetLink("public/package/Ionicons/css/ionicons.min.css");
-    echo $this->tag->stylesheetLink("public/package/AdminLTE/css/AdminLTE.min.css");
+    echo $this->tag->stylesheetLink("public/library/bootstrap/css/bootstrap.min.css");
+    echo $this->tag->stylesheetLink("public/library/font-awesome/css/font-awesome.min.css");
+    echo $this->tag->stylesheetLink("public/library/Ionicons/css/ionicons.min.css");
+    echo $this->tag->stylesheetLink("public/library/AdminLTE/css/AdminLTE.min.css");
     echo $this->tag->stylesheetLink("public/plugins/iCheck/square/blue.css");
     ?>
 
@@ -29,17 +29,25 @@
             <b>Z</b>Phal
         </div>
 
+        <div class="msgTip">
+            <?php $this->flash->output(); ?>
+        </div>
+
         <div class="login-box-body">
             <p class="login-box-msg">登录</p>
 
-            <form action="login/login" method="post">
+            <form action="<?= $this->url->get("admin/session/login"); ?>" method="post">
                 <div class="form-group has-feedback">
-                    <input type="email" class="form-control" placeholder="用户名">
+                    <input type="text" name="user" class="form-control" placeholder="用户名">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="password" class="form-control" placeholder="密码">
+                    <input type="password" name="password" class="form-control" placeholder="密码">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"
+                           value="<?php echo $this->security->getToken() ?>"/>
                 </div>
                 <div class="row">
                     <div class="col-xs-8">
@@ -65,11 +73,10 @@
         </div>
     </div>
 
-
     <?php
     /* HTML尾部资源 */
-    echo $this->tag->javascriptInclude("public/package/jquery/jquery.min.js");
-    echo $this->tag->javascriptInclude("public/package/bootstrap/js/bootstrap.min.js");
+    echo $this->tag->javascriptInclude("public/library/jquery/jquery.min.js");
+    echo $this->tag->javascriptInclude("public/library/bootstrap/js/bootstrap.min.js");
     echo $this->tag->javascriptInclude("public/plugins/iCheck/icheck.min.js");
     ?>
 </body>

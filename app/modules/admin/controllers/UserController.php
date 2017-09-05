@@ -15,7 +15,7 @@ class UserController extends ControllerBase
     public function indexAction()
     {
         $currentPage = $this->request->getQuery('page', 'int'); // GET
-        $userSearch  = trim($this->request->getPost('user_search', 'string')); // POST
+        $userSearch  = $this->request->getPost('user_search', ['string','trim']); // POST
 
         // sql builder
         $builder = $this->modelsManager->createBuilder()
@@ -49,11 +49,6 @@ class UserController extends ControllerBase
     public function newAction()
     {
 
-        // 使用会话闪存
-        /*$this->flash->message('error',"Your information was stored correctly!");*/
-
-        // 返回一个完整的HTTP重定向
-        /*return $this->response->redirect("admin/user/self");*/
     }
 
     public function saveAction()
@@ -61,8 +56,8 @@ class UserController extends ControllerBase
         if ($this->request->isPost()) {
             $inputUser      = $this->request->getPost('inputUser', ['string','trim']);
             $inputEmail     = $this->request->getPost('inputEmail', 'email');
-            $inputPassword  = $this->request->getPost('inputPassword', 'string');
-            $inputPassword2 = $this->request->getPost('inputPassword2', 'string');
+            $inputPassword  = $this->request->getPost('inputPassword');
+            $inputPassword2 = $this->request->getPost('inputPassword2');
             $inputSite      = $this->request->getPost('inputSite', ['string','trim']);
             $inputRole      = $this->request->getPost('inputRole', 'string');
 
@@ -71,15 +66,13 @@ class UserController extends ControllerBase
                 return $this->response->redirect("admin/user/new");
             }
 
-            /**
-             * TODO 各种验证   密码
-             */
             $user = new Users();
 
             $user->user_login = $inputUser;
-            $user->user_pass  = $inputPassword;
+            $user->user_pass  = $this->security->hash($inputPassword);
             $user->user_email = $inputEmail;
             $user->user_url   = $inputSite;
+            $user->user_role  = $inputRole;
 
             if ($user->save() === false) {
                 $messages = "创建失败: \n";
