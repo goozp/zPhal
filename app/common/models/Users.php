@@ -2,13 +2,19 @@
 
 namespace ZPhal\Models;
 
+use Phalcon\Mvc\Model;
+use Phalcon\Mvc\Model\Behavior\SoftDelete;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness as UniquenessValidator;;
 use Phalcon\Validation\Validator\InclusionIn as InclusionValidator;
 use Phalcon\Validation\Validator\Email as EmailValidator;
 
-class Users extends \Phalcon\Mvc\Model
+
+class Users extends Model
 {
+    const DELETED = 1;
+
+    const NOT_DELETED = 0;
 
     public $ID;
 
@@ -39,6 +45,16 @@ class Users extends \Phalcon\Mvc\Model
     {
         $this->setSchema("zphaldb");
         $this->setSource("zp_users");
+
+        // 软删除
+        $this->addBehavior(
+            new SoftDelete(
+                [
+                    "field" => "user_status",
+                    "value" => Users::DELETED,
+                ]
+            )
+        );
     }
 
     /**

@@ -5,10 +5,11 @@ use Phalcon\DiInterface;
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Dispatcher;
+use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\ModuleDefinitionInterface;
-/*use Phalcon\Flash\Direct as Flash;*/
 use ZPhal\Modules\Admin\Components\NewFlash;
+
 
 class Module implements ModuleDefinitionInterface
 {
@@ -22,9 +23,10 @@ class Module implements ModuleDefinitionInterface
         $loader = new Loader();
 
         $loader->registerNamespaces([
-            'ZPhal\Modules\Admin\Controllers' => __DIR__ . '/controllers/',
-            'ZPhal\Modules\Admin\Models' => __DIR__ . '/models/',
-            'ZPhal\Modules\Admin\Components' => __DIR__ . '/components/',
+            'ZPhal\Modules\Admin\Controllers'   => __DIR__ . '/controllers/',
+            'ZPhal\Modules\Admin\Models'        => __DIR__ . '/models/',
+            'ZPhal\Modules\Admin\Components'    => __DIR__ . '/components/',
+            'ZPhal\Modules\Admin\library'       => __DIR__ . '/library/',
         ]);
 
         $loader->register();
@@ -57,8 +59,25 @@ class Module implements ModuleDefinitionInterface
          * Registering a dispatcher
          */
         $di->set('dispatcher', function () {
+            // 创建一个事件管理器
+            /*$eventsManager = new EventsManager();*/
+
+            // 监听分发器中使用安全插件产生的事件
+            /*$eventsManager->attach(
+                "dispatch:beforeExecuteRoute",
+                new SecurityPlugin()
+            );*/
+
+            // 处理异常和使用 NotFoundPlugin 未找到异常
+            /*$eventsManager->attach(
+                "dispatch:beforeException",
+                new NotFoundPlugin()
+            );*/
+
             $dispatcher = new Dispatcher();
             $dispatcher->setDefaultNamespace('ZPhal\Modules\Admin\Controllers\\');
+            /*$dispatcher->setEventsManager($eventsManager); // 分配事件管理器到分发器*/
+
             return $dispatcher;
         });
 
@@ -76,5 +95,10 @@ class Module implements ModuleDefinitionInterface
 
             return $flash;
         });
+
+        /*$di->setShared('acl', function () {
+            $acl = new AdminAcl();
+            return $acl;
+        });*/
     }
 }

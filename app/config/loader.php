@@ -8,8 +8,9 @@ $loader = new Loader();
  * Register Namespaces
  */
 $loader->registerNamespaces([
-    'ZPhal\Models' => APP_PATH . '/common/models/',
-    'ZPhal'        => APP_PATH . '/common/library/',
+    'ZPhal\Models'  => APP_PATH . '/common/models/',
+    'ZPhal\Library' => APP_PATH . '/common/library/',
+    'ZPhal\Plugins' => APP_PATH . '/common/plugins/',
 ]);
 
 /**
