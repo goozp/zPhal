@@ -37,7 +37,7 @@
         <!-- 侧边菜单 sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">主菜单</li>
-            <li class="treeview active">
+            <li class="treeview <?php if ($controllerName=='index') echo 'active'; ?>">
                 <a href="#">
                     <i class="fa fa-dashboard"></i> <span>仪表盘</span>
                     <span class="pull-right-container">
@@ -45,7 +45,7 @@
                         </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="<?php echo $this->url->get("admin/"); ?>"><i class="fa fa-circle-o"></i> 首页 </a></li>
+                    <li <?php if ($actionName=='index') echo 'class="active"'; ?>><a href="<?php echo $this->url->get("admin/"); ?>"><i class="fa fa-circle-o"></i> 首页 </a></li>
                 </ul>
             </li>
 

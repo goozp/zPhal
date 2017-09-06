@@ -3,6 +3,7 @@
 namespace ZPhal\Modules\Admin\Controllers;
 
 use Phalcon\Paginator\Adapter\QueryBuilder as PaginatorQueryBuilder;
+use ZPhal\Models\Usermeta;
 use ZPhal\Models\Users;
 
 class UserController extends ControllerBase
@@ -84,6 +85,16 @@ class UserController extends ControllerBase
                 $this->flash->error($messages);
                 return $this->response->redirect("admin/user/new");
             } else {
+                /**
+                 * 添加其它设置属性
+                 */
+                /*$theUser = Users::findFirst(
+                    "user_login = '{$inputUser}'"
+                );
+                $userMeta = new Usermeta();
+                $userMeta->user_id = $theUser;*/
+
+
                 $this->flash->success("创建成功!");
                 return $this->response->redirect("admin/user");
             }

@@ -46,6 +46,12 @@ class Users extends Model
         $this->setSchema("zphaldb");
         $this->setSource("zp_users");
 
+        $this->hasMany(
+            "ID",
+            "ZPhal\\Models\\Usermata",
+            "user_id"
+        );
+
         // 软删除
         $this->addBehavior(
             new SoftDelete(

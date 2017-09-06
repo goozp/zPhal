@@ -20,6 +20,12 @@ class Usermeta extends \Phalcon\Mvc\Model
     {
         $this->setSchema("zphaldb");
         $this->setSource("zp_usermeta");
+
+        $this->belongsTo(
+            "user_id",
+            "ZPhal\\Models\\Users",
+            "ID"
+        );
     }
 
     /**
