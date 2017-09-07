@@ -24,7 +24,7 @@ class ControllerBase extends Controller
     }
 
     /**
-     * 初始化
+     * 初始化数据
      */
     public function initValues()
     {
@@ -37,8 +37,21 @@ class ControllerBase extends Controller
         );
     }
 
-    public function indexAction()
+    /**
+     * 获取错误信息
+     * @param $object
+     * @param $message
+     * @return mixed
+     */
+    public function getErrorMsg($object, $message)
     {
+        $output = $message."：\n";
 
+        $msgs = $object->getMessages();
+        foreach ($msgs as $msg) {
+            $output .= $msg->getMessage()."\n";
+        }
+
+        return $output;
     }
 }

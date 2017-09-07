@@ -41,6 +41,7 @@ $router->add('/admin/session/login',
     ]
 );
 
+/* user */
 $router->add('/admin/user',
     [
         'module'     => 'admin',
@@ -69,6 +70,22 @@ $router->add('/admin/user/self',
         'action'     => 'self',
     ]
 );
+$router->add('/admin/user/updateInfo',
+    [
+        'module'     => 'admin',
+        'controller' => 'user',
+        'action'     => 'updateInfo',
+    ]
+);
+$router->add('/admin/user/updatePassword',
+    [
+        'module'     => 'admin',
+        'controller' => 'user',
+        'action'     => 'updatePassword',
+    ]
+);
+
+
 
 $router->notFound(
     [

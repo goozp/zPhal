@@ -32,7 +32,7 @@ class Users extends Model
 
     public $user_activation_key;
 
-    public $user_status;
+    public $user_status; // 0 正常 1删除 9 出错
 
     public $display_name;
 
