@@ -41,6 +41,22 @@ $router->add('/admin/session/login',
     ]
 );
 
+/* media */
+$router->add('/admin/media',
+    [
+        'module'     => 'admin',
+        'controller' => 'media',
+        'action'     => 'index',
+    ]
+);
+$router->add('/admin/media/new',
+    [
+        'module'     => 'admin',
+        'controller' => 'media',
+        'action'     => 'new',
+    ]
+);
+
 /* user */
 $router->add('/admin/user',
     [

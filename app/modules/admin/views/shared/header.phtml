@@ -45,7 +45,9 @@
                         </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li <?php if ($actionName=='index') echo 'class="active"'; ?>><a href="<?php echo $this->url->get("admin/"); ?>"><i class="fa fa-circle-o"></i> 首页 </a></li>
+                    <li <?php if ($controllerName=='index' && $actionName=='index') echo 'class="active"'; ?>>
+                        <a href="<?php echo $this->url->get("admin/"); ?>"><i class="fa fa-circle-o"></i> 首页 </a>
+                    </li>
                 </ul>
             </li>
 
@@ -77,7 +79,7 @@
                 </ul>
             </li>
 
-            <li class="treeview">
+            <li class="treeview <?php if ($controllerName=='media') echo 'active'; ?>">
                 <a href="#">
                     <i class="fa fa-medium"></i> <span>媒体</span>
                     <span class="pull-right-container">
@@ -85,8 +87,12 @@
                         </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> 媒体库</a></li>
-                    <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> 添加</a></li>
+                    <li <?php if ($controllerName=='media' && $actionName=='index') echo 'class="active"'; ?>>
+                        <a href="<?= $this->url->get("admin/media"); ?>"><i class="fa fa-circle-o"></i> 媒体库</a>
+                    </li>
+                    <li <?php if ($controllerName=='media' && $actionName=='new') echo 'class="active"'; ?>>
+                        <a href="<?= $this->url->get("admin/media/new"); ?>"><i class="fa fa-circle-o"></i> 添加</a>
+                    </li>
                 </ul>
             </li>
 
@@ -163,17 +169,17 @@
                         </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li <?php if ($actionName=='index') echo 'class="active"'; ?>>
+                    <li <?php if ($controllerName=='user' && $actionName=='index') echo 'class="active"'; ?>>
                         <a href="<?php echo $this->url->get("admin/user"); ?>">
                             <i class="fa fa-circle-o"></i> 所有用户
                         </a>
                     </li>
-                    <li <?php if ($actionName=='new') echo 'class="active"'; ?>>
+                    <li <?php if ($controllerName=='user' && $actionName=='new') echo 'class="active"'; ?>>
                         <a href="<?php echo $this->url->get("admin/user/new"); ?>">
                             <i class="fa fa-circle-o"></i> 添加用户
                         </a>
                     </li>
-                    <li <?php if ($actionName=='self') echo 'class="active"'; ?>>
+                    <li <?php if ($controllerName=='user' && $actionName=='self') echo 'class="active"'; ?>>
                         <a href="<?php echo $this->url->get("admin/user/self"); ?>">
                             <i class="fa fa-circle-o"></i> 我的个人资料
                         </a>
