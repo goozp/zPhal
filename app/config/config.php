@@ -27,10 +27,11 @@ return new \Phalcon\Config([
         'cacheDir'       => BASE_PATH . '/cache/',
         'themesDir'      => THEMES_PATH. '/', // 主题目录
 
-        // This allows the baseUri to be understand project paths that are not in the root directory
-        // of the webpspace.  This will break if the public/index.php entry point is moved or
-        // possibly if the web server rewrite rules are changed. This can also be set to a static path.
+        // baseUri 不是在根目录或者server工作目录时,生成url起作用
+        // 通常为指到public/index.php下的路径, 受server rewrite规则影响
+        // 官方动态写法(不支持nginx配置public下为根目录):
         // 'baseUri'        => preg_replace('/public([\/\\\\])index.php$/', '', $_SERVER["PHP_SELF"]),
+        // 获取直接写为静态路径 (需设置host, 否则为/zPhal/等其它情况) :
         'baseUri'        => '/',
     ],
 
