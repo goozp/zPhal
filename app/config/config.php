@@ -12,9 +12,9 @@ return new \Phalcon\Config([
 
     'database' => [
         'adapter'  => 'Mysql',
-        'host'     => 'localhost',
-        'username' => 'root',
-        'password' => '123456',
+        'host'     => 'mysql-db', // 如用docker,需改为对应数据库容器的hostname
+        'username' => 'zphal',
+        'password' => 'zphal123',
         'dbname'   => 'zphaldb',
         'dbprefix' => 'zp_',
         'charset'  => 'utf8',
@@ -31,7 +31,7 @@ return new \Phalcon\Config([
         // of the webpspace.  This will break if the public/index.php entry point is moved or
         // possibly if the web server rewrite rules are changed. This can also be set to a static path.
         // 'baseUri'        => preg_replace('/public([\/\\\\])index.php$/', '', $_SERVER["PHP_SELF"]),
-        'baseUri'        => './',
+        'baseUri'        => '/',
     ],
 
     /**
