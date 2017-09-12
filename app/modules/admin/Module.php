@@ -8,7 +8,7 @@ use Phalcon\Mvc\Dispatcher;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\ModuleDefinitionInterface;
-use ZPhal\Modules\Admin\Components\NewFlash;
+use ZPhal\Modules\Admin\Providers\NewFlash;
 
 
 class Module implements ModuleDefinitionInterface
@@ -27,6 +27,7 @@ class Module implements ModuleDefinitionInterface
             'ZPhal\Modules\Admin\Models'        => __DIR__ . '/models/',
             'ZPhal\Modules\Admin\Components'    => __DIR__ . '/components/',
             'ZPhal\Modules\Admin\library'       => __DIR__ . '/library/',
+            'ZPhal\Modules\Admin\Providers'     => __DIR__ . '/Providers/',
         ]);
 
         $loader->register();

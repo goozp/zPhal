@@ -1,5 +1,5 @@
 <?php
-namespace ZPhal\Modules\Admin\Components;
+namespace ZPhal\Modules\Admin\Providers;
 
 use Phalcon\Flash\Session as Flash;
 
