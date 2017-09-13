@@ -56,6 +56,13 @@ $router->add('/admin/media/new',
         'action'     => 'new',
     ]
 );
+$router->add('/admin/media/upload',
+    [
+        'module'     => 'admin',
+        'controller' => 'media',
+        'action'     => 'upload',
+    ]
+);
 
 /* user */
 $router->add('/admin/user',

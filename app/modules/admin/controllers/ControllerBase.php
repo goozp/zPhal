@@ -9,6 +9,7 @@ class ControllerBase extends Controller
     {
         $this->checkLogin();
         $this->initValues();
+        $this->staticResource();
     }
 
     /**
@@ -35,6 +36,28 @@ class ControllerBase extends Controller
                 "actionName" => $this->dispatcher->getActionName()
             ]
         );
+    }
+
+    /**
+     * 静态资源
+     */
+    public function staticResource()
+    {
+        // HTML 头部的js资源
+        $this->assets->addCss("backend/library/bootstrap/css/bootstrap.min.css", true);
+        $this->assets->addCss("backend/library/font-awesome/css/font-awesome.min.css", true);
+        $this->assets->addCss("backend/library/Ionicons/css/ionicons.min.css", true);
+        $this->assets->addCss("backend/library/AdminLTE/css/AdminLTE.min.css", true);
+        $this->assets->addCss("backend/library/AdminLTE/css/skins/_all-skins.min.css", true);
+
+        // HTML尾部的js资源
+        $this->assets->addJs("backend/js/jquery.min.js", true);
+        $this->assets->addJs("backend/js/jquery.slimscroll.min.js", true);
+        $this->assets->addJs("backend/library/bootstrap/js/bootstrap.min.js", true);
+        $this->assets->addJs("backend/library/fastclick/lib/fastclick.js", true);
+        $this->assets->addJs("backend/library/AdminLTE/js/adminlte.min.js", true);
+        $this->assets->addJs("backend/library/AdminLTE/js/demo.js", true);
+
     }
 
     /**

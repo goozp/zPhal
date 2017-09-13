@@ -26,6 +26,7 @@ return new \Phalcon\Config([
         'migrationsDir'  => APP_PATH . '/migrations/',
         'cacheDir'       => BASE_PATH . '/cache/',
         'themesDir'      => THEMES_PATH. '/', // 主题目录
+        'uploadDir'      => BASE_PATH . '/public/uploads/',
 
         // baseUri 不是在根目录或者server工作目录时,生成url起作用
         // 通常为指到public/index.php下的路径, 受server rewrite规则影响

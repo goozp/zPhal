@@ -9,11 +9,7 @@
 
     <?php
     /* HTML 头部资源 */
-    echo $this->tag->stylesheetLink("backend/library/bootstrap/css/bootstrap.min.css");
-    echo $this->tag->stylesheetLink("backend/library/font-awesome/css/font-awesome.min.css");
-    echo $this->tag->stylesheetLink("backend/library/Ionicons/css/ionicons.min.css");
-    echo $this->tag->stylesheetLink("backend/library/AdminLTE/css/AdminLTE.min.css");
-    echo $this->tag->stylesheetLink("backend/library/AdminLTE/css/skins/_all-skins.min.css");
+    $this->assets->outputCss();
     ?>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -43,12 +39,7 @@
 
     <?php
     /* HTML尾部资源 */
-    echo $this->tag->javascriptInclude("backend/library/jquery/jquery.min.js");
-    echo $this->tag->javascriptInclude("backend/library/bootstrap/js/bootstrap.min.js");
-    echo $this->tag->javascriptInclude("backend/library/jquery-slimscroll/jquery.slimscroll.min.js");
-    echo $this->tag->javascriptInclude("backend/library/fastclick/lib/fastclick.js");
-    echo $this->tag->javascriptInclude("backend/library/AdminLTE/js/adminlte.min.js");
-    echo $this->tag->javascriptInclude("backend/library/AdminLTE/js/demo.js");
+    $this->assets->outputJs();
     ?>
 
     <script>

@@ -1,19 +1,84 @@
-<!-- 页头 -->
-<section class="content-header">
-    <div class="msgTip col-md-12">
-        <div class="row">
-            <?php $this->flash->output(); ?>
-        </div>
-    </div>
-    <h1>
-        上传新媒体文件
-        <small></small>
-    </h1>
-</section>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title> 后台管理 - ZPhal </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-<!-- 主内容 -->
-<section class="content">
-    <div class="row">
+    <?php
+    /* HTML 头部资源 */
+    $this->assets->outputCss();
+    ?>
 
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini">
+
+<div class="wrapper">
+    <!-- 加载顶部和侧栏 -->
+    <?php $this->partial("shared/header"); ?>
+
+    <!-- 加载主模块 -->
+    <div class="content-wrapper">
+        <!-- 页头 -->
+        <section class="content-header">
+            <div class="msgTip col-md-12">
+                <div class="row">
+                    <?php $this->flash->output(); ?>
+                </div>
+            </div>
+            <h1>
+                上传新媒体文件
+                <small></small>
+            </h1>
+        </section>
+
+        <!-- 主内容 -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="" method="post">
+                        <label for="input-fa">选择文件</label>
+                        <div class="file-loading">
+                            <input id="input-fa" name="input-fa[]" type="file" multiple>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
     </div>
-</section>
+
+    <!-- 加载footer -->
+    <?php $this->partial("shared/footer"); ?>
+
+    <!-- 加载setting模块 -->
+    <?php $this->partial("shared/setting"); ?>
+</div>
+
+<?php
+/* HTML尾部资源 */
+$this->assets->outputJs();
+?>
+
+<script>
+    $(document).ready(function () {
+        $('.sidebar-menu').tree()
+    });
+
+    $("#input-fa").fileinput({
+        theme: "fa",
+        uploadUrl: "<?php echo $this->url->get("/admin/media/upload"); ?>",
+        language: 'zh',
+        uploadClass: "btn btn-primary",
+        showCaption: false
+    });
+</script>
+</body>
+</html>
