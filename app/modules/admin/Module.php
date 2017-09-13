@@ -8,6 +8,8 @@ use Phalcon\Mvc\Dispatcher;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\ModuleDefinitionInterface;
+use ZPhal\Modules\Admin\Components\Media;
+use ZPhal\Modules\Admin\Listeners\AliYunOss;
 use ZPhal\Modules\Admin\Providers\NewFlash;
 
 
@@ -27,7 +29,8 @@ class Module implements ModuleDefinitionInterface
             'ZPhal\Modules\Admin\Models'        => __DIR__ . '/models/',
             'ZPhal\Modules\Admin\Components'    => __DIR__ . '/components/',
             'ZPhal\Modules\Admin\library'       => __DIR__ . '/library/',
-            'ZPhal\Modules\Admin\Providers'     => __DIR__ . '/Providers/',
+            'ZPhal\Modules\Admin\Providers'     => __DIR__ . '/providers/',
+            'ZPhal\Modules\Admin\Listeners'     => __DIR__ . '/listeners/',
         ]);
 
         $loader->register();
@@ -61,13 +64,21 @@ class Module implements ModuleDefinitionInterface
          */
         $di->set('dispatcher', function () {
             // 创建一个事件管理器
-            /*$eventsManager = new EventsManager();*/
+            $eventsManager = new EventsManager();
+
+            $media = new Media();
+
+            $media->setEventsManager($eventsManager);
 
             // 监听分发器中使用安全插件产生的事件
             /*$eventsManager->attach(
                 "dispatch:beforeExecuteRoute",
                 new SecurityPlugin()
             );*/
+            $eventsManager->attach(
+                "media",
+                new AliYunOss()
+            );
 
             // 处理异常和使用 NotFoundPlugin 未找到异常
             /*$eventsManager->attach(
@@ -77,7 +88,7 @@ class Module implements ModuleDefinitionInterface
 
             $dispatcher = new Dispatcher();
             $dispatcher->setDefaultNamespace('ZPhal\Modules\Admin\Controllers\\');
-            /*$dispatcher->setEventsManager($eventsManager); // 分配事件管理器到分发器*/
+            $dispatcher->setEventsManager($eventsManager); // 分配事件管理器到分发器
 
             return $dispatcher;
         });

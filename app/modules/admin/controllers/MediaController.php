@@ -2,6 +2,7 @@
 namespace ZPhal\Modules\Admin\Controllers;
 
 use Phalcon\Mvc\View;
+use ZPhal\Modules\Admin\Components\Media;
 
 class MediaController extends ControllerBase
 {
@@ -33,19 +34,9 @@ class MediaController extends ControllerBase
         // 检测是否上传文件
         if ($this->request->hasFiles()) {
             $files = $this->request->getUploadedFiles();
-            $uploadDir = $this->config->application->uploadDir;
 
-            // 遍历所有文件
-            foreach ($files as $file) {
-                // Print file details
-                echo $file->getName(), " ", $file->getSize(), "\n";
-
-                // 保存文件
-                if ($file->moveTo( $uploadDir . $file->getName() )){
-                    $output['error'] = 'You are not allowed to upload such a file.';
-                    return json_encode($output);
-                }
-            }
+            $media = new Media();
+            return $media->uploadMedia($files);
         }
     }
 }
