@@ -9,7 +9,7 @@ use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\ModuleDefinitionInterface;
 use ZPhal\Modules\Admin\Components\Media;
-use ZPhal\Modules\Admin\Library\Message;
+use ZPhal\Modules\Admin\Library\Message\MessageControl;
 use ZPhal\Modules\Admin\Listeners\AliYunOss;
 use ZPhal\Modules\Admin\Providers\NewFlash;
 
@@ -127,8 +127,11 @@ class Module implements ModuleDefinitionInterface
             return $acl;
         });*/
 
+        /**
+         * 注册错误信息获取服务
+         */
         $di->setShared('messageControl', function (){
-            $message = new Message();
+            $message = new MessageControl();
             return $message;
         });
     }

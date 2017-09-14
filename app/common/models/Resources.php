@@ -51,7 +51,7 @@ class Resources extends \Phalcon\Mvc\Model
     public function beforeCreate()
     {
         if (!$this->upload_author){
-            $auth = $this->session->get('userAuth');
+            $auth = $this->di->get('session')->get('userAuth');
             $this->upload_author = $auth['userId'];
         }
 

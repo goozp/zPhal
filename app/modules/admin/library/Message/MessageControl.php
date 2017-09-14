@@ -1,5 +1,5 @@
 <?php
-namespace ZPhal\Modules\Admin\Library;
+namespace ZPhal\Modules\Admin\Library\Message;
 
 use Phalcon\Mvc\User\Component;
 
@@ -8,7 +8,7 @@ use Phalcon\Mvc\User\Component;
  *
  * 信息控制
  */
-class Message extends Component
+class MessageControl extends Component
 {
     /**
      * 获取错误信息

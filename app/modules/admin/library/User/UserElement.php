@@ -1,5 +1,5 @@
 <?php
-namespace ZPhal\Modules\Admin\Library;
+namespace ZPhal\Modules\Admin\Library\User;
 
 use Phalcon\Mvc\User\Component;
 
@@ -8,7 +8,7 @@ use Phalcon\Mvc\User\Component;
  *
  * 用户登录状态操纵和UI元素建立
  */
-class User extends Component
+class UserElement extends Component
 {
     private $_headerMenu = array(
         'navbar-left' => array(
@@ -71,6 +71,7 @@ class User extends Component
         $auth['userLogin'];
         $auth['userRole'];*/
     }
+
     /**
      * Builds header menu with left and right items
      *

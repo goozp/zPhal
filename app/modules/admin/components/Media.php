@@ -60,18 +60,24 @@ class Media implements EventsAwareInterface
             $fileInfo['filetype'] = $file->getType();
             $fileInfo['url'] = '/uploads/'.$year.'/'.$month.'/'.$fileInfo['filename'];
 
-            if (is_file($fileInfo['filename'])){
+            // 保存文件
+            $newFile = $uploadDir . $fileInfo['filename'];
+            if (is_file($newFile)){
                 $output['error'] = '文件已存在！';
                 return json_encode($output);
             }
 
-            // 保存文件
-            $newFile = $uploadDir . $fileInfo['filename'];
             if ( $file->moveTo($newFile) ) {
-                $output['success'] = '上传成功！';
 
-                // 存储到数据库
-                $this->saveInfo($fileInfo);
+                /**
+                 * 存储到数据库
+                 */
+                $save = $this->saveInfo($fileInfo);
+                if (  $save === true ){
+                    $output['success'] = '上传成功！';
+                }else{
+                    $output['error'] = $save;
+                }
 
             }else{
                 $output['error'] = '文件保存失败！';
@@ -85,6 +91,11 @@ class Media implements EventsAwareInterface
         }
     }
 
+    /**
+     * 存储媒体信息到数据库
+     * @param $fileInfo
+     * @return bool|string
+     */
     public function saveInfo($fileInfo)
     {
         $resource = new Resources();
@@ -97,14 +108,19 @@ class Media implements EventsAwareInterface
         $resource->resource_mime_type = $fileInfo['filetype'];
 
 
-        if ($resource->create() === false) {
-            $messages = $resource->getMessages();
+        // TODO 读取配置,是否裁剪图片
 
-            foreach ($messages as $message) {
-                echo $message, "\n";
+        if ($resource->create() === false) {
+            $output = "文件信息保存失败：\n";
+
+            $msgs = $resource->getMessages();
+            foreach ($msgs as $msg) {
+                $output .= $msg->getMessage()."\n";
             }
+
+            return $output;
         } else {
-            echo "Great, a new robot was created successfully!";
+            return true;
         }
     }
 
