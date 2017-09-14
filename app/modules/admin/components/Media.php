@@ -2,11 +2,10 @@
 
 namespace ZPhal\Modules\Admin\Components;
 
-use DateTime;
-use DateTimeZone;
 use Phalcon\Di;
 use Phalcon\Events\ManagerInterface;
 use Phalcon\Events\EventsAwareInterface;
+use ZPhal\Models\Resources;
 
 class Media implements EventsAwareInterface
 {
@@ -24,36 +23,92 @@ class Media implements EventsAwareInterface
 
     public function uploadMedia($files)
     {
-        //$this->_eventsManager->fire("media:beforeUploadMedia", $this, $files);
+        if (is_object($this->_eventsManager)){
+            $this->_eventsManager->fire("media:beforeUploadMedia", $this, $files);
+        }
 
         /**
          * 文件上传操作
          */
         // 上传路径
         $config =  Di::getDefault()->getConfig();
-        $uploadDir = $config->application->uploadDir;
+        $uploadBaseDir = $config->application->uploadDir;
 
         //当前时间
-        $datetime = new Datetime(
-            new DateTimeZone("Asia/Shanghai")
-        );
-        $year =  $datetime->format("Y");
-        $month =  $datetime->format("m");
+        $now   = time();
+        $year  = date('Y', $now);
+        $month = date('m', $now);
 
-        // TODO
-         
-        // 遍历所有文件
-        foreach ($files as $file) {
-            // Print file details
-            /*echo $file->getName(), " ", $file->getSize(), "\n";*/
-
-            // 保存文件
-            if ($file->moveTo( $uploadDir . $file->getName() )){
-                $output['success'] = 'upload success';
-                return json_encode($output);
-            }
+        if (!file_exists($uploadBaseDir.$year)){
+            mkdir($uploadBaseDir.$year, 0777);
         }
 
-        //$this->_eventsManager->fire("media:afterUploadMedia", $this, $files);
+        if (!file_exists($uploadBaseDir.$year.'/'.$month)){
+            mkdir($uploadBaseDir.$year.'/'.$month, 0777);
+        }
+
+        $uploadDir = $uploadBaseDir.$year.'/'.$month.'/';
+
+
+        // 遍历所有文件
+        $output = [];
+        $fileInfo = [];
+        foreach ($files as $file) {
+            // 文件信息
+            $fileInfo['filename'] = $file->getName();
+            $fileInfo['filesize'] = $file->getSize();
+            $fileInfo['filetype'] = $file->getType();
+            $fileInfo['url'] = '/uploads/'.$year.'/'.$month.'/'.$fileInfo['filename'];
+
+            if (is_file($fileInfo['filename'])){
+                $output['error'] = '文件已存在！';
+                return json_encode($output);
+            }
+
+            // 保存文件
+            $newFile = $uploadDir . $fileInfo['filename'];
+            if ( $file->moveTo($newFile) ) {
+                $output['success'] = '上传成功！';
+
+                // 存储到数据库
+                $this->saveInfo($fileInfo);
+
+            }else{
+                $output['error'] = '文件保存失败！';
+            }
+            return json_encode($output);
+        }
+
+
+        if (is_object($this->_eventsManager)){
+            $this->_eventsManager->fire("media:afterUploadMedia", $this, $files);
+        }
     }
+
+    public function saveInfo($fileInfo)
+    {
+        $resource = new Resources();
+
+        $resource->resource_title = $fileInfo['filename'];
+        $resource->resource_name  = $fileInfo['filename'];
+        $resource->resource_parent = 0;
+        $resource->guid = $fileInfo['url'];
+        //$resource->resource_type
+        $resource->resource_mime_type = $fileInfo['filetype'];
+
+
+        if ($resource->create() === false) {
+            $messages = $resource->getMessages();
+
+            foreach ($messages as $message) {
+                echo $message, "\n";
+            }
+        } else {
+            echo "Great, a new robot was created successfully!";
+        }
+    }
+
+    /**
+     * 图片处理
+     */
 }

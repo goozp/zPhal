@@ -8,11 +8,11 @@ class AliYunOss
 {
     public function beforeUploadMedia(Event $event, $myComponent, $files)
     {
-        echo "这里, beforeUploadMedia\n";
+        return false;
     }
 
     public function afterUploadMedia(Event $event, $myComponent, $files)
     {
-        echo "这里, afterUploadMedia\n";
+        return false;
     }
 }

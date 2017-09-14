@@ -5,13 +5,13 @@ namespace ZPhal\Models;
 class Resourcemeta extends \Phalcon\Mvc\Model
 {
 
-    public $Meta_id;
+    public $meta_id;
 
-    public $Resource_id;
+    public $resource_id;
 
-    public $Meta_key;
+    public $meta_key;
 
-    public $Meta_value;
+    public $meta_value;
 
     /**
      * Initialize method for model.
@@ -20,6 +20,12 @@ class Resourcemeta extends \Phalcon\Mvc\Model
     {
         $this->setSchema("zphaldb");
         $this->setSource("zp_resourcemeta");
+
+        $this->belongsTo(
+            "resource_id",
+            "ZPhal\\Models\\Resources",
+            "resource_id"
+        );
     }
 
     /**

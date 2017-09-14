@@ -35,7 +35,9 @@ class MediaController extends ControllerBase
         if ($this->request->hasFiles()) {
             $files = $this->request->getUploadedFiles();
 
-            $media = new Media();
+            //$media = new Media();
+
+            $media = $this->di->get('mediaUpload');
             return $media->uploadMedia($files);
         }
     }

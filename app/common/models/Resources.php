@@ -5,29 +5,29 @@ namespace ZPhal\Models;
 class Resources extends \Phalcon\Mvc\Model
 {
 
-    public $Resource_id;
+    public $resource_id;
 
-    public $Upload_author;
+    public $upload_author;
 
-    public $Upload_date;
+    public $upload_date;
 
-    public $Upload_date_gmt;
+    public $upload_date_gmt;
 
-    public $Resource_content;
+    public $resource_content;
 
-    public $Resource_title;
+    public $resource_title;
 
-    public $Resource_status;
+    public $resource_status;
 
-    public $Resource_name;
+    public $resource_name;
 
-    public $Resource_parent;
+    public $resource_parent;
 
-    public $Guid;
+    public $guid;
 
-    public $Resource_type;
+    public $resource_type;
 
-    public $Resource_mime_type;
+    public $resource_mime_type;
 
     /**
      * Initialize method for model.
@@ -36,6 +36,30 @@ class Resources extends \Phalcon\Mvc\Model
     {
         $this->setSchema("zphaldb");
         $this->setSource("zp_resources");
+
+        $this->hasMany(
+            "resource_id",
+            "ZPhal\\Models\\Resourcemeta",
+            "resource_id"
+        );
+
+    }
+
+    /**
+     * 插入新数据前
+     */
+    public function beforeCreate()
+    {
+        if (!$this->upload_author){
+            $auth = $this->session->get('userAuth');
+            $this->upload_author = $auth['userId'];
+        }
+
+        $this->resource_status   = 'normal';
+
+        $this->upload_date       = date('Y-m-d H:i:s', time());
+
+        $this->upload_date_gmt   = gmdate('Y-m-d H:i:s', time());
     }
 
     /**

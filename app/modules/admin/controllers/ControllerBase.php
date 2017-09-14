@@ -68,12 +68,9 @@ class ControllerBase extends Controller
      */
     public function getErrorMsg($object, $message)
     {
-        $output = $message."：\n";
+        $control = $this->di->get("messageControl"); // 单例
 
-        $msgs = $object->getMessages();
-        foreach ($msgs as $msg) {
-            $output .= $msg->getMessage()."\n";
-        }
+        $output  = $control->getErrorMsg($object, $message);
 
         return $output;
     }
