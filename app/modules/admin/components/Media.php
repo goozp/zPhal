@@ -21,6 +21,11 @@ class Media implements EventsAwareInterface
         return $this->_eventsManager;
     }
 
+    /**
+     * 上传文件
+     * @param $files
+     * @return string
+     */
     public function uploadMedia($files)
     {
         if (is_object($this->_eventsManager)){

@@ -25,6 +25,16 @@ class ControllerBase extends Controller
     }
 
     /**
+     * 获取用户id
+     * @return mixed
+     */
+    public function getUserId()
+    {
+        $auth = $this->session->get("userAuth");
+        return $auth['userId'];
+    }
+
+    /**
      * 初始化数据
      */
     public function initValues()

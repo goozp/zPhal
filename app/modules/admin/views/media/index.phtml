@@ -15,5 +15,46 @@
 <section class="content">
     <div class="row">
 
+        <div class="col-md-12 ">
+            <ul class="mailbox-attachments clearfix">
+                <?php
+                foreach ($resources as $k => $v){
+                    if ($v['resource_type'] == 'picture'){ ?>
+                        <li id="meida_<?= $v['resource_id'] ?>">
+                            <span class="">
+                                <img src="<?= $v['guid'] ?>" alt="<?= $v['resource_title'] ?>" width="200px" height="200px">
+                            </span>
+
+                            <div class="mailbox-attachment-info">
+                                <a href="#" class="mailbox-attachment-name">
+                                    <i class="fa fa-picture-o"></i>
+                                    <?= $v['resource_title'] ?>
+                                </a>
+                                <span class="mailbox-attachment-size">
+                                <?= $v['upload_date'] ?>
+                            </span>
+                            </div>
+                        </li>
+                    <?php } else { ?>
+                        <li id="meida_<?= $v['resource_id'] ?>">
+                            <span class="mailbox-attachment-icon">
+                                <i class="fa fa-file-<?= $v['resource_type'] ?>-o"></i>
+                            </span>
+
+                            <div class="mailbox-attachment-info">
+                                <a href="#" class="mailbox-attachment-name">
+                                    <i class="fa fa-paperclip"></i>
+                                    <?= $v['resource_title'] ?>
+                                </a>
+                                <span class="mailbox-attachment-size">
+                                <?= $v['upload_date'] ?>
+                            </span>
+                            </div>
+                        </li>
+                    <?}
+                } ?>
+
+            </ul>
+        </div>
     </div>
 </section>

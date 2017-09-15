@@ -2,7 +2,7 @@
 namespace ZPhal\Modules\Admin\Controllers;
 
 use Phalcon\Mvc\View;
-use ZPhal\Modules\Admin\Components\Media;
+use ZPhal\Models\Resources;
 
 class MediaController extends ControllerBase
 {
@@ -13,9 +13,32 @@ class MediaController extends ControllerBase
 
     public function indexAction()
     {
+        $userId = $this->getUserId();
 
+        $resources = $this->modelsManager->createBuilder()
+            ->columns(["resource_id", "upload_date", "resource_title", "guid", "resource_type"])
+            ->from("ZPhal\Models\Resources")
+            ->where("upload_author = {$userId}")
+            ->orderBy("resource_id DESC")
+            ->limit(10, 0)
+            ->getQuery()
+            ->execute()
+            ->toArray();
+
+        foreach ($resources as $resource){
+            //$resource['guid'] = '/'.$resource['guid'];
+        }
+
+        $this->view->setVars(
+            [
+                "resources" => $resources
+            ]
+        );
     }
 
+    /**
+     * 添加媒体页
+     */
     public function newAction()
     {
         $this->view->setRenderLevel(
@@ -29,11 +52,15 @@ class MediaController extends ControllerBase
         /*$this->assets->addJs("backend/js/upload.js", true);*/
     }
 
+    /**
+     * 上传操作
+     * @return mixed
+     */
     public function uploadAction()
     {
         // 检测是否上传文件
         if ($this->request->hasFiles()) {
-            $files = $this->request->getUploadedFiles();
+            $files = $this->request->getUploadedFiles(); // 获取上传的文件
 
             //$media = new Media();
 
