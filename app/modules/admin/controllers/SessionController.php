@@ -67,4 +67,16 @@ class SessionController extends Controller
         // 返回登录页面
         return $this->response->redirect("login");
     }
+
+    /**
+     * logout
+     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     */
+    public function logoutAction(){
+        // 销毁全部session会话
+        $this->session->destroy();
+
+        // 返回登录页面
+        return $this->response->redirect("login");
+    }
 }

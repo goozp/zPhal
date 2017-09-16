@@ -41,6 +41,14 @@ $router->add('/admin/session/login',
     ]
 );
 
+$router->add('/admin/session/logout',
+    [
+        'module'     => 'admin',
+        'controller' => 'session',
+        'action'     => 'logout',
+    ]
+)->setName('admin-logout');
+
 /* media */
 $router->add('/admin/media',
     [

@@ -4,6 +4,16 @@ namespace ZPhal\Modules\Admin\Controllers;
 use Phalcon\Mvc\View;
 use ZPhal\Models\Resources;
 
+/**
+ * 媒体操作类
+ *
+ * TODO 详情页面 图片信息修改 永久删除 动态加载列表 筛选 搜索   文件大小
+ *
+ * TODO 阿里云OSS插件  图片切割(捞配置)
+ *
+ * Class MediaController
+ * @package ZPhal\Modules\Admin\Controllers
+ */
 class MediaController extends ControllerBase
 {
     public function initialize()

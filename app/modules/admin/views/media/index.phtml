@@ -25,7 +25,7 @@
                                 <img src="<?= $v['guid'] ?>" alt="<?= $v['resource_title'] ?>" width="200px" height="200px">
                             </span>
 
-                            <div class="mailbox-attachment-info">
+                            <div class="mailbox-attachment-info" style="overflow: hidden; text-overflow:ellipsis;white-space: nowrap;">
                                 <a href="#" class="mailbox-attachment-name">
                                     <i class="fa fa-picture-o"></i>
                                     <?= $v['resource_title'] ?>
@@ -41,7 +41,7 @@
                                 <i class="fa fa-file-<?= $v['resource_type'] ?>-o"></i>
                             </span>
 
-                            <div class="mailbox-attachment-info">
+                            <div class="mailbox-attachment-info" style="overflow: hidden; text-overflow:ellipsis;white-space: nowrap;">
                                 <a href="#" class="mailbox-attachment-name">
                                     <i class="fa fa-paperclip"></i>
                                     <?= $v['resource_title'] ?>
