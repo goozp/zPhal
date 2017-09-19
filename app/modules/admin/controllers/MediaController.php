@@ -35,10 +35,11 @@ class MediaController extends ControllerBase
             ->execute()
             ->toArray();
 
-        foreach ($resources as $resource){
-            //$resource['guid'] = '/'.$resource['guid'];
-        }
 
+        foreach ($resources as $key => $resource){
+            $resources[$key]['guid'] = $this->config->application->baseUri . $resource['guid'];
+        }
+        //print_r($resources);exit;
         $this->view->setVars(
             [
                 "resources" => $resources

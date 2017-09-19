@@ -51,7 +51,7 @@
                 </ul>
             </li>
 
-            <li class="treeview">
+            <li class="treeview <?php if ($controllerName=='post') echo 'active'; ?>">
                 <a href="#">
                     <i class="fa fa-files-o"></i> <span>文章</span>
                     <span class="pull-right-container">
@@ -59,10 +59,18 @@
                         </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 所有文章</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 写文章</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 分类目录</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 标签</a></li>
+                    <li <?php if ($controllerName=='post' && $actionName=='index') echo 'class="active"'; ?>>
+                        <a href="<?= $this->url->get("admin/post"); ?>"><i class="fa fa-circle-o"></i> 所有文章</a>
+                    </li>
+                    <li <?php if ($controllerName=='post' && $actionName=='new') echo 'class="active"'; ?>>
+                        <a href="<?= $this->url->get("admin/post/new"); ?>"><i class="fa fa-circle-o"></i> 写文章</a>
+                    </li>
+                    <li <?php if ($controllerName=='post' && $actionName=='taxonomy') echo 'class="active"'; ?>>
+                        <a href="<?= $this->url->get("admin/post/taxonomy/category"); ?>"><i class="fa fa-circle-o"></i> 分类目录</a>
+                    </li>
+                    <li <?php if ($controllerName=='post' && $actionName=='taxonomy') echo 'class="active"'; ?>>
+                        <a href="<?= $this->url->get("admin/post/taxonomy/tag"); ?>"><i class="fa fa-circle-o"></i> 标签</a>
+                    </li>
                 </ul>
             </li>
 

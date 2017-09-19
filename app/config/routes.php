@@ -49,6 +49,31 @@ $router->add('/admin/session/logout',
     ]
 )->setName('admin-logout');
 
+/* post */
+$router->add('/admin/post',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'index',
+    ]
+);
+$router->add('/admin/post/new',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'new',
+    ]
+);
+$router->add('/admin/post/taxonomy/{param:[a-z]+}',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'taxonomy',
+        'type'       => 1,
+    ]
+);
+
+
 /* media */
 $router->add('/admin/media',
     [

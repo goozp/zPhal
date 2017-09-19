@@ -63,7 +63,7 @@ class Media implements EventsAwareInterface
             $fileInfo['filename'] = $file->getName();
             $fileInfo['filesize'] = $file->getSize();
             $fileInfo['filetype'] = $file->getType();
-            $fileInfo['url'] = '/uploads/'.$year.'/'.$month.'/'.$fileInfo['filename'];
+            $fileInfo['url'] = 'uploads/'.$year.'/'.$month.'/'.$fileInfo['filename'];
 
             // 保存文件
             $newFile = $uploadDir . $fileInfo['filename'];

@@ -12,9 +12,9 @@ return new \Phalcon\Config([
 
     'database' => [
         'adapter'  => 'Mysql',
-        'host'     => 'mysql-db', // 如用docker,需改为对应数据库容器的hostname
-        'username' => 'zphal',
-        'password' => 'zphal123',
+        'host'     => '127.0.0.1', // 如用docker,需改为对应数据库容器的hostname
+        'username' => 'root',
+        'password' => 'root',
         'dbname'   => 'zphaldb',
         'dbprefix' => 'zp_',
         'charset'  => 'utf8',
@@ -31,9 +31,9 @@ return new \Phalcon\Config([
         // baseUri 不是在根目录或者server工作目录时,生成url起作用
         // 通常为指到public/index.php下的路径, 受server rewrite规则影响
         // 官方动态写法(不支持nginx配置public下为根目录):
-        // 'baseUri'        => preg_replace('/public([\/\\\\])index.php$/', '', $_SERVER["PHP_SELF"]),
+         'baseUri'        => preg_replace('/public([\/\\\\])index.php$/', '', $_SERVER["PHP_SELF"]),
         // 获取直接写为静态路径 (需设置host, 否则为/zPhal/等其它情况) :
-        'baseUri'        => '/',
+        // 'baseUri'        => '/',
     ],
 
     /**
