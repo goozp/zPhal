@@ -29,9 +29,18 @@ class PostController extends ControllerBase
         $type = $this->dispatcher->getParam("type");
 
         if ($type == 'category'){
-
+            $topTitle = '分类';
+            $topSubtitle = '文章的分类';
         } elseif ($type == 'tag'){
-
+            $topTitle = '标签';
+            $topSubtitle = '文章贴标签';
         }
+
+        $this->view->setVars(
+            [
+                "topTitle" => $topTitle,
+                "topSubtitle" => $topSubtitle
+            ]
+        );
     }
 }
