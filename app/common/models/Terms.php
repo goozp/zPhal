@@ -5,13 +5,13 @@ namespace ZPhal\Models;
 class Terms extends \Phalcon\Mvc\Model
 {
 
-    public $Term_id;
+    public $term_id;
 
-    public $Name;
+    public $name;
 
-    public $Slug;
+    public $slug;
 
-    public $Term_group;
+    public $term_group;
 
     /**
      * Initialize method for model.
@@ -20,6 +20,22 @@ class Terms extends \Phalcon\Mvc\Model
     {
         $this->setSchema("zphaldb");
         $this->setSource("zp_terms");
+
+        $this->hasOne(
+            "term_id",
+            "ZPhal\\Models\\TermTaxonomy",
+            "term_id"
+        );
+    }
+
+    /**
+     * 返回关联的TermTaxonomy表
+     * @param null $parameters
+     * @return \Phalcon\Mvc\Model\ResultsetInterface
+     */
+    public function getTermTaxonomy($parameters = null)
+    {
+        return $this->getRelated("ZPhal\\Models\\TermTaxonomy", $parameters);
     }
 
     /**

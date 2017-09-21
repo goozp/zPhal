@@ -64,7 +64,15 @@ $router->add('/admin/post/new',
         'action'     => 'new',
     ]
 );
-$router->add('/admin/post/taxonomy/{param:[a-z]+}',
+$router->add('/admin/post/addTaxonomy/{type:[a-z]+}',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'addTaxonomy',
+        'type'       => 1,
+    ]
+)->setName('new-taxonomy');
+$router->add('/admin/post/taxonomy/{type:[a-z]+}',
     [
         'module'     => 'admin',
         'controller' => 'post',

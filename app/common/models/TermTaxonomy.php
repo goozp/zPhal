@@ -5,17 +5,17 @@ namespace ZPhal\Models;
 class TermTaxonomy extends \Phalcon\Mvc\Model
 {
 
-    public $Term_taxonomy_id;
+    public $term_taxonomy_id;
 
-    public $Term_id;
+    public $term_id;
 
-    public $Taxonomy;
+    public $taxonomy;
 
-    public $Description;
+    public $description;
 
-    public $Parent;
+    public $parent;
 
-    public $Count;
+    public $count;
 
     /**
      * Initialize method for model.
@@ -24,6 +24,12 @@ class TermTaxonomy extends \Phalcon\Mvc\Model
     {
         $this->setSchema("zphaldb");
         $this->setSource("zp_term_taxonomy");
+
+        $this->belongsTo(
+            "term_id",
+            "ZPhal\\Models\\Terms",
+            "term_id"
+        );
     }
 
     /**

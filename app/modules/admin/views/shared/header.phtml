@@ -65,10 +65,10 @@
                     <li <?php if ($controllerName=='post' && $actionName=='new') echo 'class="active"'; ?>>
                         <a href="<?= $this->url->get("admin/post/new"); ?>"><i class="fa fa-circle-o"></i> 写文章</a>
                     </li>
-                    <li <?php if ($controllerName=='post' && $actionName=='taxonomy') echo 'class="active"'; ?>>
+                    <li <?php if ($controllerName=='post' && $actionName=='taxonomy' && $type=='category') echo 'class="active"'; ?>>
                         <a href="<?= $this->url->get("admin/post/taxonomy/category"); ?>"><i class="fa fa-circle-o"></i> 分类目录</a>
                     </li>
-                    <li <?php if ($controllerName=='post' && $actionName=='taxonomy') echo 'class="active"'; ?>>
+                    <li <?php if ($controllerName=='post' && $actionName=='taxonomy' && $type=='tag') echo 'class="active"'; ?>>
                         <a href="<?= $this->url->get("admin/post/taxonomy/tag"); ?>"><i class="fa fa-circle-o"></i> 标签</a>
                     </li>
                 </ul>

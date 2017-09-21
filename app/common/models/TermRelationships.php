@@ -5,11 +5,11 @@ namespace ZPhal\Models;
 class TermRelationships extends \Phalcon\Mvc\Model
 {
 
-    public $Object_id;
+    public $object_id;
 
-    public $Term_taxonomy_id;
+    public $term_taxonomy_id;
 
-    public $Term_order;
+    public $term_order;
 
     /**
      * Initialize method for model.

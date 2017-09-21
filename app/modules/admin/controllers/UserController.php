@@ -74,7 +74,7 @@ class UserController extends ControllerBase
 
             if ($inputPassword !== $inputPassword2){
                 $this->flash->error("两次密码输入不一致!");
-                return $this->response->redirect("admin/user/new");
+                return $this->response->redirect("admin");
             }
 
             $user = new Users();
@@ -198,7 +198,7 @@ class UserController extends ControllerBase
 
                 $userMeta->meta_value = $description;
                 if ($userMeta->save() === false){
-                    $messages = $this->getErrorMsg($user, "更新出错");
+                    $messages = $this->getErrorMsg($userMeta, "更新出错");
                     $this->flash->error($messages);
 
                     return $this->response->redirect("admin/user/self");
