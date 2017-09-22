@@ -28,7 +28,10 @@ class TermTaxonomy extends \Phalcon\Mvc\Model
         $this->belongsTo(
             "term_id",
             "ZPhal\\Models\\Terms",
-            "term_id"
+            "term_id",
+            [
+                "alias" => "Terms",
+            ]
         );
     }
 
