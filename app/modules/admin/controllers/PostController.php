@@ -38,12 +38,8 @@ class PostController extends ControllerBase
         $terms->name = $name;
         $terms->slug = $slug;
 
-        $a = $terms->getTermTaxonomy();
-        print_r($a);exit;
-
-        // TODO
         $termTaxonomy = new TermTaxonomy();
-        $termTaxonomy->term_id  = $terms;
+        $termTaxonomy->terms  = $terms;
         $termTaxonomy->taxonomy = $type;
         $termTaxonomy->description = $description;
         $termTaxonomy->parent   = $parent;
