@@ -39,7 +39,7 @@ class PostController extends ControllerBase
         $terms->slug = $slug;
 
         $termTaxonomy = new TermTaxonomy();
-        $termTaxonomy->terms  = $terms;
+        $termTaxonomy->Terms  = $terms;
         $termTaxonomy->taxonomy = $type;
         $termTaxonomy->description = $description;
         $termTaxonomy->parent   = $parent;
@@ -70,7 +70,7 @@ class PostController extends ControllerBase
                   FROM ZPhal\Models\TermTaxonomy AS tt
                   LEFT JOIN ZPhal\Models\Terms AS t ON t.term_id=tt.term_id
                   WHERE tt.taxonomy = :taxonomy:
-                  ORDER BY t.term_id DESC",
+                  ORDER BY t.term_id ASC",
                 [
                     "taxonomy" => "category",
                 ]
@@ -151,18 +151,19 @@ class PostController extends ControllerBase
             $html = '<option value="0">无</option>';
         }
 
-        $nbsp = '&nbsp;&nbsp;';
+        $nbsp = '&nbsp;&nbsp;&nbsp;&nbsp;';
         $tags = '';
         if ($deep){
-            for ($i=0; $i<=$deep;$i++){
+            for ($i=1; $i<=$deep;$i++){
                 $tags .= $nbsp;
             }
         }
 
         foreach ($categoryTree as $category){
+
             $html .= '<option value="'.$category['term_id'].'">'.$tags.$category['name'].'</option>';
             if (!empty($category['sun'])){
-                $this->treeHtml($category['sun'], $html, $deep+1);
+                $html = $this->treeHtml($category['sun'], $html, $deep+1);
             }
         }
         return $html;
