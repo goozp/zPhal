@@ -3,6 +3,8 @@ namespace ZPhal\Modules\Admin\Controllers;
 
 use ZPhal\Models\Terms;
 use ZPhal\Models\TermTaxonomy;
+use Phalcon\Paginator\Adapter\NativeArray as PaginatorArray;
+use ZPhal\Modules\Admin\Library\Paginator\Pager;
 
 /**
  * 文章类
@@ -26,6 +28,10 @@ class PostController extends ControllerBase
 
     }
 
+    /**
+     * 添加分类或者标签
+     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     */
     public function addTaxonomyAction()
     {
         $type = $this->dispatcher->getParam("type");
@@ -54,10 +60,22 @@ class PostController extends ControllerBase
         }
     }
 
+    /**
+     * 分类/标签 页面
+     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     */
     public function taxonomyAction()
     {
         $type = $this->dispatcher->getParam("type");
+        // 当前页数
+        $currentPage = abs($this->request->getQuery('page', 'int', 1));
+        if ($currentPage == 0) {
+            $currentPage = 1;
+        }
 
+        /**
+         * 分类目录
+         */
         if ($type == 'category'){
             $topTitle = '分类';
             $topSubtitle = '文章的分类';
@@ -81,26 +99,83 @@ class PostController extends ControllerBase
             /**
              * 获取分类列表
              */
+            $pager = new Pager(
+                new PaginatorArray(
+                    [
+                        "data"  => $category,
+                        "limit" => 20,
+                        "page"  => $currentPage,
+                    ]
+                ),
+                [
+                    // We will use Bootstrap framework styles
+                    'layoutClass' => 'ZPhal\Modules\Admin\Library\Paginator\Pager\Layout\Bootstrap',
+                    // Range window will be 5 pages
+                    'rangeLength' => 5,
+                    // Just a string with URL mask
+                    'urlMask'     => '?page={%page_number}',
+                ]
+            );
 
             $this->view->setVars(
                 [
                     "type" => $type,
                     "topTitle" => $topTitle,
                     "topSubtitle" => $topSubtitle,
-                    "categoryTree" => $this->treeHtml($categoryTree)
+                    "categoryTree" => $this->treeHtml($categoryTree),
+                    "pager" => $pager
                 ]
             );
 
-        } elseif ($type == 'tag'){
-
+        }
+        /**
+         * 标签
+         */
+        elseif ($type == 'tag'){
             $topTitle = '标签';
             $topSubtitle = '文章贴标签';
+
+            /**
+             * 获取标签列表
+             */
+            $tags = $this->modelsManager->executeQuery(
+                "SELECT tt.term_taxonomy_id, tt.term_id, tt.description, tt.parent, tt.count, t.name, t.slug
+                  FROM ZPhal\Models\TermTaxonomy AS tt
+                  LEFT JOIN ZPhal\Models\Terms AS t ON t.term_id=tt.term_id
+                  WHERE tt.taxonomy = :taxonomy:
+                  ORDER BY t.term_id ASC",
+                [
+                    "taxonomy" => "tag",
+                ]
+            )->toArray();
+
+            /**
+             * 获取分类列表
+             */
+            $pager = new Pager(
+                new PaginatorArray(
+                    [
+                        "data"  => $tags,
+                        "limit" => 20,
+                        "page"  => $currentPage,
+                    ]
+                ),
+                [
+                    // We will use Bootstrap framework styles
+                    'layoutClass' => 'ZPhal\Modules\Admin\Library\Paginator\Pager\Layout\Bootstrap',
+                    // Range window will be 5 pages
+                    'rangeLength' => 5,
+                    // Just a string with URL mask
+                    'urlMask'     => '?page={%page_number}',
+                ]
+            );
 
             $this->view->setVars(
                 [
                     "type" => $type,
                     "topTitle" => $topTitle,
-                    "topSubtitle" => $topSubtitle
+                    "topSubtitle" => $topSubtitle,
+                    "pager" => $pager
                 ]
             );
 

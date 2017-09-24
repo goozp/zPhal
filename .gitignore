@@ -2,3 +2,4 @@
 /config/development/
 .idea
 /public/uploads/*
+/app/config/config.php

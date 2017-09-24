@@ -14,8 +14,8 @@
 <!-- 主内容 -->
 <section class="content">
     <div class="row">
-        <div class="col-md-4">
-            <?php if ($type == 'category'){?>
+        <?php if ($type == 'category'){?>
+            <div class="col-md-4">
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">添加新的分类目录</h3>
@@ -60,7 +60,62 @@
                         </div>
                     </form>
                 </div>
-            <?} elseif($type == 'tag'){?>
+            </div>
+
+            <div class="col-md-8">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">分类列表</h3>
+                    </div>
+
+                    <div class="box-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>描述</th>
+                                <th>别名</th>
+                                <th>总数</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php if (count($pager) == 0){?>
+                                <tr align="center">
+                                    <td colspan="4" > 暂无数据 </td>
+                                </tr>
+                            <?php }else{
+                                foreach ($pager->getIterator() as $item){?>
+                                    <tr>
+                                        <td><?= $item['name'] ?></td>
+                                        <td><?= $item['description'] ?></td>
+                                        <td><?= $item['slug'] ?></td>
+                                        <td><?= $item['count'] ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>名称</th>
+                                <th>描述</th>
+                                <th>别名</th>
+                                <th>总数</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                    <?php
+                    if ($pager->haveToPaginate()){
+                        echo $pager->getLayout();
+                    }
+                    ?>
+                    </div>
+                </div>
+            </div>
+        <?} elseif($type == 'tag'){?>
+            <div class="col-md-4">
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">添加新的标签</h3>
@@ -96,55 +151,60 @@
                         </div>
                     </form>
                 </div>
-            <?} ?>
-        </div>
-        <div class="col-md-8">
-            <div class="box box-primary">
-                <div class="box-header">
-                    <h3 class="box-title">Hover Data Table</h3>
-                </div>
+            </div>
 
-                <div class="box-body">
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th>Rendering engine</th>
-                            <th>Browser</th>
-                            <th>Platform(s)</th>
-                            <th>Engine version</th>
-                            <th>CSS grade</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet
-                                Explorer 4.0
-                            </td>
-                            <td>Win 95+</td>
-                            <td> 4</td>
-                            <td>X</td>
-                        </tr>
-                        <tr>
-                            <td>Other browsers</td>
-                            <td>All others</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>U</td>
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <th>Rendering engine</th>
-                            <th>Browser</th>
-                            <th>Platform(s)</th>
-                            <th>Engine version</th>
-                            <th>CSS grade</th>
-                        </tr>
-                        </tfoot>
-                    </table>
+            <div class="col-md-8">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">标签列表</h3>
+                    </div>
+
+                    <div class="box-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>描述</th>
+                                <th>别名</th>
+                                <th>总数</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php if (count($pager) == 0){?>
+                                <tr align="center">
+                                    <td colspan="4" > 暂无数据 </td>
+                                </tr>
+                            <?php }else{
+                                foreach ($pager->getIterator() as $item){?>
+                                    <tr>
+                                        <td><?= $item['name'] ?></td>
+                                        <td><?= $item['description'] ?></td>
+                                        <td><?= $item['slug'] ?></td>
+                                        <td><?= $item['count'] ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>名称</th>
+                                <th>描述</th>
+                                <th>别名</th>
+                                <th>总数</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                        <?php
+                        if ($pager->haveToPaginate()){
+                            echo $pager->getLayout();
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?} ?>
     </div>
 </section>
