@@ -1,6 +1,6 @@
-app/* linguist-vendored
-bootstrap/* linguist-vendored
-public/* linguist-vendored=false
-schema/* linguist-vendored=false
-cache/* linguist-vendored=false
+app/* linguist-vendored=false
+bootstrap/* linguist-vendored=false
+public/* linguist-vendored
+schema/* linguist-vendored
+cache/* linguist-vendored
 
