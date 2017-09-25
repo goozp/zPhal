@@ -1,7 +1,24 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2017/9/19
- * Time: 10:17
- */
+<!-- 页头 -->
+<section class="content-header">
+    <div class="msgTip col-md-12">
+        <div class="row">
+            <?php $this->flash->output(); ?>
+        </div>
+    </div>
+    <h1>
+        撰写新文章
+        <small>固定链接:</small>
+    </h1>
+</section>
+
+<!-- 主内容 -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="editormd">
+                <textarea style="display:none;"></textarea>
+            </div>
+
+        </div>
+    </div>
+</section>

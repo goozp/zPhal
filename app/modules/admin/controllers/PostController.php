@@ -25,7 +25,10 @@ class PostController extends ControllerBase
 
     public function newAction()
     {
-
+        // 编辑器静态资源
+        $this->assets->addCss("backend/plugins/editor.md/css/editormd.css", true);
+        $this->assets->addJs("backend/plugins/editor.md/editormd.min.js", true);
+        $this->assets->addJs("backend/js/md.js", true);
     }
 
     /**

@@ -22,5 +22,14 @@ $loader->registerClasses([
     'ZPhal\Modules\Admin\Module'      => APP_PATH . '/modules/admin/Module.php'
 ]);
 
+/**
+ * Register Files, composer autoloader
+ */
+$loader->registerFiles(
+    [
+        APP_PATH . '/common/vendor/autoload.php'
+    ]
+);
+
 $loader->register();
 

@@ -1,0 +1,9 @@
+{
+    "require": {
+        "erusev/parsedown": "^1.6"
+    },
+
+    "config" : {
+        "vendor-dir" : "app/common/vendor"
+    }
+}

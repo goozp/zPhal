@@ -60,7 +60,7 @@ class MediaController extends ControllerBase
         $this->assets->addJs("backend/library/bootstrap-fileinput/js/fileinput.min.js", true);
         $this->assets->addJs("backend/library/bootstrap-fileinput/js/locales/zh.js", true);
         $this->assets->addJs("backend/library/bootstrap-fileinput/themes/fa/theme.min.js", true);
-        /*$this->assets->addJs("backend/js/upload.js", true);*/
+
     }
 
     /**
