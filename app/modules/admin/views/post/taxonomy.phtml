@@ -105,12 +105,14 @@
                             </tr>
                             </tfoot>
                         </table>
+                    </div>
 
-                    <?php
-                    if ($pager->haveToPaginate()){
-                        echo $pager->getLayout();
-                    }
-                    ?>
+                    <div class="box-footer clearfix">
+                        <?php
+                        if ($pager->haveToPaginate()){
+                            echo $pager->getLayout();
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -196,7 +198,9 @@
                             </tr>
                             </tfoot>
                         </table>
+                    </div>
 
+                    <div class="box-footer clearfix">
                         <?php
                         if ($pager->haveToPaginate()){
                             echo $pager->getLayout();

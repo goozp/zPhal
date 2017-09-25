@@ -3,6 +3,7 @@
 namespace ZPhal\Modules\Admin\Controllers;
 
 use Phalcon\Paginator\Adapter\QueryBuilder as PaginatorQueryBuilder;
+use ZPhal\Modules\Admin\Library\Paginator\Pager;
 use ZPhal\Models\Usermeta;
 use ZPhal\Models\Users;
 
@@ -32,19 +33,25 @@ class UserController extends ControllerBase
         $builder->orderBy('ID');
 
         // 分页查询
-        $paginator = new PaginatorQueryBuilder(
+        $pager = new Pager(
+            new PaginatorQueryBuilder(
+                [
+                    'builder' => $builder,
+                    'limit'   => 20,
+                    'page'    => $currentPage,
+                ]
+            ),
             [
-                'builder' => $builder,
-                'limit'   => 20,
-                'page'    => $currentPage,
+                'layoutClass' => 'ZPhal\Modules\Admin\Library\Paginator\Pager\Layout\Bootstrap', // 样式类
+                'rangeLength' => 5, // 分页长度
+                'urlMask'     => '?page={%page_number}', // 额外url传参
             ]
         );
-        $page = $paginator->getPaginate();
 
         // 输出
         $this->view->setVars(
             [
-                'page'=>$page,
+                'pager'=>$pager,
                 'userSearch' => $userSearch
             ]
         );

@@ -22,7 +22,7 @@ class Bootstrap extends Layout
      *
      * @var string
      */
-    protected $selectedTemplate = '<li class="active"><span>{%page}</span></li>';
+    protected $selectedTemplate = '<li class="#"><span>{%page}</span></li>';
 
     /**
      * {@inheritdoc}
@@ -32,7 +32,12 @@ class Bootstrap extends Layout
      */
     public function getRendered(array $options = [])
     {
-        $result = '<ul class="pagination">';
+        $currentPage = $this->pager->getCurrentPage();
+        $totalPage   = $this->pager->getLastPage();
+        $totalNumber = $this->pager->count();
+
+        $result = '<span>当前第 '.$currentPage.' 页，共 '.$totalPage.' 页，共 '.$totalNumber.' 条数据</span>
+        <ul class="pagination pagination-sm no-margin pull-right">';
 
         $bootstrapSelected = '<li class="disabled"><span>{%page}</span></li>';
         $originTemplate = $this->selectedTemplate;

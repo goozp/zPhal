@@ -108,12 +108,9 @@ class PostController extends ControllerBase
                     ]
                 ),
                 [
-                    // We will use Bootstrap framework styles
-                    'layoutClass' => 'ZPhal\Modules\Admin\Library\Paginator\Pager\Layout\Bootstrap',
-                    // Range window will be 5 pages
-                    'rangeLength' => 5,
-                    // Just a string with URL mask
-                    'urlMask'     => '?page={%page_number}',
+                    'layoutClass' => 'ZPhal\Modules\Admin\Library\Paginator\Pager\Layout\Bootstrap', // 样式类
+                    'rangeLength' => 5, // 分页长度
+                    'urlMask'     => '?page={%page_number}', // 额外url传参
                 ]
             );
 

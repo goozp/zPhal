@@ -42,7 +42,7 @@
                             <th>状态</th>
                         </tr>
                         <?php
-                        foreach ($page->items as $v){ ?>
+                        foreach ($pager->getIterator() as $v){ ?>
                             <tr>
                                 <td><?php echo $v->ID ?></td>
                                 <td><?php echo $v->user_login ?></td>
@@ -73,16 +73,9 @@
                 </div>
 
                 <div class="box-footer clearfix">
-                    <?php echo '当前第 ', $page->current, ' 页，共 ', $page->total_pages,' 页，共 ',$page->total_items,' 条数据'; ?>
-                    <?php if($page->total_pages > 1):?>
-                        <ul class="pagination pagination-sm no-margin pull-right">
-                            <li class="<?php echo $page->current <= 1?'disabled':''; ?>"><a href="<?php echo $this->url->get('admin/user',array('page'=>$page->before));?>">&laquo;</a></li>
-                            <?php for($i = 1;$i <= $page->total_pages;$i++):?>
-                                <li class="<?php echo $page->current == $i?'active':''; ?>"><a href="<?php echo $this->url->get('admin/user',array('page'=>$i));?>"><?php echo $i; ?></a></li>
-                            <?php endfor; ?>
-                            <li class="<?php echo $page->current >= $page->total_pages?'disabled':''; ?>"><a href="<?php echo $this->url->get('admin/user',array('page'=>$page->next));?>">&raquo;</a></li>
-                        </ul>
-                    <?php endif;?>
+                    <?php if ($pager->haveToPaginate()){
+                        echo $pager->getLayout();
+                    } ?>
                 </div>
             </div>
         </div>
