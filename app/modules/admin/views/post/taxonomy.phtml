@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-info pull-right">确定</button>
+                            <button type="submit" class="btn btn-info pull-right">添加新的分类目录</button>
                         </div>
                     </form>
                 </div>
@@ -84,9 +84,14 @@
                                     <td colspan="4" > 暂无数据 </td>
                                 </tr>
                             <?php }else{
-                                foreach ($pager->getIterator() as $item){?>
+                                foreach ($pager->getIterator() as $item){ ?>
                                     <tr>
-                                        <td><?= $item['name'] ?></td>
+                                        <td>
+                                            <a href="<?= $this->url->get(["for"   => "edit-taxonomy", "type"  => $type,
+                                                "slug" => $item['slug'], "id" => $item['term_taxonomy_id'],]); ?>">
+                                                <?= $item['name'] ?>
+                                            </a>
+                                        </td>
                                         <td><?= $item['description'] ?></td>
                                         <td><?= $item['slug'] ?></td>
                                         <td><?= $item['count'] ?></td>
@@ -149,7 +154,7 @@
                         </div>
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-info pull-right">确定</button>
+                            <button type="submit" class="btn btn-info pull-right">添加新的标签</button>
                         </div>
                     </form>
                 </div>

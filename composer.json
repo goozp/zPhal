@@ -5,5 +5,11 @@
 
     "config" : {
         "vendor-dir" : "app/common/vendor"
+    },
+
+    "autoload": {
+        "files": [
+            "bootstrap/helpers.php"
+        ]
     }
 }

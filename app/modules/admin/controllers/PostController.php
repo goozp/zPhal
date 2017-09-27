@@ -1,6 +1,7 @@
 <?php
 namespace ZPhal\Modules\Admin\Controllers;
 
+use ZPhal\Models\Services\Service\PostService;
 use ZPhal\Models\Terms;
 use ZPhal\Models\TermTaxonomy;
 use Phalcon\Paginator\Adapter\NativeArray as PaginatorArray;
@@ -63,6 +64,32 @@ class PostController extends ControllerBase
         }
     }
 
+    public function editTaxonomyAction()
+    {
+        $type = $this->dispatcher->getParam("type");
+        $slug = $this->dispatcher->getParam("slug");
+        $id = $this->dispatcher->getParam("id");
+
+        if ($type == 'category'){
+            $topTitle = '修改分类';
+            $topSubtitle = '文章的分类';
+        }elseif ($type == 'tag'){
+            $topTitle = '修改标签';
+            $topSubtitle = '文章贴标签';
+        } else{
+            $this->flash->error("错误操作!");
+            return $this->response->redirect("admin/");
+        }
+
+        $this->view->setVars(
+            [
+                "type" => $type,
+                "topTitle" => $topTitle,
+                "topSubtitle" => $topSubtitle,
+            ]
+        );
+    }
+
     /**
      * 分类/标签 页面
      * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
@@ -86,6 +113,9 @@ class PostController extends ControllerBase
             /**
              * 获取分类目录
              */
+            /** @var PostService $postsService */
+            $postService = container(PostService::class);
+            print_r($postService->getTaxonomyListByType('category'));exit;
             $category = $this->modelsManager->executeQuery(
                 "SELECT tt.term_taxonomy_id, tt.term_id, tt.description, tt.parent, tt.count, t.name, t.slug
                   FROM ZPhal\Models\TermTaxonomy AS tt
@@ -97,7 +127,7 @@ class PostController extends ControllerBase
                 ]
             )->toArray();
 
-            $categoryTree = $this->makeTree($category, $pk='term_id', $pid='parent', $child='sun', $root=0);
+            $categoryTree = $this->makeTree($category, $pk='term_taxonomy_id', $pid='parent', $child='sun', $root=0);
 
             /**
              * 获取分类列表
@@ -236,7 +266,7 @@ class PostController extends ControllerBase
 
         foreach ($categoryTree as $category){
 
-            $html .= '<option value="'.$category['term_id'].'">'.$tags.$category['name'].'</option>';
+            $html .= '<option value="'.$category['term_taxonomy_id'].'">'.$tags.$category['name'].'</option>';
             if (!empty($category['sun'])){
                 $html = $this->treeHtml($category['sun'], $html, $deep+1);
             }

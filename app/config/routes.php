@@ -72,6 +72,16 @@ $router->add('/admin/post/addTaxonomy/{type:[a-z]+}',
         'type'       => 1,
     ]
 )->setName('new-taxonomy');
+$router->add('/admin/post/editTaxonomy/{type:[a-z]+}/{slug:[a-z]+}/{id:[0-9]+}',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'editTaxonomy',
+        'type'       => 1,
+        'slug'       => 2,
+        'id'         => 3,
+    ]
+)->setName('edit-taxonomy');
 $router->add('/admin/post/taxonomy/{type:[a-z]+}',
     [
         'module'     => 'admin',
