@@ -7,6 +7,7 @@ use ZPhal\Models\TermTaxonomy;
 use Phalcon\Paginator\Adapter\NativeArray as PaginatorArray;
 use ZPhal\Modules\Admin\Library\Paginator\Pager;
 
+
 /**
  * 文章类
  * Class PostController
@@ -26,7 +27,7 @@ class PostController extends ControllerBase
 
     public function newAction()
     {
-        // 编辑器静态资源
+        /* 编辑器静态资源 */
         $this->assets->addCss("backend/plugins/editor.md/css/editormd.css", true);
         $this->assets->addJs("backend/plugins/editor.md/editormd.min.js", true);
         $this->assets->addJs("backend/js/md.js", true);
@@ -40,7 +41,7 @@ class PostController extends ControllerBase
     {
         $type = $this->dispatcher->getParam("type");
         $name = $this->request->getPost('name', ['string','trim']);
-        $slug = $this->request->getPost('slug', ['string','trim']);
+        $slug = $this->request->getPost('slug', ['string','trim', 'lower']);
         $parent = $this->request->getPost('parent', 'int');
         $description = $this->request->getPost('description', ['string','trim']);
 
@@ -64,30 +65,154 @@ class PostController extends ControllerBase
         }
     }
 
+    /**
+     * 编辑分类或者标签
+     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     */
     public function editTaxonomyAction()
     {
         $type = $this->dispatcher->getParam("type");
-        $slug = $this->dispatcher->getParam("slug");
         $id = $this->dispatcher->getParam("id");
 
-        if ($type == 'category'){
-            $topTitle = '修改分类';
-            $topSubtitle = '文章的分类';
-        }elseif ($type == 'tag'){
-            $topTitle = '修改标签';
-            $topSubtitle = '文章贴标签';
-        } else{
+        $termTaxonomy = TermTaxonomy::findFirst($id);
+        if ($termTaxonomy){
+            $description = $termTaxonomy->description;
+            $term = $termTaxonomy->Terms;
+            $name = $term->name;
+            $slug = $term->slug;
+
+            if ($type == 'category'){
+                $topTitle = '编辑分类';
+                $parent = $termTaxonomy->parent;
+
+                //分类列表
+                /** @var PostService $postsService */
+                $postService = container(PostService::class);
+                $category = $postService->getTaxonomyListByType('category');
+                $categoryTree = $this->makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
+
+                $this->view->categoryTree = $this->treeHtml($categoryTree, '', 0, $parent);
+
+            }elseif ($type == 'tag'){
+                $topTitle = '编辑标签';
+
+            } else{
+                $this->flash->error("错误操作!");
+                return $this->response->redirect("admin/");
+            }
+
+            $this->view->setVars(
+                [
+                    "type"      => $type,
+                    "topTitle"  => $topTitle,
+                    "id"        => $id,
+                    "name"      => $name,
+                    "slug"      => $slug,
+                    "description" => $description,
+                ]
+            );
+
+        }else{
             $this->flash->error("错误操作!");
             return $this->response->redirect("admin/");
         }
+    }
 
-        $this->view->setVars(
-            [
-                "type" => $type,
-                "topTitle" => $topTitle,
-                "topSubtitle" => $topSubtitle,
-            ]
-        );
+    /**
+     * 更新分类或标签
+     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     */
+    public function updateTaxonomyAction()
+    {
+        $type = $this->dispatcher->getParam("type");
+        $id = $this->dispatcher->getParam("id");
+
+        if ($type == 'category' || 'tag'){
+
+            if ($this->request->isPost()) {
+                // 获取POST数据
+                $name = $this->request->getPost('name', ['string','trim']);
+                $slug = $this->request->getPost('slug', ['string','trim', 'lower']);
+                $parent = $this->request->getPost('parent', 'int', 0);
+                $description = $this->request->getPost('description', ['string','trim']);
+
+                $termTaxonomy = TermTaxonomy::findFirst($id);
+                if ($termTaxonomy){
+                    $termTaxonomy->description = $description;
+                    $termTaxonomy->parent = $parent;
+
+                    $term = $termTaxonomy->Terms;
+                    $term->name = $name;
+                    $term->slug = $slug;
+
+                    if ($termTaxonomy->save()){
+                        $this->flash->success("更新成功");
+                        return $this->response->redirect("admin/post/editTaxonomy/".$type.'/'.$id);
+
+                    } else{
+                        $messages = $this->getErrorMsg($termTaxonomy, "更新失败");
+                        $this->flash->error($messages);
+                        return $this->response->redirect("admin/post/editTaxonomy/".$type.'/'.$id);
+                    }
+                }
+            }
+        }
+
+        $this->flash->error("请求错误!");
+        return $this->response->redirect("admin/");
+    }
+
+    /**
+     * 删除分类或标签
+     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     */
+    public function deleteTaxonomyAction()
+    {
+        $type = $this->dispatcher->getParam("type");
+        $id = $this->dispatcher->getParam("id");
+
+        // accept a transaction manager
+        $manager = $this->transactions;
+
+        // Request a transaction
+        $transaction = $manager->get();
+
+        $termTaxonomy = TermTaxonomy::findFirst($id);
+        if ($termTaxonomy){
+            $termTaxonomy -> setTransaction($transaction); // 设置事务
+            $term = $termTaxonomy->Terms;
+
+            if ($termTaxonomy->delete() === false){
+
+                $messages = $this->getErrorMsg($termTaxonomy, "删除失败");
+
+                $transaction->rollback($messages); // 回滚
+
+                $this->flash->error($messages);
+                return $this->response->redirect("admin/post/editTaxonomy/".$type.'/'.$id);
+
+            }else{
+
+                if ($term->delete() === false){
+                    $messages = $this->getErrorMsg($term, "删除失败");
+
+                    $transaction->rollback($messages); // 回滚
+
+                    $this->flash->error($messages);
+                    return $this->response->redirect("admin/post/editTaxonomy/".$type.'/'.$id);
+
+                }else{
+                    $transaction->commit(); //提交
+
+                    $this->flash->success("删除成功");
+                    return $this->response->redirect("admin/post/taxonomy/".$type);
+                }
+            }
+
+        }else{
+            $this->flash->success("错误的操作");
+            return $this->response->redirect("admin/post/taxonomy/".$type);
+        }
     }
 
     /**
@@ -110,28 +235,12 @@ class PostController extends ControllerBase
             $topTitle = '分类';
             $topSubtitle = '文章的分类';
 
-            /**
-             * 获取分类目录
-             */
             /** @var PostService $postsService */
             $postService = container(PostService::class);
-            print_r($postService->getTaxonomyListByType('category'));exit;
-            $category = $this->modelsManager->executeQuery(
-                "SELECT tt.term_taxonomy_id, tt.term_id, tt.description, tt.parent, tt.count, t.name, t.slug
-                  FROM ZPhal\Models\TermTaxonomy AS tt
-                  LEFT JOIN ZPhal\Models\Terms AS t ON t.term_id=tt.term_id
-                  WHERE tt.taxonomy = :taxonomy:
-                  ORDER BY t.term_id ASC",
-                [
-                    "taxonomy" => "category",
-                ]
-            )->toArray();
+            $category = $postService->getTaxonomyListByType('category');
+            $categoryTree = $this->makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
 
-            $categoryTree = $this->makeTree($category, $pk='term_taxonomy_id', $pid='parent', $child='sun', $root=0);
-
-            /**
-             * 获取分类列表
-             */
+            // 获取分类列表
             $pager = new Pager(
                 new PaginatorArray(
                     [
@@ -165,19 +274,8 @@ class PostController extends ControllerBase
             $topTitle = '标签';
             $topSubtitle = '文章贴标签';
 
-            /**
-             * 获取标签列表
-             */
-            $tags = $this->modelsManager->executeQuery(
-                "SELECT tt.term_taxonomy_id, tt.term_id, tt.description, tt.parent, tt.count, t.name, t.slug
-                  FROM ZPhal\Models\TermTaxonomy AS tt
-                  LEFT JOIN ZPhal\Models\Terms AS t ON t.term_id=tt.term_id
-                  WHERE tt.taxonomy = :taxonomy:
-                  ORDER BY t.term_id ASC",
-                [
-                    "taxonomy" => "tag",
-                ]
-            )->toArray();
+            $postService = container(PostService::class);
+            $tags = $postService->getTaxonomyListByType('tag');
 
             /**
              * 获取分类列表
@@ -216,6 +314,8 @@ class PostController extends ControllerBase
         }
     }
 
+    // TODO 以下功能函数不应该在这
+
     /**
      * 返回分类树结构
      * @param array $list 要排列的数组
@@ -250,7 +350,7 @@ class PostController extends ControllerBase
      * @param int $deep
      * @return string
      */
-    function treeHtml($categoryTree, $html='', $deep=0)
+    function treeHtml($categoryTree, $html='', $deep=0, $active=0)
     {
         if ($html == ''){
             $html = '<option value="0">无</option>';
@@ -265,8 +365,14 @@ class PostController extends ControllerBase
         }
 
         foreach ($categoryTree as $category){
+            if ($active != 0 && $category['term_taxonomy_id'] == $active){
+                $actived = 'selected';
+            }else{
+                $actived  = '';
+            }
 
-            $html .= '<option value="'.$category['term_taxonomy_id'].'">'.$tags.$category['name'].'</option>';
+            $html .= '<option value="'.$category['term_taxonomy_id'].'" '.$actived.'>'.$tags.$category['name'].'</option>';
+
             if (!empty($category['sun'])){
                 $html = $this->treeHtml($category['sun'], $html, $deep+1);
             }

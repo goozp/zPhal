@@ -64,24 +64,6 @@ $router->add('/admin/post/new',
         'action'     => 'new',
     ]
 );
-$router->add('/admin/post/addTaxonomy/{type:[a-z]+}',
-    [
-        'module'     => 'admin',
-        'controller' => 'post',
-        'action'     => 'addTaxonomy',
-        'type'       => 1,
-    ]
-)->setName('new-taxonomy');
-$router->add('/admin/post/editTaxonomy/{type:[a-z]+}/{slug:[a-z]+}/{id:[0-9]+}',
-    [
-        'module'     => 'admin',
-        'controller' => 'post',
-        'action'     => 'editTaxonomy',
-        'type'       => 1,
-        'slug'       => 2,
-        'id'         => 3,
-    ]
-)->setName('edit-taxonomy');
 $router->add('/admin/post/taxonomy/{type:[a-z]+}',
     [
         'module'     => 'admin',
@@ -90,6 +72,42 @@ $router->add('/admin/post/taxonomy/{type:[a-z]+}',
         'type'       => 1,
     ]
 );
+$router->add('/admin/post/addTaxonomy/{type:[a-z]+}',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'addTaxonomy',
+        'type'       => 1,
+    ]
+)->setName('new-taxonomy');
+$router->add('/admin/post/editTaxonomy/{type:[a-z]+}/{id:[0-9]+}',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'editTaxonomy',
+        'type'       => 1,
+        'id'         => 2,
+    ]
+)->setName('edit-taxonomy');
+$router->add('/admin/post/updateTaxonomy/{type:[a-z]+}/{id:[0-9]+}',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'updateTaxonomy',
+        'type'       => 1,
+        'id'         => 2,
+    ]
+)->setName('update-taxonomy');
+$router->add('/admin/post/deleteTaxonomy/{type:[a-z]+}/{id:[0-9]+}',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'deleteTaxonomy',
+        'type'       => 1,
+        'id'         => 2,
+    ]
+)->setName('delete-taxonomy');
+
 
 
 /* media */

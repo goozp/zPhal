@@ -19,6 +19,7 @@ if (!function_exists('container')) {
     function container()
     {
         $default = Di::getDefault();
+
         $args = func_get_args();
 
         if (empty($args)) {

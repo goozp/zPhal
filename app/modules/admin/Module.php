@@ -8,6 +8,7 @@ use Phalcon\Mvc\Dispatcher;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\ModuleDefinitionInterface;
+use Phalcon\Mvc\Model\Transaction\Manager as TransactionManager;
 use ZPhal\Modules\Admin\Components\Media;
 use ZPhal\Modules\Admin\Library\Message\MessageControl;
 use ZPhal\Modules\Admin\Listeners\AliYunOss;
@@ -127,6 +128,16 @@ class Module implements ModuleDefinitionInterface
             $acl = new AdminAcl();
             return $acl;
         });*/
+
+        /**
+         * 注册事务管理器
+         */
+        $di->setShared(
+            "transactions",
+            function () {
+                return new TransactionManager();
+            }
+        );
 
         /**
          * 注册错误信息获取服务
