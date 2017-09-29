@@ -74,7 +74,7 @@
                 </ul>
             </li>
 
-            <li class="treeview">
+            <li class="treeview <?php if ($controllerName=='subject') echo 'active'; ?>">
                 <a href="#">
                     <i class="fa fa-dashcube"></i> <span>专题</span>
                     <span class="pull-right-container">
@@ -82,8 +82,12 @@
                         </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 所有专题</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 专题管理</a></li>
+                    <li  <?php if ($controllerName=='subject' && $actionName=='index') echo 'class="active"'; ?>>
+                        <a href="<?= $this->url->get("admin/subject"); ?>"><i class="fa fa-circle-o"></i> 专题管理</a>
+                    </li>
+                    <li  <?php if ($controllerName=='subject' && $actionName=='new') echo 'class="active"'; ?>>
+                        <a href="<?= $this->url->get("admin/subject/new"); ?>"><i class="fa fa-circle-o"></i> 添加</a>
+                    </li>
                 </ul>
             </li>
 

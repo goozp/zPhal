@@ -49,6 +49,29 @@ $router->add('/admin/session/logout',
     ]
 )->setName('admin-logout');
 
+/* subject */
+$router->add('/admin/subject',
+    [
+        'module'    =>  'admin',
+        'controller'=>  'subject',
+        'action'    =>  'index'
+    ]
+)->setName('list-subject');
+$router->add('/admin/subject/new',
+    [
+        'module'    =>  'admin',
+        'controller'=>  'subject',
+        'action'    =>  'new'
+    ]
+)->setName('new-subject');
+$router->add('/admin/subject/save',
+    [
+        'module'    =>  'admin',
+        'controller'=>  'subject',
+        'action'    =>  'save'
+    ]
+)->setName('save-subject');
+
 /* post */
 $router->add('/admin/post',
     [

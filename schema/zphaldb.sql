@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: 2017-09-05 20:45:28
--- 服务器版本： 10.1.24-MariaDB
--- PHP Version: 7.1.6
+-- Host: mysql-db
+-- Generation Time: 2017-09-29 22:03:17
+-- 服务器版本： 5.7.19-log
+-- PHP Version: 7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -331,6 +331,45 @@ CREATE TABLE `zp_resources` (
   `resource_mime_type` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资源文件类型'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='资源表';
 
+--
+-- 转存表中的数据 `zp_resources`
+--
+
+INSERT INTO `zp_resources` (`resource_id`, `upload_author`, `upload_date`, `upload_date_gmt`, `resource_content`, `resource_title`, `resource_status`, `resource_name`, `resource_parent`, `guid`, `resource_type`, `resource_mime_type`) VALUES
+(1, 13, '2017-09-15 00:00:08', '2017-09-14 16:00:08', NULL, 'default_zp1.jpg', 'normal', 'default_zp1.jpg', 0, 'uploads/2017/09/default_zp1.jpg', 'picture', 'image/jpeg'),
+(2, 13, '2017-09-16 02:50:57', '2017-09-15 18:50:57', NULL, 'default_zp3 _1_.jpg', 'normal', 'default_zp3 _1_.jpg', 0, 'uploads/2017/09/default_zp3 _1_.jpg', 'picture', 'image/jpeg'),
+(3, 13, '2017-09-16 02:56:31', '2017-09-15 18:56:31', NULL, 'c5131475jw1f9fxxjv7clj209h0az752.jpg', 'normal', 'c5131475jw1f9fxxjv7clj209h0az752.jpg', 0, 'uploads/2017/09/c5131475jw1f9fxxjv7clj209h0az752.jpg', 'picture', 'image/jpeg'),
+(4, 13, '2017-09-16 02:56:31', '2017-09-15 18:56:31', NULL, '20141272313028441.jpg', 'normal', '20141272313028441.jpg', 0, 'uploads/2017/09/20141272313028441.jpg', 'picture', 'image/jpeg');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `zp_subjects`
+--
+
+CREATE TABLE `zp_subjects` (
+  `subject_id` int(11) UNSIGNED NOT NULL COMMENT '专题 id',
+  `subject_name` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '专题名称',
+  `subject_slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '专题缩略名',
+  `subject_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '封面图',
+  `subject_description` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
+  `count` int(11) NOT NULL DEFAULT '0' COMMENT '拥有数量',
+  `last_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上次更新',
+  `parent` int(11) NOT NULL DEFAULT '0' COMMENT '父id'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='专题表';
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `zp_subject_relationships`
+--
+
+CREATE TABLE `zp_subject_relationships` (
+  `object_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `subject_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `order` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='专题关系表';
+
 -- --------------------------------------------------------
 
 --
@@ -362,7 +401,12 @@ CREATE TABLE `zp_terms` (
 --
 
 INSERT INTO `zp_terms` (`term_id`, `name`, `slug`, `term_group`) VALUES
-(1, '未分类', 'uncategorized', 0);
+(1, '未分类', 'uncategorized', 0),
+(2, '编程', 'code123', 0),
+(3, 'PHP', 'php', 0),
+(4, 'Javascript', 'javascript', 0),
+(5, 'thinkphp', 'thinkphp', 0),
+(12, 'PHP', 'php', 0);
 
 -- --------------------------------------------------------
 
@@ -403,7 +447,13 @@ CREATE TABLE `zp_term_taxonomy` (
 --
 
 INSERT INTO `zp_term_taxonomy` (`term_taxonomy_id`, `term_id`, `taxonomy`, `description`, `parent`, `count`) VALUES
-(1, 1, 'category', '', 0, 1);
+(1, 1, 'category', '', 0, 1),
+(2, 2, 'category', '骄傲了=', 0, 0),
+(3, 3, 'category', '最好的语言', 0, 0),
+(4, 4, 'category', 'Javascript', 2, 0),
+(5, 5, 'category', 'thinkphpthinkphpthinkphpthinkphp', 3, 0),
+(8, 11, 'category', '最好的语言', 0, 0),
+(9, 12, 'tag', 'php哦', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -542,6 +592,19 @@ ALTER TABLE `zp_resources`
   ADD KEY `resource_type` (`resource_type`,`resource_status`,`upload_date`,`resource_id`);
 
 --
+-- Indexes for table `zp_subjects`
+--
+ALTER TABLE `zp_subjects`
+  ADD PRIMARY KEY (`subject_id`);
+
+--
+-- Indexes for table `zp_subject_relationships`
+--
+ALTER TABLE `zp_subject_relationships`
+  ADD PRIMARY KEY (`object_id`,`subject_id`),
+  ADD KEY `subject_id` (`subject_id`);
+
+--
 -- Indexes for table `zp_termmeta`
 --
 ALTER TABLE `zp_termmeta`
@@ -600,66 +663,85 @@ ALTER TABLE `zp_users`
 --
 ALTER TABLE `zp_commentmeta`
   MODIFY `meta_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- 使用表AUTO_INCREMENT `zp_comments`
 --
 ALTER TABLE `zp_comments`
   MODIFY `comment_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '评论id', AUTO_INCREMENT=2;
+
 --
 -- 使用表AUTO_INCREMENT `zp_links`
 --
 ALTER TABLE `zp_links`
   MODIFY `link_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '链接id';
+
 --
 -- 使用表AUTO_INCREMENT `zp_options`
 --
 ALTER TABLE `zp_options`
   MODIFY `option_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '配置id', AUTO_INCREMENT=144;
+
 --
 -- 使用表AUTO_INCREMENT `zp_postmeta`
 --
 ALTER TABLE `zp_postmeta`
   MODIFY `meta_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- 使用表AUTO_INCREMENT `zp_posts`
 --
 ALTER TABLE `zp_posts`
   MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id', AUTO_INCREMENT=4;
+
 --
 -- 使用表AUTO_INCREMENT `zp_resourcemeta`
 --
 ALTER TABLE `zp_resourcemeta`
   MODIFY `meta_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- 使用表AUTO_INCREMENT `zp_resources`
 --
 ALTER TABLE `zp_resources`
-  MODIFY `resource_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '资源id';
+  MODIFY `resource_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '资源id', AUTO_INCREMENT=5;
+
+--
+-- 使用表AUTO_INCREMENT `zp_subjects`
+--
+ALTER TABLE `zp_subjects`
+  MODIFY `subject_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '专题 id';
+
 --
 -- 使用表AUTO_INCREMENT `zp_termmeta`
 --
 ALTER TABLE `zp_termmeta`
   MODIFY `meta_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id';
+
 --
 -- 使用表AUTO_INCREMENT `zp_terms`
 --
 ALTER TABLE `zp_terms`
-  MODIFY `term_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '条件id', AUTO_INCREMENT=2;
+  MODIFY `term_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '条件id', AUTO_INCREMENT=13;
+
 --
 -- 使用表AUTO_INCREMENT `zp_term_taxonomy`
 --
 ALTER TABLE `zp_term_taxonomy`
-  MODIFY `term_taxonomy_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '分类方式id', AUTO_INCREMENT=2;
+  MODIFY `term_taxonomy_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '分类方式id', AUTO_INCREMENT=10;
+
 --
 -- 使用表AUTO_INCREMENT `zp_usermeta`
 --
 ALTER TABLE `zp_usermeta`
   MODIFY `umeta_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id', AUTO_INCREMENT=18;
+
 --
 -- 使用表AUTO_INCREMENT `zp_users`
 --
 ALTER TABLE `zp_users`
-  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id', AUTO_INCREMENT=14;COMMIT;
+  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id', AUTO_INCREMENT=14;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
