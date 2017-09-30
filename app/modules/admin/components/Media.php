@@ -21,79 +21,94 @@ class Media implements EventsAwareInterface
         return $this->_eventsManager;
     }
 
+
     /**
      * 上传文件
      * @param $files
+     * @param string $uploadType 上传类型(决定路径) resource|cover
+     * @param array $extra 额外参数
      * @return string
      */
-    public function uploadMedia($files)
+    public function uploadMedia($file, $uploadType, $extra = [])
     {
-        if (is_object($this->_eventsManager)){
-            $this->_eventsManager->fire("media:beforeUploadMedia", $this, $files);
+        if (is_object($this->_eventsManager)) {
+            $this->_eventsManager->fire("media:beforeUploadMedia", $this, $file);
         }
+
 
         /**
          * 文件上传操作
          */
-        // 上传路径
-        $config =  Di::getDefault()->getConfig();
-        $uploadBaseDir = $config->application->uploadDir;
-
-        //当前时间
-        $now   = time();
-        $year  = date('Y', $now);
-        $month = date('m', $now);
-
-        if (!file_exists($uploadBaseDir.$year)){
-            mkdir($uploadBaseDir.$year, 0777);
-        }
-
-        if (!file_exists($uploadBaseDir.$year.'/'.$month)){
-            mkdir($uploadBaseDir.$year.'/'.$month, 0777);
-        }
-
-        $uploadDir = $uploadBaseDir.$year.'/'.$month.'/';
-
-
-        // 遍历所有文件
         $output = [];
         $fileInfo = [];
-        foreach ($files as $file) {
-            // 文件信息
-            $fileInfo['filename'] = $file->getName();
-            $fileInfo['filesize'] = $file->getSize();
-            $fileInfo['filetype'] = $file->getType();
-            $fileInfo['url'] = 'uploads/'.$year.'/'.$month.'/'.$fileInfo['filename'];
+        $config = Di::getDefault()->getConfig();
+        $uploadBaseDir = $config->application->uploadDir; // 上传路径
 
-            // 保存文件
-            $newFile = $uploadDir . $fileInfo['filename'];
-            if (is_file($newFile)){
-                $output['error'] = '文件已存在！';
-                return json_encode($output);
+        if ($uploadType == 'resource') {
+            //当前时间
+            $now = time();
+            $year = date('Y', $now);
+            $month = date('m', $now);
+
+            if (!file_exists($uploadBaseDir . $year)) {
+                mkdir($uploadBaseDir . $year, 0777);
             }
 
-            if ( $file->moveTo($newFile) ) {
-
-                /**
-                 * 存储到数据库
-                 */
-                $save = $this->saveInfo($fileInfo);
-                if (  $save === true ){
-                    $output['success'] = '上传成功！';
-                }else{
-                    $output['error'] = $save;
-                }
-
-            }else{
-                $output['error'] = '文件保存失败！';
+            if (!file_exists($uploadBaseDir . $year . '/' . $month)) {
+                mkdir($uploadBaseDir . $year . '/' . $month, 0777);
             }
-            return json_encode($output);
+
+            $uploadDir = $uploadBaseDir . $year . '/' . $month . '/';
+            $dir = 'uploads/' . $year . '/' . $month . '/';
+
+        } elseif ($uploadType == 'cover') {
+            $uploadDir = $uploadBaseDir . 'cover/';
+
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0777);
+            }
+
+            $dir = 'uploads/cover/';
+
+        } else {
+            return $this->uploadStatus('error', '错误的上传类型！');
         }
 
+        // 文件信息
+        $fileInfo['filename'] = $file->getName();
+        $fileInfo['filesize'] = $file->getSize();
+        $fileInfo['filetype'] = $file->getType();
+        $fileInfo['url'] = $dir . $fileInfo['filename'];
 
-        if (is_object($this->_eventsManager)){
-            $this->_eventsManager->fire("media:afterUploadMedia", $this, $files);
+        $newFile = $uploadDir . iconv('UTF-8', 'gb2312', $fileInfo['filename']);
+        if (is_file($newFile)) {
+            return $this->uploadStatus('error', '文件已存在！');
         }
+
+        // 保存文件
+        if ($file->moveTo($newFile)) {
+
+            /**
+             * 存储到数据库
+             */
+            $save = $this->saveInfo($fileInfo);
+
+            if ($save === true) {
+                $output = $this->uploadStatus('success', '上传成功！', $fileInfo);
+            } else {
+                $output = $this->uploadStatus('error', $save);
+            }
+
+        } else {
+            $error = $file->getError;
+            $output = $this->uploadStatus('error', '文件保存失败：' . $error);
+        }
+
+        if (is_object($this->_eventsManager)) {
+            $this->_eventsManager->fire("media:afterUploadMedia", $this, $file);
+        }
+
+        return $output;
     }
 
     /**
@@ -106,7 +121,7 @@ class Media implements EventsAwareInterface
         $resource = new Resources();
 
         $resource->resource_title = $fileInfo['filename'];
-        $resource->resource_name  = $fileInfo['filename'];
+        $resource->resource_name = $fileInfo['filename'];
         $resource->resource_parent = 0;
         $resource->guid = $fileInfo['url'];
         //$resource->resource_type
@@ -120,13 +135,28 @@ class Media implements EventsAwareInterface
 
             $msgs = $resource->getMessages();
             foreach ($msgs as $msg) {
-                $output .= $msg->getMessage()."\n";
+                $output .= $msg->getMessage() . "\n";
             }
 
             return $output;
         } else {
             return true;
         }
+    }
+
+    /**
+     * 返回上传状态
+     * @param $status
+     * @param $message
+     * @return array
+     */
+    public function uploadStatus($status, $message, $data = [])
+    {
+        return [
+            'status' => $status,
+            'message' => $message,
+            'data' => $data
+        ];
     }
 
     /**

@@ -9,7 +9,7 @@ use ZPhal\Modules\Admin\Library\Paginator\Pager;
 
 
 /**
- * 文章类
+ * 文章相关
  * Class PostController
  * @package ZPhal\Modules\Admin\Controllers
  */
@@ -40,28 +40,28 @@ class PostController extends ControllerBase
     public function addTaxonomyAction()
     {
         $type = $this->dispatcher->getParam("type");
-        $name = $this->request->getPost('name', ['string','trim']);
-        $slug = $this->request->getPost('slug', ['string','trim', 'lower']);
+        $name = $this->request->getPost('name', ['string', 'trim']);
+        $slug = $this->request->getPost('slug', ['string', 'trim', 'lower']);
         $parent = $this->request->getPost('parent', 'int');
-        $description = $this->request->getPost('description', ['string','trim']);
+        $description = $this->request->getPost('description', ['string', 'trim']);
 
         $terms = new Terms();
         $terms->name = $name;
         $terms->slug = $slug;
 
         $termTaxonomy = new TermTaxonomy();
-        $termTaxonomy->Terms  = $terms;
+        $termTaxonomy->Terms = $terms;
         $termTaxonomy->taxonomy = $type;
         $termTaxonomy->description = $description;
-        $termTaxonomy->parent   = $parent;
+        $termTaxonomy->parent = $parent;
 
-        if ($termTaxonomy->save()){
+        if ($termTaxonomy->save()) {
             $this->flash->success("创建成功");
-            return $this->response->redirect("admin/post/taxonomy/".$type);
-        }else{
+            return $this->response->redirect("admin/post/taxonomy/" . $type);
+        } else {
             $messages = $this->getErrorMsg($termTaxonomy, "创建失败");
             $this->flash->error($messages);
-            return $this->response->redirect("admin/post/taxonomy/".$type);
+            return $this->response->redirect("admin/post/taxonomy/" . $type);
         }
     }
 
@@ -75,13 +75,13 @@ class PostController extends ControllerBase
         $id = $this->dispatcher->getParam("id");
 
         $termTaxonomy = TermTaxonomy::findFirst($id);
-        if ($termTaxonomy){
+        if ($termTaxonomy) {
             $description = $termTaxonomy->description;
             $term = $termTaxonomy->Terms;
             $name = $term->name;
             $slug = $term->slug;
 
-            if ($type == 'category'){
+            if ($type == 'category') {
                 $topTitle = '编辑分类';
                 $parent = $termTaxonomy->parent;
 
@@ -89,30 +89,30 @@ class PostController extends ControllerBase
                 /** @var PostService $postsService */
                 $postService = container(PostService::class);
                 $category = $postService->getTaxonomyListByType('category');
-                $categoryTree = $this->makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
+                $categoryTree = makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
 
-                $this->view->categoryTree = $this->treeHtml($categoryTree, '', 0, $parent);
+                $this->view->categoryTree = treeHtml($categoryTree, 'term_taxonomy_id', 'name', '', 0, $parent);
 
-            }elseif ($type == 'tag'){
+            } elseif ($type == 'tag') {
                 $topTitle = '编辑标签';
 
-            } else{
+            } else {
                 $this->flash->error("错误操作!");
                 return $this->response->redirect("admin/");
             }
 
             $this->view->setVars(
                 [
-                    "type"      => $type,
-                    "topTitle"  => $topTitle,
-                    "id"        => $id,
-                    "name"      => $name,
-                    "slug"      => $slug,
+                    "type" => $type,
+                    "topTitle" => $topTitle,
+                    "id" => $id,
+                    "name" => $name,
+                    "slug" => $slug,
                     "description" => $description,
                 ]
             );
 
-        }else{
+        } else {
             $this->flash->error("错误操作!");
             return $this->response->redirect("admin/");
         }
@@ -127,17 +127,17 @@ class PostController extends ControllerBase
         $type = $this->dispatcher->getParam("type");
         $id = $this->dispatcher->getParam("id");
 
-        if ($type == 'category' || 'tag'){
+        if ($type == 'category' || 'tag') {
 
             if ($this->request->isPost()) {
                 // 获取POST数据
-                $name = $this->request->getPost('name', ['string','trim']);
-                $slug = $this->request->getPost('slug', ['string','trim', 'lower']);
+                $name = $this->request->getPost('name', ['string', 'trim']);
+                $slug = $this->request->getPost('slug', ['string', 'trim', 'lower']);
                 $parent = $this->request->getPost('parent', 'int', 0);
-                $description = $this->request->getPost('description', ['string','trim']);
+                $description = $this->request->getPost('description', ['string', 'trim']);
 
                 $termTaxonomy = TermTaxonomy::findFirst($id);
-                if ($termTaxonomy){
+                if ($termTaxonomy) {
                     $termTaxonomy->description = $description;
                     $termTaxonomy->parent = $parent;
 
@@ -145,14 +145,14 @@ class PostController extends ControllerBase
                     $term->name = $name;
                     $term->slug = $slug;
 
-                    if ($termTaxonomy->save()){
+                    if ($termTaxonomy->save()) {
                         $this->flash->success("更新成功");
-                        return $this->response->redirect("admin/post/editTaxonomy/".$type.'/'.$id);
+                        return $this->response->redirect("admin/post/editTaxonomy/" . $type . '/' . $id);
 
-                    } else{
+                    } else {
                         $messages = $this->getErrorMsg($termTaxonomy, "更新失败");
                         $this->flash->error($messages);
-                        return $this->response->redirect("admin/post/editTaxonomy/".$type.'/'.$id);
+                        return $this->response->redirect("admin/post/editTaxonomy/" . $type . '/' . $id);
                     }
                 }
             }
@@ -178,40 +178,40 @@ class PostController extends ControllerBase
         $transaction = $manager->get();
 
         $termTaxonomy = TermTaxonomy::findFirst($id);
-        if ($termTaxonomy){
-            $termTaxonomy -> setTransaction($transaction); // 设置事务
+        if ($termTaxonomy) {
+            $termTaxonomy->setTransaction($transaction); // 设置事务
             $term = $termTaxonomy->Terms;
 
-            if ($termTaxonomy->delete() === false){
+            if ($termTaxonomy->delete() === false) {
 
                 $messages = $this->getErrorMsg($termTaxonomy, "删除失败");
 
                 $transaction->rollback($messages); // 回滚
 
                 $this->flash->error($messages);
-                return $this->response->redirect("admin/post/editTaxonomy/".$type.'/'.$id);
+                return $this->response->redirect("admin/post/editTaxonomy/" . $type . '/' . $id);
 
-            }else{
+            } else {
 
-                if ($term->delete() === false){
+                if ($term->delete() === false) {
                     $messages = $this->getErrorMsg($term, "删除失败");
 
                     $transaction->rollback($messages); // 回滚
 
                     $this->flash->error($messages);
-                    return $this->response->redirect("admin/post/editTaxonomy/".$type.'/'.$id);
+                    return $this->response->redirect("admin/post/editTaxonomy/" . $type . '/' . $id);
 
-                }else{
+                } else {
                     $transaction->commit(); //提交
 
                     $this->flash->success("删除成功");
-                    return $this->response->redirect("admin/post/taxonomy/".$type);
+                    return $this->response->redirect("admin/post/taxonomy/" . $type);
                 }
             }
 
-        }else{
+        } else {
             $this->flash->success("错误的操作");
-            return $this->response->redirect("admin/post/taxonomy/".$type);
+            return $this->response->redirect("admin/post/taxonomy/" . $type);
         }
     }
 
@@ -231,28 +231,28 @@ class PostController extends ControllerBase
         /**
          * 分类目录
          */
-        if ($type == 'category'){
+        if ($type == 'category') {
             $topTitle = '分类';
             $topSubtitle = '文章的分类';
 
             /** @var PostService $postsService */
             $postService = container(PostService::class);
             $category = $postService->getTaxonomyListByType('category');
-            $categoryTree = $this->makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
+            $categoryTree = makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
 
             // 获取分类列表
             $pager = new Pager(
                 new PaginatorArray(
                     [
-                        "data"  => $category,
+                        "data" => $category,
                         "limit" => 20,
-                        "page"  => $currentPage,
+                        "page" => $currentPage,
                     ]
                 ),
                 [
                     'layoutClass' => 'ZPhal\Modules\Admin\Library\Paginator\Pager\Layout\Bootstrap', // 样式类
                     'rangeLength' => 5, // 分页长度
-                    'urlMask'     => '?page={%page_number}', // 额外url传参
+                    'urlMask' => '?page={%page_number}', // 额外url传参
                 ]
             );
 
@@ -261,16 +261,15 @@ class PostController extends ControllerBase
                     "type" => $type,
                     "topTitle" => $topTitle,
                     "topSubtitle" => $topSubtitle,
-                    "categoryTree" => $this->treeHtml($categoryTree),
+                    "categoryTree" => treeHtml($categoryTree, 'term_taxonomy_id', 'name'),
                     "pager" => $pager
                 ]
             );
 
-        }
-        /**
+        } /**
          * 标签
          */
-        elseif ($type == 'tag'){
+        elseif ($type == 'tag') {
             $topTitle = '标签';
             $topSubtitle = '文章贴标签';
 
@@ -283,9 +282,9 @@ class PostController extends ControllerBase
             $pager = new Pager(
                 new PaginatorArray(
                     [
-                        "data"  => $tags,
+                        "data" => $tags,
                         "limit" => 20,
-                        "page"  => $currentPage,
+                        "page" => $currentPage,
                     ]
                 ),
                 [
@@ -294,7 +293,7 @@ class PostController extends ControllerBase
                     // Range window will be 5 pages
                     'rangeLength' => 5,
                     // Just a string with URL mask
-                    'urlMask'     => '?page={%page_number}',
+                    'urlMask' => '?page={%page_number}',
                 ]
             );
 
@@ -307,76 +306,12 @@ class PostController extends ControllerBase
                 ]
             );
 
-        } else{
+        } else {
 
             $this->flash->error("错误操作!");
             return $this->response->redirect("admin/");
         }
     }
 
-    // TODO 以下功能函数不应该在这
 
-    /**
-     * 返回分类树结构
-     * @param array $list 要排列的数组
-     * @param string $pk 唯一标志,id
-     * @param string $pid 父id
-     * @param string $child 子集合key
-     * @param int $root 层级
-     * @return array
-     */
-    function makeTree($list, $pk='', $pid='parent', $child='sun', $root=0)
-    {
-        $tree = [];
-        foreach($list as $key=> $val){
-            if($val[$pid]==$root){
-                unset($list[$key]);
-                if(! empty($list)){
-                    $child=$this->makeTree($list, $pk, $pid, $child, $val[$pk]);
-                    if(!empty($child)){
-                        $val['sun']=$child;
-                    }
-                }
-                $tree[]=$val;
-            }
-        }
-        return $tree;
-    }
-
-    /**
-     * 返回分类要输出的html结构
-     * @param $categoryTree
-     * @param string $html
-     * @param int $deep
-     * @return string
-     */
-    function treeHtml($categoryTree, $html='', $deep=0, $active=0)
-    {
-        if ($html == ''){
-            $html = '<option value="0">无</option>';
-        }
-
-        $nbsp = '&nbsp;&nbsp;&nbsp;&nbsp;';
-        $tags = '';
-        if ($deep){
-            for ($i=1; $i<=$deep;$i++){
-                $tags .= $nbsp;
-            }
-        }
-
-        foreach ($categoryTree as $category){
-            if ($active != 0 && $category['term_taxonomy_id'] == $active){
-                $actived = 'selected';
-            }else{
-                $actived  = '';
-            }
-
-            $html .= '<option value="'.$category['term_taxonomy_id'].'" '.$actived.'>'.$tags.$category['name'].'</option>';
-
-            if (!empty($category['sun'])){
-                $html = $this->treeHtml($category['sun'], $html, $deep+1);
-            }
-        }
-        return $html;
-    }
 }

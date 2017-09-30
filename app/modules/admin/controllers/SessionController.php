@@ -15,9 +15,9 @@ class SessionController extends Controller
         $this->session->set(
             'userAuth',
             [
-                'userId'    => $user->ID,
+                'userId' => $user->ID,
                 'userLogin' => $user->user_login,
-                'userRole'  => $user->user_role,
+                'userRole' => $user->user_role,
             ]
         );
     }
@@ -32,14 +32,14 @@ class SessionController extends Controller
             if ($this->security->checkToken()) {
                 // token is ok
 
-                $inputUser  = $this->request->getPost("user");
-                $password   = $this->request->getPost("password");
+                $inputUser = $this->request->getPost("user");
+                $password  = $this->request->getPost("password");
 
                 $user = Users::findFirst(
                     [
                         "user_login = :login: AND user_status = 0",
                         'bind' => [
-                            'login'    => $inputUser,
+                            'login' => $inputUser,
                         ]
                     ]
                 );
@@ -48,7 +48,7 @@ class SessionController extends Controller
                     if ($this->security->checkHash($password, $user->user_pass)) {
                         $this->_registerSession($user);
 
-                        $this->flash->notice("登陆成功！欢迎 ".$user->user_nickname." ！");
+                        $this->flash->notice("登陆成功！欢迎 " . $user->user_nickname . " ！");
                         return $this->response->redirect("admin/");
                     }
                 } else {
@@ -72,7 +72,8 @@ class SessionController extends Controller
      * logout
      * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
-    public function logoutAction(){
+    public function logoutAction()
+    {
         // 销毁全部session会话
         $this->session->destroy();
 

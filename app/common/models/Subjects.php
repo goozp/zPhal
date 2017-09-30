@@ -2,6 +2,9 @@
 
 namespace ZPhal\Models;
 
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness as UniquenessValidator;;
+
 class Subjects extends \Phalcon\Mvc\Model
 {
     public $subject_id;
@@ -27,6 +30,27 @@ class Subjects extends \Phalcon\Mvc\Model
     {
         $this->setSchema("zphaldb");
         $this->setSource("zp_subjects");
+    }
+
+    public function validation()
+    {
+        $validator = new Validation();
+
+        $validator->add(
+            'subject_name',
+            new UniquenessValidator([
+                'message' => '专题名已存在！'
+            ])
+        );
+
+        $validator->add(
+            'subject_slug',
+            new UniquenessValidator([
+                'message' => '别名已存在！'
+            ])
+        );
+
+        return $this->validate($validator);
     }
 
     /**

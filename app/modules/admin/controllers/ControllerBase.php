@@ -80,7 +80,7 @@ class ControllerBase extends Controller
     {
         $control = $this->di->get("messageControl"); // 单例
 
-        $output  = $control->getErrorMsg($object, $message);
+        $output = $control->getErrorMsg($object, $message);
 
         return $output;
     }

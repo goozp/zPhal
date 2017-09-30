@@ -30,7 +30,7 @@ class MediaController extends ControllerBase
             ->from("ZPhal\Models\Resources")
             ->where("upload_author = {$userId}")
             ->orderBy("resource_id DESC")
-            ->limit(10, 0)
+            ->limit(20, 0)
             ->getQuery()
             ->execute()
             ->toArray();
@@ -73,10 +73,12 @@ class MediaController extends ControllerBase
         if ($this->request->hasFiles()) {
             $files = $this->request->getUploadedFiles(); // 获取上传的文件
 
-            //$media = new Media();
-
             $media = $this->di->get('mediaUpload');
-            return $media->uploadMedia($files);
+
+            foreach ($files as $file) {
+                $upload = $media->uploadMedia($file, 'resource');
+                return json_encode([$upload['status'] => $upload['message']]);
+            }
         }
     }
 }

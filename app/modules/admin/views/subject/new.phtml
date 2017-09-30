@@ -14,10 +14,10 @@
 <section class="content">
     <div class="row">
         <div class="col-md-12">
-            <form class="form-horizontal" action="<?= $this->url->get(["for" => "save-subject"]); ?>" method="post">
+            <form class="form-horizontal" action="<?= $this->url->get("/admin/subject/save"); ?>" method="post" enctype="multipart/form-data">
                 <div class="box box-default box-solid">
                     <div class="box-header with-border">
-                        <h3 class="box-title">添加新的分类目录</h3>
+                        <h3 class="box-title">添加新的专题</h3>
                     </div>
 
                     <div class="box-body">
@@ -42,7 +42,7 @@
                                 <label class="col-sm-2 control-label">父级专题</label>
                                 <div class="col-sm-6">
                                     <select class="form-control" name="parent">
-                                        <?= $categoryTree ?>
+                                        <?= $subjectTree ?>
                                     </select>
                                     <span class="help-block">“别名”是在URL中使用的别称，它可以令URL更美观。通常使用小写，只能包含字母，数字和连字符（-）。</span>
                                 </div>

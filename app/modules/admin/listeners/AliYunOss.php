@@ -6,12 +6,12 @@ use Phalcon\Events\Event;
 
 class AliYunOss
 {
-    public function beforeUploadMedia(Event $event, $myComponent, $files)
+    public function beforeUploadMedia(Event $event, $myComponent, $file)
     {
         return false;
     }
 
-    public function afterUploadMedia(Event $event, $myComponent, $files)
+    public function afterUploadMedia(Event $event, $myComponent, $file)
     {
         return false;
     }
