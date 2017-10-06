@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql-db
--- Generation Time: 2017-10-06 23:14:43
+-- Generation Time: 2017-09-29 22:03:17
 -- 服务器版本： 5.7.19-log
 -- PHP Version: 7.1.9
 
@@ -48,14 +48,21 @@ CREATE TABLE `zp_comments` (
   `comment_author_email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '评论者email',
   `comment_author_url` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '评论者链接',
   `comment_author_IP` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '评论者ip',
-  `comment_date` datetime NOT NULL COMMENT '评论时间',
-  `comment_date_gmt` datetime NOT NULL COMMENT '评论标准时间',
+  `comment_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '评论时间',
+  `comment_date_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '评论标准时间',
   `comment_content` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '评论内容',
   `comment_approved` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1' COMMENT '是否通过',
   `comment_agent` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '评论来源agent',
   `comment_parent` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '父id',
   `user_id` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '评论者id'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 转存表中的数据 `zp_comments`
+--
+
+INSERT INTO `zp_comments` (`comment_ID`, `comment_post_ID`, `comment_author`, `comment_author_email`, `comment_author_url`, `comment_author_IP`, `comment_date`, `comment_date_gmt`, `comment_content`, `comment_approved`, `comment_agent`, `comment_parent`, `user_id`) VALUES
+(1, 1, '一位WordPress评论者', 'wapuu@wordpress.example', 'https://wordpress.org/', '', '2017-08-23 00:13:01', '2017-08-22 16:13:02', '嗨，这是一条评论。\n要开始审核、编辑及删除评论，请访问仪表盘的“评论”页面。\n评论者头像来自<a href=\"https://gravatar.com\">Gravatar</a>。', '1', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -73,7 +80,7 @@ CREATE TABLE `zp_links` (
   `link_visible` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y' COMMENT '是否可见',
   `link_owner` int(11) UNSIGNED NOT NULL DEFAULT '1' COMMENT '所属用户',
   `link_rating` int(11) NOT NULL DEFAULT '0' COMMENT '评分',
-  `link_updated` datetime NOT NULL COMMENT '更新时间',
+  `link_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间',
   `link_rel` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '链接关系',
   `link_notes` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '备注',
   `link_rss` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'rss地址'
@@ -265,15 +272,15 @@ INSERT INTO `zp_postmeta` (`meta_id`, `post_id`, `meta_key`, `meta_value`) VALUE
 CREATE TABLE `zp_posts` (
   `ID` int(11) UNSIGNED NOT NULL COMMENT 'id',
   `post_author` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '发表人id',
-  `post_date` datetime NOT NULL COMMENT '发表时间',
-  `post_date_gmt` datetime NOT NULL COMMENT '发表GMT标准时间',
+  `post_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '发表时间',
+  `post_date_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '发表GMT标准时间',
   `post_content` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容',
   `post_title` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '标题',
   `post_status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'publish' COMMENT '状态',
   `comment_status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'open' COMMENT '评论状态(是否开启)',
   `post_name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '缩略名',
-  `post_modified` datetime NOT NULL COMMENT '更新时间',
-  `post_modified_gmt` datetime NOT NULL COMMENT '更新GMT标准时间',
+  `post_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间',
+  `post_modified_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '更新GMT标准时间',
   `post_parent` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '父id',
   `guid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '唯一链接',
   `post_type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'post' COMMENT '类型',
@@ -312,9 +319,9 @@ CREATE TABLE `zp_resourcemeta` (
 CREATE TABLE `zp_resources` (
   `resource_id` int(11) UNSIGNED NOT NULL COMMENT '资源id',
   `upload_author` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '拥有者id',
-  `upload_date` datetime NOT NULL COMMENT '上传时间',
-  `upload_date_gmt` datetime NOT NULL COMMENT '上传GMT时间',
-  `resource_content` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资源说明',
+  `upload_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上传时间',
+  `upload_date_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上传GMT时间',
+  `resource_content` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '资源说明',
   `resource_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资源名称',
   `resource_status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'normal' COMMENT '资源状态',
   `resource_name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '缩略名',
@@ -323,6 +330,16 @@ CREATE TABLE `zp_resources` (
   `resource_type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'picture' COMMENT '资源类型',
   `resource_mime_type` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资源文件类型'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='资源表';
+
+--
+-- 转存表中的数据 `zp_resources`
+--
+
+INSERT INTO `zp_resources` (`resource_id`, `upload_author`, `upload_date`, `upload_date_gmt`, `resource_content`, `resource_title`, `resource_status`, `resource_name`, `resource_parent`, `guid`, `resource_type`, `resource_mime_type`) VALUES
+(1, 13, '2017-09-15 00:00:08', '2017-09-14 16:00:08', NULL, 'default_zp1.jpg', 'normal', 'default_zp1.jpg', 0, 'uploads/2017/09/default_zp1.jpg', 'picture', 'image/jpeg'),
+(2, 13, '2017-09-16 02:50:57', '2017-09-15 18:50:57', NULL, 'default_zp3 _1_.jpg', 'normal', 'default_zp3 _1_.jpg', 0, 'uploads/2017/09/default_zp3 _1_.jpg', 'picture', 'image/jpeg'),
+(3, 13, '2017-09-16 02:56:31', '2017-09-15 18:56:31', NULL, 'c5131475jw1f9fxxjv7clj209h0az752.jpg', 'normal', 'c5131475jw1f9fxxjv7clj209h0az752.jpg', 0, 'uploads/2017/09/c5131475jw1f9fxxjv7clj209h0az752.jpg', 'picture', 'image/jpeg'),
+(4, 13, '2017-09-16 02:56:31', '2017-09-15 18:56:31', NULL, '20141272313028441.jpg', 'normal', '20141272313028441.jpg', 0, 'uploads/2017/09/20141272313028441.jpg', 'picture', 'image/jpeg');
 
 -- --------------------------------------------------------
 
@@ -335,20 +352,11 @@ CREATE TABLE `zp_subjects` (
   `subject_name` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '专题名称',
   `subject_slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '专题缩略名',
   `subject_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '封面图',
-  `subject_description` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '描述',
+  `subject_description` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
   `count` int(11) NOT NULL DEFAULT '0' COMMENT '拥有数量',
-  `last_updated` datetime NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '上次更新',
+  `last_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上次更新',
   `parent` int(11) NOT NULL DEFAULT '0' COMMENT '父id'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='专题表';
-
---
--- 转存表中的数据 `zp_subjects`
---
-
-INSERT INTO `zp_subjects` (`subject_id`, `subject_name`, `subject_slug`, `subject_image`, `subject_description`, `count`, `last_updated`, `parent`) VALUES
-(1, '编程', 'code', 'uploads/cover/20141272313028441.jpg', '666', 0, '2017-10-05 22:14:24', 0),
-(2, 'PHP', 'php', 'uploads/cover/c5131475jw1f9fxxjv7clj209h0az752.jpg', '111', 0, '2017-10-06 01:02:05', 1),
-(3, 'golang', 'go', 'uploads/cover/default-zp3 (2).jpg', '666', 0, '2017-10-06 01:09:30', 1);
 
 -- --------------------------------------------------------
 
@@ -481,9 +489,7 @@ INSERT INTO `zp_usermeta` (`umeta_id`, `user_id`, `meta_key`, `meta_value`) VALU
 (14, 1, 'show_welcome_panel', '1'),
 (15, 1, 'session_tokens', 'a:1:{s:64:\"a18e1f3eb0fa65e5ae5e747944aef113cd3098a60d12445b412481d51618067a\";a:4:{s:10:\"expiration\";i:1503591197;s:2:\"ip\";s:3:\"::1\";s:2:\"ua\";s:142:\"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 YaBrowser/17.7.1.719 Yowser/2.5 Safari/537.36\";s:5:\"login\";i:1503418397;}}'),
 (16, 1, 'zp_dashboard_quick_press_last_post_id', '3'),
-(17, 1, 'community-events-location', 'a:1:{s:2:\"ip\";s:2:\"::\";}'),
-(18, 14, 'description', ''),
-(19, 14, 'session_tokens', '');
+(17, 1, 'community-events-location', 'a:1:{s:2:\"ip\";s:2:\"::\";}');
 
 -- --------------------------------------------------------
 
@@ -498,7 +504,7 @@ CREATE TABLE `zp_users` (
   `user_nickname` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '昵称',
   `user_email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '邮箱',
   `user_url` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '主页链接',
-  `user_registered` datetime NOT NULL COMMENT '注册时间',
+  `user_registered` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '注册时间',
   `user_activation_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '激活码',
   `user_status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
   `display_name` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '展示名称',
@@ -511,8 +517,7 @@ CREATE TABLE `zp_users` (
 
 INSERT INTO `zp_users` (`ID`, `user_login`, `user_pass`, `user_nickname`, `user_email`, `user_url`, `user_registered`, `user_activation_key`, `user_status`, `display_name`, `user_role`) VALUES
 (1, 'root', '$P$BxiMOJuXpwfTzLZxenWZUAOR3qZnD.1', 'root', '411214120@qq.com', '', '2017-08-22 16:13:00', '', 0, 'root', 'subscriber'),
-(13, 'gzp', '$2y$08$aHNGNWQ1MjBlaHliWGJhN.i7unsEtbapIPGi/DEuix12THtnrAMky', 'gzp', 'gzp@goozp.com', 'http://www.goozp.com2', '2017-09-05 17:58:50', '', 0, 'gzp', 'administrator'),
-(14, 'aaaaaa', '$2y$08$ZVgxUkJIUXViNVNkK25vRutv/jCjSS0FB7Y9I32AFp/dKgLeAFwPC', 'aaaaaa', 'gzp@aaa.com', '', '2017-10-06 20:54:51', '', 0, 'aaaaaa', 'subscriber');
+(13, 'gzp', '$2y$08$aHNGNWQ1MjBlaHliWGJhN.i7unsEtbapIPGi/DEuix12THtnrAMky', 'gzp', 'gzp@goozp.com', 'http://www.goozp.com', '2017-09-05 17:58:50', '', 0, 'gzp', 'administrator');
 
 --
 -- Indexes for dumped tables
@@ -663,7 +668,7 @@ ALTER TABLE `zp_commentmeta`
 -- 使用表AUTO_INCREMENT `zp_comments`
 --
 ALTER TABLE `zp_comments`
-  MODIFY `comment_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '评论id';
+  MODIFY `comment_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '评论id', AUTO_INCREMENT=2;
 
 --
 -- 使用表AUTO_INCREMENT `zp_links`
@@ -699,13 +704,13 @@ ALTER TABLE `zp_resourcemeta`
 -- 使用表AUTO_INCREMENT `zp_resources`
 --
 ALTER TABLE `zp_resources`
-  MODIFY `resource_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '资源id', AUTO_INCREMENT=23;
+  MODIFY `resource_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '资源id', AUTO_INCREMENT=5;
 
 --
 -- 使用表AUTO_INCREMENT `zp_subjects`
 --
 ALTER TABLE `zp_subjects`
-  MODIFY `subject_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '专题 id', AUTO_INCREMENT=4;
+  MODIFY `subject_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '专题 id';
 
 --
 -- 使用表AUTO_INCREMENT `zp_termmeta`
@@ -729,13 +734,13 @@ ALTER TABLE `zp_term_taxonomy`
 -- 使用表AUTO_INCREMENT `zp_usermeta`
 --
 ALTER TABLE `zp_usermeta`
-  MODIFY `umeta_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id', AUTO_INCREMENT=20;
+  MODIFY `umeta_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id', AUTO_INCREMENT=18;
 
 --
 -- 使用表AUTO_INCREMENT `zp_users`
 --
 ALTER TABLE `zp_users`
-  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id', AUTO_INCREMENT=15;
+  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id', AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

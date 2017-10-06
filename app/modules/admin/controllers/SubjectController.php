@@ -92,7 +92,7 @@ class SubjectController extends ControllerBase
 
                     }
                 } else {
-                    $this->flash->error("文件上传失败");
+                    $this->flash->error("文件上传失败：" . $upload['message']);
                 }
             }
         }

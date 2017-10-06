@@ -130,7 +130,10 @@ class Users extends Model
         }
 
         $this->user_status   = 0;
-        $this->user_registered = date('Y-m-d H:i:s', time());
+
+        if (!$this->user_registered){
+            $this->user_registered = date('Y-m-d H:i:s', time());
+        }
     }
 
     /**

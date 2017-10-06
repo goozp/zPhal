@@ -47,6 +47,24 @@ class Posts extends \Phalcon\Mvc\Model
     }
 
     /**
+     * 插入新数据前
+     */
+    public function beforeCreate()
+    {
+        $this->post_date = date('Y-m-d H:i:s', time());
+        $this->post_date_gmt = gmdate('Y-m-d H:i:s', time());
+    }
+
+    /**
+     * 更新数据前
+     */
+    public function beforeUpdate()
+    {
+        $this->post_modified = date('Y-m-d H:i:s', time());
+        $this->post_modified_gmt = gmdate('Y-m-d H:i:s', time());
+    }
+
+    /**
      * Returns table name mapped in the model.
      *
      * @return string

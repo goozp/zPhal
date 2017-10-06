@@ -51,6 +51,14 @@ class Links extends \Phalcon\Mvc\Model
     }
 
     /**
+     * 插入新数据前
+     */
+    public function beforeCreate()
+    {
+        $this->link_updated = date('Y-m-d H:i:s', time());
+    }
+
+    /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters

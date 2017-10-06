@@ -51,6 +51,15 @@ class Comments extends \Phalcon\Mvc\Model
     }
 
     /**
+     * 插入新数据前
+     */
+    public function beforeCreate()
+    {
+        $this->comment_date = date('Y-m-d H:i:s', time());
+        $this->comment_date_gmt = gmdate('Y-m-d H:i:s', time());
+    }
+
+    /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters

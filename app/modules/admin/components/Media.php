@@ -80,7 +80,7 @@ class Media implements EventsAwareInterface
         $fileInfo['filetype'] = $file->getType();
         $fileInfo['url'] = $dir . $fileInfo['filename'];
 
-        $newFile = $uploadDir . iconv('UTF-8', 'gb2312', $fileInfo['filename']);
+        $newFile = $uploadDir . $fileInfo['filename'];
         if (is_file($newFile)) {
             return $this->uploadStatus('error', '文件已存在！');
         }

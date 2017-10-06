@@ -19,7 +19,7 @@ class Subjects extends \Phalcon\Mvc\Model
 
     public $count;
 
-    public $last_updated;
+    public $last_updated; // 默认1000-01-01 00:00:00为没有更新
 
     public $parent;
 
@@ -61,6 +61,27 @@ class Subjects extends \Phalcon\Mvc\Model
     public function getSource()
     {
         return 'zp_subjects';
+    }
+
+    /**
+     * 获取上次更新时间
+     * @return string
+     */
+    public function getLastUpdated()
+    {
+        if ($this->last_updated == '1000-01-01 00:00:00'){
+            return '暂无更新';
+        }else{
+            return $this->last_updated;
+        }
+    }
+
+    /**
+     * 插入新数据前
+     */
+    public function beforeCreate()
+    {
+
     }
 
     /**

@@ -91,8 +91,9 @@ class UserController extends ControllerBase
             $user->user_email = $inputEmail;
             $user->user_url   = $inputSite;
             $user->user_role  = $inputRole;
+            $user->user_registered = date('Y-m-d H:i:s', time());
 
-            if ($user->save() === false) {
+            if ($user->create() === false) {
                 $messages = $this->getErrorMsg($user, "创建失败");
                 $this->flash->error($messages);
 
@@ -115,7 +116,7 @@ class UserController extends ControllerBase
                     $userMeta->meta_key = $key;
                     $userMeta->meta_value = $value;
 
-                    if ($userMeta->save() === false){
+                    if ($userMeta->create() === false){
                         $theUser->user_status = 9; // 出错的
                         $theUser->save();
 
@@ -166,6 +167,7 @@ class UserController extends ControllerBase
     }
 
     /**
+     * TODO desicprition 为空报错
      * 更新个人信息
      * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
@@ -203,12 +205,14 @@ class UserController extends ControllerBase
                     ]
                 );
 
-                $userMeta->meta_value = $description;
-                if ($userMeta->save() === false){
-                    $messages = $this->getErrorMsg($userMeta, "更新出错");
-                    $this->flash->error($messages);
+                if ($userMeta){
+                    $userMeta->meta_value = $description;
+                    if ($userMeta->save() === false){
+                        $messages = $this->getErrorMsg($userMeta, "更新出错");
+                        $this->flash->error($messages);
 
-                    return $this->response->redirect("admin/user/self");
+                        return $this->response->redirect("admin/user/self");
+                    }
                 }
             }
 
