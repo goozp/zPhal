@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql-db
--- Generation Time: 2017-10-06 23:14:43
--- 服务器版本： 5.7.19-log
+-- Generation Time: 2017-10-08 01:24:32
+-- 服务器版本： 5.7.19
 -- PHP Version: 7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -314,15 +314,23 @@ CREATE TABLE `zp_resources` (
   `upload_author` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '拥有者id',
   `upload_date` datetime NOT NULL COMMENT '上传时间',
   `upload_date_gmt` datetime NOT NULL COMMENT '上传GMT时间',
-  `resource_content` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资源说明',
+  `resource_content` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '资源说明',
   `resource_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资源名称',
   `resource_status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'normal' COMMENT '资源状态',
   `resource_name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '缩略名',
   `resource_parent` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '所属父post',
-  `guid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '唯一链接',
+  `guid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '唯一链接',
   `resource_type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'picture' COMMENT '资源类型',
   `resource_mime_type` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资源文件类型'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='资源表';
+
+--
+-- 转存表中的数据 `zp_resources`
+--
+
+INSERT INTO `zp_resources` (`resource_id`, `upload_author`, `upload_date`, `upload_date_gmt`, `resource_content`, `resource_title`, `resource_status`, `resource_name`, `resource_parent`, `guid`, `resource_type`, `resource_mime_type`) VALUES
+(1, 13, '2017-10-08 01:13:21', '2017-10-07 17:13:21', '123', 'QQ图片20170311223801.jpg', 'normal', 'QQ图片20170311223801.jpg', 0, 'uploads/2017/10/QQ图片20170311223801.jpg', 'picture', 'image/jpeg'),
+(2, 13, '2017-10-08 01:15:24', '2017-10-07 17:15:24', '', 'default_zp3 _1_.jpg', 'normal', 'default_zp3 _1_.jpg', 0, 'uploads/2017/10/default_zp3 _1_.jpg', 'picture', 'image/jpeg');
 
 -- --------------------------------------------------------
 
@@ -335,7 +343,7 @@ CREATE TABLE `zp_subjects` (
   `subject_name` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '专题名称',
   `subject_slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '专题缩略名',
   `subject_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '封面图',
-  `subject_description` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '描述',
+  `subject_description` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '描述',
   `count` int(11) NOT NULL DEFAULT '0' COMMENT '拥有数量',
   `last_updated` datetime NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '上次更新',
   `parent` int(11) NOT NULL DEFAULT '0' COMMENT '父id'
@@ -699,7 +707,7 @@ ALTER TABLE `zp_resourcemeta`
 -- 使用表AUTO_INCREMENT `zp_resources`
 --
 ALTER TABLE `zp_resources`
-  MODIFY `resource_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '资源id', AUTO_INCREMENT=23;
+  MODIFY `resource_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '资源id', AUTO_INCREMENT=3;
 
 --
 -- 使用表AUTO_INCREMENT `zp_subjects`

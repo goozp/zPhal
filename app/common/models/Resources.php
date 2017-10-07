@@ -55,11 +55,15 @@ class Resources extends \Phalcon\Mvc\Model
             $this->upload_author = $auth['userId'];
         }
 
+        if (!$this->upload_date){
+            $this->upload_date       = date('Y-m-d H:i:s', time());
+        }
+
+        if (!$this->upload_date_gmt){
+            $this->upload_date_gmt   = gmdate('Y-m-d H:i:s', time());
+        }
+
         $this->resource_status   = 'normal';
-
-        $this->upload_date       = date('Y-m-d H:i:s', time());
-
-        $this->upload_date_gmt   = gmdate('Y-m-d H:i:s', time());
     }
 
     /**

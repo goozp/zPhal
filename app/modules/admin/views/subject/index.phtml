@@ -10,3 +10,58 @@
         <small>专题是文章、页面等的整合板块</small>
     </h1>
 </section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default box-solid">
+                <div class="box-header">
+                    <h3 class="box-title">专题列表</h3>
+                </div>
+
+                <div class="box-body">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>描述</th>
+                            <th>别名</th>
+                            <th>上次更新</th>
+                            <th>总数</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php if (count($pager) == 0){?>
+                            <tr align="center">
+                                <td colspan="4" > 暂无数据 </td>
+                            </tr>
+                        <?php }else{
+                            foreach ($pager->getIterator() as $item){
+                                echo $item['html'];
+                            }
+                        }
+                        ?>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>名称</th>
+                            <th>描述</th>
+                            <th>别名</th>
+                            <th>上次更新</th>
+                            <th>总数</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="box-footer clearfix">
+                    <?php
+                    if ($pager->haveToPaginate()){
+                        echo $pager->getLayout();
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

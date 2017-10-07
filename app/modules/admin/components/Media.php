@@ -120,10 +120,13 @@ class Media implements EventsAwareInterface
     {
         $resource = new Resources();
 
-        $resource->resource_title = $fileInfo['filename'];
-        $resource->resource_name = $fileInfo['filename'];
-        $resource->resource_parent = 0;
+        $resource->upload_date  = date('Y-m-d H:i:s', time());
+        $resource->upload_date_gmt  = gmdate('Y-m-d H:i:s', time());
+        $resource->resource_title   = $fileInfo['filename'];
+        $resource->resource_name    = $fileInfo['filename'];
+        $resource->resource_parent  = 0;
         $resource->guid = $fileInfo['url'];
+
         //$resource->resource_type
         $resource->resource_mime_type = $fileInfo['filetype'];
 

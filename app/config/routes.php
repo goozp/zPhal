@@ -71,6 +71,22 @@ $router->add('/admin/subject/save',
         'action'    =>  'save'
     ]
 )->setName('save-subject');
+$router->add('/admin/subject/edit/{id:[0-9]+}',
+    [
+        'module'    =>  'admin',
+        'controller'=>  'subject',
+        'action'    =>  'edit',
+        'id'        =>  1,
+    ]
+)->setName('edit-subject');
+$router->add('/admin/subject/update/{id:[0-9]+}',
+    [
+        'module'    =>  'admin',
+        'controller'=>  'subject',
+        'action'    =>  'update',
+        'id'        =>  1,
+    ]
+)->setName('update-subject');
 
 /* post */
 $router->add('/admin/post',

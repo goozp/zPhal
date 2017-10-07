@@ -106,3 +106,48 @@ if (!function_exists('treeHtml')){
         return $html;
     }
 }
+
+if(!function_exists('subjectTreeHtml')){
+    /**
+     * 返回专题列表树形数据
+     *
+     * @param $tree
+     * @param array $output
+     * @param int $deep
+     * @return array
+     */
+    function subjectTreeHtml($tree, $output = [] , $deep = 0){
+
+        $nbsp = '— ';
+        $tags = '';
+        if ($deep) {
+            for ($i = 1; $i <= $deep; $i++) {
+                $tags .= $nbsp;
+            }
+        }
+
+        $url = container('url');
+
+        foreach ($tree as $treeItem){
+            $link = $url->get(["for"=>"edit-subject", 'id'=>$treeItem['subject_id']]);
+            $lastUpdated = $treeItem["last_updated"] == '1000-01-01 00:00:00' ? '暂无更新' : $treeItem["last_updated"];
+
+            $output[] = [
+                'id'    => $treeItem["subject_id"],
+                'html'  => '<tr>
+                                <td><a href="'.$link.'">' . $tags . $treeItem["subject_name"] . '</a></td>
+                                <td>'.$treeItem["subject_description"].'</td>
+                                <td>'.$treeItem["subject_slug"].'</td>
+                                <td>'. $lastUpdated .'</td>
+                                <td>'.$treeItem["count"].'</td>
+                            </tr>'
+            ];
+
+            if (!empty($treeItem['sun'])) {
+                $output = subjectTreeHtml($treeItem['sun'], $output, $deep + 1);
+            }
+        }
+
+        return $output;
+    }
+}

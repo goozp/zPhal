@@ -6304,7 +6304,7 @@
     line.markedSpans = spans;
   }
 
-  // Helpers used when computing which overlapping collapsed span
+  // helpers used when computing which overlapping collapsed span
   // counts as the larger one.
   function extraLeft(marker) { return marker.inclusiveLeft ? -1 : 0; }
   function extraRight(marker) { return marker.inclusiveRight ? 1 : 0; }

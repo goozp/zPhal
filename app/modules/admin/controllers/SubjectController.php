@@ -3,6 +3,8 @@
 namespace ZPhal\Modules\Admin\Controllers;
 
 use ZPhal\Models\Subjects;
+use Phalcon\Paginator\Adapter\NativeArray as PaginatorArray;
+use ZPhal\Modules\Admin\Library\Paginator\Pager;
 
 class SubjectController extends ControllerBase
 {
@@ -12,8 +14,43 @@ class SubjectController extends ControllerBase
         parent::initialize();
     }
 
+    /**
+     * 专题列表
+     */
     public function indexAction()
     {
+        // 当前页数
+        $currentPage = abs($this->request->getQuery('page', 'int', 1));
+        if ($currentPage == 0) {
+            $currentPage = 1;
+        }
+
+        $subjects = Subjects::find()->toArray();
+
+        $tree = makeTree($subjects, 'subject_id', 'parent');
+        $treeHtmlArray = subjectTreeHtml($tree);
+
+
+        $pager = new Pager(
+            new PaginatorArray(
+                [
+                    'data' => $treeHtmlArray,
+                    'limit'=> 20,
+                    'page' => $currentPage,
+                ]
+            ),
+            [
+                'layoutClass' => 'ZPhal\Modules\Admin\Library\Paginator\Pager\Layout\Bootstrap', // 样式类
+                'rangeLength' => 5, // 分页长度
+                'urlMask' => '?page={%page_number}', // 额外url传参
+            ]
+        );
+
+        $this->view->setVars(
+            [
+                "pager" => $pager,
+            ]
+        );
 
     }
 
@@ -98,5 +135,15 @@ class SubjectController extends ControllerBase
         }
 
         return $this->response->redirect("admin/subject/new");
+    }
+
+    public function editAction()
+    {
+
+    }
+
+    public function updateAction()
+    {
+
     }
 }
