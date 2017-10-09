@@ -87,6 +87,14 @@ $router->add('/admin/subject/update/{id:[0-9]+}',
         'id'        =>  1,
     ]
 )->setName('update-subject');
+$router->add('/admin/subject/delete/{id:[0-9]+}',
+    [
+        'module'    =>  'admin',
+        'controller'=>  'subject',
+        'action'    =>  'delete',
+        'id'        =>  1,
+    ]
+)->setName('delete-subject');
 
 /* post */
 $router->add('/admin/post',

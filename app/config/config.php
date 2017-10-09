@@ -12,9 +12,9 @@ return new \Phalcon\Config([
 
     'database' => [
         'adapter'  => 'Mysql',
-        'host'     => 'mysql-db', // 如用docker,需改为对应数据库容器的hostname
-        'username' => 'zphal',
-        'password' => 'zphal123',
+        'host'     => '127.0.0.1', // 如用docker,需改为对应数据库容器的hostname
+        'username' => 'root',
+        'password' => 'root',
         'dbname'   => 'zphaldb',
         'dbprefix' => 'zp_',
         'charset'  => 'utf8',

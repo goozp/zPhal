@@ -1,8 +1,5 @@
 /**
- * AdminLTE Demo Menu
- * ------------------
- * You should not use this file in production.
- * This file is for demo purposes only.
+ * zphal 布局;主题;设置栏等
  */
 $(function () {
   'use strict'
@@ -184,47 +181,47 @@ $(function () {
   // Layout options
   $demoSettings.append(
     '<h4 class="control-sidebar-heading">'
-    + 'Layout Options'
+    + '布局配置'
     + '</h4>'
     // Fixed layout
     + '<div class="form-group">'
     + '<label class="control-sidebar-subheading">'
     + '<input type="checkbox"data-layout="fixed"class="pull-right"/> '
-    + 'Fixed layout'
+    + '固定布局'
     + '</label>'
-    + '<p>Activate the fixed layout. You can\'t use fixed and boxed layouts together</p>'
+    + '<p>使用固定布局。固定布局和盒状布局不能同时使用</p>'
     + '</div>'
     // Boxed layout
     + '<div class="form-group">'
     + '<label class="control-sidebar-subheading">'
     + '<input type="checkbox"data-layout="layout-boxed" class="pull-right"/> '
-    + 'Boxed Layout'
+    + '盒状布局'
     + '</label>'
-    + '<p>Activate the boxed layout</p>'
+    + '<p>使用盒状布局</p>'
     + '</div>'
     // Sidebar Toggle
     + '<div class="form-group">'
     + '<label class="control-sidebar-subheading">'
     + '<input type="checkbox"data-layout="sidebar-collapse"class="pull-right"/> '
-    + 'Toggle Sidebar'
+    + '切换左侧边栏'
     + '</label>'
-    + '<p>Toggle the left sidebar\'s state (open or collapse)</p>'
+    + '<p>切换左侧边栏状态（收缩或展开）</p>'
     + '</div>'
     // Sidebar mini expand on hover toggle
     + '<div class="form-group">'
     + '<label class="control-sidebar-subheading">'
     + '<input type="checkbox"data-enable="expandOnHover"class="pull-right"/> '
-    + 'Sidebar Expand on Hover'
+    + '左侧栏动态展开'
     + '</label>'
-    + '<p>Let the sidebar mini expand on hover</p>'
+    + '<p>让鼠标指针指向已收缩的迷你侧边框时动态展开侧边栏</p>'
     + '</div>'
     // Control Sidebar Toggle
     + '<div class="form-group">'
     + '<label class="control-sidebar-subheading">'
     + '<input type="checkbox"data-controlsidebar="control-sidebar-open"class="pull-right"/> '
-    + 'Toggle Right Sidebar Slide'
+    + '切换右侧设置栏状态'
     + '</label>'
-    + '<p>Toggle between slide over content and push content effects</p>'
+    + '<p>右侧边栏占位或展示于主体之上</p>'
     + '</div>'
     // Control Sidebar Skin Toggle
     + '<div class="form-group">'

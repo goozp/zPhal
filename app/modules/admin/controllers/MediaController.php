@@ -21,8 +21,13 @@ class MediaController extends ControllerBase
         parent::initialize();
     }
 
+    /**
+     * 媒体库列表
+     */
     public function indexAction()
     {
+        $this->tag->prependTitle("媒体库 - ");
+
         $userId = $this->getUserId();
 
         $resources = $this->modelsManager->createBuilder()
@@ -52,6 +57,8 @@ class MediaController extends ControllerBase
      */
     public function newAction()
     {
+        $this->tag->prependTitle("媒体添加 - ");
+
         $this->view->setRenderLevel(
             View::LEVEL_ACTION_VIEW
         );

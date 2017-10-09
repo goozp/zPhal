@@ -10,6 +10,9 @@ class ControllerBase extends Controller
         $this->checkLogin();
         $this->initValues();
         $this->staticResource();
+
+        // TODO 读取配置获取网站名称
+        $this->tag->setTitle("ZPhal后台管理");
     }
 
     /**
@@ -58,7 +61,7 @@ class ControllerBase extends Controller
         $this->assets->addCss("backend/library/font-awesome/css/font-awesome.min.css", true);
         $this->assets->addCss("backend/library/Ionicons/css/ionicons.min.css", true);
         $this->assets->addCss("backend/library/AdminLTE/css/AdminLTE.min.css", true);
-        $this->assets->addCss("backend/library/AdminLTE/css/skins/_all-skins.min.css", true);
+        $this->assets->addCss("backend/library/AdminLTE/css/skin-black.min.css", true);
 
         // HTML尾部的js资源
         $this->assets->addJs("backend/js/jquery.min.js", true);
@@ -66,8 +69,6 @@ class ControllerBase extends Controller
         $this->assets->addJs("backend/library/bootstrap/js/bootstrap.min.js", true);
         $this->assets->addJs("backend/library/fastclick/lib/fastclick.js", true);
         $this->assets->addJs("backend/library/AdminLTE/js/adminlte.min.js", true);
-        $this->assets->addJs("backend/library/AdminLTE/js/demo.js", true);
-
     }
 
     /**

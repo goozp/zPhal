@@ -22,11 +22,13 @@ class PostController extends ControllerBase
 
     public function indexAction()
     {
-
+        $this->tag->prependTitle("文章列表 - ");
     }
 
     public function newAction()
     {
+        $this->tag->prependTitle("新文章 - ");
+
         /* 编辑器静态资源 */
         $this->assets->addCss("backend/plugins/editor.md/css/editormd.css", true);
         $this->assets->addJs("backend/plugins/editor.md/editormd.min.js", true);
@@ -83,6 +85,7 @@ class PostController extends ControllerBase
 
             if ($type == 'category') {
                 $topTitle = '编辑分类';
+                $this->tag->prependTitle("编辑分类 - ");
                 $parent = $termTaxonomy->parent;
 
                 //分类列表
@@ -95,7 +98,7 @@ class PostController extends ControllerBase
 
             } elseif ($type == 'tag') {
                 $topTitle = '编辑标签';
-
+                $this->tag->prependTitle("编辑标签 - ");
             } else {
                 $this->flash->error("错误操作!");
                 return $this->response->redirect("admin/");
@@ -232,6 +235,7 @@ class PostController extends ControllerBase
          * 分类目录
          */
         if ($type == 'category') {
+            $this->tag->prependTitle("分类 - ");
             $topTitle = '分类';
             $topSubtitle = '文章的分类';
 
@@ -270,6 +274,7 @@ class PostController extends ControllerBase
          * 标签
          */
         elseif ($type == 'tag') {
+            $this->tag->prependTitle("标签 - ");
             $topTitle = '标签';
             $topSubtitle = '文章贴标签';
 
@@ -312,6 +317,4 @@ class PostController extends ControllerBase
             return $this->response->redirect("admin/");
         }
     }
-
-
 }

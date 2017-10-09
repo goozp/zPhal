@@ -19,6 +19,8 @@ class UserController extends ControllerBase
      */
     public function indexAction()
     {
+        $this->tag->prependTitle("用户列表 - ");
+
         $currentPage = $this->request->getQuery('page', 'int'); // GET
         $userSearch  = $this->request->getPost('user_search', ['string','trim']); // POST
 
@@ -62,7 +64,7 @@ class UserController extends ControllerBase
      */
     public function newAction()
     {
-
+        $this->tag->prependTitle("添加用户 - ");
     }
 
     /**
@@ -138,6 +140,8 @@ class UserController extends ControllerBase
      */
     public function selfAction()
     {
+        $this->tag->prependTitle("个人资料 - ");
+
         $userAuth = $this->session->get("userAuth");
         $userId   = $userAuth['userId'];
 
@@ -167,7 +171,6 @@ class UserController extends ControllerBase
     }
 
     /**
-     * TODO desicprition 为空报错
      * 更新个人信息
      * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
