@@ -5,6 +5,7 @@ use Phalcon\Mvc\User\Component;
 
 /**
  * User
+ * TODO ACL实现后做
  *
  * 用户登录状态操纵和UI元素建立
  */
@@ -80,7 +81,7 @@ class UserElement extends Component
     public function getMenu()
     {
         /**
-         * TODO $_headerMenu $_tabs 数据库和缓存中取出
+         * TODO $_headerMenu $_tabs 数据库和缓存中取出;  侧栏菜单权限实现
          */
         $auth = $this->session->get('auth');
         if ($auth) {
