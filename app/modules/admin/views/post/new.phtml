@@ -7,7 +7,7 @@
     </div>
     <h1>
         撰写新文章
-        <small>固定链接:</small>
+        <small>固定链接:<span>暂无</span></small>
     </h1>
 </section>
 
@@ -28,7 +28,7 @@
             <div class="form-group col-md-3">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">发布</h3>
+                        <h3 class="box-title"><i class="fa fa-calendar"></i> 发布</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -37,11 +37,28 @@
                     </div>
 
                     <div class="box-body">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label>选择发布时间</label>
+                                <div class="col-md-12">
+                                    <label>
+                                        <input type="radio" name="r3" class="flat-red" checked>立即发布
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="r3" class="flat-red">自定义时间
+                                    </label>
+                                </div>
+                            </div>
 
+                            <div class="form-group col-md-12">
+
+                            </div>
+                        </div>
                     </div>
 
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-info pull-right">发布</button>
+                        <button type="submit" name="draft" class="btn btn-default">保存草稿</button>
+                        <button type="submit" name="publish" class="btn btn-info pull-right">发布</button>
                     </div>
                 </div>
             </div>
@@ -49,7 +66,7 @@
             <div class="form-group col-md-3">
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3 class="box-title">分类</h3>
+                        <h3 class="box-title"><i class="fa fa-tags"></i> 分类</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -58,7 +75,14 @@
                     </div>
 
                     <div class="box-body" style="">
-
+                        <label>选择标签（按CTRL多选）</label>
+                        <select multiple class="form-control">
+                            <option>option 1</option>
+                            <option>option 2</option>
+                            <option>option 3</option>
+                            <option>option 4</option>
+                            <option>option 5</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -66,7 +90,7 @@
             <div class="form-group col-md-3">
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3 class="box-title">标签</h3>
+                        <h3 class="box-title"><i class="fa fa-tag"></i> 标签</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -78,7 +102,12 @@
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <label>创建一个新的</label>
-
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="newTag" id="newTag" placeholder="输入新标签">
+                                    <span class="input-group-btn">
+                                      <button type="button" class="btn btn-info btn-flat">添加</button>
+                                    </span>
+                                </div>
                             </div>
 
                             <div class="form-group col-md-12">
@@ -102,7 +131,7 @@
             <div class="form-group col-md-3">
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3 class="box-title">特色图片</h3>
+                        <h3 class="box-title"><i class="fa fa-image"></i> 特色图片</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -111,7 +140,17 @@
                     </div>
 
                     <div class="box-body" style="">
-                        
+                        <div class="form-group col-md-12">
+                            <label for="imageUrl">图片地址</label>
+                            <input type="text" class="form-control" id="imageUrl" placeholder="url">
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="exampleInputEmail1">预览</label>
+                            <div>
+                                <img src="/backend/img/default-img.png" width="200" height="180">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
