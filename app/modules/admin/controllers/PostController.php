@@ -29,10 +29,13 @@ class PostController extends ControllerBase
     {
         $this->tag->prependTitle("新文章 - ");
 
-        /* 编辑器静态资源 */
+        /* 静态资源 */
         $this->assets->addCss("backend/plugins/editor.md/css/editormd.css", true);
+        $this->assets->addCss("backend/library/select2/css/select2.min.css", true);
+        $this->assets->addCss("backend/library/AdminLTE/css/alt/AdminLTE-select2.min.css", true);
         $this->assets->addJs("backend/plugins/editor.md/editormd.min.js", true);
-        $this->assets->addJs("backend/js/md.js", true);
+        $this->assets->addJs("backend/library/select2/js/select2.full.min.js", true);
+        $this->assets->addJs("backend/js/post.js", true);
     }
 
     /**

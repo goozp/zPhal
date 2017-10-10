@@ -60,7 +60,7 @@ class ControllerBase extends Controller
         $this->assets->addCss("backend/library/bootstrap/css/bootstrap.min.css", true);
         $this->assets->addCss("backend/library/font-awesome/css/font-awesome.min.css", true);
         $this->assets->addCss("backend/library/Ionicons/css/ionicons.min.css", true);
-        $this->assets->addCss("backend/library/AdminLTE/css/AdminLTE.min.css", true);
+        $this->assets->addCss("backend/library/AdminLTE/css/AdminLTE-without-plugins.min.css", true);
         $this->assets->addCss("backend/library/AdminLTE/css/skin-black.min.css", true);
 
         // HTML尾部的js资源

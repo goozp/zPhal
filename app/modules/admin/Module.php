@@ -35,7 +35,6 @@ class Module implements ModuleDefinitionInterface
             'ZPhal\Modules\Admin\Providers'     => __DIR__ . '/providers/',
             'ZPhal\Modules\Admin\Listeners'     => __DIR__ . '/listeners/',
             'ZPhal\Modules\Admin\Plugins'       => __DIR__ . '/plugins/',
-            'ZPhal\Modules\Admin\Logics'       => __DIR__ . '/logics/',
         ]);
 
         $loader->register();

@@ -14,7 +14,7 @@
 <!-- 主内容 -->
 <section class="content">
     <div class="row">
-        <form>
+        <form action="<?= $this->url->get(""); ?>" method="post">
             <div class="form-group col-md-12">
                 <input class="form-control" type="text" name="title" placeholder="输入标题">
             </div>
@@ -24,6 +24,98 @@
                     <textarea name="content" style="display:none;"></textarea>
                 </div>
             </div>
+
+            <div class="form-group col-md-3">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">发布</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-info pull-right">发布</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">分类</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="box-body" style="">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">标签</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="box-body" style="">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label>创建一个新的</label>
+
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label>从已有的选择</label>
+                                <select class="form-control select2" multiple="multiple" data-placeholder="选择标签"
+                                        style="width: 100%;">
+                                    <option>Alabama</option>
+                                    <option>Alaska</option>
+                                    <option>California</option>
+                                    <option>Delaware</option>
+                                    <option>Tennessee</option>
+                                    <option>Texas</option>
+                                    <option>Washington</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">特色图片</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="box-body" style="">
+                        
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 </section>
+
