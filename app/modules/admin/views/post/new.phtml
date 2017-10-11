@@ -7,7 +7,7 @@
     </div>
     <h1>
         撰写新文章
-        <small>固定链接:</small>
+        <small>固定链接:<span>暂无</span></small>
     </h1>
 </section>
 
@@ -25,93 +25,166 @@
                 </div>
             </div>
 
-            <div class="form-group col-md-3">
-                <div class="box box-success">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">发布</h3>
-
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="box-body">
-
-                    </div>
-
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-info pull-right">发布</button>
-                    </div>
-                </div>
+            <div class="form-group col-md-12">
+                <label>Description</label>
+                <textarea class="form-control" rows="3" name="description"  placeholder="概述"></textarea>
             </div>
 
-            <div class="form-group col-md-3">
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">分类</h3>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <div class="box box-success">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><i class="fa fa-calendar"></i> 发布</h3>
 
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="box-body" style="">
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group col-md-3">
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">标签</h3>
-
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="box-body" style="">
-                        <div class="row">
-                            <div class="form-group col-md-12">
-                                <label>创建一个新的</label>
-
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
                             </div>
 
-                            <div class="form-group col-md-12">
-                                <label>从已有的选择</label>
-                                <select class="form-control select2" multiple="multiple" data-placeholder="选择标签"
-                                        style="width: 100%;">
-                                    <option>Alabama</option>
-                                    <option>Alaska</option>
-                                    <option>California</option>
-                                    <option>Delaware</option>
-                                    <option>Tennessee</option>
-                                    <option>Texas</option>
-                                    <option>Washington</option>
-                                </select>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label>选择发布时间</label>
+                                        <div class="col-md-12">
+                                            <label>
+                                                <input type="radio" name="r3" class="flat-red" checked>立即发布
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="r3" class="flat-red">自定义时间
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group date" id="datetimepicker" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input">
+                                            <input class="form-control" size="16" type="text" value="">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                        </div>
+                                        <input name="time" type="hidden" id="dtp_input" value="" /><br/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-footer">
+                                <button type="submit" name="draft" class="btn btn-default">保存草稿</button>
+                                <button type="submit" name="publish" class="btn btn-info pull-right">发布</button>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="form-group col-md-3">
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">特色图片</h3>
+                    <div class="form-group col-md-4">
+                        <div class="box box-default">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><i class="fa fa-tags"></i> 分类</h3>
 
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label>添加新分类</label>
+                                        <div class="row">
+                                            <div class="col-xs-5">
+                                                <select class="form-control" id="newCategoryParent"  name="newCategoryParent">
+                                                    <?= $categoryTreeNbsp ?>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-xs-7">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="newCategory"  id="newCategory" placeholder="分类名称">
+                                                    <span class="input-group-btn">
+                                              <button type="button" class="btn btn-info btn-flat">添加</button>
+                                            </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group col-md-12">
+                                        <label>选择分类</label>
+                                        <select class="form-control select2" multiple="multiple" data-placeholder="选择分类" style="width: 100%;">
+                                            <?= $categoryTree ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="box-body" style="">
+                    <div class="form-group col-md-3">
+                        <div class="box box-default">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><i class="fa fa-tags"></i> 标签</h3>
 
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label>添加新标签</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="newTag"  id="newTag" placeholder="标签名称">
+                                            <span class="input-group-btn">
+                                        <button type="button" class="btn btn-info btn-flat">添加</button>
+                                    </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label>选择标签</label>
+                                        <select class="form-control select2" multiple="multiple" data-placeholder="选择标签" style="width: 100%;">
+                                            <?php foreach ($tags as $tag){?>
+                                                <option><?= $tag['name'] ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <div class="box box-default">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><i class="fa fa-image"></i> 特色图片</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="box-body" style="">
+                                <div class="form-group col-md-12">
+                                    <label for="imageUrl">图片地址</label>
+                                    <input type="text" class="form-control" id="imageUrl" placeholder="url">
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <label for="exampleInputEmail1">预览</label>
+                                    <div>
+                                        <img src="/backend/img/default-img.png" width="200" height="180">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

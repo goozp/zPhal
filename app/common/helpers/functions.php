@@ -76,13 +76,12 @@ if (!function_exists('treeHtml')){
      * @param int $active
      * @return string
      */
-    function treeHtml($categoryTree, $pk, $name, $html = '', $deep = 0, $active = 0)
+    function treeHtml($categoryTree, $pk, $name, $html = '', $deep = 0, $active = 0, $nbsp="&nbsp;&nbsp;&nbsp;&nbsp;")
     {
         if ($html == '') {
             $html = '<option value="0">无</option>';
         }
 
-        $nbsp = '&nbsp;&nbsp;&nbsp;&nbsp;';
         $tags = '';
         if ($deep) {
             for ($i = 1; $i <= $deep; $i++) {
@@ -100,7 +99,7 @@ if (!function_exists('treeHtml')){
             $html .= '<option value="' . $category[$pk] . '" ' . $actived . '>' . $tags . $category[$name] . '</option>';
 
             if (!empty($category['sun'])) {
-                $html = treeHtml($category['sun'], $pk, $name, $html, $deep + 1);
+                $html = treeHtml($category['sun'], $pk, $name, $html, $deep + 1, $active, $nbsp);
             }
         }
         return $html;

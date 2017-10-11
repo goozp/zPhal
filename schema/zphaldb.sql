@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql-db
--- Generation Time: 2017-10-08 01:24:32
--- 服务器版本： 5.7.19
--- PHP Version: 7.1.9
+-- Generation Time: 2017-10-10 23:40:30
+-- 服务器版本： 5.7.19-log
+-- PHP Version: 7.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -278,17 +278,18 @@ CREATE TABLE `zp_posts` (
   `guid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '唯一链接',
   `post_type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'post' COMMENT '类型',
   `post_mime_type` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '文件类型',
-  `comment_count` int(11) NOT NULL DEFAULT '0' COMMENT '评论数目'
+  `comment_count` int(11) NOT NULL DEFAULT '0' COMMENT '评论数目',
+  `view_count` int(11) NOT NULL DEFAULT '0' COMMENT '浏览量'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 转存表中的数据 `zp_posts`
 --
 
-INSERT INTO `zp_posts` (`ID`, `post_author`, `post_date`, `post_date_gmt`, `post_content`, `post_title`, `post_status`, `comment_status`, `post_name`, `post_modified`, `post_modified_gmt`, `post_parent`, `guid`, `post_type`, `post_mime_type`, `comment_count`) VALUES
-(1, 1, '2017-08-23 00:13:01', '2017-08-22 16:13:02', '欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！', '世界，您好！', 'publish', 'open', 'hello-world', '2017-08-23 00:13:01', '2017-08-22 16:13:02', 0, 'http://localhost/wordpress/?p=1', 'post', '', 1),
-(2, 1, '2017-08-23 00:13:01', '2017-08-22 16:13:02', '这是示范页面。页面和博客文章不同，它的位置是固定的，通常会在站点导航栏显示。很多用户都创建一个“关于”页面，向访客介绍自己。例如：\n\n<blockquote>欢迎！我白天是个邮递员，晚上就是个有抱负的演员。这是我的博客。我住在天朝的帝都，有条叫做Jack的狗。</blockquote>\n\n……或这个：\n\n<blockquote>XYZ Doohickey公司成立于1971年，自从建立以来，我们一直向社会贡献着优秀doohickies。我们的公司总部位于天朝魔都，有着超过两千名员工，对魔都政府税收有着巨大贡献。</blockquote>\n\n而您，作为一个WordPress用户，我们建议您访问<a href=\"http://localhost/wordpress/wp-admin/\">控制板</a>，删除本页面，然后添加您自己的页面。祝您使用愉快！', '示例页面', 'publish', 'closed', 'sample-page', '2017-08-23 00:13:01', '2017-08-22 16:13:02', 0, 'http://localhost/wordpress/?page_id=2', 'page', '', 0),
-(3, 1, '2017-08-23 00:13:19', '0000-00-00 00:00:00', '', '自动草稿', 'auto-draft', 'open', '', '2017-08-23 00:13:19', '0000-00-00 00:00:00', 0, 'http://localhost/wordpress/?p=3', 'post', '', 0);
+INSERT INTO `zp_posts` (`ID`, `post_author`, `post_date`, `post_date_gmt`, `post_content`, `post_title`, `post_status`, `comment_status`, `post_name`, `post_modified`, `post_modified_gmt`, `post_parent`, `guid`, `post_type`, `post_mime_type`, `comment_count`, `view_count`) VALUES
+(1, 1, '2017-08-23 00:13:01', '2017-08-22 16:13:02', '欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！', '世界，您好！', 'publish', 'open', 'hello-world', '2017-08-23 00:13:01', '2017-08-22 16:13:02', 0, 'http://localhost/wordpress/?p=1', 'post', '', 1, 0),
+(2, 1, '2017-08-23 00:13:01', '2017-08-22 16:13:02', '这是示范页面。页面和博客文章不同，它的位置是固定的，通常会在站点导航栏显示。很多用户都创建一个“关于”页面，向访客介绍自己。例如：\n\n<blockquote>欢迎！我白天是个邮递员，晚上就是个有抱负的演员。这是我的博客。我住在天朝的帝都，有条叫做Jack的狗。</blockquote>\n\n……或这个：\n\n<blockquote>XYZ Doohickey公司成立于1971年，自从建立以来，我们一直向社会贡献着优秀doohickies。我们的公司总部位于天朝魔都，有着超过两千名员工，对魔都政府税收有着巨大贡献。</blockquote>\n\n而您，作为一个WordPress用户，我们建议您访问<a href=\"http://localhost/wordpress/wp-admin/\">控制板</a>，删除本页面，然后添加您自己的页面。祝您使用愉快！', '示例页面', 'publish', 'closed', 'sample-page', '2017-08-23 00:13:01', '2017-08-22 16:13:02', 0, 'http://localhost/wordpress/?page_id=2', 'page', '', 0, 0),
+(3, 1, '2017-08-23 00:13:19', '0000-00-00 00:00:00', '', '自动草稿', 'auto-draft', 'open', '', '2017-08-23 00:13:19', '0000-00-00 00:00:00', 0, 'http://localhost/wordpress/?p=3', 'post', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -330,7 +331,8 @@ CREATE TABLE `zp_resources` (
 
 INSERT INTO `zp_resources` (`resource_id`, `upload_author`, `upload_date`, `upload_date_gmt`, `resource_content`, `resource_title`, `resource_status`, `resource_name`, `resource_parent`, `guid`, `resource_type`, `resource_mime_type`) VALUES
 (1, 13, '2017-10-08 01:13:21', '2017-10-07 17:13:21', '123', 'QQ图片20170311223801.jpg', 'normal', 'QQ图片20170311223801.jpg', 0, 'uploads/2017/10/QQ图片20170311223801.jpg', 'picture', 'image/jpeg'),
-(2, 13, '2017-10-08 01:15:24', '2017-10-07 17:15:24', '', 'default_zp3 _1_.jpg', 'normal', 'default_zp3 _1_.jpg', 0, 'uploads/2017/10/default_zp3 _1_.jpg', 'picture', 'image/jpeg');
+(2, 13, '2017-10-08 01:15:24', '2017-10-07 17:15:24', '', 'default_zp3 _1_.jpg', 'normal', 'default_zp3 _1_.jpg', 0, 'uploads/2017/10/default_zp3 _1_.jpg', 'picture', 'image/jpeg'),
+(3, 13, '2017-10-08 01:25:16', '2017-10-07 17:25:16', '', '九里台.jpg', 'normal', '九里台.jpg', 0, 'uploads/cover/九里台.jpg', 'picture', 'image/jpeg');
 
 -- --------------------------------------------------------
 
@@ -356,7 +358,8 @@ CREATE TABLE `zp_subjects` (
 INSERT INTO `zp_subjects` (`subject_id`, `subject_name`, `subject_slug`, `subject_image`, `subject_description`, `count`, `last_updated`, `parent`) VALUES
 (1, '编程', 'code', 'uploads/cover/20141272313028441.jpg', '666', 0, '2017-10-05 22:14:24', 0),
 (2, 'PHP', 'php', 'uploads/cover/c5131475jw1f9fxxjv7clj209h0az752.jpg', '111', 0, '2017-10-06 01:02:05', 1),
-(3, 'golang', 'go', 'uploads/cover/default-zp3 (2).jpg', '666', 0, '2017-10-06 01:09:30', 1);
+(3, 'golang', 'go', 'uploads/cover/default-zp3 (2).jpg', '666', 0, '2017-10-06 01:09:30', 1),
+(4, 'thinkphp', 'thinkphp', 'uploads/cover/九里台.jpg', '', 0, '1000-01-01 00:00:00', 2);
 
 -- --------------------------------------------------------
 
@@ -707,13 +710,13 @@ ALTER TABLE `zp_resourcemeta`
 -- 使用表AUTO_INCREMENT `zp_resources`
 --
 ALTER TABLE `zp_resources`
-  MODIFY `resource_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '资源id', AUTO_INCREMENT=3;
+  MODIFY `resource_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '资源id', AUTO_INCREMENT=4;
 
 --
 -- 使用表AUTO_INCREMENT `zp_subjects`
 --
 ALTER TABLE `zp_subjects`
-  MODIFY `subject_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '专题 id', AUTO_INCREMENT=4;
+  MODIFY `subject_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '专题 id', AUTO_INCREMENT=5;
 
 --
 -- 使用表AUTO_INCREMENT `zp_termmeta`

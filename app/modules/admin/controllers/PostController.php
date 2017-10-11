@@ -32,10 +32,29 @@ class PostController extends ControllerBase
         /* 静态资源 */
         $this->assets->addCss("backend/plugins/editor.md/css/editormd.css", true);
         $this->assets->addCss("backend/library/select2/css/select2.min.css", true);
-        $this->assets->addCss("backend/library/AdminLTE/css/alt/AdminLTE-select2.min.css", true);
+        $this->assets->addCss("backend/library/AdminLTE/css/AdminLTE-select2.min.css", true);
+        $this->assets->addCss("backend/library/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css", true);
         $this->assets->addJs("backend/plugins/editor.md/editormd.min.js", true);
         $this->assets->addJs("backend/library/select2/js/select2.full.min.js", true);
+        $this->assets->addJs("backend/library/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js", true);
         $this->assets->addJs("backend/js/post.js", true);
+
+        // 分类列表
+        $postService = container(PostService::class);
+        $category = $postService->getTaxonomyListByType('category');
+        $categoryTree = makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
+
+        // 标签列表
+        $postService = container(PostService::class);
+        $tags = $postService->getTaxonomyListByType('tag');
+
+        $this->view->setVars(
+            [
+                "categoryTree" => treeHtml($categoryTree, 'term_taxonomy_id', 'name', ' ', 0, 1, ' '),
+                "categoryTreeNbsp" => treeHtml($categoryTree, 'term_taxonomy_id', 'name', ' ', 0, 1),
+                "tags"  => $tags
+            ]
+        );
     }
 
     /**
