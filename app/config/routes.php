@@ -180,6 +180,29 @@ $router->add('/admin/media/upload',
     ]
 );
 
+/* links */
+$router->add('/admin/link',
+    [
+        'module'     => 'admin',
+        'controller' => 'link',
+        'action'     => 'index',
+    ]
+);
+$router->add('/admin/link/new',
+    [
+        'module'     => 'admin',
+        'controller' => 'link',
+        'action'     => 'new',
+    ]
+);
+$router->add('/admin/link/linkCategory',
+    [
+        'module'     => 'admin',
+        'controller' => 'link',
+        'action'     => 'linkCategory',
+    ]
+);
+
 /* user */
 $router->add('/admin/user',
     [

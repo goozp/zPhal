@@ -105,7 +105,7 @@
                 </ul>
             </li>
 
-            <li class="treeview">
+            <li class="treeview <?php if ($controllerName=='link') echo 'active'; ?>">
                 <a href="#">
                     <i class="fa fa-link"></i>
                     <span>链接</span>
@@ -114,9 +114,15 @@
                         </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="../charts/chartjs.html"><i class="fa fa-circle-o"></i> 全部链接</a></li>
-                    <li><a href="../charts/morris.html"><i class="fa fa-circle-o"></i> 添加</a></li>
-                    <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> 链接分类目录</a></li>
+                    <li <?php if ($controllerName=='link' && $actionName=='index') echo 'class="active"'; ?>>
+                        <a href="<?= $this->url->get("admin/link"); ?>"><i class="fa fa-circle-o"></i> 全部链接</a>
+                    </li>
+                    <li <?php if ($controllerName=='link' && $actionName=='new') echo 'class="active"'; ?>>
+                        <a href="<?= $this->url->get("admin/link/new"); ?>"><i class="fa fa-circle-o"></i> 添加</a>
+                    </li>
+                    <li <?php if ($controllerName=='link' && $actionName=='linkCategory') echo 'class="active"'; ?>>
+                        <a href="<?= $this->url->get("admin/link/linkCategory"); ?>"><i class="fa fa-circle-o"></i> 链接分类目录</a>
+                    </li>
                 </ul>
             </li>
 
