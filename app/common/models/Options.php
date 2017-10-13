@@ -5,13 +5,13 @@ namespace ZPhal\Models;
 class Options extends \Phalcon\Mvc\Model
 {
 
-    public $Option_id;
+    public $option_id;
 
-    public $Option_name;
+    public $option_name;
 
-    public $Option_value;
+    public $option_value;
 
-    public $Autoload;
+    public $autoload;
 
     /**
      * Initialize method for model.

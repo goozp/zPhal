@@ -5,37 +5,41 @@ namespace ZPhal\Models;
 class Posts extends \Phalcon\Mvc\Model
 {
 
-    public $Id;
+    public $ID;
 
-    public $Post_author;
+    public $post_author;
 
-    public $Post_date;
+    public $post_date;
 
-    public $Post_date_gmt;
+    public $post_date_gmt;
 
-    public $Post_content;
+    public $post_content;
 
-    public $Post_title;
+    public $post_title;
 
-    public $Post_status;
+    public $post_status;
 
-    public $Comment_status;
+    public $comment_status;
 
-    public $Post_name;
+    public $post_name;
 
-    public $Post_modified;
+    public $post_modified;
 
-    public $Post_modified_gmt;
+    public $post_modified_gmt;
 
-    public $Post_parent;
+    public $post_parent;
 
-    public $Guid;
+    public $cover_picture;
 
-    public $Post_type;
+    public $guid;
 
-    public $Post_mime_type;
+    public $post_type;
 
-    public $Comment_count;
+    public $post_mime_type;
+
+    public $comment_count;
+
+    public $view_count;
 
     /**
      * Initialize method for model.
@@ -51,8 +55,14 @@ class Posts extends \Phalcon\Mvc\Model
      */
     public function beforeCreate()
     {
-        $this->post_date = date('Y-m-d H:i:s', time());
-        $this->post_date_gmt = gmdate('Y-m-d H:i:s', time());
+        if(!$this->post_date){
+            $this->post_date = date('Y-m-d H:i:s', time());
+        }
+
+        if(!$this->post_date_gmt){
+            $this->post_date_gmt = gmdate('Y-m-d H:i:s', time());
+        }
+
     }
 
     /**
@@ -60,8 +70,14 @@ class Posts extends \Phalcon\Mvc\Model
      */
     public function beforeUpdate()
     {
-        $this->post_modified = date('Y-m-d H:i:s', time());
-        $this->post_modified_gmt = gmdate('Y-m-d H:i:s', time());
+        if(!$this->post_modified){
+            $this->post_modified = date('Y-m-d H:i:s', time());
+        }
+
+        if (!$this->post_modified_gmt){
+            $this->post_modified_gmt = gmdate('Y-m-d H:i:s', time());
+        }
+
     }
 
     /**

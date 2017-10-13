@@ -5,31 +5,31 @@ namespace ZPhal\Models;
 class Comments extends \Phalcon\Mvc\Model
 {
 
-    public $Comment_id;
+    public $comment_id;
 
-    public $Comment_post_id;
+    public $comment_post_id;
 
-    public $Comment_author;
+    public $comment_author;
 
-    public $Comment_author_email;
+    public $comment_author_email;
 
-    public $Comment_author_url;
+    public $comment_author_url;
 
-    public $Comment_author_ip;
+    public $comment_author_ip;
 
-    public $Comment_date;
+    public $comment_date;
 
-    public $Comment_date_gmt;
+    public $comment_date_gmt;
 
-    public $Comment_content;
+    public $comment_content;
 
-    public $Comment_approved;
+    public $comment_approved;
 
-    public $Comment_agent;
+    public $comment_agent;
 
-    public $Comment_parent;
+    public $comment_parent;
 
-    public $User_id;
+    public $user_id;
 
     /**
      * Initialize method for model.

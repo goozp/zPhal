@@ -5,31 +5,31 @@ namespace ZPhal\Models;
 class Links extends \Phalcon\Mvc\Model
 {
 
-    public $Link_id;
+    public $link_id;
 
-    public $Link_url;
+    public $link_url;
 
-    public $Link_name;
+    public $link_name;
 
-    public $Link_image;
+    public $link_image;
 
-    public $Link_target;
+    public $link_target;
 
-    public $Link_description;
+    public $link_description;
 
-    public $Link_visible;
+    public $link_visible;
 
-    public $Link_owner;
+    public $link_owner;
 
-    public $Link_rating;
+    public $link_rating;
 
-    public $Link_updated;
+    public $link_updated;
 
-    public $Link_rel;
+    public $link_rel;
 
-    public $Link_notes;
+    public $link_notes;
 
-    public $Link_rss;
+    public $link_rss;
 
     /**
      * Initialize method for model.

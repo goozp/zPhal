@@ -5,13 +5,13 @@ namespace ZPhal\Models;
 class Postmeta extends \Phalcon\Mvc\Model
 {
 
-    public $Meta_id;
+    public $meta_id;
 
-    public $Post_id;
+    public $post_id;
 
-    public $Meta_key;
+    public $meta_key;
 
-    public $Meta_value;
+    public $meta_value;
 
     /**
      * Initialize method for model.
