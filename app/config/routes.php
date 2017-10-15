@@ -111,6 +111,13 @@ $router->add('/admin/post/new',
         'action'     => 'new',
     ]
 );
+$router->add('/admin/post/save',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'save',
+    ]
+);
 $router->add('/admin/post/taxonomy/{type:[a-z]+}',
     [
         'module'     => 'admin',

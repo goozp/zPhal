@@ -14,14 +14,14 @@
 <!-- 主内容 -->
 <section class="content">
     <div class="row">
-        <form action="<?= $this->url->get(""); ?>" method="post">
+        <form action="<?= $this->url->get("admin/post/save"); ?>" method="post">
             <div class="form-group col-md-12">
                 <input class="form-control" type="text" name="title" placeholder="输入标题">
             </div>
 
             <div class="form-group col-md-12">
                 <div id="editormd">
-                    <textarea name="content" style="display:none;"></textarea>
+                    <textarea name="mr_content" style="display:none;"></textarea>
                 </div>
             </div>
 
@@ -49,10 +49,10 @@
                                         <label>选择发布时间</label>
                                         <div class="col-md-12">
                                             <label>
-                                                <input type="radio" name="r3" class="flat-red" checked>立即发布
+                                                <input type="radio" name="publishTime" value="now" class="flat-red" checked>立即发布
                                             </label>
                                             <label>
-                                                <input type="radio" name="r3" class="flat-red">自定义时间
+                                                <input type="radio" name="publishTime" value="custom" class="flat-red">自定义时间
                                             </label>
                                         </div>
                                     </div>
@@ -63,14 +63,14 @@
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                                         </div>
-                                        <input name="time" type="hidden" id="dtp_input" value="" /><br/>
+                                        <input name="publishTimeCustom" type="hidden" id="dtp_input" value="" /><br/>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="box-footer">
-                                <button type="submit" name="draft" class="btn btn-default">保存草稿</button>
-                                <button type="submit" name="publish" class="btn btn-info pull-right">发布</button>
+                                <button type="submit" name="submitWay" value="draft" class="btn btn-default">保存草稿</button>
+                                <button type="submit" name="submitWay" value="publish"  class="btn btn-info pull-right">发布</button>
                             </div>
                         </div>
                     </div>
@@ -92,14 +92,14 @@
                                         <label>添加新分类</label>
                                         <div class="row">
                                             <div class="col-xs-5">
-                                                <select class="form-control" id="newCategoryParent"  name="newCategoryParent">
+                                                <select class="form-control" id="newCategoryParent">
                                                     <?= $categoryTreeNbsp ?>
                                                 </select>
                                             </div>
 
                                             <div class="col-xs-7">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="newCategory"  id="newCategory" placeholder="分类名称">
+                                                    <input type="text" class="form-control" id="newCategory" placeholder="分类名称">
                                                     <span class="input-group-btn">
                                               <button type="button" class="btn btn-info btn-flat">添加</button>
                                             </span>
@@ -111,7 +111,7 @@
 
                                     <div class="form-group col-md-12">
                                         <label>选择分类</label>
-                                        <select class="form-control select2" multiple="multiple" data-placeholder="选择分类" style="width: 100%;">
+                                        <select class="form-control select2" name="categories[]" multiple="multiple" data-placeholder="选择分类" style="width: 100%;">
                                             <?= $categoryTree ?>
                                         </select>
                                     </div>
@@ -136,7 +136,7 @@
                                     <div class="form-group col-md-12">
                                         <label>添加新标签</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="newTag"  id="newTag" placeholder="标签名称">
+                                            <input type="text" class="form-control" id="newTag" placeholder="标签名称">
                                             <span class="input-group-btn">
                                         <button type="button" class="btn btn-info btn-flat">添加</button>
                                     </span>
@@ -145,9 +145,9 @@
 
                                     <div class="form-group col-md-12">
                                         <label>选择标签</label>
-                                        <select class="form-control select2" multiple="multiple" data-placeholder="选择标签" style="width: 100%;">
+                                        <select class="form-control select2" name="tags[]" multiple="multiple" data-placeholder="选择标签" style="width: 100%;">
                                             <?php foreach ($tags as $tag){?>
-                                                <option><?= $tag['name'] ?></option>
+                                                <option value="<?= $tag['term_taxonomy_id'] ?>"><?= $tag['name'] ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
@@ -174,7 +174,7 @@
                             <div class="box-body" style="">
                                 <div class="form-group col-md-12">
                                     <label for="imageUrl">图片地址</label>
-                                    <input type="text" class="form-control" id="imageUrl" placeholder="url">
+                                    <input type="text" name="cover_image" class="form-control" id="imageUrl" placeholder="url">
                                 </div>
 
                                 <div class="form-group col-md-12">

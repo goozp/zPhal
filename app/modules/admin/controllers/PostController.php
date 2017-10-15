@@ -25,6 +25,9 @@ class PostController extends ControllerBase
         $this->tag->prependTitle("文章列表 - ");
     }
 
+    /**
+     * 新文章
+     */
     public function newAction()
     {
         $this->tag->prependTitle("新文章 - ");
@@ -55,6 +58,11 @@ class PostController extends ControllerBase
                 "tags"  => $tags
             ]
         );
+    }
+
+    public function saveAction()
+    {
+        print_r($_POST);exit;
     }
 
     /**
