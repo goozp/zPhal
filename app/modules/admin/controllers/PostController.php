@@ -54,15 +54,78 @@ class PostController extends ControllerBase
         $this->view->setVars(
             [
                 "categoryTree" => treeHtml($categoryTree, 'term_taxonomy_id', 'name', ' ', 0, 1, ' '),
-                "categoryTreeNbsp" => treeHtml($categoryTree, 'term_taxonomy_id', 'name', ' ', 0, 1),
-                "tags"  => $tags
+                "categoryTreeNbsp" => treeHtml($categoryTree, 'term_taxonomy_id', 'name'),
+                "tags" => $tags,
+                "quickAddUrl" => $this->url->get('admin/post/quickAddTaxonomy')
             ]
         );
     }
 
     public function saveAction()
     {
-        print_r($_POST);exit;
+        print_r($_POST);
+        exit;
+    }
+
+    /**
+     * ajax快速添加分类或者标签
+     */
+    public function quickAddTaxonomyAction()
+    {
+        $type = $this->dispatcher->getParam("type");
+
+        if ($this->request->isPost()) {
+            if ($type == 'category') {
+                $name = $this->request->getPost('newCategory', ['string', 'trim']);
+                $parent = $this->request->getPost('categoryParent', 'int', 0);
+            } elseif ($type == 'tag') {
+                $name = $this->request->getPost('newTag', ['string', 'trim']);
+                $parent = 0;
+            } else {
+                die(json_encode(['status' => 'error', 'message' => '类型错误']));
+            }
+
+            $terms = new Terms();
+            $terms->name = $name;
+            $terms->slug = $name;
+
+            $termTaxonomy = new TermTaxonomy();
+            $termTaxonomy->Terms = $terms;
+            $termTaxonomy->taxonomy = $type;
+            $termTaxonomy->description = '';
+            $termTaxonomy->parent = $parent;
+
+            if ($termTaxonomy->save()) {
+
+                // 新的列表
+                $data = [];
+                if ($type == 'category') {
+                    $postService = container(PostService::class);
+                    $category = $postService->getTaxonomyListByType('category');
+                    $categoryTree = makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
+
+                    $data = [
+                        "categoryTree" => treeHtml($categoryTree, 'term_taxonomy_id', 'name', ' ', 0, 1, ' '),
+                        "categoryTreeNbsp" => treeHtml($categoryTree, 'term_taxonomy_id', 'name'),
+                    ];
+                } elseif ($type == 'tag') {
+                    $postService = container(PostService::class);
+                    $tags = $postService->getTaxonomyListByType('tag');
+
+                    $data = [
+                        "tags" => $tags,
+                    ];
+                }
+
+                echo json_encode(['status' => 'success', 'message' => '创建成功', 'data' => $data]);
+            } else {
+                $messages = $this->getErrorMsg($termTaxonomy, "创建失败");
+                echo json_encode(['status' => 'failed', 'message' => $messages]);
+            }
+
+        } else {
+            die(json_encode(['status' => 'error', 'message' => '请求错误']));
+        }
     }
 
     /**
@@ -74,7 +137,7 @@ class PostController extends ControllerBase
         $type = $this->dispatcher->getParam("type");
         $name = $this->request->getPost('name', ['string', 'trim']);
         $slug = $this->request->getPost('slug', ['string', 'trim', 'lower']);
-        $parent = $this->request->getPost('parent', 'int');
+        $parent = $this->request->getPost('parent', 'int', 0);
         $description = $this->request->getPost('description', ['string', 'trim']);
 
         $terms = new Terms();

@@ -45,21 +45,22 @@
 
                             <div class="box-body">
                                 <div class="row">
-                                    <div class="form-group col-md-12">
-                                        <label>选择发布时间</label>
-                                        <div class="col-md-12">
-                                            <label>
-                                                <input type="radio" name="publishTime" value="now" class="flat-red" checked>立即发布
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="publishTime" value="custom" class="flat-red">自定义时间
-                                            </label>
-                                        </div>
+                                    <div class="form-group col-md-12" id="publishTimeNowDiv">
+                                        <label>
+                                            <input type="radio" name="publishTime" id="publishTimeNow" value="now" onchange="changePublishTime('now')" checked>
+                                            立即发布
+                                        </label>
                                     </div>
+                                </div>
 
-                                    <div class="form-group col-md-12">
+                                <div class="row">
+                                    <div class="form-group col-md-12" id="publishTimeCustomDiv">
+                                        <label class="control-label">
+                                            <input type="radio" name="publishTime" id="publishTimeCustom" value="custom" onchange="changePublishTime('custom')" >
+                                            自定义时间
+                                        </label>
                                         <div class="input-group date" id="datetimepicker" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input">
-                                            <input class="form-control" size="16" type="text" value="">
+                                            <input class="form-control" size="16" type="text" value=""/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                                         </div>
@@ -67,6 +68,7 @@
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="box-footer">
                                 <button type="submit" name="submitWay" value="draft" class="btn btn-default">保存草稿</button>
@@ -77,6 +79,10 @@
 
                     <div class="form-group col-md-4">
                         <div class="box box-default">
+                            <div class="overlay" id="post_category">
+                                <i class="fa fa-refresh fa-spin"></i>
+                            </div>
+
                             <div class="box-header with-border">
                                 <h3 class="box-title"><i class="fa fa-tags"></i> 分类</h3>
 
@@ -100,9 +106,10 @@
                                             <div class="col-xs-7">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" id="newCategory" placeholder="分类名称">
+                                                    <input type="hidden" id="quickAddUrlCategory" value="<?= $quickAddUrl ?>/category">
                                                     <span class="input-group-btn">
-                                              <button type="button" class="btn btn-info btn-flat">添加</button>
-                                            </span>
+                                                      <button type="button" id="addNewCategory" class="btn btn-info btn-flat">添加</button>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -122,6 +129,10 @@
 
                     <div class="form-group col-md-3">
                         <div class="box box-default">
+                            <div class="overlay" id="post_tag">
+                                <i class="fa fa-refresh fa-spin"></i>
+                            </div>
+
                             <div class="box-header with-border">
                                 <h3 class="box-title"><i class="fa fa-tags"></i> 标签</h3>
 
@@ -137,9 +148,10 @@
                                         <label>添加新标签</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="newTag" placeholder="标签名称">
+                                            <input type="hidden" id="quickAddUrlTag" value="<?= $quickAddUrl ?>/tag">
                                             <span class="input-group-btn">
-                                        <button type="button" class="btn btn-info btn-flat">添加</button>
-                                    </span>
+                                                <button type="button" id="addNewTag" class="btn btn-info btn-flat">添加</button>
+                                            </span>
                                         </div>
                                     </div>
 
@@ -177,11 +189,7 @@
                                     <input type="text" name="cover_image" class="form-control" id="imageUrl" placeholder="url">
                                 </div>
 
-                                <div class="form-group col-md-12">
-                                    <label for="exampleInputEmail1">预览</label>
-                                    <div>
-                                        <img src="/backend/img/default-img.png" width="200" height="180">
-                                    </div>
+                                <div class="form-group col-md-12"  id="imagePreview">
                                 </div>
                             </div>
                         </div>

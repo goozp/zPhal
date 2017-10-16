@@ -126,6 +126,14 @@ $router->add('/admin/post/taxonomy/{type:[a-z]+}',
         'type'       => 1,
     ]
 );
+$router->add('/admin/post/quickAddTaxonomy/{type:[a-z]+}',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'quickAddTaxonomy',
+        'type'       => 1,
+    ]
+);
 $router->add('/admin/post/addTaxonomy/{type:[a-z]+}',
     [
         'module'     => 'admin',
