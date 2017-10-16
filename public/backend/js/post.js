@@ -50,11 +50,12 @@ $(function() {
             quickAddUrlCategory,
             {categoryParent:categoryParent, newCategory:newCategory},
             function(result){
+                res = JSON.parse(result);
                 $("#post_category").hide();
-                console.log(result);
-                if (result.status == 'success'){
+                if (res.status == 'success'){
                     //刷新列表
-
+                    $("#categoryList").html(res.data.categoryTree);
+                    $("#newCategoryParent").html(res.data.categoryTreeNbsp);
                 }else{
                     alert(result.message);
                 }
@@ -72,13 +73,16 @@ $(function() {
             quickAddUrlTag,
             {newTag:newTag},
             function(result){
+                res = JSON.parse(result);
                 $("#post_tag").hide();
-                console.log(result);
-                if (result.status == 'success'){
+                if (res.status == 'success'){
                     //刷新列表
-
+                    $("#tagsList").html("");//清空tags列表内容
+                    $.each(res.data.tags, function(i, item) {
+                        $("#tagsList").append("<option value='"+ item.term_taxonomy_id +"'>"+ item.name +"</option>");
+                    });
                 }else{
-                    alert(result.message);
+                   alert(res.message);
                 }
             }
         );

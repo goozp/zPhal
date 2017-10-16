@@ -118,7 +118,7 @@
 
                                     <div class="form-group col-md-12">
                                         <label>选择分类</label>
-                                        <select class="form-control select2" name="categories[]" multiple="multiple" data-placeholder="选择分类" style="width: 100%;">
+                                        <select class="form-control select2" id="categoryList" name="categories[]" multiple="multiple" data-placeholder="选择分类" style="width: 100%;">
                                             <?= $categoryTree ?>
                                         </select>
                                     </div>
@@ -157,7 +157,7 @@
 
                                     <div class="form-group col-md-12">
                                         <label>选择标签</label>
-                                        <select class="form-control select2" name="tags[]" multiple="multiple" data-placeholder="选择标签" style="width: 100%;">
+                                        <select class="form-control select2" id="tagsList" name="tags[]" multiple="multiple" data-placeholder="选择标签" style="width: 100%;">
                                             <?php foreach ($tags as $tag){?>
                                                 <option value="<?= $tag['term_taxonomy_id'] ?>"><?= $tag['name'] ?></option>
                                             <?php } ?>

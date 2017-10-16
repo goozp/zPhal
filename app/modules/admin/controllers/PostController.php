@@ -82,7 +82,7 @@ class PostController extends ControllerBase
                 $name = $this->request->getPost('newTag', ['string', 'trim']);
                 $parent = 0;
             } else {
-                die(json_encode(['status' => 'error', 'message' => '类型错误']));
+                die(json_encode(['status' => 'error', 'message' => '类型错误'], JSON_UNESCAPED_UNICODE));
             }
 
             $terms = new Terms();
@@ -92,7 +92,7 @@ class PostController extends ControllerBase
             $termTaxonomy = new TermTaxonomy();
             $termTaxonomy->Terms = $terms;
             $termTaxonomy->taxonomy = $type;
-            $termTaxonomy->description = '';
+            $termTaxonomy->description = ' ';
             $termTaxonomy->parent = $parent;
 
             if ($termTaxonomy->save()) {
@@ -117,14 +117,14 @@ class PostController extends ControllerBase
                     ];
                 }
 
-                echo json_encode(['status' => 'success', 'message' => '创建成功', 'data' => $data]);
+                return json_encode(['status' => 'success', 'message' => '创建成功', 'data' => $data], JSON_UNESCAPED_UNICODE);
             } else {
                 $messages = $this->getErrorMsg($termTaxonomy, "创建失败");
-                echo json_encode(['status' => 'failed', 'message' => $messages]);
+                return json_encode(['status' => 'failed', 'message' => $messages], JSON_UNESCAPED_UNICODE);
             }
 
         } else {
-            die(json_encode(['status' => 'error', 'message' => '请求错误']));
+            die(json_encode(['status' => 'error', 'message' => '请求错误'], JSON_UNESCAPED_UNICODE));
         }
     }
 
