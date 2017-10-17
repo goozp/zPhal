@@ -2,6 +2,7 @@
 namespace ZPhal\Modules\Admin\Controllers;
 
 use ZPhal\Models\Services\Service\PostService;
+use ZPhal\Models\Subjects;
 use ZPhal\Models\Terms;
 use ZPhal\Models\TermTaxonomy;
 use Phalcon\Paginator\Adapter\NativeArray as PaginatorArray;
@@ -27,6 +28,7 @@ class PostController extends ControllerBase
 
     /**
      * 新文章
+     * TODO 列表输出优化
      */
     public function newAction()
     {
@@ -51,11 +53,16 @@ class PostController extends ControllerBase
         $postService = container(PostService::class);
         $tags = $postService->getTaxonomyListByType('tag');
 
+        // 专题列表
+        $subjects = Subjects::find()->toArray();
+        $subjectsTree = makeTree($subjects, 'subject_id', 'parent');
+
         $this->view->setVars(
             [
                 "categoryTree" => treeHtml($categoryTree, 'term_taxonomy_id', 'name', ' ', 0, 1, ' '),
                 "categoryTreeNbsp" => treeHtml($categoryTree, 'term_taxonomy_id', 'name'),
                 "tags" => $tags,
+                "subjectTree" => treeHtml($subjectsTree, 'subject_id', 'subject_name'),
                 "quickAddUrl" => $this->url->get('admin/post/quickAddTaxonomy')
             ]
         );
@@ -63,8 +70,33 @@ class PostController extends ControllerBase
 
     public function saveAction()
     {
-        print_r($_POST);
-        exit;
+         print_r($_POST);
+        if ($this->request->isPost()) {
+            $submitWay = $this->request->getPost('submitWay', 'string');
+
+            // 发布
+            if ($submitWay == 'publish') {
+                $title = $this->request->getPost('title');
+                $mr_content = $this->request->getPost('mr_content');
+                $description = $this->request->getPost('description', ['string', 'trim']);
+                $publishTime = $this->request->getPost('publishTime' );
+                $publishTimeCustom = $this->request->getPost('publishTimeCustom');
+                $submitWay = $this->request->getPost('submitWay');
+                $categories = $this->request->getPost('categories');
+                $subject = $this->request->getPost('subject');
+                $cover_image = $this->request->getPost('cover_image');
+
+                print_r($categories);exit;
+            }
+
+            // 保存草稿
+            elseif ($submitWay == 'draft') {
+
+            }
+        }
+
+        $this->flash->error("错误操作!");
+        return $this->response->redirect("admin/");
     }
 
     /**
