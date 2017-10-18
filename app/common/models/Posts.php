@@ -48,6 +48,12 @@ class Posts extends \Phalcon\Mvc\Model
     {
         $this->setSchema("zphaldb");
         $this->setSource("zp_posts");
+
+        $this->hasMany(
+            "ID",
+            "ZPhal\\Models\\Postmeta",
+            "post_id"
+        );
     }
 
     /**
@@ -63,7 +69,17 @@ class Posts extends \Phalcon\Mvc\Model
             $this->post_date_gmt = gmdate('Y-m-d H:i:s', time());
         }
 
+        if (!$this->post_name){
+            $this->post_name = '';
+        }
+
+        $this->comment_count = 0;
+        $this->view_count = 0;
     }
+
+    /**
+     * 正式发表; 插入后更新数目和专题上次更新时间
+     */
 
     /**
      * 更新数据前

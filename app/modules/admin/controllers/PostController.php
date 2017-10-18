@@ -1,8 +1,13 @@
 <?php
+
 namespace ZPhal\Modules\Admin\Controllers;
 
+use ZPhal\Models\Postmeta;
+use ZPhal\Models\Posts;
 use ZPhal\Models\Services\Service\PostService;
+use ZPhal\Models\SubjectRelationships;
 use ZPhal\Models\Subjects;
+use ZPhal\Models\TermRelationships;
 use ZPhal\Models\Terms;
 use ZPhal\Models\TermTaxonomy;
 use Phalcon\Paginator\Adapter\NativeArray as PaginatorArray;
@@ -68,33 +73,98 @@ class PostController extends ControllerBase
         );
     }
 
+    /**
+     * 保存文章
+     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     */
     public function saveAction()
     {
-         print_r($_POST);
         if ($this->request->isPost()) {
             $submitWay = $this->request->getPost('submitWay', 'string');
 
-            // 发布
-            if ($submitWay == 'publish') {
-                $title = $this->request->getPost('title');
-                $mr_content = $this->request->getPost('mr_content');
-                $description = $this->request->getPost('description', ['string', 'trim']);
-                $publishTime = $this->request->getPost('publishTime' );
-                $publishTimeCustom = $this->request->getPost('publishTimeCustom');
-                $submitWay = $this->request->getPost('submitWay');
-                $categories = $this->request->getPost('categories');
-                $subject = $this->request->getPost('subject');
-                $cover_image = $this->request->getPost('cover_image');
+            // 获取表单数据
+            $title = $this->request->getPost('title');
+            $mr_content = $this->request->getPost('mr_content');
+            $cover_image = $this->request->getPost('cover_image');
+            // 以下需要判断
+            $description = $this->request->getPost('description', ['string', 'trim']);
+            $publishTime = $this->request->getPost('publishTime');
+            $categories = $this->request->getPost('categories');
+            $tags = $this->request->getPost('tags');
+            $subject = $this->request->getPost('subject');
 
-                print_r($categories);exit;
+            $post = new Posts();
+            $post->post_author = $this->getUserId();
+            $post->post_content = $mr_content;
+            $post->post_title = $title;
+            $post->comment_status = 'open';
+            $post->post_parent = 0;
+            $post->cover_picture = $cover_image;
+            $post->post_type = 'post';
+
+            // publish date and modified date
+            if ($publishTime == 'now') {
+                $post->post_date = date('Y-m-d H:i:s', time());
+                $post->post_date_gmt = gmdate('Y-m-d H:i:s', time());
+
+            } elseif ($publishTime == 'custom') {
+                $publishTimeCustom = $this->request->getPost('publishTimeCustom');
+                $post->post_date = $publishTimeCustom;
+                $post->post_date_gmt = gmdate('Y-m-d H:i:s', strtotime($publishTimeCustom));
+            }
+            $post->post_modified = $post->post_date;
+            $post->post_modified_gmt = $post->post_date_gmt;
+
+            // 发布状态
+            if ($submitWay == 'publish') {
+                $post->post_status = 'publish';
+            } elseif ($submitWay == 'draft') {
+                $post->post_status = 'draft';
             }
 
-            // 保存草稿
-            elseif ($submitWay == 'draft') {
+            // TODO 生成链接
+            // 自动保存草稿的话, 会有链接
+            $post->guid = '';
 
+            if ($post->create()) {
+                // 如果输入description,保存
+                if ($description != '') {
+                    $postmeta = new Postmeta();
+                    $postmeta->post_id = $post->ID;
+                    $postmeta->meta_key = 'description';
+                    $postmeta->meta_value = $description;
+                    $postmeta->create();
+                }
+
+                // 分类,标签
+                // categories一定有,如未设置则是未分类; tags可能没有设置
+                if (!empty($tags)) {
+                    $categories = array_merge($categories, $tags);
+                }
+
+                $termRelationShip = new TermRelationships();
+                foreach ($categories as $item) {
+                    $termRelationShip->object_id = $post->ID;
+                    $termRelationShip->term_taxonomy_id = $item;
+                    $termRelationShip->create();
+                }
+
+                // subject专题, 可能没设置
+                if (!empty($subject)) {
+                    $subjectRelationShip = new SubjectRelationships();
+                    $subjectRelationShip->object_id = $post->ID;
+                    $subjectRelationShip->subject_id = $subject;
+                    $subjectRelationShip->create();
+                }
+
+                // 成功,跳转到文章编辑页
+                $this->flash->success("操作成功!");
+                return $this->response->redirect("admin/post/edit/" . $post->ID);
+            } else {
+                $this->flash->error("保存失败!");
+                return $this->response->redirect("admin/post/new");
             }
         }
-
         $this->flash->error("错误操作!");
         return $this->response->redirect("admin/");
     }

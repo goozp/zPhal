@@ -20,6 +20,12 @@ class Postmeta extends \Phalcon\Mvc\Model
     {
         $this->setSchema("zphaldb");
         $this->setSource("zp_postmeta");
+
+        $this->belongsTo(
+            "post_id",
+            "ZPhal\\Models\\Posts",
+            "ID"
+        );
     }
 
     /**

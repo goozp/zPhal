@@ -48,7 +48,7 @@ class Users extends Model
 
         $this->hasMany(
             "ID",
-            "ZPhal\\Models\\Usermata",
+            "ZPhal\\Models\\Usermeta",
             "user_id"
         );
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql-db
--- Generation Time: 2017-10-10 23:40:30
+-- Generation Time: 2017-10-19 01:07:11
 -- 服务器版本： 5.7.19-log
 -- PHP Version: 7.1.10
 
@@ -276,6 +276,7 @@ CREATE TABLE `zp_posts` (
   `post_modified_gmt` datetime NOT NULL COMMENT '更新GMT标准时间',
   `post_parent` int(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '父id',
   `guid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '唯一链接',
+  `cover_picture` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '特色图片',
   `post_type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'post' COMMENT '类型',
   `post_mime_type` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '文件类型',
   `comment_count` int(11) NOT NULL DEFAULT '0' COMMENT '评论数目',
@@ -286,10 +287,10 @@ CREATE TABLE `zp_posts` (
 -- 转存表中的数据 `zp_posts`
 --
 
-INSERT INTO `zp_posts` (`ID`, `post_author`, `post_date`, `post_date_gmt`, `post_content`, `post_title`, `post_status`, `comment_status`, `post_name`, `post_modified`, `post_modified_gmt`, `post_parent`, `guid`, `post_type`, `post_mime_type`, `comment_count`, `view_count`) VALUES
-(1, 1, '2017-08-23 00:13:01', '2017-08-22 16:13:02', '欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！', '世界，您好！', 'publish', 'open', 'hello-world', '2017-08-23 00:13:01', '2017-08-22 16:13:02', 0, 'http://localhost/wordpress/?p=1', 'post', '', 1, 0),
-(2, 1, '2017-08-23 00:13:01', '2017-08-22 16:13:02', '这是示范页面。页面和博客文章不同，它的位置是固定的，通常会在站点导航栏显示。很多用户都创建一个“关于”页面，向访客介绍自己。例如：\n\n<blockquote>欢迎！我白天是个邮递员，晚上就是个有抱负的演员。这是我的博客。我住在天朝的帝都，有条叫做Jack的狗。</blockquote>\n\n……或这个：\n\n<blockquote>XYZ Doohickey公司成立于1971年，自从建立以来，我们一直向社会贡献着优秀doohickies。我们的公司总部位于天朝魔都，有着超过两千名员工，对魔都政府税收有着巨大贡献。</blockquote>\n\n而您，作为一个WordPress用户，我们建议您访问<a href=\"http://localhost/wordpress/wp-admin/\">控制板</a>，删除本页面，然后添加您自己的页面。祝您使用愉快！', '示例页面', 'publish', 'closed', 'sample-page', '2017-08-23 00:13:01', '2017-08-22 16:13:02', 0, 'http://localhost/wordpress/?page_id=2', 'page', '', 0, 0),
-(3, 1, '2017-08-23 00:13:19', '0000-00-00 00:00:00', '', '自动草稿', 'auto-draft', 'open', '', '2017-08-23 00:13:19', '0000-00-00 00:00:00', 0, 'http://localhost/wordpress/?p=3', 'post', '', 0, 0);
+INSERT INTO `zp_posts` (`ID`, `post_author`, `post_date`, `post_date_gmt`, `post_content`, `post_title`, `post_status`, `comment_status`, `post_name`, `post_modified`, `post_modified_gmt`, `post_parent`, `guid`, `cover_picture`, `post_type`, `post_mime_type`, `comment_count`, `view_count`) VALUES
+(1, 1, '2017-08-23 00:13:01', '2017-08-22 16:13:02', '欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！', '世界，您好！', 'publish', 'open', 'hello-world', '2017-08-23 00:13:01', '2017-08-22 16:13:02', 0, 'http://localhost/wordpress/?p=1', '', 'post', '', 1, 0),
+(2, 1, '2017-08-23 00:13:01', '2017-08-22 16:13:02', '这是示范页面。页面和博客文章不同，它的位置是固定的，通常会在站点导航栏显示。很多用户都创建一个“关于”页面，向访客介绍自己。例如：\n\n<blockquote>欢迎！我白天是个邮递员，晚上就是个有抱负的演员。这是我的博客。我住在天朝的帝都，有条叫做Jack的狗。</blockquote>\n\n……或这个：\n\n<blockquote>XYZ Doohickey公司成立于1971年，自从建立以来，我们一直向社会贡献着优秀doohickies。我们的公司总部位于天朝魔都，有着超过两千名员工，对魔都政府税收有着巨大贡献。</blockquote>\n\n而您，作为一个WordPress用户，我们建议您访问<a href=\"http://localhost/wordpress/wp-admin/\">控制板</a>，删除本页面，然后添加您自己的页面。祝您使用愉快！', '示例页面', 'publish', 'closed', 'sample-page', '2017-08-23 00:13:01', '2017-08-22 16:13:02', 0, 'http://localhost/wordpress/?page_id=2', '', 'page', '', 0, 0),
+(3, 1, '2017-08-23 00:13:19', '0000-00-00 00:00:00', '', '自动草稿', 'auto-draft', 'open', '', '2017-08-23 00:13:19', '0000-00-00 00:00:00', 0, 'http://localhost/wordpress/?p=3', '', 'post', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -394,7 +395,7 @@ CREATE TABLE `zp_termmeta` (
 
 CREATE TABLE `zp_terms` (
   `term_id` int(11) UNSIGNED NOT NULL COMMENT '条件id',
-  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '条件名称',
+  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '条件名称',
   `slug` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '缩略名',
   `term_group` int(11) NOT NULL DEFAULT '0' COMMENT '分组'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -409,7 +410,19 @@ INSERT INTO `zp_terms` (`term_id`, `name`, `slug`, `term_group`) VALUES
 (3, 'PHP', 'php', 0),
 (4, 'Javascript', 'javascript', 0),
 (5, 'thinkphp', 'thinkphp', 0),
-(12, 'PHP', 'php', 0);
+(12, 'PHP', 'php', 0),
+(13, 'golang', 'go', 0),
+(43, 'python', 'python', 0),
+(44, 'python2', 'python2', 0),
+(45, 'python3', 'python3', 0),
+(46, 'python4', 'python4', 0),
+(47, 'python5', 'python5', 0),
+(48, 'python6', 'python6', 0),
+(49, '生活', '生活', 0),
+(50, '吐槽', '吐槽', 0),
+(51, '变态', '变态', 0),
+(52, '科学', '科学', 0),
+(53, '好变态', '好变态', 0);
 
 -- --------------------------------------------------------
 
@@ -456,7 +469,19 @@ INSERT INTO `zp_term_taxonomy` (`term_taxonomy_id`, `term_id`, `taxonomy`, `desc
 (4, 4, 'category', 'Javascript', 2, 0),
 (5, 5, 'category', 'thinkphpthinkphpthinkphpthinkphp', 3, 0),
 (8, 11, 'category', '最好的语言', 0, 0),
-(9, 12, 'tag', 'php哦', 0, 0);
+(9, 12, 'tag', 'php哦', 0, 0),
+(10, 13, 'tag', 'go', 0, 0),
+(15, 43, 'tag', ' ', 0, 0),
+(16, 44, 'tag', ' ', 0, 0),
+(17, 45, 'tag', ' ', 0, 0),
+(18, 46, 'tag', ' ', 0, 0),
+(19, 47, 'tag', ' ', 0, 0),
+(20, 48, 'tag', 'asdasdads', 0, 0),
+(21, 49, 'category', ' ', 0, 0),
+(22, 50, 'category', ' ', 21, 0),
+(23, 51, 'category', ' ', 21, 0),
+(24, 52, 'category', ' ', 0, 0),
+(25, 53, 'category', '好变态噢', 23, 0);
 
 -- --------------------------------------------------------
 
@@ -728,13 +753,13 @@ ALTER TABLE `zp_termmeta`
 -- 使用表AUTO_INCREMENT `zp_terms`
 --
 ALTER TABLE `zp_terms`
-  MODIFY `term_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '条件id', AUTO_INCREMENT=13;
+  MODIFY `term_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '条件id', AUTO_INCREMENT=54;
 
 --
 -- 使用表AUTO_INCREMENT `zp_term_taxonomy`
 --
 ALTER TABLE `zp_term_taxonomy`
-  MODIFY `term_taxonomy_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '分类方式id', AUTO_INCREMENT=10;
+  MODIFY `term_taxonomy_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '分类方式id', AUTO_INCREMENT=26;
 
 --
 -- 使用表AUTO_INCREMENT `zp_usermeta`
