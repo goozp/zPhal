@@ -7,7 +7,7 @@
     </div>
     <h1>
         撰写新文章
-        <small>固定链接:<span>暂无</span></small>
+        <small>固定链接:<span id="postUrl">暂无</span></small>
     </h1>
 </section>
 
@@ -17,6 +17,7 @@
         <form action="<?= $this->url->get("admin/post/save"); ?>" method="post">
             <div class="form-group col-md-12">
                 <input class="form-control" id="title" type="text" name="title" placeholder="输入标题">
+                <input type="hidden" id="post_id" name="post_id" value="0" >
             </div>
 
             <div class="form-group col-md-12">
@@ -75,6 +76,7 @@
                                     <div class="box-footer">
                                         <input type="hidden" id="ajaxUri" value="<?= $ajaxUri ?>">
                                         <button type="submit" name="submitWay" value="draft" class="btn btn-default">保存草稿</button>
+                                        <span id="autoDraftTps"></span>
                                         <button type="submit" name="submitWay" value="publish"  class="btn btn-info pull-right">发布</button>
                                     </div>
                                 </div>

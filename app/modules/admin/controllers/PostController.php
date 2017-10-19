@@ -83,6 +83,7 @@ class PostController extends ControllerBase
             $submitWay = $this->request->getPost('submitWay', 'string');
 
             // 获取表单数据
+            $postId = $this->request->getPost('post_id');
             $title = $this->request->getPost('title', 'trim');
             $mr_content = $this->request->getPost('mr_content');
             $cover_image = $this->request->getPost('cover_image');
@@ -93,10 +94,15 @@ class PostController extends ControllerBase
             $tags = $this->request->getPost('tags');
             $subject = $this->request->getPost('subject');
 
-            $post = new Posts();
+            if ($postId == 0){
+                $post = new Posts();
+            }else{
+                $post = Posts::findFirst($postId);
+            }
+
             $post->post_author = $this->getUserId();
             $post->post_content = $mr_content;
-            $post->post_title = $title;
+            $post->post_title = $title ? $title : '无题';
             $post->comment_status = 'open';
             $post->post_parent = 0;
             $post->cover_picture = $cover_image;
@@ -122,11 +128,11 @@ class PostController extends ControllerBase
                 $post->post_status = 'draft';
             }
 
-            // TODO 生成链接
-            // 自动保存草稿的话, 会有链接
-            $post->guid = '';
+            if ($post->save()) {
+                // 生成连接
+                $post->guid = $this->url->get(['for' => 'article', 'id' => $post->ID]);
+                $post->save();
 
-            if ($post->create()) {
                 // 如果输入description,保存
                 if ($description != '') {
                     $postmeta = new Postmeta();
@@ -142,6 +148,7 @@ class PostController extends ControllerBase
                     $categories = array_merge($categories, $tags);
                 }
 
+                // TODO TermRelationships 计数++ 和 --
                 $termRelationShip = new TermRelationships();
                 foreach ($categories as $item) {
                     $termRelationShip->object_id = $post->ID;
@@ -164,16 +171,103 @@ class PostController extends ControllerBase
                 $this->flash->error("保存失败!");
                 return $this->response->redirect("admin/post/new");
             }
+
         }
         $this->flash->error("错误操作!");
         return $this->response->redirect("admin/");
     }
 
-    // TODO
+    /**
+     * 自动保存草稿
+     * @return string
+     */
     public function autoSaveDraftAction(){
         if ($this->request->isPost()) {
             $markdownWord = $this->request->getPost('markdownWord');
             $title = $this->request->getPost('title', 'trim');
+            $postId = $this->request->getPost('postId', 'int', 0);
+
+
+            // 没有草稿
+            if ($postId == 0){
+                $post = new Posts();
+                $post->post_author = $this->getUserId();
+                $post->post_content = $markdownWord;
+                $post->post_title = $title ? $title : '无题';
+                $post->comment_status = 'open';
+                $post->post_parent = 0;
+                $post->post_type = 'post';
+                $post->post_date = date('Y-m-d H:i:s', time());
+                $post->post_date_gmt = gmdate('Y-m-d H:i:s', time());
+                $post->post_modified = $post->post_date;
+                $post->post_modified_gmt = $post->post_date_gmt;
+                $post->post_status = 'auto-draft';
+                if ($post->create()){
+                    $postId = $post->ID;
+                    $post = Posts::findFirst($postId);
+                    $post->guid = $this->url->get(['for' => 'article', 'id' => $postId]);
+                    if ($post->save()){
+                        $data = [
+                            'post_id' => $postId,
+                            'post_date' => $post->post_date,
+                            'post_url' =>$post->guid
+                        ];
+                    }
+                }
+            }else{
+                // 检查是否有草稿
+                $post = Posts::findFirst(
+                    [
+                        "conditions" => "ID = ?1 AND post_status = 'auto-draft'",
+                        "bind"       => [
+                            1 => $postId,
+                        ]
+                    ]
+                );
+
+                if ($post){
+                    $post->post_content = $markdownWord;
+                    $post->post_title = $title ? $title : '无题';
+                    $post->post_date = date('Y-m-d H:i:s', time());
+                    $post->post_date_gmt = gmdate('Y-m-d H:i:s', time());
+                    $post->post_modified = $post->post_date;
+                    $post->post_modified_gmt = $post->post_date_gmt;
+                    if ($post->save()){
+                        $data = [
+                            'post_id' => $postId,
+                            'post_date' => $post->post_date,
+                            'post_url' =>$post->guid
+                        ];
+                    }
+                }else{
+                    // postId = parent
+                    $post = new Posts();
+                    $post->post_author = $this->getUserId();
+                    $post->post_content = $markdownWord;
+                    $post->post_title = $title ? $title : '无题';
+                    $post->comment_status = 'open';
+                    $post->post_parent = $postId;
+                    $post->post_type = 'post';
+                    $post->post_date = date('Y-m-d H:i:s', time());
+                    $post->post_date_gmt = gmdate('Y-m-d H:i:s', time());
+                    $post->post_modified = $post->post_date;
+                    $post->post_modified_gmt = $post->post_date_gmt;
+                    $post->post_status = 'auto-draft';
+                    if ($post->create()){
+                        $postId = $post->ID;
+                        $post = Posts::findFirst($postId);
+                        $post->guid = $this->url->get(['for' => 'article', 'id' => $postId]);
+                        if ($post->save()){
+                            $data = [
+                                'post_id' => $postId,
+                                'post_date' => $post->post_date,
+                                'post_url' =>$post->guid
+                            ];
+                        }
+                    }
+                }
+            }
+            return json_encode(['status' => 'success', 'message' => '保存成功', 'data' => $data], JSON_UNESCAPED_UNICODE);
         }
     }
 

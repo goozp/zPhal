@@ -12,7 +12,14 @@ $router->add('/',
         'action'     => 'index',
     ]
 );
-
+$router->add("/article/{id:[0-9]+}.html",
+    [
+        'module'     => 'frontend',
+        'controller' => 'articles',
+        'action'     => 'index',
+        "id"     => 1,
+    ]
+)->setName('article');
 
 $router->add('/login',
     [

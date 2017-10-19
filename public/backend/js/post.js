@@ -99,18 +99,21 @@ $(function () {
 function autoDraft() {
     var markdownWord = Editormd.getMarkdown();
     var title = $("#title").val();
+    var postId = $("#post_id").val();
 
     if (markdownWord != '') {
         var autoDraftUrl = $("#ajaxUri").val() + 'admin/post/autodraft';
         $.post(
             autoDraftUrl,
-            {markdownWord: markdownWord, title: title},
+            {markdownWord: markdownWord, title: title, postId: postId},
             function (result) {
                 res = JSON.parse(result);
-                $("#post_tag").hide();
+                console.log(res);
                 if (res.status == 'success') {
-                    // TODO
-
+                    // 更新提示
+                    $("#postUrl").html(res.data.post_url);
+                    $("#autoDraftTps").html("上一次自动保存草稿于："+res.data.post_date);
+                    $("#post_id").val(res.data.post_id);
                 } else {
                     alert(res.message);
                 }
