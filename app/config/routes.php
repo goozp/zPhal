@@ -118,6 +118,13 @@ $router->add('/admin/post/save',
         'action'     => 'save',
     ]
 );
+$router->add('/admin/post/autodraft',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'autoSaveDraft',
+    ]
+);
 $router->add('/admin/post/edit/{id:[0-9]+}',
     [
         'module'     => 'admin',

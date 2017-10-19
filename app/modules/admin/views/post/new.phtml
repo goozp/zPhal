@@ -16,7 +16,7 @@
     <div class="row">
         <form action="<?= $this->url->get("admin/post/save"); ?>" method="post">
             <div class="form-group col-md-12">
-                <input class="form-control" type="text" name="title" placeholder="输入标题">
+                <input class="form-control" id="title" type="text" name="title" placeholder="输入标题">
             </div>
 
             <div class="form-group col-md-12">
@@ -73,6 +73,7 @@
 
 
                                     <div class="box-footer">
+                                        <input type="hidden" id="ajaxUri" value="<?= $ajaxUri ?>">
                                         <button type="submit" name="submitWay" value="draft" class="btn btn-default">保存草稿</button>
                                         <button type="submit" name="submitWay" value="publish"  class="btn btn-info pull-right">发布</button>
                                     </div>
@@ -111,7 +112,6 @@
                                                     <div class="col-xs-7">
                                                         <div class="input-group">
                                                             <input type="text" class="form-control" id="newCategory" placeholder="分类名称">
-                                                            <input type="hidden" id="quickAddUrlCategory" value="<?= $quickAddUrl ?>/category">
                                                             <span class="input-group-btn">
                                                       <button type="button" id="addNewCategory" class="btn btn-info btn-flat">添加</button>
                                                     </span>
@@ -153,7 +153,6 @@
                                                 <label>添加新标签</label>
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" id="newTag" placeholder="标签名称">
-                                                    <input type="hidden" id="quickAddUrlTag" value="<?= $quickAddUrl ?>/tag">
                                                     <span class="input-group-btn">
                                                 <button type="button" id="addNewTag" class="btn btn-info btn-flat">添加</button>
                                             </span>

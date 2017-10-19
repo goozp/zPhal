@@ -68,7 +68,7 @@ class PostController extends ControllerBase
                 "categoryTreeNbsp" => treeHtml($categoryTree, 'term_taxonomy_id', 'name'),
                 "tags" => $tags,
                 "subjectTree" => treeHtml($subjectsTree, 'subject_id', 'subject_name'),
-                "quickAddUrl" => $this->url->get('admin/post/quickAddTaxonomy')
+                "ajaxUri" => $this->url->getBaseUri(),
             ]
         );
     }
@@ -83,7 +83,7 @@ class PostController extends ControllerBase
             $submitWay = $this->request->getPost('submitWay', 'string');
 
             // 获取表单数据
-            $title = $this->request->getPost('title');
+            $title = $this->request->getPost('title', 'trim');
             $mr_content = $this->request->getPost('mr_content');
             $cover_image = $this->request->getPost('cover_image');
             // 以下需要判断
@@ -167,6 +167,14 @@ class PostController extends ControllerBase
         }
         $this->flash->error("错误操作!");
         return $this->response->redirect("admin/");
+    }
+
+    // TODO
+    public function autoSaveDraftAction(){
+        if ($this->request->isPost()) {
+            $markdownWord = $this->request->getPost('markdownWord');
+            $title = $this->request->getPost('title', 'trim');
+        }
     }
 
     /**
