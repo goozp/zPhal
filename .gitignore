@@ -1,4 +1,4 @@
-/cache/*
-/config/development/
 .idea
+/cache/*
 /public/uploads/*
+/app/common/vendor/**/.git
