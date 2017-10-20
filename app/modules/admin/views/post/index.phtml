@@ -15,42 +15,58 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h5>
-                        <a href="">全部</a> |
-                        <a href="">已发布</a> |
-                        <a href="">草稿</a> |
-                        <a href="">回收站</a>
-                    </h5>
-                    当前: 全部
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default">切换</button>
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">全部</a></li>
-                            <li><a href="#">已发布</a></li>
-                            <li><a href="#">草稿</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">回收站</a></li>
-                        </ul>
-                    </div>
-
-
-                    <div class="box-tools">
-                        <form action="<?= $this->url->get(""); ?>" method="POST">
-                            <div class="input-group" style="width: 150px;">
-                                <input type="text" name="user_search" class="form-control pull-right" placeholder="搜索" value="">
-
-                                <div class="input-group-btn">
-                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    <form action="<?= $this->url->get(""); ?>" method="POST">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <span class="input-group">
+                                        <a href="">全部</a> |
+                                        <a href="">已发布</a> |
+                                        <a href="">草稿</a> |
+                                        <a href="">回收站</a>
+                                    </span>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <div class="input-group">
+                                        <select class="form-control">
+                                                <option>批量操作</option>
+                                                <option>移至回收站</option>
+                                        </select>
+                                        <div class="input-group-btn">
+                                            <button id="add-new-event" type="button" class="btn btn-default btn-flat">应用</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">分类</span>
+                                        <select class="form-control">
+                                            <option>1231231231</option>
+                                        </select>
+                                        <div class="input-group-btn">
+                                            <button id="add-new-event" type="button" class="btn btn-default btn-flat">筛选</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-2">
+                                    <div class="input-group">
+                                        <input type="text" name="user_search" class="form-control pull-right" placeholder="搜索" value="">
+
+                                        <div class="input-group-btn">
+                                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <!-- /.box-header -->
+               
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
