@@ -29,6 +29,21 @@ class PostController extends ControllerBase
     public function indexAction()
     {
         $this->tag->prependTitle("文章列表 - ");
+
+        $postService = container(PostService::class);
+        $static = $postService->staticPost('post');
+        print_r($static);
+        
+        $dateSection = $postService->getDateSection('post');
+        print_r($dateSection);
+        exit;
+
+        $this->view->setVars(
+            [
+                "static" => $static,
+                "dateSection" => $dateSection,
+            ]
+        );
     }
 
     /**
