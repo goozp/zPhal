@@ -30,14 +30,13 @@ class PostController extends ControllerBase
     {
         $this->tag->prependTitle("文章列表 - ");
 
+        // 数目统计
         $postService = container(PostService::class);
         $static = $postService->staticPost('post');
-        print_r($static);
-        
+       
+        // 结果集时间区间
         $dateSection = $postService->getDateSection('post');
-        print_r($dateSection);
-        exit;
-
+      
         $this->view->setVars(
             [
                 "static" => $static,

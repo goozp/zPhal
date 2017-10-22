@@ -28,13 +28,17 @@ class PostService extends AbstractService
         )->toArray();
     }
 
-    
+    /**
+     * 根据post类型获取post统计数量
+     * @param $type
+     * @return mixed
+     */
     public function staticPost($postType)
     {
         $modelsManager = $this->di->get('modelsManager') ?: container('modelsManager');
         
         $count = $modelsManager->executeQuery(
-            "SELECT post_type, sum(case post_status when 'publish' then 1 else 0 end) AS publish_num,
+            "SELECT sum(case post_status when 'publish' then 1 else 0 end) AS publish_num,
             sum(case post_status when 'draft' then 1 else 0 end) AS draft_num,
             sum(case post_status when 'auto-draft' then 1 else 0 end) AS autodraft_num,
             sum(case post_status when 'trash' then 1 else 0 end) AS trash_num
@@ -49,7 +53,7 @@ class PostService extends AbstractService
     }
 
     /**
-     * 获取结果的时间区间(格式年-月 '%Y-%m')
+     * 根据post类型获取所有结果的时间区间(格式:年-月 '%Y-%m')
      * @param $type
      * @return mixed
      */

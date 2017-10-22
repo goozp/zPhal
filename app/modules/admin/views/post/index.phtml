@@ -20,10 +20,12 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <span class="input-group">
-                                        <a href="">全部 <?= $static ?></a> |
-                                        <a href="">已发布</a> |
-                                        <a href="">草稿</a> |
-                                        <a href="">回收站</a>
+                                        <div class="form-control no-border ">
+                                            <a href="" class="">全部 (<?= array_sum($static) ?>) </a> &nbsp;|&nbsp;
+                                            <a href="">已发布 (<?= $static['publish_num'] ?>) </a> &nbsp;|&nbsp;
+                                            <a href="">草稿 (<?= $static['draft_num']+$static['autodraft_num'] ?>) </a> &nbsp;|&nbsp;
+                                            <a href="">回收站 (<?= $static['trash_num'] ?>) </a>
+                                        </div>
                                     </span>
                                 </div>
                             </div>
@@ -43,9 +45,13 @@
 
                                 <div class="col-xs-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">分类</span>
+                                        <span class="input-group-addon bg-gray">分类</span>
+                                        <select class="form-control col-xs-1">
+                                            <option>所有分类</option>
+                                        </select>
+                                        <span class="input-group-addon bg-gray">日期</span>
                                         <select class="form-control">
-                                            <option>1231231231</option>
+                                            <option>全部日期</option>
                                         </select>
                                         <div class="input-group-btn">
                                             <button id="add-new-event" type="button" class="btn btn-default btn-flat">筛选</button>
