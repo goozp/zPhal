@@ -13,59 +13,77 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
+            <ul class="nav nav-pills " role="tablist">
+                <li role="presentation" class="<?php if ($activeShow == 'all') echo 'bg-gray-active' ?>">
+                    <a href="<?= $this->url->get(["for"=>"list-article","params"=>'all']); ?>">全部 <span class="badge"><?= array_sum($static) ?></span></a>
+                </li>
+                <li role="presentation" class="<?php if ($activeShow == 'publish') echo 'bg-gray-active' ?>">
+                    <a href="<?= $this->url->get(["for"=>"list-article","params"=>'publish']); ?>">已发布 <span class="badge"><?= $static['publish_num'] ?></span></a>
+                </li>
+                <li role="presentation" class="<?php if ($activeShow == 'draft') echo 'bg-gray-active' ?>">
+                    <a href="<?= $this->url->get(["for"=>"list-article","params"=>'draft']); ?>">草稿 <span class="badge"><?= $static['draft_num']+$static['autodraft_num'] ?></span></a>
+                </li>
+                <li role="presentation" class="<?php if ($activeShow == 'trash') echo 'bg-gray-active' ?>">
+                    <a href="<?= $this->url->get(["for"=>"list-article","params"=>'trash']); ?>">回收站 <span class="badge"><?= $static['trash_num'] ?></span></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <form action="<?= $this->url->get(""); ?>" method="POST">
-                        <div class="col-xs-12">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <span class="input-group">
-                                        <div class="form-control no-border ">
-                                            <a href="" class="">全部 (<?= array_sum($static) ?>) </a> &nbsp;|&nbsp;
-                                            <a href="">已发布 (<?= $static['publish_num'] ?>) </a> &nbsp;|&nbsp;
-                                            <a href="">草稿 (<?= $static['draft_num']+$static['autodraft_num'] ?>) </a> &nbsp;|&nbsp;
-                                            <a href="">回收站 (<?= $static['trash_num'] ?>) </a>
-                                        </div>
-                                    </span>
+                    <form action="<?= $this->url->get(["for"=>"list-article","params"=>$activeShow]); ?>" method="POST">
+
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <div class="input-group">
+                                    <select class="form-control">
+                                        <option>批量操作</option>
+                                        <option>移至回收站</option>
+                                    </select>
+                                    <div class="input-group-btn">
+                                        <button id="add-new-event" type="button" class="btn btn-default btn-flat">应用</button>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-xs-2">
-                                    <div class="input-group">
-                                        <select class="form-control">
-                                                <option>批量操作</option>
-                                                <option>移至回收站</option>
-                                        </select>
+                            <div class="col-xs-8">
+                                <div class="row">
+                                    <div class="col-xs-3 col-xs-offset-1">
                                         <div class="input-group-btn">
-                                            <button id="add-new-event" type="button" class="btn btn-default btn-flat">应用</button>
+                                            <select class="form-control" name="categorySelected">
+                                                <?= $categoryTree; ?>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-xs-3">
+                                        <div class="input-group-btn">
+                                            <select class="form-control" name="dateSelected">
+                                                <option value="0">全部日期</option>
+                                                <?php
+                                                foreach ($dateSection as $date){ ?>
+                                                    <option value="<?= $date['year_month'] ?>" <?php if ($dateSelected == $date['year_month']) echo 'selected'; ?>><?= $date['year_month'] ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-3">
+                                        <div class="input-group">
+                                            <button id="add-new-event" type="submit" class="btn btn-default btn-flat">筛选</button>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-xs-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon bg-gray">分类</span>
-                                        <select class="form-control col-xs-1">
-                                            <option>所有分类</option>
-                                        </select>
-                                        <span class="input-group-addon bg-gray">日期</span>
-                                        <select class="form-control">
-                                            <option>全部日期</option>
-                                        </select>
-                                        <div class="input-group-btn">
-                                            <button id="add-new-event" type="button" class="btn btn-default btn-flat">筛选</button>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-xs-2">
+                                <div class="input-group">
+                                    <input type="text" name="user_search" class="form-control pull-right" placeholder="标题关键字" value="<?= $search ?>">
 
-                                <div class="col-xs-2">
-                                    <div class="input-group">
-                                        <input type="text" name="user_search" class="form-control pull-right" placeholder="搜索" value="">
-
-                                        <div class="input-group-btn">
-                                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                        </div>
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -81,23 +99,45 @@
                                 <th>作者</th>
                                 <th>分类目录</th>
                                 <th>标签</th>
-                                <th>评论</th>
+                                <th>评论 <i class="fa fa-comment"></i></th>
                                 <th>日期</th>
                                 <th>阅读量</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>
+                        <?php
+                        $result = $pager->getIterator();
+                        if (count($result)){
+                            foreach ($result as $v){
+                                ?>
+                                <tr>
+                                    <td><?= $v->post_title ?></td>
+                                    <td><?= $v->display_name ?></td>
+                                    <td><?= $v->terms ?></td>
+                                    <td></td>
+                                    <td><?php
+                                        if ($v->comment_count >0){
+                                            echo $v->comment_count.' <a href=""><i class="fa fa-commenting"></i></a>';
+                                        }else{
+                                            echo $v->comment_count;
+                                        }
+                                        ?>
+                                    </td>
+                                    <td><?= $v->post_date ?></td>
+                                    <td><?= $v->view_count ?></td>
+                                    <td>
+                                        <a type="button" class="btn btn-xs bg-purple"><i class="fa fa-edit"></i> 编辑</a>
+                                        <a type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i> 移到回收站</a>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                        }else{ ?>
                             <tr>
-                                <td>Other browsers</td>
-                                <td>All others</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>U</td>
-                                <td>U</td>
-                                <td>U</td>
-                                <td>U</td>
+                                <td colspan="8" class="text-center">无</td>
                             </tr>
+                        <?php } ?>
                         </tbody>
                         <tfoot>
                             <tr>
@@ -113,7 +153,12 @@
                         </tfoot>
                     </table>
                 </div>
-                <!-- /.box-body -->
+
+                <div class="box-footer clearfix">
+                    <?php if ($pager->haveToPaginate()){
+                        echo $pager->getLayout();
+                    } ?>
+                </div>
             </div>
         </div>
     </div>

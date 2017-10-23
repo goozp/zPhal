@@ -11,6 +11,7 @@ use ZPhal\Models\TermRelationships;
 use ZPhal\Models\Terms;
 use ZPhal\Models\TermTaxonomy;
 use Phalcon\Paginator\Adapter\NativeArray as PaginatorArray;
+use Phalcon\Paginator\Adapter\QueryBuilder as PaginatorQueryBuilder;
 use ZPhal\Modules\Admin\Library\Paginator\Pager;
 
 
@@ -26,21 +27,38 @@ class PostController extends ControllerBase
         parent::initialize();
     }
 
-    public function indexAction()
+    public function indexAction($show = 'all')
     {
         $this->tag->prependTitle("文章列表 - ");
+
+        $currentPage = $this->request->getQuery('page', 'int'); // GET
+        $categorySelected  = $this->request->getPost('categorySelected', 'int'); // POST
+        $dateSelected  = $this->request->getPost('dateSelected'); // POST
+        $search  = $this->request->getPost('user_search', ['string','trim']); // POST
 
         // 数目统计
         $postService = container(PostService::class);
         $static = $postService->staticPost('post');
-       
+
+        // 分类列表
+        $category = $postService->getTaxonomyListByType('category');
+        $categoryTree = makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
+
         // 结果集时间区间
         $dateSection = $postService->getDateSection('post');
-      
+
+        // 数据列表
+        $pager = $postService->getPostListByType('post', $show, $currentPage, $search);
+
         $this->view->setVars(
             [
+                "activeShow" => $show,
                 "static" => $static,
+                "categoryTree" => treeHtml($categoryTree, 'term_taxonomy_id', 'name', '<option value="0">所有分类</option>', 0, $categorySelected),
                 "dateSection" => $dateSection,
+                'pager'=>$pager,
+                'search' => $search,
+                'dateSelected' => $dateSelected,
             ]
         );
     }

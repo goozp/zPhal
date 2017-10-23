@@ -104,13 +104,14 @@ $router->add('/admin/subject/delete/{id:[0-9]+}',
 )->setName('delete-subject');
 
 /* post */
-$router->add('/admin/post',
+$router->add('/admin/post/:params',
     [
         'module'     => 'admin',
         'controller' => 'post',
         'action'     => 'index',
+        'params'       => 1
     ]
-);
+)->setName('list-article');
 $router->add('/admin/post/new',
     [
         'module'     => 'admin',
