@@ -80,7 +80,8 @@ class PostService extends AbstractService
             "SELECT DATE_FORMAT(post_date,'%Y-%m') AS year_month
             FROM ZPhal\Models\Posts
             WHERE post_type = :posttype: 
-            GROUP BY year_month",
+            GROUP BY year_month 
+            ORDER BY year_month DESC",
             [
                 'posttype' => $postType
             ]
@@ -141,7 +142,7 @@ class PostService extends AbstractService
             new PaginatorQueryBuilder(
                 [
                     'builder' => $builder,
-                    'limit'   => 15,
+                    'limit'   => 20,
                     'page'    => $currentPage,
                 ]
             ),
