@@ -32,7 +32,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <form action="<?= $this->url->get(["for"=>"list-article","params"=>$activeShow]); ?>" method="POST">
+                    <form action="<?= $this->url->get(["for"=>"list-article","params"=>$activeShow]); ?>" method="get">
 
                         <div class="row">
                             <div class="col-xs-2">
@@ -80,7 +80,7 @@
 
                             <div class="col-xs-2">
                                 <div class="input-group">
-                                    <input type="text" name="user_search" class="form-control pull-right" placeholder="标题关键字" value="<?= $search ?>">
+                                    <input type="text" name="search" class="form-control pull-right" placeholder="标题关键字" value="<?= $search ?>">
 
                                     <div class="input-group-btn">
                                         <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
@@ -112,7 +112,11 @@
                             foreach ($result as $v){
                                 ?>
                                 <tr>
-                                    <td><?= $v->post_title ?></td>
+                                    <td>
+                                        <a href=""><?= $v->post_title ?></a>
+                                        <?php if ($v->post_status == 'draft') echo ' — 草稿';
+                                        elseif($v->post_status == 'auto-draft') echo ' — 自动草稿'; ?>
+                                    </td>
                                     <td><?= $v->display_name ?></td>
                                     <td><?= $v->terms ?></td>
                                     <td></td>

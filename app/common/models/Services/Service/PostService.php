@@ -87,19 +87,26 @@ class PostService extends AbstractService
         )->toArray();
     }
 
-    public function getPostListByType($type, $show, $currentPage, $search)
+    public function getPostListByType($type, $show, $currentPage, $condition)
     {
         // sql builder
         $builder = self::$modelsManager->createBuilder()
-            // TODO Terms 标签 分类的查询
-            ->columns("p.ID, p.post_title, p.post_author, p.post_date, p.comment_count, p.view_count, u.display_name,
-                       group_concat( t.name ) terms ")
+            ->columns("p.ID, p.post_title, p.post_status, p.post_author, p.post_date, p.comment_count, p.view_count, u.display_name,
+                       GROUP_CONCAT( t.name, tt.taxonomy ) terms")
             ->from(['p' => 'ZPhal\Models\Posts'])
             ->leftJoin('ZPhal\Models\Users', 'u.ID = p.post_author', "u")
             ->leftJoin('ZPhal\Models\TermRelationships', 'ts.object_id = p.ID', 'ts')
             ->leftJoin('ZPhal\Models\TermTaxonomy', 'tt.term_taxonomy_id = ts.term_taxonomy_id', 'tt')
             ->leftJoin('ZPhal\Models\Terms', 't.term_id = tt.term_id', 't')
-            ->where("post_type = '{$type}'");
+            ->where("p.post_type = :type:", ["type" => $type]);
+
+        if ($condition['categorySelected']){
+            $builder->andWhere("tt.term_taxonomy_id = :categorySelected:", [ "categorySelected" => $condition['categorySelected']]);
+        }
+
+        if ($condition['dateSelected']){
+            $builder->andWhere("DATE_FORMAT(p.post_date,'%Y-%m') = :dateSelected:", ["dateSelected" => $condition['dateSelected']]);
+        }
 
         switch ($show){
             case 'all':
@@ -117,11 +124,17 @@ class PostService extends AbstractService
                 break;
         }
 
-        if (isset($search)){
-            $builder->andWhere("p.post_title LIKE :title:", ["title" => "%" . $search . "%"]);
+        if (!empty($condition['search'])){
+            $builder->andWhere("p.post_title LIKE :title:", ["title" => "%" . $condition['search'] . "%"]);
         }
         $builder->groupBy("p.ID");
-        $builder->orderBy('p.ID');
+        $builder->orderBy('p.ID desc');
+
+        // 分页额外url传参
+        $urlMask = '?page={%page_number}';
+        foreach ($condition as $key => $value){
+            $urlMask .= '&'.$key.'='.$value;
+        }
 
         // 分页查询
         return $pager = new Pager(
@@ -135,7 +148,7 @@ class PostService extends AbstractService
             [
                 'layoutClass' => 'ZPhal\Modules\Admin\Library\Paginator\Pager\Layout\Bootstrap', // 样式类
                 'rangeLength' => 5, // 分页长度
-                'urlMask'     => '?page={%page_number}', // 额外url传参
+                'urlMask'     => $urlMask, // 额外url传参
             ]
         );
     }

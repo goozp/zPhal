@@ -108,7 +108,6 @@ function autoDraft() {
             {markdownWord: markdownWord, title: title, postId: postId},
             function (result) {
                 res = JSON.parse(result);
-                console.log(res);
                 if (res.status == 'success') {
                     // 更新提示
                     $("#postUrl").html(res.data.post_url);

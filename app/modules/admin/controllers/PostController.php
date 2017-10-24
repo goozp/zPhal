@@ -32,9 +32,9 @@ class PostController extends ControllerBase
         $this->tag->prependTitle("文章列表 - ");
 
         $currentPage = $this->request->getQuery('page', 'int'); // GET
-        $categorySelected  = $this->request->getPost('categorySelected', 'int'); // POST
-        $dateSelected  = $this->request->getPost('dateSelected'); // POST
-        $search  = $this->request->getPost('user_search', ['string','trim']); // POST
+        $categorySelected  = $this->request->get('categorySelected', 'int'); // POST
+        $dateSelected  = $this->request->get('dateSelected'); // POST
+        $search  = $this->request->get('search', ['string','trim']); // POST
 
         // 数目统计
         $postService = container(PostService::class);
@@ -48,7 +48,37 @@ class PostController extends ControllerBase
         $dateSection = $postService->getDateSection('post');
 
         // 数据列表
-        $pager = $postService->getPostListByType('post', $show, $currentPage, $search);
+        $condition = [
+            'categorySelected' => $categorySelected,
+            'dateSelected' => $dateSelected,
+            'search' => $search
+        ];
+        $pager = $postService->getPostListByType('post', $show, $currentPage, $condition);
+
+        $items = $pager->getIterator();
+        if ($items){
+            foreach ($items as $k => $v){
+
+                $cateStr = '';
+                $tagStr = '';
+
+                $termsArr = explode(',', $v['terms']);
+                foreach ($termsArr as $v2){
+                    if ($cate = strstr($v2, 'category', true)){
+                        $cateStr .= $cate.',';
+                    }elseif($tag = strstr($v2, 'tag', true)){
+                        $tagStr .= $tag.',';
+                    }
+                }
+                $items->$k->cateStr = substr($cateStr, 0, -1);
+                $items->$k->tagStr = substr($tagStr, 0, -1);
+            }
+        }else{
+            $result = 0;
+        }
+
+        // TODO 
+        print_r($items);exit;
 
         $this->view->setVars(
             [
@@ -56,9 +86,9 @@ class PostController extends ControllerBase
                 "static" => $static,
                 "categoryTree" => treeHtml($categoryTree, 'term_taxonomy_id', 'name', '<option value="0">所有分类</option>', 0, $categorySelected),
                 "dateSection" => $dateSection,
-                'pager'=>$pager,
-                'search' => $search,
                 'dateSelected' => $dateSelected,
+                'search' => $search,
+                'pager'=>$pager,
             ]
         );
     }
