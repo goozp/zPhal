@@ -22,7 +22,7 @@
         "ext-mbstring": "*",
         "ext-iconv": "*",
         "ext-json": "*",
-        "ext-phalcon": "~3.0"
-
+        "ext-phalcon": "~3.0",
+        "erusev/parsedown": "^1.6"
     }
 }

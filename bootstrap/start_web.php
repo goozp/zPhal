@@ -11,6 +11,9 @@ define('THEMES_PATH', BASE_PATH . '/public/themes');
 
 try {
 
+    // Register The Composer Auto Loader
+    require BASE_PATH . '/vendor/autoload.php';
+
     /**
      * The FactoryDefault Dependency Injector automatically registers the services that
      * provide a full stack framework. These default services can be overidden with custom ones.
