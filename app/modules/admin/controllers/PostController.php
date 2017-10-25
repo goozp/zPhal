@@ -11,7 +11,6 @@ use ZPhal\Models\TermRelationships;
 use ZPhal\Models\Terms;
 use ZPhal\Models\TermTaxonomy;
 use Phalcon\Paginator\Adapter\NativeArray as PaginatorArray;
-use Phalcon\Paginator\Adapter\QueryBuilder as PaginatorQueryBuilder;
 use ZPhal\Modules\Admin\Library\Paginator\Pager;
 
 
@@ -27,14 +26,18 @@ class PostController extends ControllerBase
         parent::initialize();
     }
 
+    /**
+     * 文章列表
+     * @param string $show
+     */
     public function indexAction($show = 'all')
     {
         $this->tag->prependTitle("文章列表 - ");
 
         $currentPage = $this->request->getQuery('page', 'int'); // GET
-        $categorySelected  = $this->request->get('categorySelected', 'int'); // POST
-        $dateSelected  = $this->request->get('dateSelected'); // POST
-        $search  = $this->request->get('search', ['string','trim']); // POST
+        $categorySelected = $this->request->get('categorySelected', 'int'); // POST
+        $dateSelected = $this->request->get('dateSelected'); // POST
+        $search = $this->request->get('search', ['string', 'trim']); // POST
 
         // 数目统计
         $postService = container(PostService::class);
@@ -55,30 +58,27 @@ class PostController extends ControllerBase
         ];
         $pager = $postService->getPostListByType('post', $show, $currentPage, $condition);
 
+        // 获取分类,标签
         $items = $pager->getIterator();
-        if ($items){
-            foreach ($items as $k => $v){
-
+        if ($items) {
+            $str = [];
+            foreach ($items as $k => $v) {
                 $cateStr = '';
                 $tagStr = '';
 
                 $termsArr = explode(',', $v['terms']);
-                foreach ($termsArr as $v2){
-                    if ($cate = strstr($v2, 'category', true)){
-                        $cateStr .= $cate.',';
-                    }elseif($tag = strstr($v2, 'tag', true)){
-                        $tagStr .= $tag.',';
+                foreach ($termsArr as $v2) {
+                    if ($cate = strstr($v2, 'category', true)) {
+                        $cateStr .= $cate . ',';
+                    } elseif ($tag = strstr($v2, 'tag', true)) {
+                        $tagStr .= $tag . ',';
                     }
                 }
-                $items->$k->cateStr = substr($cateStr, 0, -1);
-                $items->$k->tagStr = substr($tagStr, 0, -1);
-            }
-        }else{
-            $result = 0;
-        }
 
-        // TODO
-        print_r($items);exit;
+                $str[$k]['cateStr'] = substr($cateStr, 0, -1);
+                $str[$k]['tagStr'] = substr($tagStr, 0, -1);
+            }
+        }
 
         $this->view->setVars(
             [
@@ -88,7 +88,8 @@ class PostController extends ControllerBase
                 "dateSection" => $dateSection,
                 'dateSelected' => $dateSelected,
                 'search' => $search,
-                'pager'=>$pager,
+                'pager' => $pager,
+                'str' => $str
             ]
         );
     }
@@ -141,6 +142,7 @@ class PostController extends ControllerBase
      */
     public function saveAction()
     {
+
         if ($this->request->isPost()) {
             $submitWay = $this->request->getPost('submitWay', 'string');
 
@@ -156,9 +158,9 @@ class PostController extends ControllerBase
             $tags = $this->request->getPost('tags');
             $subject = $this->request->getPost('subject');
 
-            if ($postId == 0){
+            if ($postId == 0) {
                 $post = new Posts();
-            }else{
+            } else {
                 $post = Posts::findFirst($postId);
             }
 
@@ -211,8 +213,8 @@ class PostController extends ControllerBase
                 }
 
                 // TODO TermRelationships 计数++ 和 --
-                $termRelationShip = new TermRelationships();
                 foreach ($categories as $item) {
+                    $termRelationShip = new TermRelationships();
                     $termRelationShip->object_id = $post->ID;
                     $termRelationShip->term_taxonomy_id = $item;
                     $termRelationShip->create();
@@ -239,11 +241,16 @@ class PostController extends ControllerBase
         return $this->response->redirect("admin/");
     }
 
+    public function editAction(){
+
+    }
+
     /**
      * 自动保存草稿
      * @return string
      */
-    public function autoSaveDraftAction(){
+    public function autoSaveDraftAction()
+    {
         if ($this->request->isPost()) {
             $markdownWord = $this->request->getPost('markdownWord');
             $title = $this->request->getPost('title', 'trim');
@@ -251,7 +258,7 @@ class PostController extends ControllerBase
 
 
             // 没有草稿
-            if ($postId == 0){
+            if ($postId == 0) {
                 $post = new Posts();
                 $post->post_author = $this->getUserId();
                 $post->post_content = $markdownWord;
@@ -264,44 +271,44 @@ class PostController extends ControllerBase
                 $post->post_modified = $post->post_date;
                 $post->post_modified_gmt = $post->post_date_gmt;
                 $post->post_status = 'auto-draft';
-                if ($post->create()){
+                if ($post->create()) {
                     $postId = $post->ID;
                     $post = Posts::findFirst($postId);
                     $post->guid = $this->url->get(['for' => 'article', 'id' => $postId]);
-                    if ($post->save()){
+                    if ($post->save()) {
                         $data = [
                             'post_id' => $postId,
                             'post_date' => $post->post_date,
-                            'post_url' =>$post->guid
+                            'post_url' => $post->guid
                         ];
                     }
                 }
-            }else{
+            } else {
                 // 检查是否有草稿
                 $post = Posts::findFirst(
                     [
                         "conditions" => "ID = ?1 AND post_status = 'auto-draft'",
-                        "bind"       => [
+                        "bind" => [
                             1 => $postId,
                         ]
                     ]
                 );
 
-                if ($post){
+                if ($post) {
                     $post->post_content = $markdownWord;
                     $post->post_title = $title ? $title : '无题';
                     $post->post_date = date('Y-m-d H:i:s', time());
                     $post->post_date_gmt = gmdate('Y-m-d H:i:s', time());
                     $post->post_modified = $post->post_date;
                     $post->post_modified_gmt = $post->post_date_gmt;
-                    if ($post->save()){
+                    if ($post->save()) {
                         $data = [
                             'post_id' => $postId,
                             'post_date' => $post->post_date,
-                            'post_url' =>$post->guid
+                            'post_url' => $post->guid
                         ];
                     }
-                }else{
+                } else {
                     // postId = parent
                     $post = new Posts();
                     $post->post_author = $this->getUserId();
@@ -315,15 +322,15 @@ class PostController extends ControllerBase
                     $post->post_modified = $post->post_date;
                     $post->post_modified_gmt = $post->post_date_gmt;
                     $post->post_status = 'auto-draft';
-                    if ($post->create()){
+                    if ($post->create()) {
                         $postId = $post->ID;
                         $post = Posts::findFirst($postId);
                         $post->guid = $this->url->get(['for' => 'article', 'id' => $postId]);
-                        if ($post->save()){
+                        if ($post->save()) {
                             $data = [
                                 'post_id' => $postId,
                                 'post_date' => $post->post_date,
-                                'post_url' =>$post->guid
+                                'post_url' => $post->guid
                             ];
                         }
                     }

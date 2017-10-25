@@ -1,4 +1,5 @@
 .idea
+.phalcon
+vendor/
 /cache/*
 /public/uploads/*
-/app/common/vendor/**/.git

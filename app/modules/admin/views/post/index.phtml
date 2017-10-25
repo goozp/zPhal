@@ -109,17 +109,17 @@
                         <?php
                         $result = $pager->getIterator();
                         if (count($result)){
-                            foreach ($result as $v){
+                            foreach ($result as $k => $v){
                                 ?>
                                 <tr>
                                     <td>
-                                        <a href=""><?= $v->post_title ?></a>
+                                        <a href="<?= $this->url->get(["for" => "edit-post", "id" => $v->ID]); ?>"><?= $v->post_title ?></a>
                                         <?php if ($v->post_status == 'draft') echo ' — 草稿';
                                         elseif($v->post_status == 'auto-draft') echo ' — 自动草稿'; ?>
                                     </td>
                                     <td><?= $v->display_name ?></td>
-                                    <td><?= $v->terms ?></td>
-                                    <td></td>
+                                    <td><?= $str[$k]['cateStr'] ?></td>
+                                    <td><?= $str[$k]['tagStr'] ?></td>
                                     <td><?php
                                         if ($v->comment_count >0){
                                             echo $v->comment_count.' <a href=""><i class="fa fa-commenting"></i></a>';
@@ -131,8 +131,8 @@
                                     <td><?= $v->post_date ?></td>
                                     <td><?= $v->view_count ?></td>
                                     <td>
-                                        <a type="button" class="btn btn-xs bg-purple"><i class="fa fa-edit"></i> 编辑</a>
-                                        <a type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i> 移到回收站</a>
+                                        <a href="<?= $this->url->get(["for" => "edit-post", "id" => $v->ID]); ?>" class="btn btn-xs bg-purple"><i class="fa fa-edit"></i> 编辑</a>
+                                        <a class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i> 移到回收站</a>
                                     </td>
                                 </tr>
                                 <?php
