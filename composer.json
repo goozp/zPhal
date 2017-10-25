@@ -24,5 +24,11 @@
         "ext-json": "*",
         "ext-phalcon": "~3.0",
         "vlucas/phpdotenv": "^2.4"
+    },
+    "autoload": {
+        "files": [
+            "app/common/helpers/basic.php",
+            "app/common/helpers/functions.php"            
+        ]
     }
 }

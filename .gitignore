@@ -1,7 +1,6 @@
 .idea
 .phalcon
 
-/cache/*
 /public/uploads/*
 /public/robots.txt
 /public/sitemap.xml

@@ -18,7 +18,7 @@
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\Application;
 
-error_reporting(E_ALL);
+error_reporting(E_ALL); // testing use
 
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
@@ -26,14 +26,17 @@ define('THEMES_PATH', BASE_PATH . '/public/themes');
 
 try {
 
-    // Register The Composer Auto Loader
-    require BASE_PATH . '/vendor/autoload.php';
-
     /**
      * The FactoryDefault Dependency Injector automatically registers the services that
      * provide a full stack framework. These default services can be overidden with custom ones.
      */
     $di = new FactoryDefault();
+
+    /**
+     * 应用部署环境
+     */
+    $environment = env('APP_ENV', 'development');
+    defined('APPLICATION_ENV') || define('APPLICATION_ENV', $environment);
 
     /**
      * Include general services

@@ -1,38 +1,19 @@
 <?php
+
 /*
-  +------------------------------------------------------------------------+
-  | ZPhal 辅助函数                                                          |
-  +------------------------------------------------------------------------+
-  | Copyright (c) 2017 ZPhal                                               |
-  +------------------------------------------------------------------------+
+ +------------------------------------------------------------------------+
+ | ZPhal                                                                  |
+ +------------------------------------------------------------------------+
+ | Copyright (c) 2017 ZPhal Team and contributors                         |
+ +------------------------------------------------------------------------+
+ | This source file is subject to the New BSD License that is bundled     |
+ | with this package in the file docs/LICENSE.txt.                        |
+ |                                                                        |
+ | If you did not receive a copy of the license and are unable to         |
+ | obtain it through the world-wide-web, please send an email             |
+ | to gzp@goozp.com so we can send you a copy immediately.                |
+ +------------------------------------------------------------------------+
 */
-
-use Phalcon\Di;
-
-if (!function_exists('container')) {
-    /**
-     * 唤醒默认依赖注入容器
-     *
-     * @param  mixed
-     * @return mixed|\Phalcon\DiInterface
-     */
-    function container()
-    {
-        $default = Di::getDefault();
-
-        $args = func_get_args();
-
-        if (empty($args)) {
-            return $default;
-        }
-
-        if (!$default) {
-            trigger_error('Unable to resolve Dependency Injection container.', E_USER_ERROR);
-        }
-
-        return call_user_func_array([$default, 'getShared'], $args);
-    }
-}
 
 if (!function_exists('makeTree')) {
     /**

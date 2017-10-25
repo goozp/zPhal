@@ -26,7 +26,10 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 
 // 加载环境配置
 try {
-    (new Dotenv\Dotenv(dirname(app_path())))->load();
+    $envConfig = new Dotenv\Dotenv(dirname(app_path()));
+    $envConfig->load();
 } catch (Dotenv\Exception\InvalidPathException $e) {
-    // Skip
+    
 }
+
+require '../bootstrap/bootstrap.php';
