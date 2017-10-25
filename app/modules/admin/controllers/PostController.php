@@ -77,7 +77,7 @@ class PostController extends ControllerBase
             $result = 0;
         }
 
-        // TODO 
+        // TODO
         print_r($items);exit;
 
         $this->view->setVars(
