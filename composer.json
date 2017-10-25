@@ -23,6 +23,6 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "ext-phalcon": "~3.0",
-        "erusev/parsedown": "^1.6"
+        "vlucas/phpdotenv": "^2.4"
     }
 }
