@@ -32,7 +32,7 @@ if (!function_exists('value')) {
 
 if (!function_exists('env')) {
     /**
-     * 获取环境配置文件的值
+     * 获取环境变量值
      *
      * @param  string $key
      * @param  mixed  $default
@@ -80,19 +80,6 @@ if (!function_exists('container')) {
         }
 
         return call_user_func_array([$default, 'getShared'], $args);
-    }
-}
-
-if (!function_exists('app_path')) {
-    /**
-     * Get the application path.
-     *
-     * @param  string $path
-     * @return string
-     */
-    function app_path($path = '')
-    {
-        return dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . ($path ? DIRECTORY_SEPARATOR . $path : $path);
     }
 }
 

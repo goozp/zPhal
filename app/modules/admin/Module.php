@@ -3,17 +3,7 @@ namespace ZPhal\Modules\Admin;
 
 use Phalcon\DiInterface;
 use Phalcon\Loader;
-use Phalcon\Mvc\View;
-use Phalcon\Mvc\Dispatcher;
-use Phalcon\Events\Manager as EventsManager;
-use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\ModuleDefinitionInterface;
-use Phalcon\Mvc\Model\Transaction\Manager as TransactionManager;
-use ZPhal\Modules\Admin\Components\Media;
-use ZPhal\Modules\Admin\Library\Message\MessageControl;
-use ZPhal\Modules\Admin\Listeners\AliYunOss;
-use ZPhal\Modules\Admin\Providers\NewFlash;
-
 
 class Module implements ModuleDefinitionInterface
 {
@@ -49,101 +39,15 @@ class Module implements ModuleDefinitionInterface
     public function registerServices(DiInterface $di)
     {
         /**
-         * 注册view引擎
+         * 读取config服务提供者注册列表进行服务注册
          */
-        $di->set('view', function () {
-            $view = new View();
-            $view->setDI($this);
-            $view->setViewsDir(__DIR__ . '/views/');
-
-            $view->registerEngines([
-                '.volt'  => 'voltShared',
-                '.phtml' => PhpEngine::class
-            ]);
-
-            return $view;
-        });
-
-        /**
-         * 注册dispatcher
-         */
-        $di->set('dispatcher', function () {
-            // 创建一个事件管理器
-            //$eventsManager = new EventsManager();
-
-            // 监听分发器中使用安全插件产生的事件
-            /*$eventsManager->attach(
-                "dispatch:beforeExecuteRoute",
-                new SecurityPlugin()
-            );*/
-
-            // 处理异常和使用 NotFoundPlugin 未找到异常
-            /*$eventsManager->attach(
-                "dispatch:beforeException",
-                new NotFoundPlugin()
-            );*/
-
-            $dispatcher = new Dispatcher();
-            $dispatcher->setDefaultNamespace('ZPhal\Modules\Admin\Controllers\\');
-            //$dispatcher->setEventsManager($eventsManager); // 分配事件管理器到分发器
-
-            return $dispatcher;
-        });
-
-        /**
-         * 注册一个文件上传服务
-         */
-        $di->set('mediaUpload',function (){
-            $media = new Media();
-
-            // TODO 判断是否开启阿里云Oss
-            // 创建一个事件管理器
-            $eventsManager = new EventsManager();
-            $eventsManager->attach(
-                "media",
-                new AliYunOss()
-            );
-            $media->setEventsManager($eventsManager);
-
-            return $media;
-        });
-
-        /**
-         * 注册闪存提示class名
-         */
-        $di->set('flash', function () {
-            $flash = new NewFlash([
-                'error'   => 'alert alert-danger alert-dismissible fade in',
-                'success' => 'alert alert-success alert-dismissible fade in',
-                'notice'  => 'alert alert-info alert-dismissible fade in',
-                'warning' => 'alert alert-warning alert-dismissible fade in'
-            ]);
-            $flash->setAutoescape(true);
-
-            return $flash;
-        });
-
-        /*$di->setShared('acl', function () {
-            $acl = new AdminAcl();
-            return $acl;
-        });*/
-
-        /**
-         * 注册事务管理器
-         */
-        $di->setShared(
-            "transactions",
-            function () {
-                return new TransactionManager();
+        $providers = require APP_PATH.'/config/providers.php';    
+        if (is_array($providers['web']['admin'])) {
+            foreach ($providers['web']['admin'] as $name => $class) {
+                $serviceProvider = new $class($di);
+                $serviceProvider->register();
+                $serviceProvider->boot();
             }
-        );
-
-        /**
-         * 注册错误信息获取服务
-         */
-        $di->setShared('messageControl', function (){
-            $message = new MessageControl();
-            return $message;
-        });
+        }
     }
 }

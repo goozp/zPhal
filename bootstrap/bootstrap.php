@@ -20,10 +20,6 @@ use Phalcon\Mvc\Application;
 
 error_reporting(E_ALL); // testing use
 
-define('BASE_PATH', dirname(__DIR__));
-define('APP_PATH', BASE_PATH . '/app');
-define('THEMES_PATH', BASE_PATH . '/public/themes');
-
 try {
 
     /**
@@ -39,6 +35,11 @@ try {
     defined('APPLICATION_ENV') || define('APPLICATION_ENV', $environment);
 
     /**
+     * Include Autoloader
+     */
+    include APP_PATH . '/config/loader.php';
+
+    /**
      * Include general services
      */
     require APP_PATH . '/config/services.php';
@@ -52,11 +53,6 @@ try {
      * Get config service for use in inline setup below
      */
     $config = $di->getConfig();
-
-    /**
-     * Include Autoloader
-     */
-    include APP_PATH . '/config/loader.php';
 
     /**
      * Handle the request

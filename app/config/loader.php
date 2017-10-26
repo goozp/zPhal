@@ -11,6 +11,7 @@ $loader->registerNamespaces([
     'ZPhal\Models'  => APP_PATH . '/common/models/',
     'ZPhal\Library' => APP_PATH . '/common/library/',
     'ZPhal\Plugins' => APP_PATH . '/common/plugins/',
+    'ZPhal\Providers' => APP_PATH . '/common/providers/',
 ]);
 
 /**
@@ -25,11 +26,11 @@ $loader->registerClasses([
 /**
  * Register Files, composer autoloader
  */
-$loader->registerFiles(
+/*$loader->registerFiles(
     [
         APP_PATH . '/common/helpers/functions.php',
     ]
-);
+);*/
 
 $loader->register();
 
