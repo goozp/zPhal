@@ -39,7 +39,7 @@ class Module implements ModuleDefinitionInterface
     public function registerServices(DiInterface $di)
     {
         /**
-         * 读取config服务提供者注册列表进行服务注册
+         * 读取config服务提供者admin注册列表进行服务注册
          */
         $providers = require APP_PATH.'/config/providers.php';    
         if (is_array($providers['web']['admin'])) {

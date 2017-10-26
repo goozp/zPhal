@@ -3,6 +3,7 @@
 namespace ZPhal\Providers\ModelsMetadata;
 
 use ZPhal\Providers\AbstractServiceProvider;
+use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
 
 /**
  * 模型元数据 ServiceProvider

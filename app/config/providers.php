@@ -18,7 +18,9 @@ return [
          * 前后台共有的服务
          */
         "both" => [
-
+            ZPhal\Providers\Router\ServiceProvider::class, // 路由
+            ZPhal\Providers\Session\ServiceProvider::class, // session
+            ZPhal\Providers\Url\ServiceProvider::class, // Url
         ],
 
         /**
@@ -37,7 +39,8 @@ return [
          * 前台展示需要的服务
          */
         "frontend" => [
-
+            ZPhal\Modules\Frontend\Providers\Dispatcher\ServiceProvider::class, // 分发器
+            ZPhal\Modules\Frontend\Providers\View\ServiceProvider::class,  // 视图
         ]
     ],
 

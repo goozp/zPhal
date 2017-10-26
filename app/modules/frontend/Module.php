@@ -3,9 +3,6 @@ namespace ZPhal\Modules\Frontend;
 
 use Phalcon\DiInterface;
 use Phalcon\Loader;
-use Phalcon\Mvc\View;
-use Phalcon\Mvc\Dispatcher;
-use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\ModuleDefinitionInterface;
 
 class Module implements ModuleDefinitionInterface
@@ -23,6 +20,7 @@ class Module implements ModuleDefinitionInterface
             'ZPhal\Modules\Frontend\Controllers' => __DIR__ . '/controllers/',
             'ZPhal\Modules\Frontend\Models' => __DIR__ . '/models/',
             'ZPhal\Modules\Frontend\Plugins' => __DIR__ . '/plugins/',
+            'ZPhal\Modules\Frontend\Providers' => __DIR__ . '/providers/',
         ]);
 
         $loader->register();
@@ -36,28 +34,16 @@ class Module implements ModuleDefinitionInterface
     public function registerServices(DiInterface $di)
     {
         /**
-         * Setting up the view components
+         * 读取config服务提供者frontend注册列表进行服务注册
          */
-        $di->set('view', function () {
-            $view = new View();
-            $view->setDI($this);
-            $view->setViewsDir(BASE_PATH . '/public/themes/default/');
+        $providers = require APP_PATH.'/config/providers.php';
+        if (is_array($providers['web']['frontend'])) {
+            foreach ($providers['web']['frontend'] as $name => $class) {
+                $serviceProvider = new $class($di);
+                $serviceProvider->register();
+                $serviceProvider->boot();
+            }
+        }
 
-            $view->registerEngines([
-                '.volt'  => 'voltShared',
-                '.phtml' => PhpEngine::class
-            ]);
-
-            return $view;
-        });
-
-        /**
-         * Registering a dispatcher
-         */
-        $di->set('dispatcher', function () {
-            $dispatcher = new Dispatcher();
-            $dispatcher->setDefaultNamespace('ZPhal\Modules\Frontend\Controllers\\');
-            return $dispatcher;
-        });
     }
 }
