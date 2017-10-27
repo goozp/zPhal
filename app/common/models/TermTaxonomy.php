@@ -33,6 +33,18 @@ class TermTaxonomy extends \Phalcon\Mvc\Model
                 "alias" => "Terms",
             ]
         );
+
+        $this->hasManyToMany(
+            "term_taxonomy_id",
+            "ZPhal\\Models\\TermTaxonomy",
+            "term_taxonomy_id",
+            "object_id",
+            "ZPhal\\Models\\TermRelationships",
+            "ID",
+            [
+                'alias' => 'Post'
+            ]
+        );
     }
 
     /**
@@ -43,6 +55,16 @@ class TermTaxonomy extends \Phalcon\Mvc\Model
     public function getSource()
     {
         return 'zp_term_taxonomy';
+    }
+
+    public function incCount()
+    {
+        $this->count++;
+    }
+
+    public function decCount()
+    {
+
     }
 
     /**

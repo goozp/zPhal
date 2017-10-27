@@ -54,6 +54,19 @@ class Posts extends \Phalcon\Mvc\Model
             "ZPhal\\Models\\Postmeta",
             "post_id"
         );
+
+        $this->hasManyToMany(
+            "ID",
+            "ZPhal\\Models\\TermRelationships",
+            "object_id",
+            "term_taxonomy_id",
+            "ZPhal\\Models\\TermTaxonomy",
+            "term_taxonomy_id",
+            [
+                'alias' => 'TermTaxonomy'
+            ]
+        );
+
     }
 
     /**
