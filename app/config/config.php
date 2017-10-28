@@ -28,7 +28,6 @@ return [
         'themesDir'      => THEMES_PATH. '/', // 主题目录
         'uploadDir'      => BASE_PATH . '/public/uploads/',
 
-
         // 动态写法(不支持nginx配置public下为根目录):
         // 'baseUri'        => preg_replace('/([\/\\\\])index.php$/', '', $_SERVER["PHP_SELF"]),
         // 静态写法(需设置host或配置域名, 否则为/zPhal/等其它情况) :
