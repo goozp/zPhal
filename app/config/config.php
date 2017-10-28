@@ -1,8 +1,5 @@
 <?php
-/*
- * Modified: prepend directory path of current file, because of this file own different ENV under between Apache and command line.
- * NOTE: please remove this comment.
- */
+
 defined('BASE_PATH') || define('BASE_PATH', getenv('BASE_PATH') ?: realpath(dirname(__FILE__) . '/../..'));
 defined('APP_PATH') || define('APP_PATH', BASE_PATH . '/app');
 defined('THEMES_PATH') || define('THEMES_PATH', BASE_PATH . '/public/themes');
@@ -11,13 +8,12 @@ return [
     'version' => '1.0',
 
     'database' => [
-        'adapter'  => 'Mysql',
-        'host'     => 'mysql-db', // 如用docker,需改为对应数据库容器的hostname
-        'username' => 'zphal',
-        'password' => 'zphal123',
-        'dbname'   => 'zphaldb',
-        'dbprefix' => 'zp_',
-        'charset'  => 'utf8',
+        'adapter'  => env('DB_ADAPTER', 'Mysql'),
+        'host'     => env('DB_HOST', 'localhost'), // 如用docker,对应数据库容器的hostname
+        'dbname'   => env('DB_DATABASE', 'zphaldb'),
+        'username' => env('DB_USERNAME', 'root'),
+        'password' => env('DB_PASSWORD', 'root'),
+        'charset'  => env('DB_CHARSET', 'utf8'),
     ],
 
     'application' => [

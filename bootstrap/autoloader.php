@@ -33,7 +33,7 @@ try {
     $envConfig = new Dotenv\Dotenv(dirname(APP_PATH));
     $envConfig->load();
 } catch (Dotenv\Exception\InvalidPathException $e) {
-    
+
 }
 
 require '../bootstrap/bootstrap.php';
