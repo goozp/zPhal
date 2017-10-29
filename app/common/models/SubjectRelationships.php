@@ -17,6 +17,26 @@ class SubjectRelationships extends \Phalcon\Mvc\Model
     {
         $this->setSchema("zphaldb");
         $this->setSource("zp_subject_relationships");
+
+        $this->belongsTo(
+            "subject_id",
+            "ZPhal\\Models\\Subjects",
+            "subject_id",
+            [
+                "alias" => "Subject",
+            ]
+        );
+    }
+
+    public function afterCreate()
+    {
+        $subject = $this->Subject;
+        $subject->last_updated = date("Y-m-d H:i:s" ,time());
+        $subject->count++;
+        $subject->save();
+        if ($subject->parent>0){
+            $subject->updateParentStatus($subject->parent);
+        }
     }
 
     /**

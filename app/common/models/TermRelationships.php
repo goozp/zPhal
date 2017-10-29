@@ -50,22 +50,7 @@ class TermRelationships extends \Phalcon\Mvc\Model
         $this->TermTaxonomy->count++;
         $this->TermTaxonomy->save();
         if ($this->TermTaxonomy->parent > 0){
-            $this->incTermTaxonomyCount($this->TermTaxonomy->parent);
-        }
-
-    }
-
-    /**
-     * 递归更新父级分类的post数目 ++
-     * @param $parent
-     */
-    public function incTermTaxonomyCount($parent)
-    {
-        $TermTaxonomy = TermTaxonomy::findFirst($parent);
-        $TermTaxonomy ->count++;
-        $TermTaxonomy ->save();
-        if ($TermTaxonomy->parent > 0){
-            $this->incTermTaxonomyCount($parent);
+            $this->TermTaxonomy->incTermTaxonomyCount($this->TermTaxonomy->parent);
         }
     }
 

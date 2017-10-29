@@ -57,14 +57,18 @@ class TermTaxonomy extends \Phalcon\Mvc\Model
         return 'zp_term_taxonomy';
     }
 
-    public function incCount()
+    /**
+     * 递归更新父级分类的post数目 ++
+     * @param $parent
+     */
+    public function incTermTaxonomyCount($parent)
     {
-        $this->count++;
-    }
-
-    public function decCount()
-    {
-
+        $TermTaxonomy = self::findFirst($parent);
+        $TermTaxonomy ->count++;
+        $TermTaxonomy ->save();
+        if ($TermTaxonomy->parent > 0){
+            return $this->incTermTaxonomyCount($TermTaxonomy->parent);
+        }
     }
 
     /**

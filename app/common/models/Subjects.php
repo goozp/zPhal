@@ -30,6 +30,15 @@ class Subjects extends \Phalcon\Mvc\Model
     {
         $this->setSchema("zphaldb");
         $this->setSource("zp_subjects");
+
+        $this->hasMany(
+            "subject_id",
+            "ZPhal\\Models\\SubjectRelationships",
+            "subject_id",
+            [
+                "alias" => "SubjectRelation",
+            ]
+        );
     }
 
     public function validation()
@@ -77,11 +86,18 @@ class Subjects extends \Phalcon\Mvc\Model
     }
 
     /**
-     * 插入新数据前
+     * 递归更新父级的数目和更新时间
+     * @param $parent
      */
-    public function beforeCreate()
+    public function updateParentStatus($parent)
     {
-
+        $parentSubject = self::findFirst($parent);
+        $parentSubject->last_updated = date("Y-m-d H:i:s" ,time());
+        $parentSubject->count++;
+        $parentSubject->save();
+        if ($parentSubject->parent >0){
+            return $this->updateParentStatus($parentSubject->parent);
+        }
     }
 
     /**
