@@ -47,11 +47,9 @@ class TermRelationships extends \Phalcon\Mvc\Model
         /**
          * 更新所属分类和标签的数目
          */
+        // TODO 报错; 父子冲突时
         $this->TermTaxonomy->count++;
         $this->TermTaxonomy->save();
-        if ($this->TermTaxonomy->parent > 0){
-            $this->TermTaxonomy->incTermTaxonomyCount($this->TermTaxonomy->parent);
-        }
     }
 
     public function afterUpdate()

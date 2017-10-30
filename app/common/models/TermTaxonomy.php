@@ -58,17 +58,12 @@ class TermTaxonomy extends \Phalcon\Mvc\Model
     }
 
     /**
-     * 递归更新父级分类的post数目 ++
-     * @param $parent
+     * 获取父id
+     * @return mixed
      */
-    public function incTermTaxonomyCount($parent)
+    public function getParent()
     {
-        $TermTaxonomy = self::findFirst($parent);
-        $TermTaxonomy ->count++;
-        $TermTaxonomy ->save();
-        if ($TermTaxonomy->parent > 0){
-            return $this->incTermTaxonomyCount($TermTaxonomy->parent);
-        }
+        return $this->parent;
     }
 
     /**

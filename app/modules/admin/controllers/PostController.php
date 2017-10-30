@@ -170,7 +170,7 @@ class PostController extends ControllerBase
             $post->comment_status = 'open';
             $post->post_parent = 0;
             $post->cover_picture = $cover_image;
-            $post->post_type = 'post';
+            $post->post_type = $post::TYPE_ARTICLE;
 
             // publish date and modified date
             if ($publishTime == 'now') {
@@ -193,9 +193,8 @@ class PostController extends ControllerBase
             }
 
             if ($post->save()) {
-                // 生成连接
-                $post->guid = $this->url->get(['for' => 'article', 'id' => $post->ID]);
-                $post->save();
+                $updateURL = Posts::findFirst($post->ID);
+                $updateURL->generateUrl();
 
                 // 如果输入description,保存
                 if ($description != '') {
@@ -208,12 +207,21 @@ class PostController extends ControllerBase
 
                 // 分类,标签
                 // categories一定有,如未设置则是未分类; tags可能没有设置
-                if (!empty($tags)) {
-                    $categories = array_merge($categories, $tags);
+                // TODO 父级也会生成一条记录;看一下wordpress的实现
+                $allId = [];
+                foreach ($categories as $category){
+                    if (!in_array($category, $allId)){
+                        $allId[] = $category;
+                        $term = TermTaxonomy::findFirst($category);
+                        $allId[] = $term->getParent();
+                    }
                 }
+                $allId = array_flip(array_flip($allId)); // 去重
 
-                // TODO TermRelationships 计数++ 和 --
-                foreach ($categories as $item) {
+                if (!empty($tags)) {
+                    $allId = array_merge($allId, $tags); // 合并标签
+                }
+                foreach ($allId as $item) {
                     $termRelationShip = new TermRelationships();
                     $termRelationShip->object_id = $post->ID;
                     $termRelationShip->term_taxonomy_id = $item;
@@ -265,7 +273,7 @@ class PostController extends ControllerBase
                 $post->post_title = $title ? $title : '无题';
                 $post->comment_status = 'open';
                 $post->post_parent = 0;
-                $post->post_type = 'post';
+                $post->post_type = $post::TYPE_ARTICLE;
                 $post->post_date = date('Y-m-d H:i:s', time());
                 $post->post_date_gmt = gmdate('Y-m-d H:i:s', time());
                 $post->post_modified = $post->post_date;
@@ -297,10 +305,8 @@ class PostController extends ControllerBase
                 if ($post) {
                     $post->post_content = $markdownWord;
                     $post->post_title = $title ? $title : '无题';
-                    $post->post_date = date('Y-m-d H:i:s', time());
-                    $post->post_date_gmt = gmdate('Y-m-d H:i:s', time());
-                    $post->post_modified = $post->post_date;
-                    $post->post_modified_gmt = $post->post_date_gmt;
+                    $post->post_modified = date('Y-m-d H:i:s', time());
+                    $post->post_modified_gmt = gmdate('Y-m-d H:i:s', time());
                     if ($post->save()) {
                         $data = [
                             'post_id' => $postId,

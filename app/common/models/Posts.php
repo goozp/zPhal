@@ -41,6 +41,10 @@ class Posts extends \Phalcon\Mvc\Model
 
     public $view_count;
 
+    const TYPE_ARTICLE = 'post';
+
+    const TYPE_PAGE = 'page';
+
     /**
      * Initialize method for model.
      */
@@ -91,10 +95,6 @@ class Posts extends \Phalcon\Mvc\Model
     }
 
     /**
-     * 正式发表; 插入后更新数目和专题上次更新时间
-     */
-
-    /**
      * 更新数据前
      */
     public function beforeUpdate()
@@ -108,6 +108,27 @@ class Posts extends \Phalcon\Mvc\Model
         }
 
     }
+
+    public function afterCreate()
+    {
+
+
+    }
+
+    /**
+     * 生成url
+     */
+    public function generateUrl()
+    {
+        $url = $this->getDI()->getShared('url');
+        if ($this->post_type == self::TYPE_ARTICLE){
+            $this->guid = $url->get(['for' => 'article', 'id' => $this->ID]);
+        }elseif ($this->post_type == self::TYPE_PAGE){
+            $this->guid = $url->get(['for' => 'page', 'id' => $this->ID]);
+        }
+        $this->save();
+    }
+
 
     /**
      * Returns table name mapped in the model.
