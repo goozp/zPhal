@@ -30,6 +30,9 @@ class SubjectRelationships extends \Phalcon\Mvc\Model
 
     public function afterCreate()
     {
+        /**
+         * 更新专题的统计数据和更新时间
+         */
         $subject = $this->Subject;
         $subject->last_updated = date("Y-m-d H:i:s" ,time());
         $subject->count++;

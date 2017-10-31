@@ -207,21 +207,10 @@ class PostController extends ControllerBase
 
                 // 分类,标签
                 // categories一定有,如未设置则是未分类; tags可能没有设置
-                // TODO 父级也会生成一条记录;看一下wordpress的实现
-                $allId = [];
-                foreach ($categories as $category){
-                    if (!in_array($category, $allId)){
-                        $allId[] = $category;
-                        $term = TermTaxonomy::findFirst($category);
-                        $allId[] = $term->getParent();
-                    }
-                }
-                $allId = array_flip(array_flip($allId)); // 去重
-
                 if (!empty($tags)) {
-                    $allId = array_merge($allId, $tags); // 合并标签
+                    $categories = array_merge($categories, $tags); // 合并标签
                 }
-                foreach ($allId as $item) {
+                foreach ($categories as $item) {
                     $termRelationShip = new TermRelationships();
                     $termRelationShip->object_id = $post->ID;
                     $termRelationShip->term_taxonomy_id = $item;

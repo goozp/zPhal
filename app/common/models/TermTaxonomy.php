@@ -67,6 +67,25 @@ class TermTaxonomy extends \Phalcon\Mvc\Model
     }
 
     /**
+     * 递归父ID
+     * @param array $allId
+     * @param $id
+     * @return array
+     */
+    public function getAllParent($allId = [], $id)
+    {
+        $parent = $id ? $id : $this->parent;
+        if ($parent){
+            $allId[] = $parent;
+            $parentInfo = self::findFirst($parent);
+            if ($parentInfo->parent){
+                return $this->getAllParent($allId, $parentInfo->parent);
+            }
+        }
+        return $allId;
+    }
+
+    /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
