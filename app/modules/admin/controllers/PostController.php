@@ -238,8 +238,9 @@ class PostController extends ControllerBase
         return $this->response->redirect("admin/");
     }
 
-    public function editAction(){
-
+    public function editAction()
+    {
+        $id = $this->dispatcher->getParam("id");
     }
 
     /**
