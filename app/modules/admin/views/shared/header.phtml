@@ -149,32 +149,9 @@
                 </a>
             </li>
 
-            <li class="header">功能</li>
-            <!--<li class="treeview">
-                <a href="#">
-                    <i class="fa fa-paint-brush"></i> <span>外观</span>
-                    <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 主题</a></li>
-                </ul>
-            </li>-->
 
-            <!--<li class="treeview">
-                <a href="#">
-                    <i class="fa fa-plug"></i> <span>插件</span>
-                    <span class="pull-right-container">
-                            <small class="label pull-right bg-red">3</small>
-                            <small class="label pull-right bg-blue">17</small>
-                        </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 已安装的插件</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 上传插件</a></li>
-                </ul>
-            </li>-->
+
+            <li class="header">功能</li>
 
             <li class="treeview <?php if ($controllerName=='user') echo 'active'; ?>">
                 <a href="#">
@@ -202,21 +179,7 @@
                 </ul>
             </li>
 
-            <!--<li class="treeview">
-                <a href="#">
-                    <i class="fa fa-wrench"></i> <span>工具</span>
-                    <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 可用工具</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 导入</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 导出</a></li>
-                </ul>
-            </li>-->
-
-            <li class="treeview">
+            <li class="treeview <?php if ($controllerName=='setting') echo 'active'; ?>">
                 <a href="#">
                     <i class="fa fa-cogs"></i> <span>设置</span>
                     <span class="pull-right-container">
@@ -224,12 +187,36 @@
                         </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 常规</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 撰写</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 阅读</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 讨论</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 媒体</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 固定链接</a></li>
+                    <li <?php if ($controllerName=='setting' && $actionName=='general') echo 'class="active"'; ?>>
+                        <a href="<?php echo $this->url->get("admin/setting/general"); ?>">
+                            <i class="fa fa-circle-o"></i> 常规
+                        </a>
+                    </li>
+                    <li <?php if ($controllerName=='setting' && $actionName=='writing') echo 'class="active"'; ?>>
+                        <a href="<?php echo $this->url->get("admin/setting/writing"); ?>">
+                            <i class="fa fa-circle-o"></i> 撰写
+                        </a>
+                    </li>
+                    <li <?php if ($controllerName=='setting' && $actionName=='reading') echo 'class="active"'; ?>>
+                        <a href="<?php echo $this->url->get("admin/setting/reading"); ?>">
+                            <i class="fa fa-circle-o"></i> 阅读
+                        </a>
+                    </li>
+                    <li <?php if ($controllerName=='setting' && $actionName=='discuss') echo 'class="active"'; ?>>
+                        <a href="<?php echo $this->url->get("admin/setting/discuss"); ?>">
+                            <i class="fa fa-circle-o"></i> 讨论
+                        </a>
+                    </li>
+                    <li <?php if ($controllerName=='setting' && $actionName=='media') echo 'class="active"'; ?>>
+                        <a href="<?php echo $this->url->get("admin/setting/media"); ?>">
+                            <i class="fa fa-circle-o"></i> 媒体
+                        </a>
+                    </li>
+                    <li <?php if ($controllerName=='setting' && $actionName=='permalink') echo 'class="active"'; ?>>
+                        <a href="<?php echo $this->url->get("admin/setting/permalink"); ?>">
+                            <i class="fa fa-circle-o"></i> 固定链接
+                        </a>
+                    </li>
                 </ul>
             </li>
 

@@ -285,6 +285,49 @@ $router->add('/admin/user/updatePassword',
     ]
 );
 
+/* setting */
+$router->add('/admin/setting/general',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'general',
+    ]
+);
+$router->add('/admin/setting/writing',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'writing',
+    ]
+);
+$router->add('/admin/setting/reading',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'reading',
+    ]
+);
+$router->add('/admin/setting/discuss',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'discuss',
+    ]
+);
+$router->add('/admin/setting/media',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'media',
+    ]
+);
+$router->add('/admin/setting/permalink',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'permalink',
+    ]
+);
 
 
 $router->notFound(

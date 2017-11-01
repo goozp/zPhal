@@ -1,0 +1,105 @@
+<!-- 页头 -->
+<section class="content-header">
+    <div class="msgTip col-md-12">
+        <div class="row">
+            <?php $this->flash->output(); ?>
+        </div>
+    </div>
+    <h1>
+        常规选项
+        <small>一些基础配置</small>
+    </h1>
+</section>
+
+<!-- 主内容 -->
+<section class="content">
+
+        <div class="box box-default  box-solid">
+            <form class="form-horizontal">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="site_name" class="col-sm-2 control-label">站点标题</label>
+
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="site_name" placeholder="输入站点标题">
+                            <span class="help-block">即站点的名称</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">副标题</label>
+
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="" placeholder="副标题">
+                            <span class="help-block">用简洁的文字描述本站点。</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">站点地址（URL）</label>
+
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="">
+                            <span class="help-block">如：https://www.zphal.com</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">电子邮件地址</label>
+
+                        <div class="col-sm-4">
+                            <input type="email" class="form-control" id="" placeholder="">
+                            <span class="help-block">此地址被用作管理用途，如新用户通知。</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">电子邮件地址</label>
+
+                        <div class="col-sm-4">
+                            <input type="email" class="form-control" id="" placeholder="">
+                            <span class="help-block">此地址被用作管理用途，如新用户通知。</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">开放注册</label>
+
+                        <div class="col-sm-4">
+                            <div class="checkbox">
+                                <label><input type="checkbox">是</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label><input type="checkbox">否</label>
+                                <span class="help-block">是否开放站点的注册功能。</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">站点语言</label>
+
+                        <div class="col-sm-4">
+                            <span class="form-control no-border">简体中文</span>
+                            <span class="help-block">暂时没有国际化。</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">时区</label>
+
+                        <div class="col-sm-4">
+                            <select class="form-control" name="displayName">
+                                <option value="" > </option>
+                            </select>
+                            <span class="help-block">您的个人邮箱，将用来通信或获取Gravatar头像。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box-footer">
+                    <button type="submit" class="btn bg-purple col-sm-offset-2">保存更改</button>
+                </div>
+            </form>
+        </div>
+
+</section>
+
