@@ -240,7 +240,28 @@ class PostController extends ControllerBase
 
     public function editAction()
     {
+        $this->tag->prependTitle("编辑文章 - ");
+
+        /* 静态资源 */
+        $this->assets->addCss("backend/plugins/editor.md/css/editormd.css", true);
+        $this->assets->addCss("backend/library/select2/css/select2.min.css", true);
+        $this->assets->addCss("backend/library/AdminLTE/css/AdminLTE-select2.min.css", true);
+        $this->assets->addCss("backend/library/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css", true);
+        $this->assets->addJs("backend/plugins/editor.md/editormd.min.js", true);
+        $this->assets->addJs("backend/library/select2/js/select2.full.min.js", true);
+        $this->assets->addJs("backend/library/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js", true);
+        $this->assets->addJs("backend/js/post.js", true);
+
         $id = $this->dispatcher->getParam("id");
+
+        $postService = container(PostService::class);
+        $info = $postService->getPostInfo($id, 'post', 'publish');
+
+        $this->view->setVars(
+            [
+                'info' => $info,
+            ]
+        );
     }
 
     /**

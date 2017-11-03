@@ -13,5 +13,21 @@
 
 <!-- 主内容 -->
 <section class="content">
+    <div class="row">
+        <div class="form-group col-md-12">
+            <input class="form-control" id="title" type="text" name="title" placeholder="输入标题">
+            <input type="hidden" id="post_id" name="post_id" value="0" >
+        </div>
 
+        <div class="form-group col-md-12">
+            <div id="editormd">
+                <textarea name="mr_content" style="display:none;"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            <label>Description</label>
+            <textarea class="form-control" rows="3" name="description"  placeholder="概述"></textarea>
+        </div>
+    </div>
 </section>

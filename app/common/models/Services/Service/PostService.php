@@ -90,6 +90,7 @@ class PostService extends AbstractService
 
     /**
      * 获取post列表
+     * TODO 根据权限获取
      * @param $type
      * @param $show
      * @param $currentPage
@@ -160,5 +161,28 @@ class PostService extends AbstractService
                 'urlMask'     => $urlMask, // 额外url传参
             ]
         );
+    }
+
+    /**
+     * 获取post信息
+     * @param $id
+     * @param string $type
+     * @param string $version
+     * @return mixed
+     */
+    public function getPostInfo($id, $type='post', $version='publish')
+    {
+        $info = self::$modelsManager->executeQuery(
+            "SELECT ID, post_date, post_content, post_title, post_status, post_modified, post_parent, guid, cover_picture
+            FROM ZPhal\Models\Posts
+            WHERE ID = :postId: AND post_type = :postType: AND post_status = :postStatus: ",
+            [
+                'postId'    => $id,
+                'postType'  => $type,
+                'postStatus'    => $version
+            ]
+        )->toArray();
+
+        return $info[0];
     }
 }
