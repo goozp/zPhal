@@ -250,16 +250,32 @@ class PostController extends ControllerBase
         $this->assets->addJs("backend/plugins/editor.md/editormd.min.js", true);
         $this->assets->addJs("backend/library/select2/js/select2.full.min.js", true);
         $this->assets->addJs("backend/library/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js", true);
-        $this->assets->addJs("backend/js/post.js", true);
+        $this->assets->addJs("backend/js/post-edit.js", true);
 
         $id = $this->dispatcher->getParam("id");
 
+        // post 信息
         $postService = container(PostService::class);
         $info = $postService->getPostInfo($id, 'post', 'publish');
+
+        // 查看postmeta (description)
+        $postMeta = Postmeta::findFirst(
+            [
+                "conditions" => "post_id = ?1 AND meta_key = ?2",
+                "bind"       => [
+                    1 => $id,
+                    2 => 'description'
+                ]
+            ]
+        )->toArray();
+
+        // 查询分类标签
+
 
         $this->view->setVars(
             [
                 'info' => $info,
+                'description' => $postMeta['meta_value'],
             ]
         );
     }

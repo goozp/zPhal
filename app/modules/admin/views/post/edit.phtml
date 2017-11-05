@@ -7,7 +7,7 @@
     </div>
     <h1>
         编辑文章
-        <small>固定链接:<span id="postUrl">暂无</span></small>
+        <small>固定链接:<span id="postUrl"><?= $info['guid'] ?></span></small>
     </h1>
 </section>
 
@@ -15,19 +15,220 @@
 <section class="content">
     <div class="row">
         <div class="form-group col-md-12">
-            <input class="form-control" id="title" type="text" name="title" placeholder="输入标题">
+            <input class="form-control" id="title" type="text" name="title" placeholder="输入标题" value="<?= $info['post_title'] ?>">
             <input type="hidden" id="post_id" name="post_id" value="0" >
         </div>
 
         <div class="form-group col-md-12">
             <div id="editormd">
-                <textarea name="mr_content" style="display:none;"></textarea>
+                <textarea name="mr_content" style="display:none;"><?= $info['post_content'] ?></textarea>
             </div>
         </div>
 
         <div class="form-group col-md-12">
             <label>Description</label>
-            <textarea class="form-control" rows="3" name="description"  placeholder="概述"></textarea>
+            <textarea class="form-control" rows="3" name="description"  placeholder="概述"><?= $description ?></textarea>
+        </div>
+
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="fa fa-calendar"></i> 发布</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>状态</label>
+                                            <select class="form-control" >
+                                                <?php if ($info['post_status'] == 'publish'){
+                                                    echo '<option value="publish" >已发布</option>
+                                                          <option value="draft" >草稿</option>';
+                                                } elseif($info['post_status'] == 'draft'){
+
+                                                } ?>
+
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-12" id="publishTimeCustomDiv">
+                                            <label class="control-label">
+                                                发布时间
+                                            </label>
+                                            <div class="input-group date" id="datetimepicker" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input">
+                                                <input class="form-control" size="16" type="text" value=""/>
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                            </div>
+                                            <input name="publishTimeCustom" type="hidden" id="dtp_input" value="" /><br/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <?php
+
+                                ?>
+                                <div class="box-footer">
+                                    <input type="hidden" id="ajaxUri" value="<?= $ajaxUri ?>">
+                                    <button type="submit" name="submitWay" value="draft" class="btn btn-default">保存草稿</button>
+                                    <span id="autoDraftTps"></span>
+                                    <button type="submit" name="submitWay" value="publish"  class="btn btn-info pull-right">发布</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div class="box box-default">
+                                <div class="overlay" id="post_category">
+                                    <i class="fa fa-refresh fa-spin"></i>
+                                </div>
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="fa fa-tags"></i> 分类</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label>添加新分类</label>
+                                            <div class="row">
+                                                <div class="col-xs-5">
+                                                    <select class="form-control" id="newCategoryParent">
+                                                        <?= $categoryTreeNbsp ?>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-xs-7">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" id="newCategory" placeholder="分类名称">
+                                                        <span class="input-group-btn">
+                                                      <button type="button" id="addNewCategory" class="btn btn-info btn-flat">添加</button>
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group col-md-12">
+                                            <label>选择分类</label>
+                                            <select class="form-control select2" id="categoryList" name="categories[]" multiple="multiple" data-placeholder="选择分类" style="width: 100%;">
+                                                <?= $categoryTree ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div class="box box-default">
+                                <div class="overlay" id="post_tag">
+                                    <i class="fa fa-refresh fa-spin"></i>
+                                </div>
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="fa fa-tags"></i> 标签</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label>添加新标签</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="newTag" placeholder="标签名称">
+                                                <span class="input-group-btn">
+                                                <button type="button" id="addNewTag" class="btn btn-info btn-flat">添加</button>
+                                            </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-12">
+                                            <label>选择标签</label>
+                                            <select class="form-control select2" id="tagsList" name="tags[]" multiple="multiple" data-placeholder="选择标签" style="width: 100%;">
+                                                <?php foreach ($tags as $tag){?>
+                                                    <option value="<?= $tag['term_taxonomy_id'] ?>"><?= $tag['name'] ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div class="box box-default">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="fa fa-dashcube"></i> 专题</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label>选择专题</label>
+                                            <select class="form-control select2" id="subjectList" name="subject" data-placeholder="选择专题" >
+                                                <?= $subjectTree ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div class="box box-default">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="fa fa-image"></i> 特色图片</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="box-body" style="">
+                                    <div class="form-group col-md-12">
+                                        <label for="imageUrl">图片地址</label>
+                                        <input type="text" name="cover_image" class="form-control" id="imageUrl" placeholder="url">
+                                    </div>
+
+                                    <div class="form-group col-md-12"  id="imagePreview">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
