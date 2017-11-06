@@ -121,30 +121,4 @@ function autoDraft() {
     }
 }
 
-/**
- * 改变发布时间样式
- * @param type
- */
-function changePublishTime(type) {
-    if (type == 'now') {
-        $("#publishTimeNowDiv").addClass("has-success");
-        $("#publishTimeCustomDiv").removeClass("has-success");
-    } else if (type == 'custom') {
-        $("#publishTimeNowDiv").removeClass("has-success");
-        $("#publishTimeCustomDiv").addClass("has-success");
-    }
-
-}
-
-/**
- * 检查发布时间的选择
- */
-function checkRadio() {
-    var checkedRadio = $("input[name='publishTime']:checked").val();
-    if (checkedRadio == 'now') {
-        $("#publishTimeNowDiv").addClass("has-success");
-    } else if (checkedRadio == 'custom') {
-        $("#publishTimeCustomDiv").addClass("has-success");
-    }
-}
 

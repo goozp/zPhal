@@ -36,7 +36,7 @@
                     <div class="col-md-4">
                         <div class="row">
                             <div class="form-group col-md-12">
-                                <div class="box box-success">
+                                <div class="box box-default">
                                     <div class="box-header with-border">
                                         <h3 class="box-title"><i class="fa fa-calendar"></i> 发布</h3>
 
@@ -48,32 +48,47 @@
 
                                     <div class="box-body">
                                         <div class="row">
-                                            <div class="form-group col-md-12" id="publishTimeNowDiv">
+                                            <div class="form-group col-md-12">
+                                                <i class="fa fa-map-pin"></i>&nbsp;状态：&nbsp;<b>草稿</b>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <i class="fa fa-eye"></i>&nbsp;公开度：&nbsp;
+                                                <select>
+                                                    <option>公开</option>
+                                                    <option>密码访问</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <i class="fa fa-comment-o"></i>&nbsp;开启评论：&nbsp;
                                                 <label>
-                                                    <input type="radio" name="publishTime" id="publishTimeNow" value="now" onchange="changePublishTime('now')" checked>
-                                                    立即发布
+                                                    <input type="radio" name="ifComment" id="" value="yes" checked> 是
+                                                </label>
+                                                &nbsp;&nbsp;
+                                                <label>
+                                                    <input type="radio" name="ifComment" id="" value="no"> 否
                                                 </label>
                                             </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-md-12" id="publishTimeCustomDiv">
-                                                <label class="control-label">
-                                                    <input type="radio" name="publishTime" id="publishTimeCustom" value="custom" onchange="changePublishTime('custom')" >
-                                                    自定义时间
+                                            <div class="form-group col-md-12">
+                                                <i class="fa fa-arrow-up"></i>&nbsp;是否置顶：&nbsp;
+                                                <label>
+                                                    <input type="radio" name="ifTop" id="" value="yes"> 是
                                                 </label>
-                                                <div class="input-group date" id="datetimepicker" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input">
-                                                    <input class="form-control" size="16" type="text" value=""/>
-                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                                                </div>
-                                                <input name="publishTimeCustom" type="hidden" id="dtp_input" value="" /><br/>
+                                                &nbsp;&nbsp;
+                                                <label>
+                                                    <input type="radio" name="ifTop" id="" value="no" checked> 否
+                                                </label>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <i class="fa fa-calendar-check-o"></i>&nbsp;发布时间：&nbsp;
+                                                <b>立即发布</b>&nbsp;&nbsp;
+                                                <a href="">编辑</a>
                                             </div>
                                         </div>
                                     </div>
 
 
                                     <div class="box-footer">
+                                        <!-- TODO 判断输出-->
                                         <input type="hidden" id="ajaxUri" value="<?= $ajaxUri ?>">
                                         <button type="submit" name="submitWay" value="draft" class="btn btn-default">保存草稿</button>
                                         <span id="autoDraftTps"></span>
