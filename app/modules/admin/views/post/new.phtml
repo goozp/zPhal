@@ -52,36 +52,94 @@
                                                 <i class="fa fa-map-pin"></i>&nbsp;状态：&nbsp;<b>草稿</b>
                                             </div>
                                             <div class="form-group col-md-12">
+                                                <!--TODO-->
                                                 <i class="fa fa-eye"></i>&nbsp;公开度：&nbsp;
-                                                <select>
-                                                    <option>公开</option>
-                                                    <option>密码访问</option>
+                                                <select class="input-sm" name="ifPublic">
+                                                    <option value="open">公开</option>
+                                                    <option value="password">密码访问</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <i class="fa fa-comment-o"></i>&nbsp;开启评论：&nbsp;
                                                 <label>
-                                                    <input type="radio" name="ifComment" id="" value="yes" checked> 是
+                                                    <input type="radio" name="ifComment" value="yes" checked> 是
                                                 </label>
                                                 &nbsp;&nbsp;
                                                 <label>
-                                                    <input type="radio" name="ifComment" id="" value="no"> 否
+                                                    <input type="radio" name="ifComment" value="no"> 否
                                                 </label>
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <i class="fa fa-arrow-up"></i>&nbsp;是否置顶：&nbsp;
                                                 <label>
-                                                    <input type="radio" name="ifTop" id="" value="yes"> 是
+                                                    <input type="radio" name="ifTop" value="yes"> 是
                                                 </label>
                                                 &nbsp;&nbsp;
                                                 <label>
-                                                    <input type="radio" name="ifTop" id="" value="no" checked> 否
+                                                    <input type="radio" name="ifTop" value="no" checked> 否
                                                 </label>
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <i class="fa fa-calendar-check-o"></i>&nbsp;发布时间：&nbsp;
-                                                <b>立即发布</b>&nbsp;&nbsp;
-                                                <a href="">编辑</a>
+                                                <b id="timestamp">立即发布</b>&nbsp;&nbsp;
+                                                <a href="javascript:void(0)" id="editTimestamp">编辑</a>
+                                            </div>
+
+                                            <div class="form-group col-md-12 border border-dark" id="timestampDiv" style="display: none;">
+                                                <label><i class="fa fa-calendar-plus-o"></i>&nbsp;日期和时间</label>
+                                                <input type="hidden" id="publishDate" name="publishDate" value="now">
+                                                <fieldset>
+                                                    <div class="timestamp-wrap">
+                                                        <label>
+                                                            <input type="text" class="form-control input-sm" id="year" name="year" size="3" maxlength="3" autocomplete="off">
+                                                        </label>
+                                                        -
+                                                        <label>
+                                                            <select id="month" name="month" class="form-control input-sm">
+                                                                <option value="01" data-text="1月">1月</option>
+                                                                <option value="02" data-text="2月">2月</option>
+                                                                <option value="03" data-text="3月">3月</option>
+                                                                <option value="04" data-text="4月">4月</option>
+                                                                <option value="05" data-text="5月">5月</option>
+                                                                <option value="06" data-text="6月">6月</option>
+                                                                <option value="07" data-text="7月">7月</option>
+                                                                <option value="08" data-text="8月">8月</option>
+                                                                <option value="09" data-text="9月">9月</option>
+                                                                <option value="10" data-text="10月">10月</option>
+                                                                <option value="11" data-text="11月">11月</option>
+                                                                <option value="12" data-text="12月">12月</option>
+                                                            </select>
+                                                        </label>
+                                                        -
+                                                        <label>
+                                                            <input type="text" id="day" name="day" class="form-control input-sm" size="2" maxlength="2" autocomplete="off">
+                                                        </label>
+                                                        &nbsp;@&nbsp;
+                                                        <label>
+                                                            <input type="text" id="hour" name="hour" class="form-control input-sm" size="2" maxlength="2" autocomplete="off">
+                                                        </label>
+                                                        :
+                                                        <label>
+                                                            <input type="text" id="minute" name="minute" class="form-control input-sm" size="2" maxlength="2" autocomplete="off">
+                                                        </label>
+                                                    </div>
+                                                    <input type="hidden" id="second" name="second" value="50">
+
+                                                    <input type="hidden" id="hidden_year" name="hidden_year" >
+                                                    <input type="hidden" id="cur_year" name="cur_year" >
+                                                    <input type="hidden" id="hidden_month" name="hidden_month" >
+                                                    <input type="hidden" id="cur_month" name="cur_month" >
+                                                    <input type="hidden" id="hidden_day" name="hidden_day" >
+                                                    <input type="hidden" id="cur_day" name="cur_day" >
+                                                    <input type="hidden" id="hidden_hour" name="hidden_hour" >
+                                                    <input type="hidden" id="cur_hour" name="cur_hour" >
+                                                    <input type="hidden" id="hidden_minute" name="hidden_minute" >
+                                                    <input type="hidden" id="cur_minute" name="cur_minute">
+                                                    <p>
+                                                        <a href="javascript:void(0)" id="saveTimestamp" class="btn btn-primary btn-sm">确定</a>
+                                                        <a href="javascript:void(0)" id="cancelTimestamp" class="btn btn-default btn-sm">取消</a>
+                                                    </p>
+                                                </fieldset>
                                             </div>
                                         </div>
                                     </div>

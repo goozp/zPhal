@@ -52,6 +52,18 @@ class TermRelationships extends \Phalcon\Mvc\Model
     }
 
     /**
+     * 删除之后
+     */
+    public function afterDelete()
+    {
+        /**
+         * 更新所属分类和标签的数目
+         */
+        $this->TermTaxonomy->count--;
+        $this->TermTaxonomy->save();
+    }
+
+    /**
      * Returns table name mapped in the model.
      *
      * @return string

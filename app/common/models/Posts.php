@@ -41,9 +41,15 @@ class Posts extends \Phalcon\Mvc\Model
 
     public $view_count;
 
+    const PUBLISH_DEFAULT_TIME = '1000-01-01 00:00:00'; //默认发布时间
+
     const TYPE_ARTICLE = 'post';
 
     const TYPE_PAGE = 'page';
+
+    const COMMENT_OPEN = 'open';
+
+    const COMMENT_CLOSE = 'closed';
 
     /**
      * Initialize method for model.
@@ -70,20 +76,19 @@ class Posts extends \Phalcon\Mvc\Model
                 'alias' => 'TermTaxonomy'
             ]
         );
-
     }
 
     /**
-     * 插入新数据前
+     * 插入新数据时验证前
      */
-    public function beforeCreate()
+    public function beforeValidationOnCreate()
     {
         if(!$this->post_date){
-            $this->post_date = date('Y-m-d H:i:s', time());
+            $this->post_date = self::PUBLISH_DEFAULT_TIME;
         }
 
         if(!$this->post_date_gmt){
-            $this->post_date_gmt = gmdate('Y-m-d H:i:s', time());
+            $this->post_date_gmt = self::PUBLISH_DEFAULT_TIME;
         }
 
         if (!$this->post_name){
@@ -95,9 +100,9 @@ class Posts extends \Phalcon\Mvc\Model
     }
 
     /**
-     * 更新数据前
+     * 更新数据时验证前
      */
-    public function beforeUpdate()
+    public function beforeValidationOnUpdate()
     {
         if(!$this->post_modified){
             $this->post_modified = date('Y-m-d H:i:s', time());
@@ -106,12 +111,6 @@ class Posts extends \Phalcon\Mvc\Model
         if (!$this->post_modified_gmt){
             $this->post_modified_gmt = gmdate('Y-m-d H:i:s', time());
         }
-
-    }
-
-    public function afterCreate()
-    {
-
 
     }
 

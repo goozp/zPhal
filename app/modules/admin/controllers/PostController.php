@@ -106,10 +106,8 @@ class PostController extends ControllerBase
         $this->assets->addCss("backend/plugins/editor.md/css/editormd.css", true);
         $this->assets->addCss("backend/library/select2/css/select2.min.css", true);
         $this->assets->addCss("backend/library/AdminLTE/css/AdminLTE-select2.min.css", true);
-        $this->assets->addCss("backend/library/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css", true);
         $this->assets->addJs("backend/plugins/editor.md/editormd.min.js", true);
         $this->assets->addJs("backend/library/select2/js/select2.full.min.js", true);
-        $this->assets->addJs("backend/library/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js", true);
         $this->assets->addJs("backend/js/post.js", true);
 
         // 分类列表
@@ -153,10 +151,13 @@ class PostController extends ControllerBase
             $cover_image = $this->request->getPost('cover_image');
             // 以下需要判断
             $description = $this->request->getPost('description', ['string', 'trim']);
-            $publishTime = $this->request->getPost('publishTime');
+            $publishDate = $this->request->getPost('publishDate');
             $categories = $this->request->getPost('categories');
             $tags = $this->request->getPost('tags');
-            $subject = $this->request->getPost('subject');
+
+            $ifPublic = $this->request->getPost('ifPublic'); // TODO
+            $ifComment = $this->request->getPost('ifComment');
+            $ifTop = $this->request->getPost('ifTop'); // TODO
 
             if ($postId == 0) {
                 $post = new Posts();
@@ -167,27 +168,39 @@ class PostController extends ControllerBase
             $post->post_author = $this->getUserId();
             $post->post_content = $mr_content;
             $post->post_title = $title ? $title : '无题';
-            $post->comment_status = 'open';
+            $post->comment_status = $ifComment == 'yes' ? $post::COMMENT_OPEN : $post::COMMENT_CLOSE;
             $post->post_parent = 0;
             $post->cover_picture = $cover_image;
             $post->post_type = $post::TYPE_ARTICLE;
 
-            // publish date and modified date
-            if ($publishTime == 'now') {
-                $post->post_date = date('Y-m-d H:i:s', time());
-                $post->post_date_gmt = gmdate('Y-m-d H:i:s', time());
+            // 立即发布 or 编辑发布时间
+            if ($publishDate == 'now'){
+                $actionTime = time();
 
-            } elseif ($publishTime == 'custom') {
-                $publishTimeCustom = $this->request->getPost('publishTimeCustom');
-                $post->post_date = $publishTimeCustom;
-                $post->post_date_gmt = gmdate('Y-m-d H:i:s', strtotime($publishTimeCustom));
+                $post->post_modified = date('Y-m-d H:i:s', $actionTime);
+                $post->post_modified_gmt = gmdate('Y-m-d H:i:s', $actionTime);
+            }elseif ($publishDate == 'edit'){
+                $year = $this->request->getPost('year');
+                $month = $this->request->getPost('month');
+                $day = $this->request->getPost('day');
+                $hour = $this->request->getPost('hour');
+                $minute = $this->request->getPost('minute');
+                $second = $this->request->getPost('second');
+                $actionTime = $year.'-'.$month.'-'.$day.' '.$hour.':'.$minute.':'.$second;
+
+                $post->post_modified = $actionTime;
+                $post->post_modified_gmt = gmdate('Y-m-d H:i:s', strtotime($actionTime));
             }
-            $post->post_modified = $post->post_date;
-            $post->post_modified_gmt = $post->post_date_gmt;
 
             // 发布状态
             if ($submitWay == 'publish') {
                 $post->post_status = 'publish';
+
+                // 尚未发布过,保存发布时间
+                if (!$post->post_date || $post->post_date == $post::PUBLISH_DEFAULT_TIME){
+                    $post->post_date = $post->post_modified;
+                    $post->post_date_gmt = $post->post_modified_gmt;
+                }
             } elseif ($submitWay == 'draft') {
                 $post->post_status = 'draft';
             }
@@ -246,10 +259,8 @@ class PostController extends ControllerBase
         $this->assets->addCss("backend/plugins/editor.md/css/editormd.css", true);
         $this->assets->addCss("backend/library/select2/css/select2.min.css", true);
         $this->assets->addCss("backend/library/AdminLTE/css/AdminLTE-select2.min.css", true);
-        $this->assets->addCss("backend/library/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css", true);
         $this->assets->addJs("backend/plugins/editor.md/editormd.min.js", true);
         $this->assets->addJs("backend/library/select2/js/select2.full.min.js", true);
-        $this->assets->addJs("backend/library/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js", true);
         $this->assets->addJs("backend/js/post-edit.js", true);
 
         $id = $this->dispatcher->getParam("id");
