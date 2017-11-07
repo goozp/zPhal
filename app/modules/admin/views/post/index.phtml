@@ -21,7 +21,7 @@
                     <a href="<?= $this->url->get(["for"=>"list-article","params"=>'publish']); ?>">已发布 <span class="badge"><?= $static['publish_num'] ?></span></a>
                 </li>
                 <li role="presentation" class="<?php if ($activeShow == 'draft') echo 'bg-gray-active' ?>">
-                    <a href="<?= $this->url->get(["for"=>"list-article","params"=>'draft']); ?>">草稿 <span class="badge"><?= $static['draft_num']+$static['autodraft_num'] ?></span></a>
+                    <a href="<?= $this->url->get(["for"=>"list-article","params"=>'draft']); ?>">草稿 <span class="badge"><?= $static['draft_num'] ?></span></a>
                 </li>
                 <li role="presentation" class="<?php if ($activeShow == 'trash') echo 'bg-gray-active' ?>">
                     <a href="<?= $this->url->get(["for"=>"list-article","params"=>'trash']); ?>">回收站 <span class="badge"><?= $static['trash_num'] ?></span></a>
@@ -120,7 +120,8 @@
                                     <td><?= $v->display_name ?></td>
                                     <td><?= $str[$k]['cateStr'] ?></td>
                                     <td><?= $str[$k]['tagStr'] ?></td>
-                                    <td><?php
+                                    <td>
+                                        <?php
                                         if ($v->comment_count >0){
                                             echo $v->comment_count.' <a href=""><i class="fa fa-commenting"></i></a>';
                                         }else{
@@ -128,7 +129,13 @@
                                         }
                                         ?>
                                     </td>
-                                    <td><?= $v->post_date ?></td>
+                                    <td>
+                                        <?php if ($v->post_date == '1000-01-01 00:00:00'){
+                                            echo '尚未发布';
+                                        } else{
+                                            echo $v->post_date;
+                                        } ?>
+                                    </td>
                                     <td><?= $v->view_count ?></td>
                                     <td>
                                         <a href="<?= $this->url->get(["for" => "edit-post", "id" => $v->ID]); ?>" class="btn btn-xs bg-purple"><i class="fa fa-edit"></i> 编辑</a>

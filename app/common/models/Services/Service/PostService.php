@@ -57,7 +57,6 @@ class PostService extends AbstractService
         $count = self::$modelsManager->executeQuery(
             "SELECT sum(case post_status when 'publish' then 1 else 0 end) AS publish_num,
             sum(case post_status when 'draft' then 1 else 0 end) AS draft_num,
-            sum(case post_status when 'auto-draft' then 1 else 0 end) AS autodraft_num,
             sum(case post_status when 'trash' then 1 else 0 end) AS trash_num
             FROM ZPhal\Models\Posts 
             WHERE post_type = :posttype:",
@@ -125,7 +124,7 @@ class PostService extends AbstractService
                 $builder->andWhere("p.post_status = 'publish'");
                 break;
             case 'draft':
-                $builder->andWhere("p.post_status = 'draft' OR p.post_status = 'auto-draft' ");
+                $builder->andWhere("p.post_status = 'draft'");
                 break;
             case 'trash':
                 $builder->andWhere("p.post_status = 'trash'");
@@ -170,16 +169,15 @@ class PostService extends AbstractService
      * @param string $version
      * @return mixed
      */
-    public function getPostInfo($id, $type='post', $version='publish')
+    public function getPostInfo($id, $type='post')
     {
         $info = self::$modelsManager->executeQuery(
             "SELECT ID, post_date, post_content, post_title, post_status, post_modified, post_parent, guid, cover_picture
             FROM ZPhal\Models\Posts
-            WHERE ID = :postId: AND post_type = :postType: AND post_status = :postStatus: ",
+            WHERE ID = :postId: AND post_type = :postType: ",
             [
                 'postId'    => $id,
-                'postType'  => $type,
-                'postStatus'    => $version
+                'postType'  => $type
             ]
         )->toArray();
 

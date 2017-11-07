@@ -173,35 +173,37 @@ class PostController extends ControllerBase
             $post->cover_picture = $cover_image;
             $post->post_type = $post::TYPE_ARTICLE;
 
-            // 立即发布 or 编辑发布时间
-            if ($publishDate == 'now'){
-                $actionTime = time();
+            // 编辑时间
+            $now = time();
+            $post->post_modified = date('Y-m-d H:i:s', $now);
+            $post->post_modified_gmt = gmdate('Y-m-d H:i:s', $now);
 
-                $post->post_modified = date('Y-m-d H:i:s', $actionTime);
-                $post->post_modified_gmt = gmdate('Y-m-d H:i:s', $actionTime);
-            }elseif ($publishDate == 'edit'){
-                $year = $this->request->getPost('year');
-                $month = $this->request->getPost('month');
-                $day = $this->request->getPost('day');
-                $hour = $this->request->getPost('hour');
-                $minute = $this->request->getPost('minute');
-                $second = $this->request->getPost('second');
-                $actionTime = $year.'-'.$month.'-'.$day.' '.$hour.':'.$minute.':'.$second;
-
-                $post->post_modified = $actionTime;
-                $post->post_modified_gmt = gmdate('Y-m-d H:i:s', strtotime($actionTime));
-            }
-
-            // 发布状态
             if ($submitWay == 'publish') {
+                // 发布时间
+                if (!$post->post_date || $post->post_date == $post::PUBLISH_DEFAULT_TIME) {
+                    // 立即发布 or 编辑发布时间
+                    if ($publishDate == 'now') {
+                        $post->post_date = $post->post_modified;
+                        $post->post_date_gmt = $post->post_modified_gmt;
+
+                    } elseif ($publishDate == 'edit') {
+                        $year = $this->request->getPost('year');
+                        $month = $this->request->getPost('month');
+                        $day = $this->request->getPost('day');
+                        $hour = $this->request->getPost('hour');
+                        $minute = $this->request->getPost('minute');
+                        $second = $this->request->getPost('second');
+                        $actionTime = $year . '-' . $month . '-' . $day . ' ' . $hour . ':' . $minute . ':' . $second;
+
+                        $post->post_date = $actionTime;
+                        $post->post_date_gmt = gmdate("Y-m-d H:i:s", strtotime($actionTime));
+                    }
+                }
+
                 $post->post_status = 'publish';
 
-                // 尚未发布过,保存发布时间
-                if (!$post->post_date || $post->post_date == $post::PUBLISH_DEFAULT_TIME){
-                    $post->post_date = $post->post_modified;
-                    $post->post_date_gmt = $post->post_modified_gmt;
-                }
-            } elseif ($submitWay == 'draft') {
+            } elseif ($submitWay == 'draft'){
+
                 $post->post_status = 'draft';
             }
 
@@ -251,6 +253,9 @@ class PostController extends ControllerBase
         return $this->response->redirect("admin/");
     }
 
+    /**
+     * // TODO 编辑
+     */
     public function editAction()
     {
         $this->tag->prependTitle("编辑文章 - ");
@@ -273,12 +278,12 @@ class PostController extends ControllerBase
         $postMeta = Postmeta::findFirst(
             [
                 "conditions" => "post_id = ?1 AND meta_key = ?2",
-                "bind"       => [
+                "bind" => [
                     1 => $id,
                     2 => 'description'
                 ]
             ]
-        )->toArray();
+        );
 
         // 查询分类标签
 
@@ -286,7 +291,7 @@ class PostController extends ControllerBase
         $this->view->setVars(
             [
                 'info' => $info,
-                'description' => $postMeta['meta_value'],
+                'description' => $postMeta->meta_value,
             ]
         );
     }
@@ -302,21 +307,18 @@ class PostController extends ControllerBase
             $title = $this->request->getPost('title', 'trim');
             $postId = $this->request->getPost('postId', 'int', 0);
 
-
-            // 没有草稿
+            // 没有记录
             if ($postId == 0) {
                 $post = new Posts();
                 $post->post_author = $this->getUserId();
                 $post->post_content = $markdownWord;
                 $post->post_title = $title ? $title : '无题';
-                $post->comment_status = 'open';
+                $post->comment_status = $post::COMMENT_OPEN;
                 $post->post_parent = 0;
                 $post->post_type = $post::TYPE_ARTICLE;
-                $post->post_date = date('Y-m-d H:i:s', time());
-                $post->post_date_gmt = gmdate('Y-m-d H:i:s', time());
-                $post->post_modified = $post->post_date;
-                $post->post_modified_gmt = $post->post_date_gmt;
-                $post->post_status = 'auto-draft';
+                $post->post_modified = date('Y-m-d H:i:s', time());
+                $post->post_modified_gmt = gmdate('Y-m-d H:i:s', time());
+                $post->post_status = 'draft';
                 if ($post->create()) {
                     $postId = $post->ID;
                     $post = Posts::findFirst($postId);
@@ -324,16 +326,18 @@ class PostController extends ControllerBase
                     if ($post->save()) {
                         $data = [
                             'post_id' => $postId,
-                            'post_date' => $post->post_date,
+                            'post_date' => $post->post_modified,
                             'post_url' => $post->guid
                         ];
                     }
                 }
-            } else {
-                // 检查是否有草稿
+            }
+            // 已有记录
+            else {
+                // 查询已有的记录
                 $post = Posts::findFirst(
                     [
-                        "conditions" => "ID = ?1 AND post_status = 'auto-draft'",
+                        "conditions" => "ID = ?1 AND post_status = 'draft'",
                         "bind" => [
                             1 => $postId,
                         ]
@@ -345,41 +349,16 @@ class PostController extends ControllerBase
                     $post->post_title = $title ? $title : '无题';
                     $post->post_modified = date('Y-m-d H:i:s', time());
                     $post->post_modified_gmt = gmdate('Y-m-d H:i:s', time());
-                    if ($post->save()) {
+                    if ($post->update()) {
                         $data = [
                             'post_id' => $postId,
-                            'post_date' => $post->post_date,
+                            'post_date' => $post->post_modified,
                             'post_url' => $post->guid
                         ];
                     }
-                } else {
-                    // postId = parent
-                    $post = new Posts();
-                    $post->post_author = $this->getUserId();
-                    $post->post_content = $markdownWord;
-                    $post->post_title = $title ? $title : '无题';
-                    $post->comment_status = 'open';
-                    $post->post_parent = $postId;
-                    $post->post_type = 'post';
-                    $post->post_date = date('Y-m-d H:i:s', time());
-                    $post->post_date_gmt = gmdate('Y-m-d H:i:s', time());
-                    $post->post_modified = $post->post_date;
-                    $post->post_modified_gmt = $post->post_date_gmt;
-                    $post->post_status = 'auto-draft';
-                    if ($post->create()) {
-                        $postId = $post->ID;
-                        $post = Posts::findFirst($postId);
-                        $post->guid = $this->url->get(['for' => 'article', 'id' => $postId]);
-                        if ($post->save()) {
-                            $data = [
-                                'post_id' => $postId,
-                                'post_date' => $post->post_date,
-                                'post_url' => $post->guid
-                            ];
-                        }
-                    }
                 }
             }
+
             return json_encode(['status' => 'success', 'message' => '保存成功', 'data' => $data], JSON_UNESCAPED_UNICODE);
         }
     }
