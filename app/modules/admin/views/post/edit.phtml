@@ -7,7 +7,7 @@
     </div>
     <h1>
         编辑文章
-        <small>固定链接:<span id="postUrl"><?= $info['guid'] ?></span></small>
+        <small>固定链接：<span id="postUrl"><?= $info['guid'] ?></span></small>
     </h1>
 </section>
 
@@ -16,12 +16,12 @@
     <div class="row">
         <div class="form-group col-md-12">
             <input class="form-control" id="title" type="text" name="title" placeholder="输入标题" value="<?= $info['post_title'] ?>">
-            <input type="hidden" id="post_id" name="post_id" value="0" >
+            <input type="hidden" id="post_id" name="post_id" value="<?= $info['ID'] ?>" >
         </div>
 
         <div class="form-group col-md-12">
             <div id="editormd">
-                <textarea name="mr_content" style="display:none;"><?= $info['post_content'] ?></textarea>
+                <textarea name="mr_content"><?= $info['post_content'] ?></textarea>
             </div>
         </div>
 
@@ -35,7 +35,7 @@
                 <div class="col-md-4">
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <div class="box box-success">
+                            <div class="box box-default">
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><i class="fa fa-calendar"></i> 发布</h3>
 
@@ -47,41 +47,149 @@
 
                                 <div class="box-body">
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <label>状态</label>
-                                            <select class="form-control" >
-                                                <?php if ($info['post_status'] == 'publish'){
-                                                    echo '<option value="publish" >已发布</option>
-                                                          <option value="draft" >草稿</option>';
-                                                } elseif($info['post_status'] == 'draft'){
+                                        <div class="form-group col-md-12">
+                                            <i class="fa fa-map-pin"></i>&nbsp;状态：&nbsp;
+                                            <?php if ($info['post_status'] == 'publish'){?>
+                                                <b>已发布</b>
+                                            <?php }elseif($info['post_status'] == 'draft'){ ?>
+                                                <b>草稿</b>
+                                            <?php } ?>
+                                            <a href="javascript:void(0)" id="changeStatus">编辑</a>
+                                            <input type="hidden" name="now_status" id="now_status" value="<?= $info['post_status'] ?>">
+                                            <input type="hidden" id="post_date" value="<?= $info['post_date'] ?>">
+                                        </div>
 
-                                                } ?>
+                                        <div class="form-group col-md-12" id="selectStatus" style="display: none;">
+                                            <select class="input-sm" name="ifPublic">
+                                                <option value="open">公开</option>
+                                                <option value="password">密码访问</option>
+                                            </select>
 
+                                            <a href="javascript:void(0)" id="saveChangeStatus" class="btn btn-primary btn-sm">确定</a>
+                                            <a href="javascript:void(0)" id="cancelChangeStatus" class="btn btn-default btn-sm">取消</a>
+                                        </div>
+
+                                        <div class="form-group col-md-12">
+                                            <!--TODO-->
+                                            <i class="fa fa-eye"></i>&nbsp;公开度：&nbsp;
+                                            <select class="input-sm" name="ifPublic">
+                                                <option value="open">公开</option>
+                                                <option value="password">密码访问</option>
                                             </select>
                                         </div>
 
-                                        <div class="col-md-12" id="publishTimeCustomDiv">
-                                            <label class="control-label">
-                                                发布时间
+                                        <div class="form-group col-md-12">
+                                            <i class="fa fa-comment-o"></i>&nbsp;开启评论：&nbsp;
+                                            <label>
+                                                <input type="radio" name="ifComment" value="yes" checked> 是
                                             </label>
-                                            <div class="input-group date" id="datetimepicker" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input">
-                                                <input class="form-control" size="16" type="text" value=""/>
-                                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                                <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                                            </div>
-                                            <input name="publishTimeCustom" type="hidden" id="dtp_input" value="" /><br/>
+                                            &nbsp;&nbsp;
+                                            <label>
+                                                <input type="radio" name="ifComment" value="no"> 否
+                                            </label>
+                                        </div>
+
+                                        <div class="form-group col-md-12">
+                                            <i class="fa fa-arrow-up"></i>&nbsp;是否置顶：&nbsp;
+                                            <label>
+                                                <input type="radio" name="ifTop" value="yes"> 是
+                                            </label>
+                                            &nbsp;&nbsp;
+                                            <label>
+                                                <input type="radio" name="ifTop" value="no" checked> 否
+                                            </label>
+                                        </div>
+
+                                        <div class="form-group col-md-12">
+                                            <i class="fa fa-calendar-check-o"></i>&nbsp;发布时间：&nbsp;
+
+                                            <b id="timestamp">
+                                                <?php if ($info['post_status'] == 'publish'){?>
+                                                    <b>发布于 <?= $info['post_date'] ?></b>
+                                                <?php }elseif($info['post_status'] == 'draft'){ ?>
+                                                    <b>立即发布</b>
+                                                <?php } ?>
+                                            </b>&nbsp;&nbsp;
+                                            <a href="javascript:void(0)" id="editTimestamp">编辑</a>
+                                        </div>
+
+                                        <div class="form-group col-md-12" id="timestampDiv" style="display: none;">
+                                            <label><i class="fa fa-calendar-plus-o"></i>&nbsp;日期和时间</label>
+                                            <input type="hidden" id="publishDate" name="publishDate" value="now">
+                                            <fieldset>
+                                                <div class="timestamp-wrap">
+                                                    <label>
+                                                        <input type="text" class="form-control input-sm" id="year" name="year" size="3" maxlength="3" autocomplete="off">
+                                                    </label>
+                                                    -
+                                                    <label>
+                                                        <select id="month" name="month" class="form-control input-sm">
+                                                            <?php
+                                                            for($i=1; $i<=12; $i++){ ?>
+                                                                <option value="<?php
+                                                                    if ($i < 10){
+                                                                        echo '0'.$i;
+                                                                    }else{
+                                                                        echo $i;
+                                                                    }
+                                                                ?>" data-text="<?= $i ?>月"
+                                                                    <?php if ($i == $publishDatetime['month']) echo "selected" ?> ><?= $i ?>月
+                                                                </option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </label>
+                                                    -
+                                                    <label>
+                                                        <input type="text" id="day" name="day" class="form-control input-sm" size="2" maxlength="2" autocomplete="off">
+                                                    </label>
+                                                    &nbsp;@&nbsp;
+                                                    <label>
+                                                        <input type="text" id="hour" name="hour" class="form-control input-sm" size="2" maxlength="2" autocomplete="off">
+                                                    </label>
+                                                    :
+                                                    <label>
+                                                        <input type="text" id="minute" name="minute" class="form-control input-sm" size="2" maxlength="2" autocomplete="off">
+                                                    </label>
+                                                </div>
+
+                                                <input type="hidden" id="second" name="second" value="<?= $publishDatetime['second'] ?>">
+
+                                                <input type="hidden" id="hidden_year" name="hidden_year" value="<?= $publishDatetime['year'] ?>">
+                                                <input type="hidden" id="cur_year" name="cur_year" >
+                                                <input type="hidden" id="hidden_month" name="hidden_month" value="<?= $publishDatetime['month'] ?>">
+                                                <input type="hidden" id="cur_month" name="cur_month" >
+                                                <input type="hidden" id="hidden_day" name="hidden_day" value="<?= $publishDatetime['day'] ?>">
+                                                <input type="hidden" id="cur_day" name="cur_day" >
+                                                <input type="hidden" id="hidden_hour" name="hidden_hour" value="<?= $publishDatetime['hour'] ?>">
+                                                <input type="hidden" id="cur_hour" name="cur_hour" >
+                                                <input type="hidden" id="hidden_minute" name="hidden_minute" value="<?= $publishDatetime['minute'] ?>">
+                                                <input type="hidden" id="cur_minute" name="cur_minute">
+                                                <p>
+                                                    <a href="javascript:void(0)" id="saveTimestamp" class="btn btn-primary btn-sm">确定</a>
+                                                    <a href="javascript:void(0)" id="cancelTimestamp" class="btn btn-default btn-sm">取消</a>
+                                                </p>
+                                            </fieldset>
                                         </div>
                                     </div>
                                 </div>
 
-                                <?php
 
-                                ?>
                                 <div class="box-footer">
                                     <input type="hidden" id="ajaxUri" value="<?= $ajaxUri ?>">
-                                    <button type="submit" name="submitWay" value="draft" class="btn btn-default">保存草稿</button>
-                                    <span id="autoDraftTps"></span>
-                                    <button type="submit" name="submitWay" value="publish"  class="btn btn-info pull-right">发布</button>
+
+                                    <?php if ($info['post_status'] == 'publish'){?>
+                                        <a href="" class="btn btn-danger btn-sm">移至回收站</a>
+                                        <button type="submit" name="submitWay" value="publish" class="btn btn-info pull-right">更新</button>
+                                    <?php }elseif($info['post_status'] == 'draft'){ ?>
+                                        <a href="" class="btn btn-danger btn-sm">移至回收站</a>
+                                        <div class="pull-right">
+                                            <button type="submit" name="submitWay" value="draft" class="btn btn-default">保存草稿</button>
+                                            <button type="submit" name="submitWay" value="publish"  class="btn btn-info">发布</button>
+                                        </div>
+
+                                    <?php } ?>
+
+                                    <p class="margin pull-right" id="autoDraftTps" style="display: none;"></p>
                                 </div>
                             </div>
                         </div>

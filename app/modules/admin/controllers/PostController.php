@@ -274,6 +274,19 @@ class PostController extends ControllerBase
         $postService = container(PostService::class);
         $info = $postService->getPostInfo($id, 'post', 'publish');
 
+        // 发布时间
+        $publishDatetime = [];
+        if ($info['post_date'] != '1000-01-01 00:00:00'){
+            $postTimestamp = strtotime($info['post_date']);
+        }
+        $publishDatetime['year'] = NULL != $postTimestamp ? date('Y', $postTimestamp) : '';
+        $publishDatetime['month'] = NULL != $postTimestamp ? date('m', $postTimestamp) : '';
+        $publishDatetime['day'] = NULL != $postTimestamp ? date('d', $postTimestamp) : '';
+        $publishDatetime['hour'] = NULL != $postTimestamp ? date('H', $postTimestamp) : '';
+        $publishDatetime['minute'] = NULL != $postTimestamp ? date('i', $postTimestamp) : '';
+        $publishDatetime['second'] = NULL != $postTimestamp ? date('s', $postTimestamp) : '';
+
+
         // 查看postmeta (description)
         $postMeta = Postmeta::findFirst(
             [
@@ -292,6 +305,8 @@ class PostController extends ControllerBase
             [
                 'info' => $info,
                 'description' => $postMeta->meta_value,
+                "ajaxUri" => $this->url->getBaseUri(),
+                "publishDatetime" => $publishDatetime,
             ]
         );
     }
