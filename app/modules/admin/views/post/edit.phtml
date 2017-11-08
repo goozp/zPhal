@@ -50,24 +50,26 @@
                                         <div class="form-group col-md-12">
                                             <i class="fa fa-map-pin"></i>&nbsp;状态：&nbsp;
                                             <?php if ($info['post_status'] == 'publish'){?>
-                                                <b>已发布</b>
+                                                <b id="nowStatusStr">已发布</b>&nbsp;<a href="javascript:void(0)" id="changeStatus">编辑</a>
                                             <?php }elseif($info['post_status'] == 'draft'){ ?>
                                                 <b>草稿</b>
                                             <?php } ?>
-                                            <a href="javascript:void(0)" id="changeStatus">编辑</a>
+
                                             <input type="hidden" name="now_status" id="now_status" value="<?= $info['post_status'] ?>">
                                             <input type="hidden" id="post_date" value="<?= $info['post_date'] ?>">
                                         </div>
 
+                                        <?php if ($info['post_status'] == 'publish'){?>
                                         <div class="form-group col-md-12" id="selectStatus" style="display: none;">
-                                            <select class="input-sm" name="ifPublic">
-                                                <option value="open">公开</option>
-                                                <option value="password">密码访问</option>
+                                            <select class="input-sm" name="change_status" id="change_status">
+                                                <option value="publish">已发布</option>
+                                                <option value="draft">草稿</option>
                                             </select>
-
+                                            &nbsp;
                                             <a href="javascript:void(0)" id="saveChangeStatus" class="btn btn-primary btn-sm">确定</a>
                                             <a href="javascript:void(0)" id="cancelChangeStatus" class="btn btn-default btn-sm">取消</a>
                                         </div>
+                                        <?php }?>
 
                                         <div class="form-group col-md-12">
                                             <!--TODO-->
