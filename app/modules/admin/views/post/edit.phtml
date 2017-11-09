@@ -106,9 +106,9 @@
                                             <i class="fa fa-calendar-check-o"></i>&nbsp;发布时间：&nbsp;
 
                                             <b id="timestamp">
-                                                <?php if ($info['post_status'] == 'publish'){?>
+                                                <?php if ($info['post_date'] != '1000-01-01 00:00:00'){?>
                                                     <b>发布于 <?= $info['post_date'] ?></b>
-                                                <?php }elseif($info['post_status'] == 'draft'){ ?>
+                                                <?php } else{ ?>
                                                     <b>立即发布</b>
                                                 <?php } ?>
                                             </b>&nbsp;&nbsp;
@@ -117,7 +117,7 @@
 
                                         <div class="form-group col-md-12" id="timestampDiv" style="display: none;">
                                             <label><i class="fa fa-calendar-plus-o"></i>&nbsp;日期和时间</label>
-                                            <input type="hidden" id="publishDate" name="publishDate" value="now">
+                                            <input type="hidden" id="publishDate" name="publishDate" value="edit">
                                             <fieldset>
                                                 <div class="timestamp-wrap">
                                                     <label>

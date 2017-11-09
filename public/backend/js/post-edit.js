@@ -55,12 +55,13 @@ $(function () {
     });
     $('#cancelTimestamp').on('click', function () {
         var post_date = $('#post_date').val();
-        if (now_status == 'publish') {
-            $('#timestamp').html('发布于 ' + post_date);
-        } else {
+        if (post_date != '1000-01-01 00:00:00'){
+            $('#timestamp').html('发布于 '+ post_date);
+            $('#publishDate').val('edit');
+        }else {
             $('#timestamp').html('立即发布');
+            $('#publishDate').val('now');
         }
-        $('#publishDate').val('now');
         $('#timestampDiv').slideUp();
         $('#editTimestamp').show();
     });

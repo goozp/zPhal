@@ -367,7 +367,9 @@ class PostController extends ControllerBase
             $publishDate = $this->request->getPost('publishDate');
             $categories = $this->request->getPost('categories');
             $tags = $this->request->getPost('tags');
-
+            $nowStatus = $this->request->getPost('now_status'); // 当前状态
+            
+        
             $ifPublic = $this->request->getPost('ifPublic'); // TODO
             $ifComment = $this->request->getPost('ifComment');
             $ifTop = $this->request->getPost('ifTop'); // TODO
@@ -383,16 +385,35 @@ class PostController extends ControllerBase
             $post->post_modified = date('Y-m-d H:i:s', $now);
             $post->post_modified_gmt = gmdate('Y-m-d H:i:s', $now);
             
-            if ($submitWay == 'publish') {
-                
-                $post->post_status = 'publish';
+            // 发布时间
+            if ($publishDate == 'now') {
+                $post->post_date = $post->post_modified;
+                $post->post_date_gmt = $post->post_modified_gmt;
 
-            } elseif ($submitWay == 'draft'){
+            } elseif ($publishDate == 'edit') {
+                $year = $this->request->getPost('year');
+                $month = $this->request->getPost('month');
+                $day = $this->request->getPost('day');
+                $hour = $this->request->getPost('hour');
+                $minute = $this->request->getPost('minute');
+                $second = $this->request->getPost('second');
+                $actionTime = $year . '-' . $month . '-' . $day . ' ' . $hour . ':' . $minute . ':' . $second;
 
-                $post->post_status = 'draft';
+                $post->post_date = $actionTime;
+                $post->post_date_gmt = gmdate("Y-m-d H:i:s", strtotime($actionTime));
             }
-
+                
+            // 发布状态
+            if($nowStatus == 'publish'){
+                $changeStatus = $this->request->getPost('change_status'); // 改变状态
+                $post->post_status = $changeStatus;
+            } elseif($nowStatus == 'draft'){
+                $post->post_status = $submitWay;
+            }
+        
             if ($post->save()) {
+
+                // TODO 额外操作
 
                 // 成功,跳转到文章编辑页
                 $this->flash->success("保存成功!");
