@@ -241,7 +241,7 @@ class PostController extends ControllerBase
                 }
 
                 // 成功,跳转到文章编辑页
-                $this->flash->success("操作成功!");
+                $this->flash->success("保存成功!");
                 return $this->response->redirect("admin/post/edit/" . $post->ID);
             } else {
                 $this->flash->error("保存失败!");
@@ -254,7 +254,8 @@ class PostController extends ControllerBase
     }
 
     /**
-     * // TODO 编辑
+     * 编辑文章
+     * TODO 列表输出优化
      */
     public function editAction()
     {
@@ -270,7 +271,9 @@ class PostController extends ControllerBase
 
         $id = $this->dispatcher->getParam("id");
 
-        // post 信息
+        /**
+         * post信息
+         */
         $postService = container(PostService::class);
         $info = $postService->getPostInfo($id, 'post', 'publish');
 
@@ -278,14 +281,15 @@ class PostController extends ControllerBase
         $publishDatetime = [];
         if ($info['post_date'] != '1000-01-01 00:00:00'){
             $postTimestamp = strtotime($info['post_date']);
+        }else{
+            $postTimestamp = 0;
         }
-        $publishDatetime['year'] = NULL != $postTimestamp ? date('Y', $postTimestamp) : '';
-        $publishDatetime['month'] = NULL != $postTimestamp ? date('m', $postTimestamp) : '';
-        $publishDatetime['day'] = NULL != $postTimestamp ? date('d', $postTimestamp) : '';
-        $publishDatetime['hour'] = NULL != $postTimestamp ? date('H', $postTimestamp) : '';
-        $publishDatetime['minute'] = NULL != $postTimestamp ? date('i', $postTimestamp) : '';
-        $publishDatetime['second'] = NULL != $postTimestamp ? date('s', $postTimestamp) : '';
-
+        $publishDatetime['year'] = $postTimestamp ? date('Y', $postTimestamp) : '';
+        $publishDatetime['month'] = $postTimestamp ? date('m', $postTimestamp) : '';
+        $publishDatetime['day'] = $postTimestamp ? date('d', $postTimestamp) : '';
+        $publishDatetime['hour'] = $postTimestamp ? date('H', $postTimestamp) : '';
+        $publishDatetime['minute'] = $postTimestamp ? date('i', $postTimestamp) : '';
+        $publishDatetime['second'] = $postTimestamp ? date('s', $postTimestamp) : '';
 
         // 查看postmeta (description)
         $postMeta = Postmeta::findFirst(
@@ -297,18 +301,110 @@ class PostController extends ControllerBase
                 ]
             ]
         );
+        $description = $postMeta ? $postMeta->meta_value : '';
 
-        // 查询分类标签
 
+        /**
+         * 分类,标签
+         */
+        // 当前分类标签
+        $taxonomy = $postService->getPostTaxonomy($id);
+
+        // 分类列表
+        $postService = container(PostService::class);
+        $category = $postService->getTaxonomyListByType('category');
+        $categoryTree = makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
+
+        // 标签列表
+        $postService = container(PostService::class);
+        $tags = $postService->getTaxonomyListByType('tag');
+        $tagsTree = makeTree($tags, 'term_taxonomy_id', 'parent', 'sun', 0);
+
+
+        /**
+         * 专题
+         */
+        // 专题列表
+        $subjects = Subjects::find()->toArray();
+        $subjectsTree = makeTree($subjects, 'subject_id', 'parent');
+
+        // 当前专题
+        $nowSubject = SubjectRelationships::findFirst([
+            'object_id = :id: ',
+            'bind' => [
+                'id' => $id
+            ]
+        ]);
+        $nowSubject = $nowSubject ? $nowSubject->subject_id : 0;
 
         $this->view->setVars(
             [
                 'info' => $info,
-                'description' => $postMeta->meta_value,
-                "ajaxUri" => $this->url->getBaseUri(),
+                'description' => $description,
                 "publishDatetime" => $publishDatetime,
+                "ajaxUri" => $this->url->getBaseUri(),
+                "categoryTree" => treeHtmlMultiSelect($categoryTree, 'term_taxonomy_id', 'name', ' ', 0, $taxonomy['category'], ' '),
+                "categoryTreeNbsp" => treeHtml($categoryTree, 'term_taxonomy_id', 'name'),
+                "tagsTree" => treeHtmlMultiSelect($tagsTree, 'term_taxonomy_id', 'name', ' ', 0, $taxonomy['tag'], ' '),
+                "subjectTree" => treeHtml($subjectsTree, 'subject_id', 'subject_name', '', 0, $nowSubject),
             ]
         );
+    }
+
+
+    public function updateAction()
+    {
+        if ($this->request->isPost()) {
+            $submitWay = $this->request->getPost('submitWay', 'string');
+            
+            // 获取表单数据
+            $postId = $this->request->getPost('post_id');
+            $title = $this->request->getPost('title', 'trim');
+            $mr_content = $this->request->getPost('mr_content');
+            $cover_image = $this->request->getPost('cover_image');
+            // 以下需要判断
+            $description = $this->request->getPost('description', ['string', 'trim']);
+            $publishDate = $this->request->getPost('publishDate');
+            $categories = $this->request->getPost('categories');
+            $tags = $this->request->getPost('tags');
+
+            $ifPublic = $this->request->getPost('ifPublic'); // TODO
+            $ifComment = $this->request->getPost('ifComment');
+            $ifTop = $this->request->getPost('ifTop'); // TODO
+
+            $post = Posts::findFirst($postId);
+            $post->post_content = $mr_content;
+            $post->post_title = $title ? $title : '无题';
+            $post->comment_status = $ifComment == 'yes' ? $post::COMMENT_OPEN : $post::COMMENT_CLOSE;
+            $post->cover_picture = $cover_image;
+
+            // 编辑时间
+            $now = time();
+            $post->post_modified = date('Y-m-d H:i:s', $now);
+            $post->post_modified_gmt = gmdate('Y-m-d H:i:s', $now);
+            
+            if ($submitWay == 'publish') {
+                
+                $post->post_status = 'publish';
+
+            } elseif ($submitWay == 'draft'){
+
+                $post->post_status = 'draft';
+            }
+
+            if ($post->save()) {
+
+                // 成功,跳转到文章编辑页
+                $this->flash->success("保存成功!");
+                return $this->response->redirect("admin/post/edit/" . $postId);
+            } else {
+                $this->flash->error("保存失败!");
+                return $this->response->redirect("admin/post/edit/".$postId);
+            }
+        }
+
+        $this->flash->error("错误操作!");
+        return $this->response->redirect("admin/");
     }
 
     /**

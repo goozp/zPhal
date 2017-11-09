@@ -188,7 +188,6 @@
                                             <button type="submit" name="submitWay" value="draft" class="btn btn-default">保存草稿</button>
                                             <button type="submit" name="submitWay" value="publish"  class="btn btn-info">发布</button>
                                         </div>
-
                                     <?php } ?>
 
                                     <p class="margin pull-right" id="autoDraftTps" style="display: none;"></p>
@@ -278,9 +277,7 @@
                                         <div class="form-group col-md-12">
                                             <label>选择标签</label>
                                             <select class="form-control select2" id="tagsList" name="tags[]" multiple="multiple" data-placeholder="选择标签" style="width: 100%;">
-                                                <?php foreach ($tags as $tag){?>
-                                                    <option value="<?= $tag['term_taxonomy_id'] ?>"><?= $tag['name'] ?></option>
-                                                <?php } ?>
+                                                <?= $tagsTree ?>
                                             </select>
                                         </div>
                                     </div>

@@ -141,6 +141,13 @@ $router->add('/admin/post/edit/{id:[0-9]+}',
         'id'         => 1,
     ]
 )->setName('edit-post');
+$router->add('/admin/post/update',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'update',
+    ]
+)->setName('update-post');
 $router->add('/admin/post/taxonomy/{type:[a-z]+}',
     [
         'module'     => 'admin',

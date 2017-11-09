@@ -87,6 +87,50 @@ if (!function_exists('treeHtml')){
     }
 }
 
+
+if (!function_exists('treeHtmlMultiSelect')){
+    /**
+     * 返回要输出的html option结构
+     *
+     * @param $categoryTree
+     * @param $pk
+     * @param $name
+     * @param string $html
+     * @param int $deep
+     * @param int $active
+     * @return string
+     */
+    function treeHtmlMultiSelect($categoryTree, $pk, $name, $html = '', $deep = 0, $active = [], $nbsp="&nbsp;&nbsp;&nbsp;&nbsp;")
+    {
+        if ($html == '') {
+            $html = '<option value="0">无</option>';
+        }
+
+        $tags = '';
+        if ($deep) {
+            for ($i = 1; $i <= $deep; $i++) {
+                $tags .= $nbsp;
+            }
+        }
+
+        foreach ($categoryTree as $category) {
+            if (in_array($category[$pk], $active)){
+                $actived = 'selected';
+            } else {
+                $actived = '';
+            }
+
+            $html .= '<option value="' . $category[$pk] . '" ' . $actived . '>' . $tags . $category[$name] . '</option>';
+
+            if (!empty($category['sun'])) {
+                $html = treeHtmlMultiSelect($category['sun'], $pk, $name, $html, $deep + 1, $active, $nbsp);
+            }
+        }
+
+        return $html;
+    }
+}
+
 if(!function_exists('subjectTreeHtml')){
     /**
      * 返回专题列表树形数据

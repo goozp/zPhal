@@ -183,4 +183,35 @@ class PostService extends AbstractService
 
         return $info[0];
     }
+
+    /**
+     * 获取post的分类或标签
+     * @param $objectId
+     * @param string $type category|tag 默认全部
+     * @return array
+     */
+    public function getPostTaxonomy($objectId, $type='')
+    {
+        $builder = self::$modelsManager->createBuilder()
+            ->columns("tr.term_taxonomy_id, tt.taxonomy")
+            ->from(['tr' => 'ZPhal\Models\TermRelationships'])
+            ->leftJoin('ZPhal\Models\TermTaxonomy', 'tt.term_taxonomy_id = tr.term_taxonomy_id', "tt")
+            ->where("tr.object_id = :id:", ["id" => $objectId]);
+
+        if ($type != ''){
+            $builder->andWhere("tt.taxonomy = :taxonomy:", ["taxonomy" => $type]);
+        }
+
+        $taxonomy = $builder
+            ->getQuery()
+            ->execute()
+            ->toArray();
+
+        $output = [];
+        foreach ($taxonomy as $item){
+            $output[$item['taxonomy']][] = $item['term_taxonomy_id'];
+        }
+
+        return $output;
+    }
 }
