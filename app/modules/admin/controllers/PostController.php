@@ -412,8 +412,29 @@ class PostController extends ControllerBase
             }
         
             if ($post->save()) {
-
-                // TODO 额外操作
+                // description
+                if($description != ''){
+                    $postMeta = Postmeta::findFirst(
+                        [
+                            "conditions" => "post_id = ?1 AND meta_key = ?2",
+                            "bind" => [
+                                1 => $postId,
+                                2 => 'description'
+                            ]
+                        ]
+                    );
+                    if($postMeta){
+                        $postMeta->meta_value = $description;
+                        $postMeta->update();
+                    }else{
+                        $postmeta = new Postmeta();
+                        $postmeta->post_id = $postId;
+                        $postmeta->meta_key = 'description';
+                        $postmeta->meta_value = $description;
+                        $postmeta->create();
+                    }
+                }
+                
 
                 // 成功,跳转到文章编辑页
                 $this->flash->success("保存成功!");

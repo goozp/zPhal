@@ -14,321 +14,327 @@
 <!-- 主内容 -->
 <section class="content">
     <div class="row">
-        <div class="form-group col-md-12">
-            <input class="form-control" id="title" type="text" name="title" placeholder="输入标题" value="<?= $info['post_title'] ?>">
-            <input type="hidden" id="post_id" name="post_id" value="<?= $info['ID'] ?>" >
-        </div>
-
-        <div class="form-group col-md-12">
-            <div id="editormd">
-                <textarea name="mr_content"><?= $info['post_content'] ?></textarea>
+        <form action="<?= $this->url->get("admin/post/update"); ?>" method="post">
+            <div class="form-group col-md-12">
+                <input class="form-control" id="title" type="text" name="title" placeholder="输入标题" value="<?= $info['post_title'] ?>">
+                <input type="hidden" id="post_id" name="post_id" value="<?= $info['ID'] ?>" >
             </div>
-        </div>
 
-        <div class="form-group col-md-12">
-            <label>Description</label>
-            <textarea class="form-control" rows="3" name="description"  placeholder="概述"><?= $description ?></textarea>
-        </div>
+            <div class="form-group col-md-12">
+                <div id="editormd">
+                    <textarea name="mr_content"><?= $info['post_content'] ?></textarea>
+                </div>
+            </div>
 
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            <div class="box box-default">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title"><i class="fa fa-calendar"></i> 发布</h3>
+            <div class="form-group col-md-12">
+                <label>Description</label>
+                <textarea class="form-control" rows="3" name="description"  placeholder="概述"><?= $description ?></textarea>
+            </div>
 
-                                    <div class="box-tools pull-right">
-                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <div class="box box-default">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title"><i class="fa fa-calendar"></i> 发布</h3>
 
-                                <div class="box-body">
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            <i class="fa fa-map-pin"></i>&nbsp;状态：&nbsp;
-                                            <?php if ($info['post_status'] == 'publish'){?>
-                                                <b id="nowStatusStr">已发布</b>&nbsp;<a href="javascript:void(0)" id="changeStatus">编辑</a>
-                                            <?php }elseif($info['post_status'] == 'draft'){ ?>
-                                                <b>草稿</b>
-                                            <?php } ?>
-
-                                            <input type="hidden" name="now_status" id="now_status" value="<?= $info['post_status'] ?>">
-                                            <input type="hidden" id="post_date" value="<?= $info['post_date'] ?>">
+                                        <div class="box-tools pull-right">
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                            </button>
                                         </div>
+                                    </div>
+
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <i class="fa fa-map-pin"></i>&nbsp;状态：&nbsp;
+                                                <?php if ($info['post_status'] == 'publish'){?>
+                                                    <b id="nowStatusStr">已发布</b>&nbsp;<a href="javascript:void(0)" id="changeStatus">编辑</a>
+                                                <?php }elseif($info['post_status'] == 'draft'){ ?>
+                                                    <b>草稿</b>
+                                                <?php } ?>
+
+                                                <input type="hidden" name="now_status" id="now_status" value="<?= $info['post_status'] ?>">
+                                                <input type="hidden" id="post_date" value="<?= $info['post_date'] ?>">
+                                            </div>
+
+                                            <?php if ($info['post_status'] == 'publish'){?>
+                                            <div class="form-group col-md-12" id="selectStatus" style="display: none;">
+                                                <select class="input-sm" name="change_status" id="change_status">
+                                                    <option value="publish">已发布</option>
+                                                    <option value="draft">草稿</option>
+                                                </select>
+                                                &nbsp;
+                                                <a href="javascript:void(0)" id="saveChangeStatus" class="btn btn-primary btn-sm">确定</a>
+                                                <a href="javascript:void(0)" id="cancelChangeStatus" class="btn btn-default btn-sm">取消</a>
+                                            </div>
+                                            <?php }?>
+
+                                            <div class="form-group col-md-12">
+                                                <!--TODO-->
+                                                <i class="fa fa-eye"></i>&nbsp;公开度：&nbsp;
+                                                <select class="input-sm" name="ifPublic">
+                                                    <option value="open">公开</option>
+                                                    <option value="password">密码访问</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <i class="fa fa-comment-o"></i>&nbsp;开启评论：&nbsp;
+                                                <label>
+                                                    <input type="radio" name="ifComment" value="yes" checked> 是
+                                                </label>
+                                                &nbsp;&nbsp;
+                                                <label>
+                                                    <input type="radio" name="ifComment" value="no"> 否
+                                                </label>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <i class="fa fa-arrow-up"></i>&nbsp;是否置顶：&nbsp;
+                                                <label>
+                                                    <input type="radio" name="ifTop" value="yes"> 是
+                                                </label>
+                                                &nbsp;&nbsp;
+                                                <label>
+                                                    <input type="radio" name="ifTop" value="no" checked> 否
+                                                </label>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <i class="fa fa-calendar-check-o"></i>&nbsp;发布时间：&nbsp;
+
+                                                <b id="timestamp">
+                                                    <?php if ($info['post_date'] != '1000-01-01 00:00:00'){?>
+                                                        <b>发布于 <?= $info['post_date'] ?></b>
+                                                    <?php } else{ ?>
+                                                        <b>立即发布</b>
+                                                    <?php } ?>
+                                                </b>&nbsp;&nbsp;
+                                                <a href="javascript:void(0)" id="editTimestamp">编辑</a>
+                                            </div>
+
+                                            <div class="form-group col-md-12" id="timestampDiv" style="display: none;">
+                                                <label><i class="fa fa-calendar-plus-o"></i>&nbsp;日期和时间</label>
+                                                <?php if ($info['post_status'] == 'draft' && $info['post_date'] == '1000-01-01 00:00:00'){?>
+                                                    <input type="hidden" id="publishDate" name="publishDate" value="now">
+                                                <?php } else{ ?>
+                                                    <input type="hidden" id="publishDate" name="publishDate" value="edit">
+                                                <?php } ?>
+                                                <fieldset>
+                                                    <div class="timestamp-wrap">
+                                                        <label>
+                                                            <input type="text" class="form-control input-sm" id="year" name="year" value="<?= $publishDatetime['year'] ?>" size="3" maxlength="3" autocomplete="off">
+                                                        </label>
+                                                        -
+                                                        <label>
+                                                            <select id="month" name="month" class="form-control input-sm">
+                                                                <?php
+                                                                for($i=1; $i<=12; $i++){ ?>
+                                                                    <option value="<?php
+                                                                        if ($i < 10){
+                                                                            echo '0'.$i;
+                                                                        }else{
+                                                                            echo $i;
+                                                                        }
+                                                                    ?>" data-text="<?= $i ?>月"
+                                                                        <?php if ($i == $publishDatetime['month']) echo "selected" ?> ><?= $i ?>月
+                                                                    </option>
+                                                                <?php } ?>
+                                                            </select>
+                                                        </label>
+                                                        -
+                                                        <label>
+                                                            <input type="text" id="day" name="day" value="<?= $publishDatetime['day'] ?>" class="form-control input-sm" size="2" maxlength="2" autocomplete="off">
+                                                        </label>
+                                                        &nbsp;@&nbsp;
+                                                        <label>
+                                                            <input type="text" id="hour" name="hour" value="<?= $publishDatetime['hour'] ?>" class="form-control input-sm" size="2" maxlength="2" autocomplete="off">
+                                                        </label>
+                                                        :
+                                                        <label>
+                                                            <input type="text" id="minute" name="minute" value="<?= $publishDatetime['minute'] ?>" class="form-control input-sm" size="2" maxlength="2" autocomplete="off">
+                                                        </label>
+                                                    </div>
+
+                                                    <input type="hidden" id="second" name="second" value="<?= $publishDatetime['second'] ?>">
+
+                                                    <input type="hidden" id="hidden_year" name="hidden_year" value="<?= $publishDatetime['year'] ?>">
+                                                    <input type="hidden" id="cur_year" name="cur_year" >
+                                                    <input type="hidden" id="hidden_month" name="hidden_month" value="<?= $publishDatetime['month'] ?>">
+                                                    <input type="hidden" id="cur_month" name="cur_month" >
+                                                    <input type="hidden" id="hidden_day" name="hidden_day" value="<?= $publishDatetime['day'] ?>">
+                                                    <input type="hidden" id="cur_day" name="cur_day" >
+                                                    <input type="hidden" id="hidden_hour" name="hidden_hour" value="<?= $publishDatetime['hour'] ?>">
+                                                    <input type="hidden" id="cur_hour" name="cur_hour" >
+                                                    <input type="hidden" id="hidden_minute" name="hidden_minute" value="<?= $publishDatetime['minute'] ?>">
+                                                    <input type="hidden" id="cur_minute" name="cur_minute">
+                                                    <p>
+                                                        <a href="javascript:void(0)" id="saveTimestamp" class="btn btn-primary btn-sm">确定</a>
+                                                        <a href="javascript:void(0)" id="cancelTimestamp" class="btn btn-default btn-sm">取消</a>
+                                                    </p>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="box-footer">
+                                        <input type="hidden" id="ajaxUri" value="<?= $ajaxUri ?>">
 
                                         <?php if ($info['post_status'] == 'publish'){?>
-                                        <div class="form-group col-md-12" id="selectStatus" style="display: none;">
-                                            <select class="input-sm" name="change_status" id="change_status">
-                                                <option value="publish">已发布</option>
-                                                <option value="draft">草稿</option>
-                                            </select>
-                                            &nbsp;
-                                            <a href="javascript:void(0)" id="saveChangeStatus" class="btn btn-primary btn-sm">确定</a>
-                                            <a href="javascript:void(0)" id="cancelChangeStatus" class="btn btn-default btn-sm">取消</a>
-                                        </div>
-                                        <?php }?>
+                                            <a href="" class="btn btn-danger btn-sm">移至回收站</a>
+                                            <button type="submit" name="submitWay" value="publish" class="btn btn-info pull-right">更新</button>
+                                        <?php }elseif($info['post_status'] == 'draft'){ ?>
+                                            <a href="" class="btn btn-danger btn-sm">移至回收站</a>
+                                            <div class="pull-right">
+                                                <button type="submit" name="submitWay" value="draft" class="btn btn-default">保存草稿</button>
+                                                <button type="submit" name="submitWay" value="publish"  class="btn btn-info">发布</button>
+                                            </div>
+                                        <?php } ?>
 
-                                        <div class="form-group col-md-12">
-                                            <!--TODO-->
-                                            <i class="fa fa-eye"></i>&nbsp;公开度：&nbsp;
-                                            <select class="input-sm" name="ifPublic">
-                                                <option value="open">公开</option>
-                                                <option value="password">密码访问</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group col-md-12">
-                                            <i class="fa fa-comment-o"></i>&nbsp;开启评论：&nbsp;
-                                            <label>
-                                                <input type="radio" name="ifComment" value="yes" checked> 是
-                                            </label>
-                                            &nbsp;&nbsp;
-                                            <label>
-                                                <input type="radio" name="ifComment" value="no"> 否
-                                            </label>
-                                        </div>
-
-                                        <div class="form-group col-md-12">
-                                            <i class="fa fa-arrow-up"></i>&nbsp;是否置顶：&nbsp;
-                                            <label>
-                                                <input type="radio" name="ifTop" value="yes"> 是
-                                            </label>
-                                            &nbsp;&nbsp;
-                                            <label>
-                                                <input type="radio" name="ifTop" value="no" checked> 否
-                                            </label>
-                                        </div>
-
-                                        <div class="form-group col-md-12">
-                                            <i class="fa fa-calendar-check-o"></i>&nbsp;发布时间：&nbsp;
-
-                                            <b id="timestamp">
-                                                <?php if ($info['post_date'] != '1000-01-01 00:00:00'){?>
-                                                    <b>发布于 <?= $info['post_date'] ?></b>
-                                                <?php } else{ ?>
-                                                    <b>立即发布</b>
-                                                <?php } ?>
-                                            </b>&nbsp;&nbsp;
-                                            <a href="javascript:void(0)" id="editTimestamp">编辑</a>
-                                        </div>
-
-                                        <div class="form-group col-md-12" id="timestampDiv" style="display: none;">
-                                            <label><i class="fa fa-calendar-plus-o"></i>&nbsp;日期和时间</label>
-                                            <input type="hidden" id="publishDate" name="publishDate" value="edit">
-                                            <fieldset>
-                                                <div class="timestamp-wrap">
-                                                    <label>
-                                                        <input type="text" class="form-control input-sm" id="year" name="year" size="3" maxlength="3" autocomplete="off">
-                                                    </label>
-                                                    -
-                                                    <label>
-                                                        <select id="month" name="month" class="form-control input-sm">
-                                                            <?php
-                                                            for($i=1; $i<=12; $i++){ ?>
-                                                                <option value="<?php
-                                                                    if ($i < 10){
-                                                                        echo '0'.$i;
-                                                                    }else{
-                                                                        echo $i;
-                                                                    }
-                                                                ?>" data-text="<?= $i ?>月"
-                                                                    <?php if ($i == $publishDatetime['month']) echo "selected" ?> ><?= $i ?>月
-                                                                </option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </label>
-                                                    -
-                                                    <label>
-                                                        <input type="text" id="day" name="day" class="form-control input-sm" size="2" maxlength="2" autocomplete="off">
-                                                    </label>
-                                                    &nbsp;@&nbsp;
-                                                    <label>
-                                                        <input type="text" id="hour" name="hour" class="form-control input-sm" size="2" maxlength="2" autocomplete="off">
-                                                    </label>
-                                                    :
-                                                    <label>
-                                                        <input type="text" id="minute" name="minute" class="form-control input-sm" size="2" maxlength="2" autocomplete="off">
-                                                    </label>
-                                                </div>
-
-                                                <input type="hidden" id="second" name="second" value="<?= $publishDatetime['second'] ?>">
-
-                                                <input type="hidden" id="hidden_year" name="hidden_year" value="<?= $publishDatetime['year'] ?>">
-                                                <input type="hidden" id="cur_year" name="cur_year" >
-                                                <input type="hidden" id="hidden_month" name="hidden_month" value="<?= $publishDatetime['month'] ?>">
-                                                <input type="hidden" id="cur_month" name="cur_month" >
-                                                <input type="hidden" id="hidden_day" name="hidden_day" value="<?= $publishDatetime['day'] ?>">
-                                                <input type="hidden" id="cur_day" name="cur_day" >
-                                                <input type="hidden" id="hidden_hour" name="hidden_hour" value="<?= $publishDatetime['hour'] ?>">
-                                                <input type="hidden" id="cur_hour" name="cur_hour" >
-                                                <input type="hidden" id="hidden_minute" name="hidden_minute" value="<?= $publishDatetime['minute'] ?>">
-                                                <input type="hidden" id="cur_minute" name="cur_minute">
-                                                <p>
-                                                    <a href="javascript:void(0)" id="saveTimestamp" class="btn btn-primary btn-sm">确定</a>
-                                                    <a href="javascript:void(0)" id="cancelTimestamp" class="btn btn-default btn-sm">取消</a>
-                                                </p>
-                                            </fieldset>
-                                        </div>
+                                        <p class="margin pull-right" id="autoDraftTps" style="display: none;"></p>
                                     </div>
-                                </div>
-
-
-                                <div class="box-footer">
-                                    <input type="hidden" id="ajaxUri" value="<?= $ajaxUri ?>">
-
-                                    <?php if ($info['post_status'] == 'publish'){?>
-                                        <a href="" class="btn btn-danger btn-sm">移至回收站</a>
-                                        <button type="submit" name="submitWay" value="publish" class="btn btn-info pull-right">更新</button>
-                                    <?php }elseif($info['post_status'] == 'draft'){ ?>
-                                        <a href="" class="btn btn-danger btn-sm">移至回收站</a>
-                                        <div class="pull-right">
-                                            <button type="submit" name="submitWay" value="draft" class="btn btn-default">保存草稿</button>
-                                            <button type="submit" name="submitWay" value="publish"  class="btn btn-info">发布</button>
-                                        </div>
-                                    <?php } ?>
-
-                                    <p class="margin pull-right" id="autoDraftTps" style="display: none;"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <div class="box box-default">
-                                <div class="overlay" id="post_category">
-                                    <i class="fa fa-refresh fa-spin"></i>
-                                </div>
-
-                                <div class="box-header with-border">
-                                    <h3 class="box-title"><i class="fa fa-tags"></i> 分类</h3>
-
-                                    <div class="box-tools pull-right">
-                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                        </button>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <div class="box box-default">
+                                    <div class="overlay" id="post_category">
+                                        <i class="fa fa-refresh fa-spin"></i>
                                     </div>
-                                </div>
 
-                                <div class="box-body">
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            <label>添加新分类</label>
-                                            <div class="row">
-                                                <div class="col-xs-5">
-                                                    <select class="form-control" id="newCategoryParent">
-                                                        <?= $categoryTreeNbsp ?>
-                                                    </select>
-                                                </div>
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title"><i class="fa fa-tags"></i> 分类</h3>
 
-                                                <div class="col-xs-7">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" id="newCategory" placeholder="分类名称">
-                                                        <span class="input-group-btn">
-                                                      <button type="button" id="addNewCategory" class="btn btn-info btn-flat">添加</button>
-                                                    </span>
+                                        <div class="box-tools pull-right">
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <label>添加新分类</label>
+                                                <div class="row">
+                                                    <div class="col-xs-5">
+                                                        <select class="form-control" id="newCategoryParent">
+                                                            <?= $categoryTreeNbsp ?>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-xs-7">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="newCategory" placeholder="分类名称">
+                                                            <span class="input-group-btn">
+                                                          <button type="button" id="addNewCategory" class="btn btn-info btn-flat">添加</button>
+                                                        </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
 
-                                        <div class="form-group col-md-12">
-                                            <label>选择分类</label>
-                                            <select class="form-control select2" id="categoryList" name="categories[]" multiple="multiple" data-placeholder="选择分类" style="width: 100%;">
-                                                <?= $categoryTree ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <div class="box box-default">
-                                <div class="overlay" id="post_tag">
-                                    <i class="fa fa-refresh fa-spin"></i>
-                                </div>
-
-                                <div class="box-header with-border">
-                                    <h3 class="box-title"><i class="fa fa-tags"></i> 标签</h3>
-
-                                    <div class="box-tools pull-right">
-                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="box-body">
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            <label>添加新标签</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="newTag" placeholder="标签名称">
-                                                <span class="input-group-btn">
-                                                <button type="button" id="addNewTag" class="btn btn-info btn-flat">添加</button>
-                                            </span>
+                                            <div class="form-group col-md-12">
+                                                <label>选择分类</label>
+                                                <select class="form-control select2" id="categoryList" name="categories[]" multiple="multiple" data-placeholder="选择分类" style="width: 100%;">
+                                                    <?= $categoryTree ?>
+                                                </select>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                        <div class="form-group col-md-12">
-                                            <label>选择标签</label>
-                                            <select class="form-control select2" id="tagsList" name="tags[]" multiple="multiple" data-placeholder="选择标签" style="width: 100%;">
-                                                <?= $tagsTree ?>
-                                            </select>
+                            <div class="form-group col-md-6">
+                                <div class="box box-default">
+                                    <div class="overlay" id="post_tag">
+                                        <i class="fa fa-refresh fa-spin"></i>
+                                    </div>
+
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title"><i class="fa fa-tags"></i> 标签</h3>
+
+                                        <div class="box-tools pull-right">
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <label>添加新标签</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="newTag" placeholder="标签名称">
+                                                    <span class="input-group-btn">
+                                                    <button type="button" id="addNewTag" class="btn btn-info btn-flat">添加</button>
+                                                </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <label>选择标签</label>
+                                                <select class="form-control select2" id="tagsList" name="tags[]" multiple="multiple" data-placeholder="选择标签" style="width: 100%;">
+                                                    <?= $tagsTree ?>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <div class="box box-default">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title"><i class="fa fa-dashcube"></i> 专题</h3>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <div class="box box-default">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title"><i class="fa fa-dashcube"></i> 专题</h3>
 
-                                    <div class="box-tools pull-right">
-                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                        </button>
+                                        <div class="box-tools pull-right">
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="box-body">
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            <label>选择专题</label>
-                                            <select class="form-control select2" id="subjectList" name="subject" data-placeholder="选择专题" >
-                                                <?= $subjectTree ?>
-                                            </select>
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <label>选择专题</label>
+                                                <select class="form-control select2" id="subjectList" name="subject" data-placeholder="选择专题" >
+                                                    <?= $subjectTree ?>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group col-md-6">
-                            <div class="box box-default">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title"><i class="fa fa-image"></i> 特色图片</h3>
+                            <div class="form-group col-md-6">
+                                <div class="box box-default">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title"><i class="fa fa-image"></i> 特色图片</h3>
 
-                                    <div class="box-tools pull-right">
-                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="box-body" style="">
-                                    <div class="form-group col-md-12">
-                                        <label for="imageUrl">图片地址</label>
-                                        <input type="text" name="cover_image" class="form-control" id="imageUrl" placeholder="url">
+                                        <div class="box-tools pull-right">
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
                                     </div>
 
-                                    <div class="form-group col-md-12"  id="imagePreview">
+                                    <div class="box-body" style="">
+                                        <div class="form-group col-md-12">
+                                            <label for="imageUrl">图片地址</label>
+                                            <input type="text" name="cover_image" class="form-control" id="imageUrl" placeholder="url">
+                                        </div>
+
+                                        <div class="form-group col-md-12"  id="imagePreview">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -336,6 +342,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </section>
