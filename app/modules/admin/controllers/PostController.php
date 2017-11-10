@@ -154,6 +154,7 @@ class PostController extends ControllerBase
             $publishDate = $this->request->getPost('publishDate');
             $categories = $this->request->getPost('categories');
             $tags = $this->request->getPost('tags');
+            $subject = $this->request->getPost('subject');
 
             $ifPublic = $this->request->getPost('ifPublic'); // TODO
             $ifComment = $this->request->getPost('ifComment');
@@ -220,7 +221,7 @@ class PostController extends ControllerBase
                     $postmeta->create();
                 }
 
-                // 分类,标签
+                // 分类和标签
                 // categories一定有,如未设置则是未分类; tags可能没有设置
                 if (!empty($tags)) {
                     $categories = array_merge($categories, $tags); // 合并标签
@@ -367,6 +368,7 @@ class PostController extends ControllerBase
             $publishDate = $this->request->getPost('publishDate');
             $categories = $this->request->getPost('categories');
             $tags = $this->request->getPost('tags');
+            $subject = $this->request->getPost('subject');
             $nowStatus = $this->request->getPost('now_status'); // 当前状态
             
         
@@ -412,7 +414,9 @@ class PostController extends ControllerBase
             }
         
             if ($post->save()) {
-                // description
+                /**
+                 * description
+                 */
                 if($description != ''){
                     $postMeta = Postmeta::findFirst(
                         [
@@ -435,6 +439,78 @@ class PostController extends ControllerBase
                     }
                 }
                 
+                /**
+                 * 分类和标签
+                 */
+                if (!empty($tags)) {
+                    $categories = array_merge($categories, $tags); // 合并标签
+                }
+                // 查询已有的数据
+                $TermRelationships = TermRelationships::find(
+                    [
+                        "conditions" => "object_id = ?1",
+                        "bind" => [
+                            1 => $postId,
+                        ]
+                    ]
+                )->toArray();
+
+                $beforeCategories = [];
+                foreach($TermRelationships as $term){
+                    $beforeCategories[] = $term['term_taxonomy_id'];
+                }
+
+                // 进行比对,选择性增删改
+                $add = []; // 初始化要添加的
+                $delete = []; // 初始化要删除逇             
+                foreach($categories as $key => $category){
+                    if(!in_array($category, $beforeCategories)){
+                        $add[] = $category;
+                    }else{
+                        unset($categories[$key]);
+                    }
+                }
+                $delete = $categories;
+    
+                //删
+                foreach($TermRelationships as $term){
+                    if(in_array($term['term_taxonomy_id'], $delete)){
+                        $term->delete();
+                    }
+                }
+            
+                //增
+                foreach($add as $id){
+                    $termRelationShip = new TermRelationships();
+                    $termRelationShip->object_id = $postId;
+                    $termRelationShip->term_taxonomy_id = $id;
+                    $termRelationShip->create();
+                }
+            
+                /**
+                 * subject专题
+                 */
+                if (!empty($subject)) {
+                    $subjectRelationShip = SubjectRelationships::findFirst(
+                        [
+                            "conditions" => "object_id = ?1",
+                            "bind" => [
+                                1 => $postId,
+                            ]
+                        ]
+                    );
+                    if($subjectRelationShip){
+                        if($subject != $subjectRelationShip->subject_id){
+                            $subjectRelationShip->subject_id = $subject;
+                            $subjectRelationShip->update();
+                        }
+                    }else{
+                        $subjectRelationShip = new SubjectRelationships();
+                        $subjectRelationShip->object_id = $postId;
+                        $subjectRelationShip->subject_id = $subject;
+                        $subjectRelationShip->create();
+                    }
+                }
 
                 // 成功,跳转到文章编辑页
                 $this->flash->success("保存成功!");
