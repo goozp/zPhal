@@ -453,11 +453,11 @@ class PostController extends ControllerBase
                             1 => $postId,
                         ]
                     ]
-                )->toArray();
+                );
 
                 $beforeCategories = [];
                 foreach($TermRelationships as $term){
-                    $beforeCategories[] = $term['term_taxonomy_id'];
+                    $beforeCategories[] = $term->term_taxonomy_id;
                 }
 
                 // 进行比对,选择性增删改
@@ -467,18 +467,18 @@ class PostController extends ControllerBase
                     if(!in_array($category, $beforeCategories)){
                         $add[] = $category;
                     }else{
-                        unset($categories[$key]);
+                        unset($beforeCategories[$key]);
                     }
                 }
-                $delete = $categories;
-    
-                //删
+                $delete = $beforeCategories;
+
+                //删 TODO 删除会删错
                 foreach($TermRelationships as $term){
-                    if(in_array($term['term_taxonomy_id'], $delete)){
+                    if(in_array($term->term_taxonomy_id, $delete)){
                         $term->delete();
                     }
                 }
-            
+
                 //增
                 foreach($add as $id){
                     $termRelationShip = new TermRelationships();
@@ -486,7 +486,7 @@ class PostController extends ControllerBase
                     $termRelationShip->term_taxonomy_id = $id;
                     $termRelationShip->create();
                 }
-            
+                exit;
                 /**
                  * subject专题
                  */
