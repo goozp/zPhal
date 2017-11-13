@@ -114,8 +114,7 @@
                                 <tr>
                                     <td>
                                         <a href="<?= $this->url->get(["for" => "edit-post", "id" => $v->ID]); ?>"><?= $v->post_title ?></a>
-                                        <?php if ($v->post_status == 'draft') echo ' — 草稿';
-                                        elseif($v->post_status == 'auto-draft') echo ' — 自动草稿'; ?>
+                                        <?php if ($v->post_status == 'draft') echo ' — 草稿'; ?>
                                     </td>
                                     <td><?= $v->display_name ?></td>
                                     <td><?= $str[$k]['cateStr'] ?></td>

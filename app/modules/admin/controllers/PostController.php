@@ -352,7 +352,10 @@ class PostController extends ControllerBase
         );
     }
 
-
+    /**
+     * 更新文章
+     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     */
     public function updateAction()
     {
         if ($this->request->isPost()) {
@@ -442,9 +445,13 @@ class PostController extends ControllerBase
                 /**
                  * 分类和标签
                  */
+                if (empty($categories)){
+                    $categories[] = 1;
+                }
                 if (!empty($tags)) {
                     $categories = array_merge($categories, $tags); // 合并标签
                 }
+
                 // 查询已有的数据
                 $TermRelationships = TermRelationships::find(
                     [
@@ -454,27 +461,19 @@ class PostController extends ControllerBase
                         ]
                     ]
                 );
-
                 $beforeCategories = [];
                 foreach($TermRelationships as $term){
                     $beforeCategories[] = $term->term_taxonomy_id;
                 }
 
                 // 进行比对,选择性增删改
-                $add = []; // 初始化要添加的
-                $delete = []; // 初始化要删除逇             
-                foreach($categories as $key => $category){
-                    if(!in_array($category, $beforeCategories)){
-                        $add[] = $category;
-                    }else{
-                        unset($beforeCategories[$key]);
-                    }
-                }
-                $delete = $beforeCategories;
+                $delete = array_diff($beforeCategories, $categories); // 要删除的
+                $add = array_diff($categories, $beforeCategories); // 要添加的
 
-                //删 TODO 删除会删错
+                // 删
                 foreach($TermRelationships as $term){
                     if(in_array($term->term_taxonomy_id, $delete)){
+                        echo $term->term_taxonomy_id;
                         $term->delete();
                     }
                 }
@@ -486,23 +485,26 @@ class PostController extends ControllerBase
                     $termRelationShip->term_taxonomy_id = $id;
                     $termRelationShip->create();
                 }
-                exit;
+
                 /**
                  * subject专题
                  */
-                if (!empty($subject)) {
-                    $subjectRelationShip = SubjectRelationships::findFirst(
-                        [
-                            "conditions" => "object_id = ?1",
-                            "bind" => [
-                                1 => $postId,
-                            ]
+                if (isset($subject)){
+                    $subjectRelationShip = SubjectRelationships::findFirst([
+                        'object_id = :id: ',
+                        'bind' => [
+                            'id' => $postId
                         ]
-                    );
-                    if($subjectRelationShip){
+                    ]);
+                    if ($subjectRelationShip){
                         if($subject != $subjectRelationShip->subject_id){
-                            $subjectRelationShip->subject_id = $subject;
-                            $subjectRelationShip->update();
+                            $subjectRelationShip->delete();
+                            if ($subject != 0){
+                                $subjectRelationShip = new SubjectRelationships();
+                                $subjectRelationShip->object_id = $postId;
+                                $subjectRelationShip->subject_id = $subject;
+                                $subjectRelationShip->create();
+                            }
                         }
                     }else{
                         $subjectRelationShip = new SubjectRelationships();
@@ -523,6 +525,11 @@ class PostController extends ControllerBase
 
         $this->flash->error("错误操作!");
         return $this->response->redirect("admin/");
+    }
+
+    public function trashAction()
+    {
+
     }
 
     /**

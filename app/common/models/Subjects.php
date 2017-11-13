@@ -86,17 +86,55 @@ class Subjects extends \Phalcon\Mvc\Model
     }
 
     /**
-     * 递归更新父级的数目和更新时间
-     * @param $parent
+     * 刷新更新时间
      */
-    public function updateParentStatus($parent)
+    public function refreshUpdateTime()
     {
-        $parentSubject = self::findFirst($parent);
-        $parentSubject->last_updated = date("Y-m-d H:i:s" ,time());
-        $parentSubject->count++;
-        $parentSubject->save();
-        if ($parentSubject->parent >0){
-            return $this->updateParentStatus($parentSubject->parent);
+        $this->last_updated = date("Y-m-d H:i:s" ,time());
+    }
+
+    /**
+     * count自增
+     */
+    public function incCount()
+    {
+        $this->count++;
+    }
+
+    /**
+     * count自减
+     */
+    public function decCount()
+    {
+        $this->count--;
+    }
+
+    /**
+     * 自增更新拥有数目和更新时间(包括parent)
+     * @param int $parent
+     */
+    public function updateNewStatus($parent=0)
+    {
+        $update = $parent ? self::findFirst($parent) : $this;
+        $update->refreshUpdateTime();
+        $update->incCount();
+        $update->save();
+        if ($update->parent>0){
+            $this->updateNewStatus($update->parent);
+        }
+    }
+
+    /**
+     * 自减更新拥有数目(包括parent)
+     * @param int $parent
+     */
+    public function updateDeleteStatus($parent=0)
+    {
+        $update = $parent ? self::findFirst($parent) : $this;
+        $update->decCount();
+        $update->save();
+        if ($update->parent>0){
+            $this->updateDeleteStatus($update->parent);
         }
     }
 
