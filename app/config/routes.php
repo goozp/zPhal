@@ -148,6 +148,30 @@ $router->add('/admin/post/update',
         'action'     => 'update',
     ]
 )->setName('update-post');
+$router->add('/admin/post/trash/{id:[0-9]+}',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'trash',
+        'id'         => 1,
+    ]
+)->setName('trash-post');
+$router->add('/admin/post/restore/{id:[0-9]+}',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'restore',
+        'id'         => 1,
+    ]
+)->setName('restore-post');
+$router->add('/admin/post/delete/{id:[0-9]+}',
+    [
+        'module'     => 'admin',
+        'controller' => 'post',
+        'action'     => 'delete',
+        'id'         => 1,
+    ]
+)->setName('delete-post');
 $router->add('/admin/post/taxonomy/{type:[a-z]+}',
     [
         'module'     => 'admin',

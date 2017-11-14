@@ -119,6 +119,7 @@ class PostService extends AbstractService
 
         switch ($show){
             case 'all':
+                $builder->andWhere("p.post_status <> 'trash'");
                 break;
             case 'publish':
                 $builder->andWhere("p.post_status = 'publish'");

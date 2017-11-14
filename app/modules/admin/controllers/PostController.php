@@ -4,6 +4,7 @@ namespace ZPhal\Modules\Admin\Controllers;
 
 use ZPhal\Models\Postmeta;
 use ZPhal\Models\Posts;
+use ZPhal\Models\Services\Service\PostmetaService;
 use ZPhal\Models\Services\Service\PostService;
 use ZPhal\Models\SubjectRelationships;
 use ZPhal\Models\Subjects;
@@ -28,6 +29,7 @@ class PostController extends ControllerBase
 
     /**
      * 文章列表
+     * TODO 输出优化;展示优化;前端优化
      * @param string $show
      */
     public function indexAction($show = 'all')
@@ -360,7 +362,7 @@ class PostController extends ControllerBase
     {
         if ($this->request->isPost()) {
             $submitWay = $this->request->getPost('submitWay', 'string');
-            
+
             // 获取表单数据
             $postId = $this->request->getPost('post_id');
             $title = $this->request->getPost('title', 'trim');
@@ -373,8 +375,8 @@ class PostController extends ControllerBase
             $tags = $this->request->getPost('tags');
             $subject = $this->request->getPost('subject');
             $nowStatus = $this->request->getPost('now_status'); // 当前状态
-            
-        
+
+
             $ifPublic = $this->request->getPost('ifPublic'); // TODO
             $ifComment = $this->request->getPost('ifComment');
             $ifTop = $this->request->getPost('ifTop'); // TODO
@@ -389,7 +391,7 @@ class PostController extends ControllerBase
             $now = time();
             $post->post_modified = date('Y-m-d H:i:s', $now);
             $post->post_modified_gmt = gmdate('Y-m-d H:i:s', $now);
-            
+
             // 发布时间
             if ($publishDate == 'now') {
                 $post->post_date = $post->post_modified;
@@ -407,7 +409,7 @@ class PostController extends ControllerBase
                 $post->post_date = $actionTime;
                 $post->post_date_gmt = gmdate("Y-m-d H:i:s", strtotime($actionTime));
             }
-                
+
             // 发布状态
             if($nowStatus == 'publish'){
                 $changeStatus = $this->request->getPost('change_status'); // 改变状态
@@ -415,7 +417,7 @@ class PostController extends ControllerBase
             } elseif($nowStatus == 'draft'){
                 $post->post_status = $submitWay;
             }
-        
+
             if ($post->save()) {
                 /**
                  * description
@@ -441,7 +443,7 @@ class PostController extends ControllerBase
                         $postmeta->create();
                     }
                 }
-                
+
                 /**
                  * 分类和标签
                  */
@@ -527,9 +529,166 @@ class PostController extends ControllerBase
         return $this->response->redirect("admin/");
     }
 
+    /**
+     * 移至回收站
+     * TODO 可以利用model改成软删除
+     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     */
     public function trashAction()
     {
+        $id = $this->dispatcher->getParam("id");
 
+        // Start a transaction
+        $this->db->begin();
+
+        $post = Posts::findFirst($id);
+
+        if ($post){
+            $beforeStatus = $post->post_status;
+            $post->post_status = $post::STATUS_TRASH;
+
+            if ($post->save() === false) {
+                $this->db->rollback();
+
+                $messages = $this->getErrorMsg($post, "移至回收站出错");
+                $this->flash->error($messages);
+
+                return $this->response->redirect("admin/post");
+            }
+
+            // change time
+            $postMeta = new Postmeta();
+            $postMeta->post_id = $id;
+            $postMeta->meta_key = '_zp_trash_meta_time';
+            $postMeta->meta_value = time();
+            if ($postMeta->save() === false) {
+                $this->db->rollback();
+
+                $messages = $this->getErrorMsg($postMeta, "移至回收站出错");
+                $this->flash->error($messages);
+
+                return $this->response->redirect("admin/post");
+            }
+
+            // before status
+            $postMeta = new Postmeta();
+            $postMeta->post_id = $id;
+            $postMeta->meta_key = '_zp_trash_meta_status';
+            $postMeta->meta_value = $beforeStatus;
+            $postMeta->save();
+            if ($postMeta->save() === false) {
+                $this->db->rollback();
+
+                $messages = $this->getErrorMsg($postMeta, "移至回收站出错");
+                $this->flash->error($messages);
+
+                return $this->response->redirect("admin/post");
+            }
+
+            // Commit the transaction
+            $this->db->commit();
+
+            $this->flash->success("已移至回收站！");
+            return $this->response->redirect("admin/post");
+        }
+
+        $this->flash->error("错误操作!");
+        return $this->response->redirect("admin/");
+    }
+
+    /**
+     * 从回收站还原文章
+     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     */
+    public function restoreAction()
+    {
+        $id = $this->dispatcher->getParam("id");
+
+        // Start a transaction
+        $this->db->begin();
+
+        $post = Posts::findFirst($id);
+
+        if ($post){
+            $status = Postmeta::findFirst([
+                "conditions" => "post_id = ?1 AND meta_key = ?2",
+                "bind" => [
+                    1 => $id,
+                    2 => '_zp_trash_meta_status'
+                ]
+            ]);
+
+            if ($status){
+                $post->post_status = $status->meta_value;
+                if ($post->save() === false){
+                    $this->db->rollback();
+
+                    $messages = $this->getErrorMsg($post, "还原失败");
+                    $this->flash->error($messages);
+
+                    return $this->response->redirect("admin/post/trash");
+                }
+
+                $postmetaService = container(PostmetaService::class);
+                $deleteTrashMeta = $postmetaService->deleteTrashMeta($id);
+
+                if ($deleteTrashMeta->success() === false) {
+                    $this->db->rollback();
+
+                    $messages = $this->getErrorMsg($deleteTrashMeta, "还原失败");
+                    $this->flash->error($messages);
+
+                    return $this->response->redirect("admin/post/trash");
+                }
+
+                // Commit the transaction
+                $this->db->commit();
+
+                $this->flash->success("还原成功！");
+                return $this->response->redirect("admin/post");
+            }
+        }
+
+        $this->flash->error("错误操作!");
+        return $this->response->redirect("admin/");
+    }
+
+    /**
+     * 永久删除
+     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     */
+    public function deleteAction()
+    {
+        $id = $this->dispatcher->getParam("id");
+
+        // Start a transaction
+        $this->db->begin();
+
+        $post = Posts::findFirst($id);
+
+        if ($post !== false) {
+            // 删除postmeta
+
+            // 删除关联表的记录
+
+            if ($post->delete() === false) {
+                $this->db->rollback();
+
+                $messages = $this->getErrorMsg($post, "删除失败");
+                $this->flash->error($messages);
+
+                return $this->response->redirect("admin/post/trash");
+            } else {
+                // Commit the transaction
+                $this->db->commit();
+
+                $this->flash->success("删除成功！");
+                return $this->response->redirect("admin/post/trash");
+            }
+        }
+
+        $this->flash->error("错误操作!");
+        return $this->response->redirect("admin/");
     }
 
     /**

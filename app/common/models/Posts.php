@@ -51,6 +51,12 @@ class Posts extends \Phalcon\Mvc\Model
 
     const COMMENT_CLOSE = 'closed';
 
+    const STATUS_PUBLISH = 'publish';
+
+    const STATUS_DRAFT = 'draft';
+
+    const STATUS_TRASH = 'trash';
+
     /**
      * Initialize method for model.
      */
@@ -62,7 +68,10 @@ class Posts extends \Phalcon\Mvc\Model
         $this->hasMany(
             "ID",
             "ZPhal\\Models\\Postmeta",
-            "post_id"
+            "post_id",
+            [
+                'alias' => 'PostMeta'
+            ]
         );
 
         $this->hasManyToMany(
