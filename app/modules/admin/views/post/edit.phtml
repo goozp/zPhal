@@ -184,11 +184,12 @@
                                     <div class="box-footer">
                                         <input type="hidden" id="ajaxUri" value="<?= $ajaxUri ?>">
 
+                                        <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#trash_modal"><i class="fa fa-trash-o"></i> 移到回收站</a>
                                         <?php if ($info['post_status'] == 'publish'){?>
-                                            <a href="" class="btn btn-danger btn-sm">移至回收站</a>
+
                                             <button type="submit" name="submitWay" value="publish" class="btn btn-info pull-right">更新</button>
                                         <?php }elseif($info['post_status'] == 'draft'){ ?>
-                                            <a href="" class="btn btn-danger btn-sm">移至回收站</a>
+
                                             <div class="pull-right">
                                                 <button type="submit" name="submitWay" value="draft" class="btn btn-default">保存草稿</button>
                                                 <button type="submit" name="submitWay" value="publish"  class="btn btn-info">发布</button>
@@ -196,6 +197,25 @@
                                         <?php } ?>
 
                                         <p class="margin pull-right" id="autoDraftTps" style="display: none;"></p>
+
+                                        <div class="modal modal-danger fade" id="trash_modal">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">移到回收站</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>确定要移到回收站吗？</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">取消</button>
+                                                        <a href="<?= $this->url->get(["for"=>"trash-post", "id"=>$info['ID']]); ?>" type="button" class="btn btn-outline">确定</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

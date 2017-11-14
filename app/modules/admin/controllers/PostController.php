@@ -531,7 +531,6 @@ class PostController extends ControllerBase
 
     /**
      * 移至回收站
-     * TODO 可以利用model改成软删除
      * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
     public function trashAction()
@@ -666,10 +665,63 @@ class PostController extends ControllerBase
 
         $post = Posts::findFirst($id);
 
-        if ($post !== false) {
+        if ($post) {
             // 删除postmeta
+            $postMeta = Postmeta::find([
+                "conditions" => "post_id = ?1",
+                "bind" => [
+                    1 => $id,
+                ]
+            ]);
+
+            foreach ($postMeta as $meta){
+                if ($meta->delete() === false){
+                    $this->db->rollback();
+
+                    $messages = $this->getErrorMsg($meta, "删除失败");
+                    $this->flash->error($messages);
+
+                    return $this->response->redirect("admin/post/trash");
+                }
+            }
 
             // 删除关联表的记录
+            $subject = SubjectRelationships::findFirst([
+                "conditions" => "object_id = ?1",
+                "bind" => [
+                    1 => $id,
+                ]
+            ]);
+            if ($subject){
+                if ($subject->delete() === false){
+                    $this->db->rollback();
+
+                    $messages = $this->getErrorMsg($subject, "删除失败");
+                    $this->flash->error($messages);
+
+                    return $this->response->redirect("admin/post/trash");
+                }
+            }
+
+            $terms = TermRelationships::find([
+                "conditions" => "object_id = ?1",
+                "bind" => [
+                    1 => $id,
+                ]
+            ]);
+            if ($terms){
+                foreach ($terms as $term){
+                    if ($term->delete() === false){
+                        $this->db->rollback();
+
+                        $messages = $this->getErrorMsg($term, "删除失败");
+                        $this->flash->error($messages);
+
+                        return $this->response->redirect("admin/post/trash");
+                    }
+                }
+            }
+
 
             if ($post->delete() === false) {
                 $this->db->rollback();
