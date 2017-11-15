@@ -224,6 +224,22 @@ $router->add('/admin/post/deleteTaxonomy/{type:[a-z]+}/{id:[0-9]+}',
     ]
 )->setName('delete-taxonomy');
 
+/* page */
+$router->add('/admin/page/:params',
+    [
+        'module'     => 'admin',
+        'controller' => 'page',
+        'action'     => 'index',
+        'params'       => 1
+    ]
+)->setName('list-page');
+$router->add('/admin/page/new',
+    [
+        'module' => 'admin',
+        'controller' => 'page',
+        'action'    => 'new'
+    ]
+)->setName('new-page');
 
 
 /* media */

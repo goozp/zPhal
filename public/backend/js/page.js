@@ -15,8 +15,7 @@ $(function () {
 
     // 初始化select2插件
     $('.select2').select2();
-
-
+    
     /**
      * 发布时间
      */
@@ -53,69 +52,6 @@ $(function () {
                 $(this).val("0"+value);
             }
         }
-    });
-
-    // 图片预览
-    $("#imageUrl").blur(function () {
-        var url = $("#imageUrl").val();
-        if (url == '') {
-            url = '/backend/img/error_image.png';
-        }
-        $("#imagePreview").html(
-            "<label>预览</label> " +
-            "<div> " +
-            "<img src='" + url + "' width='200' height='200'> " +
-            "</div>"
-        );
-    });
-
-    // 添加分类
-    $("#post_category").hide();
-    $("#addNewCategory").click(function () {
-        $("#post_category").show();
-        var quickAddUrlCategory = $("#ajaxUri").val() + 'admin/post/quickAddTaxonomy/category';
-        var categoryParent = $("#newCategoryParent").val();
-        var newCategory = $("#newCategory").val();
-        $.post(
-            quickAddUrlCategory,
-            {categoryParent: categoryParent, newCategory: newCategory},
-            function (result) {
-                res = JSON.parse(result);
-                $("#post_category").hide();
-                if (res.status == 'success') {
-                    //刷新列表
-                    $("#categoryList").html(res.data.categoryTree);
-                    $("#newCategoryParent").html(res.data.categoryTreeNbsp);
-                } else {
-                    alert(result.message);
-                }
-            }
-        );
-    });
-
-    // 添加标签
-    $("#post_tag").hide();
-    $("#addNewTag").click(function () {
-        $("#post_tag").show();
-        var quickAddUrlTag = $("#ajaxUri").val() + 'admin/post/quickAddTaxonomy/tag';
-        var newTag = $("#newTag").val();
-        $.post(
-            quickAddUrlTag,
-            {newTag: newTag},
-            function (result) {
-                res = JSON.parse(result);
-                $("#post_tag").hide();
-                if (res.status == 'success') {
-                    //刷新列表
-                    $("#tagsList").html("");//清空tags列表内容
-                    $.each(res.data.tags, function (i, item) {
-                        $("#tagsList").append("<option value='" + item.term_taxonomy_id + "'>" + item.name + "</option>");
-                    });
-                } else {
-                    alert(res.message);
-                }
-            }
-        );
     });
 });
 

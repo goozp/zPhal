@@ -126,7 +126,7 @@
                 </ul>
             </li>
 
-            <li class="treeview">
+            <li class="treeview  <?php if ($controllerName=='page') echo 'active'; ?>">
                 <a href="#">
                     <i class="fa fa-sticky-note-o"></i>
                     <span>页面</span>
@@ -135,8 +135,12 @@
                         </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 所有页面</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 新建页面</a></li>
+                    <li <?php if ($controllerName=='page' && $actionName=='index') echo 'class="active"'; ?>>
+                        <a href="<?= $this->url->get("admin/page"); ?>"><i class="fa fa-circle-o"></i> 所有页面</a>
+                    </li>
+                    <li <?php if ($controllerName=='page' && $actionName=='new') echo 'class="active"'; ?>>
+                        <a href="<?= $this->url->get("admin/page/new"); ?>"><i class="fa fa-circle-o"></i> 新建页面</a>
+                    </li>
                 </ul>
             </li>
 
