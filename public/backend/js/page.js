@@ -15,7 +15,7 @@ $(function () {
 
     // 初始化select2插件
     $('.select2').select2();
-    
+
     /**
      * 发布时间
      */
