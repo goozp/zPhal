@@ -12,6 +12,14 @@ $router->add('/',
         'action'     => 'index',
     ]
 );
+$router->add("/page/:params",
+    [
+        'module'     => 'frontend',
+        'controller' => 'pages',
+        'action'     => 'index',
+        "params"   => 1,
+    ]
+)->setName('page');
 $router->add("/article/{id:[0-9]+}.html",
     [
         'module'     => 'frontend',
@@ -20,6 +28,7 @@ $router->add("/article/{id:[0-9]+}.html",
         "id"     => 1,
     ]
 )->setName('article');
+
 
 $router->add('/login',
     [
@@ -240,7 +249,20 @@ $router->add('/admin/page/new',
         'action'    => 'new'
     ]
 )->setName('new-page');
-
+$router->add('/admin/page/save',
+    [
+        'module' => 'admin',
+        'controller' => 'page',
+        'action'    => 'save'
+    ]
+)->setName('save-page');
+$router->add('/admin/page/autodraft',
+    [
+        'module'     => 'admin',
+        'controller' => 'page',
+        'action'     => 'autoSaveDraft',
+    ]
+);
 
 /* media */
 $router->add('/admin/media',

@@ -147,7 +147,7 @@ function autoDraft() {
     var postId = $("#post_id").val();
 
     if (markdownWord != '') {
-        var autoDraftUrl = $("#ajaxUri").val() + 'admin/post/autodraft';
+        var autoDraftUrl = $("#ajaxUri").val() + 'admin/page/autodraft';
         $.post(
             autoDraftUrl,
             {markdownWord: markdownWord, title: title, postId: postId},
