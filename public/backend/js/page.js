@@ -145,12 +145,13 @@ function autoDraft() {
     var markdownWord = Editormd.getMarkdown();
     var title = $("#title").val();
     var postId = $("#post_id").val();
+    var slugName = $("#slugName").val();
 
     if (markdownWord != '') {
         var autoDraftUrl = $("#ajaxUri").val() + 'admin/page/autodraft';
         $.post(
             autoDraftUrl,
-            {markdownWord: markdownWord, title: title, postId: postId},
+            {markdownWord: markdownWord, title: title, postId: postId, slugName: slugName},
             function (result) {
                 res = JSON.parse(result);
                 if (res.status == 'success') {

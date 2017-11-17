@@ -53,6 +53,7 @@ class PageController extends ControllerBase
         $this->view->setVars(
             [
                 'parentPages' => $parentPages,
+                "ajaxUri" => $this->url->getBaseUri(),
             ]
         );
     }
@@ -63,6 +64,9 @@ class PageController extends ControllerBase
 
     }
 
+    /**
+     * 自动保存草稿
+     */
     public function autoSaveDraftAction()
     {
         if ($this->request->isPost()) {
@@ -78,23 +82,25 @@ class PageController extends ControllerBase
                 $post->post_content = $markdownWord;
                 $post->post_title = $title ? $title : '无题';
                 $post->comment_status = $post::COMMENT_OPEN;
-                $post->post_name = $slugName ? $slugName : $title;
                 $post->post_parent = 0;
                 $post->post_type = $post::TYPE_PAGE;
                 $post->post_modified = date('Y-m-d H:i:s', time());
                 $post->post_modified_gmt = gmdate('Y-m-d H:i:s', time());
                 $post->post_status = 'draft';
+                $post->post_name = $slugName ? $slugName : $title;
+                if ($slugName != '') {
+                    $post->post_name = $slugName;
+                }else{
+                    $post->post_name = $title == null ? $title : '';
+                }
+                $post->guid = $this->url->get(['for' => 'page', 'params' => $post->post_name]);
                 if ($post->create()) {
                     $postId = $post->ID;
-                    $post = Posts::findFirst($postId);
-                    $post->guid = $this->url->get(['for' => 'page', 'params' => $post->post_name]);
-                    if ($post->save()) {
-                        $data = [
-                            'post_id' => $postId,
-                            'post_date' => $post->post_modified,
-                            'post_url' => $post->guid
-                        ];
-                    }
+                    $data = [
+                        'post_id' => $postId,
+                        'post_date' => $post->post_modified,
+                        'post_url' => $post->guid
+                    ];
                 }
             }
             // 已有记录
@@ -112,9 +118,14 @@ class PageController extends ControllerBase
                 if ($post) {
                     $post->post_content = $markdownWord;
                     $post->post_title = $title ? $title : '无题';
-                    $post->post_name = $slugName ? $slugName : $title;
                     $post->post_modified = date('Y-m-d H:i:s', time());
                     $post->post_modified_gmt = gmdate('Y-m-d H:i:s', time());
+                    if ($slugName != '') {
+                        $post->post_name = $slugName;
+                    }else{
+                        $post->post_name = $title == null ? $title : '';
+                    }
+                    $post->guid = $this->url->get(['for' => 'page', 'params' => $post->post_name]);
                     if ($post->update()) {
                         $data = [
                             'post_id' => $postId,
