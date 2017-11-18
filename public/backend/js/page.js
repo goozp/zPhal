@@ -25,7 +25,7 @@ $(function () {
         $('#editTimestamp').hide();
     });
     $('#cancelTimestamp').on('click', function() {
-        $('#timestamp').html('立即发布'); // TODO 编辑时, 这里要退回hidden_time
+        $('#timestamp').html('立即发布'); 
         $('#publishDate').val('now');
         $('#timestampDiv').slideUp();
         $('#editTimestamp').show();
