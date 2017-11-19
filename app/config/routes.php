@@ -263,6 +263,45 @@ $router->add('/admin/page/autodraft',
         'action'     => 'autoSaveDraft',
     ]
 );
+$router->add('/admin/page/edit/{id:[0-9]+}',
+[
+    'module'     => 'admin',
+    'controller' => 'page',
+    'action'     => 'edit',
+    'id'         => 1,
+]
+)->setName('edit-page');
+$router->add('/admin/page/update',
+[
+    'module'     => 'admin',
+    'controller' => 'page',
+    'action'     => 'update',
+]
+)->setName('update-page');
+$router->add('/admin/page/trash/{id:[0-9]+}',
+[
+    'module'     => 'admin',
+    'controller' => 'page',
+    'action'     => 'trash',
+    'id'         => 1,
+]
+)->setName('trash-page');
+$router->add('/admin/page/restore/{id:[0-9]+}',
+[
+    'module'     => 'admin',
+    'controller' => 'page',
+    'action'     => 'restore',
+    'id'         => 1,
+]
+)->setName('restore-page');
+$router->add('/admin/page/delete/{id:[0-9]+}',
+[
+    'module'     => 'admin',
+    'controller' => 'page',
+    'action'     => 'delete',
+    'id'         => 1,
+]
+)->setName('delete-page');
 
 /* media */
 $router->add('/admin/media',

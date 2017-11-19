@@ -173,7 +173,7 @@ class PostService extends AbstractService
     public function getPostInfo($id, $type='post')
     {
         $info = self::$modelsManager->executeQuery(
-            "SELECT ID, post_date, post_content, post_title, post_status, post_modified, post_parent, guid, cover_picture
+            "SELECT ID, post_date, post_content, post_title, post_status, comment_status, post_name, post_modified, post_parent, guid, cover_picture
             FROM ZPhal\Models\Posts
             WHERE ID = :postId: AND post_type = :postType: ",
             [

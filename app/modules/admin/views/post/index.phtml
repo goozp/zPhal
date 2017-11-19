@@ -63,9 +63,10 @@
                                             <select class="form-control" name="dateSelected">
                                                 <option value="0">全部日期</option>
                                                 <?php
-                                                foreach ($dateSection as $date){ ?>
+                                                foreach ($dateSection as $date){ 
+                                                    if($date['year_month'] != '1000-01'){ ?>
                                                     <option value="<?= $date['year_month'] ?>" <?php if ($dateSelected == $date['year_month']) echo 'selected'; ?>><?= $date['year_month'] ?></option>
-                                                <?php } ?>
+                                                <?php } } ?>
                                             </select>
                                         </div>
                                     </div>

@@ -9,3 +9,199 @@
         页面
     </h1>
 </section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="nav nav-pills " role="tablist">
+                <li role="presentation" class="<?php if ($activeShow == 'all') echo 'bg-gray-active' ?>">
+                    <a href="<?= $this->url->get(["for"=>"list-page","params"=>'all']); ?>">全部 <span class="badge"><?= $static['publish_num']+$static['draft_num']; ?></span></a>
+                </li>
+                <li role="presentation" class="<?php if ($activeShow == 'publish') echo 'bg-gray-active' ?>">
+                    <a href="<?= $this->url->get(["for"=>"list-page","params"=>'publish']); ?>">已发布 <span class="badge"><?= $static['publish_num'] ?></span></a>
+                </li>
+                <li role="presentation" class="<?php if ($activeShow == 'draft') echo 'bg-gray-active' ?>">
+                    <a href="<?= $this->url->get(["for"=>"list-page","params"=>'draft']); ?>">草稿 <span class="badge"><?= $static['draft_num'] ?></span></a>
+                </li>
+                <li role="presentation" class="<?php if ($activeShow == 'trash') echo 'bg-gray-active' ?>">
+                    <a href="<?= $this->url->get(["for"=>"list-page","params"=>'trash']); ?>">回收站 <span class="badge"><?= $static['trash_num'] ?></span></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <form action="<?= $this->url->get(["for"=>"list-page","params"=>$activeShow]); ?>" method="get">
+
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <div class="input-group">
+                                    <select class="form-control">
+                                        <option>批量操作</option>
+                                        <option>移至回收站</option>
+                                    </select>
+                                    <div class="input-group-btn">
+                                        <button id="add-new-event" type="button" class="btn btn-default btn-flat">应用</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-8">
+                                <div class="row">
+                                    <div class="col-xs-3 col-xs-offset-1">
+                                        <div class="input-group">
+                                            <select class="form-control" name="dateSelected">
+                                                <option value="0">全部日期</option>
+                                                <?php
+                                                foreach ($dateSection as $date){ 
+                                                    if($date['year_month'] != '1000-01'){ ?>
+                                                    <option value="<?= $date['year_month'] ?>" <?php if ($dateSelected == $date['year_month']) echo 'selected'; ?>><?= $date['year_month'] ?></option>
+                                                <?php } } ?>
+                                            </select>
+                                            <div class="input-group-btn">
+                                                <button id="add-new-event" type="submit" class="btn btn-default btn-flat">筛选</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="input-group">
+                                    <input type="text" name="search" class="form-control pull-right" placeholder="标题关键字" value="<?= $search ?>">
+
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+               
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th width="25%">标题</th>
+                                <th width="5%">作者</th>
+                                <th width="5%">评论 <i class="fa fa-comment"></i></th>
+                                <th width="10%">日期</th>
+                                <th width="5%">阅读量</th>
+                                <th width="20%">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        $result = $pager->getIterator();
+                        if (count($result)){
+                            foreach ($result as $k => $v){
+                                ?>
+                                <tr>
+                                    <td>
+                                        <?php if ($v->post_status == 'publish'){ ?>
+                                            <a href="<?= $this->url->get(["for" => "edit-page", "id" => $v->ID]); ?>"><?= $v->post_title ?></a>
+                                        <?php }elseif ($v->post_status == 'draft') {?>
+                                            <a href="<?= $this->url->get(["for" => "edit-page", "id" => $v->ID]); ?>"><?= $v->post_title ?></a> — 草稿
+                                        <?php }elseif ($v->post_status == 'trash') {
+                                            echo $v->post_title;
+                                        }?>
+                                    </td>
+                                    <td><?= $v->display_name ?></td>
+                                    <td>
+                                        <?php
+                                        if ($v->comment_count >0){
+                                            echo $v->comment_count.' <a href=""><i class="fa fa-commenting"></i></a>';
+                                        }else{
+                                            echo $v->comment_count;
+                                        }
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php if ($v->post_date == '1000-01-01 00:00:00'){
+                                            echo '尚未发布';
+                                        } else{
+                                            echo $v->post_date;
+                                        } ?>
+                                    </td>
+                                    <td><?= $v->view_count ?></td>
+                                    <td>
+                                        <?php if ($v->post_status != 'trash'){ ?>
+                                            <a href="<?= $this->url->get(["for" => "edit-page", "id" => $v->ID]); ?>" class="btn btn-xs bg-purple"><i class="fa fa-edit"></i> 编辑</a>
+                                            <a class="btn btn-xs btn-danger" data-toggle="modal" data-target="#trash_modal_<?= $v->ID ?>"><i class="fa fa-trash-o"></i> 移到回收站</a>
+                                            <div class="modal modal-danger fade" id="trash_modal_<?= $v->ID ?>">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title">移到回收站</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>确定要移到回收站吗？已发布的文章将不再展示&hellip;</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">取消</button>
+                                                            <a href="<?= $this->url->get(["for"=>"trash-page", "id"=>$v->ID]); ?>" type="button" class="btn btn-outline">确定</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        <?php } else{ ?>
+                                            <a href="<?= $this->url->get(["for"=>"restore-page", "id"=>$v->ID]); ?>" class="btn btn-xs btn-warning"><i class="fa fa-trash-o"></i> 还原</a>
+                                            <a class="btn btn-xs btn-danger" data-toggle="modal" data-target="#delete_modal_<?= $v->ID ?>"><i class="fa fa-trash-o"></i> 永久删除</a>
+                                            <div class="modal modal-danger fade" id="delete_modal_<?= $v->ID ?>">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title">永久删除</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>确定要永久删除吗？永久删除将无法回复&hellip;</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">取消</button>
+                                                            <a href="<?= $this->url->get(["for"=>"delete-page", "id"=>$v->ID]); ?>" type="button" class="btn btn-outline">确定</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    </td>
+                                </tr>
+
+                                <?php
+                            }
+                        }else{ ?>
+                            <tr>
+                                <td colspan="8" class="text-center">无</td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>标题</th>
+                                <th>作者</th>
+                                <th>评论</th>
+                                <th>日期</th>
+                                <th>阅读量</th>
+                                <th>操作</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="box-footer clearfix">
+                    <?php if ($pager->haveToPaginate()){
+                        echo $pager->getLayout();
+                    } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
