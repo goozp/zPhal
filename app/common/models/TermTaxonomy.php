@@ -17,6 +17,12 @@ class TermTaxonomy extends \Phalcon\Mvc\Model
 
     public $count;
 
+    const TAXONOMY_CATEGORY = 'category';
+
+    const TAXONOMY_TAG = 'tag';
+
+    const TAXONOMY_LINK = 'linkCategory';
+
     /**
      * Initialize method for model.
      */
@@ -34,17 +40,15 @@ class TermTaxonomy extends \Phalcon\Mvc\Model
             ]
         );
 
-        $this->hasManyToMany(
+        $this->hasMany(
             "term_taxonomy_id",
-            "ZPhal\\Models\\TermTaxonomy",
-            "term_taxonomy_id",
-            "object_id",
             "ZPhal\\Models\\TermRelationships",
-            "ID",
+            "term_taxonomy_id",
             [
-                'alias' => 'Post'
+                'alias' => 'TermRelationships'
             ]
         );
+
     }
 
     /**

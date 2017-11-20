@@ -73,7 +73,7 @@ $(function () {
     $("#post_category").hide();
     $("#addNewCategory").click(function () {
         $("#post_category").show();
-        var quickAddUrlCategory = $("#ajaxUri").val() + 'admin/post/quickAddTaxonomy/category';
+        var quickAddUrlCategory = $("#ajaxUri").val() + 'admin/taxonomy/quickAddTaxonomy/category';
         var categoryParent = $("#newCategoryParent").val();
         var newCategory = $("#newCategory").val();
         $.post(
@@ -97,7 +97,7 @@ $(function () {
     $("#post_tag").hide();
     $("#addNewTag").click(function () {
         $("#post_tag").show();
-        var quickAddUrlTag = $("#ajaxUri").val() + 'admin/post/quickAddTaxonomy/tag';
+        var quickAddUrlTag = $("#ajaxUri").val() + 'admin/taxonomy/quickAddTaxonomy/tag';
         var newTag = $("#newTag").val();
         $.post(
             quickAddUrlTag,

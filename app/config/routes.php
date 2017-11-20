@@ -181,57 +181,60 @@ $router->add('/admin/post/delete/{id:[0-9]+}',
         'id'         => 1,
     ]
 )->setName('delete-post');
-$router->add('/admin/post/taxonomy/{type:[a-z]+}',
+
+/* taxonomy */
+$router->add('/admin/taxonomy/{type:[a-zA-Z]+}',
     [
         'module'     => 'admin',
-        'controller' => 'post',
+        'controller' => 'taxonomy',
         'action'     => 'taxonomy',
         'type'       => 1,
     ]
 );
-$router->add('/admin/post/quickAddTaxonomy/{type:[a-z]+}',
+$router->add('/admin/taxonomy/quickAddTaxonomy/{type:[a-zA-Z]+}',
     [
         'module'     => 'admin',
-        'controller' => 'post',
+        'controller' => 'taxonomy',
         'action'     => 'quickAddTaxonomy',
         'type'       => 1,
     ]
 );
-$router->add('/admin/post/addTaxonomy/{type:[a-z]+}',
+$router->add('/admin/taxonomy/addTaxonomy/{type:[a-zA-Z]+}',
     [
         'module'     => 'admin',
-        'controller' => 'post',
+        'controller' => 'taxonomy',
         'action'     => 'addTaxonomy',
         'type'       => 1,
     ]
 )->setName('new-taxonomy');
-$router->add('/admin/post/editTaxonomy/{type:[a-z]+}/{id:[0-9]+}',
+$router->add('/admin/taxonomy/editTaxonomy/{type:[a-zA-Z]+}/{id:[0-9]+}',
     [
         'module'     => 'admin',
-        'controller' => 'post',
+        'controller' => 'taxonomy',
         'action'     => 'editTaxonomy',
         'type'       => 1,
         'id'         => 2,
     ]
 )->setName('edit-taxonomy');
-$router->add('/admin/post/updateTaxonomy/{type:[a-z]+}/{id:[0-9]+}',
+$router->add('/admin/taxonomy/updateTaxonomy/{type:[a-zA-Z]+}/{id:[0-9]+}',
     [
         'module'     => 'admin',
-        'controller' => 'post',
+        'controller' => 'taxonomy',
         'action'     => 'updateTaxonomy',
         'type'       => 1,
         'id'         => 2,
     ]
 )->setName('update-taxonomy');
-$router->add('/admin/post/deleteTaxonomy/{type:[a-z]+}/{id:[0-9]+}',
+$router->add('/admin/taxonomy/deleteTaxonomy/{type:[a-zA-Z]+}/{id:[0-9]+}',
     [
         'module'     => 'admin',
-        'controller' => 'post',
+        'controller' => 'taxonomy',
         'action'     => 'deleteTaxonomy',
         'type'       => 1,
         'id'         => 2,
     ]
 )->setName('delete-taxonomy');
+
 
 /* page */
 $router->add('/admin/page/:params',
