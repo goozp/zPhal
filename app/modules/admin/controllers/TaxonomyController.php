@@ -316,7 +316,7 @@ class TaxonomyController extends ControllerBase
 
             } else {
                 // 清空关联表
-                // TODO 要用原生的删除 
+                // TODO 要用原生的删除
                 /*$TermRelationships = TermRelationships::find([
                     "conditions" => "term_taxonomy_id = ?1",
                     "bind" => [

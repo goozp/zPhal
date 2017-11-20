@@ -2,6 +2,8 @@
 
 namespace ZPhal\Models;
 
+use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
+
 class TermRelationships extends \Phalcon\Mvc\Model
 {
 
@@ -72,6 +74,7 @@ class TermRelationships extends \Phalcon\Mvc\Model
     {
         return 'zp_term_relationships';
     }
+
 
     /**
      * Allows to query a set of records that match the specified conditions
