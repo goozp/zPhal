@@ -47,8 +47,12 @@ class TermRelationships extends \Phalcon\Mvc\Model
         /**
          * 更新所属分类和标签的数目
          */
-        $this->TermTaxonomy->count++;
-        $this->TermTaxonomy->save();
+        $termTaxonomy = $this->TermTaxonomy;
+        if ($termTaxonomy){
+            $termTaxonomy->count++;
+            $termTaxonomy->save();
+        }
+
     }
 
     /**
@@ -59,8 +63,11 @@ class TermRelationships extends \Phalcon\Mvc\Model
         /**
          * 更新所属分类和标签的数目
          */
-        $this->TermTaxonomy->count--;
-        $this->TermTaxonomy->save();
+        $termTaxonomy = $this->TermTaxonomy;
+        if ($termTaxonomy){
+            $termTaxonomy->count--;
+            $termTaxonomy->save();
+        }
     }
 
     /**

@@ -316,8 +316,7 @@ class TaxonomyController extends ControllerBase
 
             } else {
                 // 清空关联表
-                // TODO 要用原生的删除 
-                /*$TermRelationships = TermRelationships::find([
+                $TermRelationships = TermRelationships::find([
                     "conditions" => "term_taxonomy_id = ?1",
                     "bind" => [
                         1 => $id,
@@ -325,14 +324,14 @@ class TaxonomyController extends ControllerBase
                 ]);
                 foreach ($TermRelationships as $relationship){
                     if ($relationship->delete() === false){
-                        $messages = $this->getErrorMsg($termTaxonomy, "删除失败");
+                        $messages = $this->getErrorMsg($relationship, "删除失败");
 
                         $transaction->rollback($messages); // 回滚
 
                         $this->flash->error($messages);
                         return $this->response->redirect("admin/taxonomy/editTaxonomy/" . $type . '/' . $id);
                     }
-                }*/
+                }
 
                 //删除terms表数据
                 if ($term->delete() === false) {
@@ -347,13 +346,13 @@ class TaxonomyController extends ControllerBase
                     $transaction->commit(); //提交
 
                     $this->flash->success("删除成功");
-                    return $this->response->redirect("admin/taxonomy/taxonomy/" . $type);
+                    return $this->response->redirect("admin/taxonomy/" . $type);
                 }
             }
 
         } else {
             $this->flash->success("错误的操作");
-            return $this->response->redirect("admin/taxonomy/taxonomy/" . $type);
+            return $this->response->redirect("admin/taxonomy/" . $type);
         }
     }
 
