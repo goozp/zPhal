@@ -316,6 +316,7 @@ class TaxonomyController extends ControllerBase
 
             } else {
                 // 清空关联表
+
                 $TermRelationships = TermRelationships::find([
                     "conditions" => "term_taxonomy_id = ?1",
                     "bind" => [

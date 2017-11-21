@@ -80,6 +80,7 @@ class TermRelationships extends \Phalcon\Mvc\Model
         return 'zp_term_relationships';
     }
 
+
     /**
      * Allows to query a set of records that match the specified conditions
      *
