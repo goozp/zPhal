@@ -29,25 +29,6 @@ class PostService extends AbstractService
     }
 
     /**
-     * 根据类型获取分类列表
-     * @param $type
-     * @return mixed
-     */
-    public function getTaxonomyListByType($type)
-    {
-        return self::$modelsManager->executeQuery(
-            "SELECT tt.term_taxonomy_id, tt.term_id, tt.description, tt.parent, tt.count, t.name, t.slug
-                  FROM ZPhal\Models\TermTaxonomy AS tt
-                  LEFT JOIN ZPhal\Models\Terms AS t ON t.term_id=tt.term_id
-                  WHERE tt.taxonomy = :taxonomy:
-                  ORDER BY t.term_id ASC",
-            [
-                "taxonomy" => $type,
-            ]
-        )->toArray();
-    }
-
-    /**
      * 根据post类型获取post统计数量
      * @param $type
      * @return mixed
@@ -183,36 +164,5 @@ class PostService extends AbstractService
         )->toArray();
 
         return $info[0];
-    }
-
-    /**
-     * 获取post的分类或标签
-     * @param $objectId
-     * @param string $type category|tag 默认全部
-     * @return array
-     */
-    public function getPostTaxonomy($objectId, $type='')
-    {
-        $builder = self::$modelsManager->createBuilder()
-            ->columns("tr.term_taxonomy_id, tt.taxonomy")
-            ->from(['tr' => 'ZPhal\Models\TermRelationships'])
-            ->leftJoin('ZPhal\Models\TermTaxonomy', 'tt.term_taxonomy_id = tr.term_taxonomy_id', "tt")
-            ->where("tr.object_id = :id:", ["id" => $objectId]);
-
-        if ($type != ''){
-            $builder->andWhere("tt.taxonomy = :taxonomy:", ["taxonomy" => $type]);
-        }
-
-        $taxonomy = $builder
-            ->getQuery()
-            ->execute()
-            ->toArray();
-
-        $output = [];
-        foreach ($taxonomy as $item){
-            $output[$item['taxonomy']][] = $item['term_taxonomy_id'];
-        }
-
-        return $output;
     }
 }

@@ -6,6 +6,7 @@ use ZPhal\Models\Postmeta;
 use ZPhal\Models\Posts;
 use ZPhal\Models\Services\Service\PostmetaService;
 use ZPhal\Models\Services\Service\PostService;
+use ZPhal\Models\Services\Service\TaxonomyService;
 use ZPhal\Models\SubjectRelationships;
 use ZPhal\Models\Subjects;
 use ZPhal\Models\TermRelationships;
@@ -41,7 +42,8 @@ class PostController extends ControllerBase
         $static = $postService->staticPost('post');
 
         // 分类列表
-        $category = $postService->getTaxonomyListByType('category');
+        $taxonomyService = container(TaxonomyService::class);
+        $category = $taxonomyService->getTaxonomyListByType('category');
         $categoryTree = makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
 
         // 结果集时间区间
@@ -108,13 +110,13 @@ class PostController extends ControllerBase
         $this->assets->addJs("backend/js/post.js", true);
 
         // 分类列表
-        $postService = container(PostService::class);
-        $category = $postService->getTaxonomyListByType('category');
+        $taxonomyService = container(TaxonomyService::class);
+        $category = $taxonomyService->getTaxonomyListByType('category');
         $categoryTree = makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
 
         // 标签列表
-        $postService = container(PostService::class);
-        $tags = $postService->getTaxonomyListByType('tag');
+        $taxonomyService = container(TaxonomyService::class);
+        $tags = $taxonomyService->getTaxonomyListByType('tag');
 
         // 专题列表
         $subjects = Subjects::find()->toArray();
@@ -309,13 +311,13 @@ class PostController extends ControllerBase
         $taxonomy = $postService->getPostTaxonomy($id);
 
         // 分类列表
-        $postService = container(PostService::class);
-        $category = $postService->getTaxonomyListByType('category');
+        $taxonomyService = container(TaxonomyService::class);
+        $category = $taxonomyService->getTaxonomyListByType('category');
         $categoryTree = makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
 
         // 标签列表
-        $postService = container(PostService::class);
-        $tags = $postService->getTaxonomyListByType('tag');
+        $taxonomyService = container(TaxonomyService::class);
+        $tags = $taxonomyService->getTaxonomyListByType('tag');
         $tagsTree = makeTree($tags, 'term_taxonomy_id', 'parent', 'sun', 0);
 
 

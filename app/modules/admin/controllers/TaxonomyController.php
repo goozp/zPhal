@@ -2,12 +2,12 @@
 
 namespace ZPhal\Modules\Admin\Controllers;
 
+use ZPhal\Models\Services\Service\TaxonomyService;
 use ZPhal\Models\TermRelationships;
 use ZPhal\Models\Terms;
 use ZPhal\Models\TermTaxonomy;
 use Phalcon\Paginator\Adapter\NativeArray as PaginatorArray;
 use ZPhal\Modules\Admin\Library\Paginator\Pager;
-use ZPhal\Models\Services\Service\PostService;
 
 class TaxonomyController extends ControllerBase
 {
@@ -37,9 +37,9 @@ class TaxonomyController extends ControllerBase
             $topTitle = '分类';
             $topSubtitle = '文章的分类';
 
-            /** @var PostService $postsService */
-            $postService = container(PostService::class);
-            $category = $postService->getTaxonomyListByType('category');
+            /** @var TaxonomyService $taxonomyService */
+            $taxonomyService = container(TaxonomyService::class);
+            $category = $taxonomyService->getTaxonomyListByType('category');
             $categoryTree = makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
 
             // 获取分类列表
@@ -76,8 +76,8 @@ class TaxonomyController extends ControllerBase
             $topTitle = '标签';
             $topSubtitle = '文章贴标签';
 
-            $postService = container(PostService::class);
-            $tags = $postService->getTaxonomyListByType('tag');
+            $taxonomyService = container(TaxonomyService::class);
+            $tags = $taxonomyService->getTaxonomyListByType('tag');
 
             /**
              * 获取分类列表
@@ -114,8 +114,8 @@ class TaxonomyController extends ControllerBase
             $topTitle = '链接分类';
             $topSubtitle = '链接分类';
 
-            $postService = container(PostService::class);
-            $linkCategory = $postService->getTaxonomyListByType('linkCategory');
+            $taxonomyService = container(TaxonomyService::class);
+            $linkCategory = $taxonomyService->getTaxonomyListByType('linkCategory');
 
             /**
              * 获取分类列表
@@ -207,9 +207,9 @@ class TaxonomyController extends ControllerBase
                 $parent = $termTaxonomy->parent;
 
                 //分类列表
-                /** @var PostService $postsService */
-                $postService = container(PostService::class);
-                $category = $postService->getTaxonomyListByType('category');
+                /** @var TaxonomyService $taxonomyService */
+                $taxonomyService = container(TaxonomyService::class);
+                $category = $taxonomyService->getTaxonomyListByType('category');
                 $categoryTree = makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
 
                 $this->view->categoryTree = treeHtml($categoryTree, 'term_taxonomy_id', 'name', '', 0, $parent);
@@ -390,8 +390,8 @@ class TaxonomyController extends ControllerBase
                 // 新的列表
                 $data = [];
                 if ($type == TermTaxonomy::TAXONOMY_CATEGORY) {
-                    $postService = container(PostService::class);
-                    $category = $postService->getTaxonomyListByType('category');
+                    $taxonomyService = container(TaxonomyService::class);
+                    $category = $taxonomyService->getTaxonomyListByType('category');
                     $categoryTree = makeTree($category, 'term_taxonomy_id', 'parent', 'sun', 0);
 
                     $data = [
@@ -399,8 +399,8 @@ class TaxonomyController extends ControllerBase
                         "categoryTreeNbsp" => treeHtml($categoryTree, 'term_taxonomy_id', 'name'),
                     ];
                 } elseif ($type == TermTaxonomy::TAXONOMY_TAG) {
-                    $postService = container(PostService::class);
-                    $tags = $postService->getTaxonomyListByType('tag');
+                    $taxonomyService = container(TaxonomyService::class);
+                    $tags = $taxonomyService->getTaxonomyListByType('tag');
 
                     $data = [
                         "tags" => $tags,

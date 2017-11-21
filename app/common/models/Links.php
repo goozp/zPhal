@@ -31,6 +31,10 @@ class Links extends \Phalcon\Mvc\Model
 
     public $link_rss;
 
+    const VISIBLE_SHOW = 'Y';
+
+    const VISIBLE_HIDE = 'N';
+
     /**
      * Initialize method for model.
      */

@@ -344,13 +344,14 @@ $router->add('/admin/link/new',
         'action'     => 'new',
     ]
 );
-$router->add('/admin/link/linkCategory',
+$router->add('/admin/link/save',
     [
         'module'     => 'admin',
         'controller' => 'link',
-        'action'     => 'linkCategory',
+        'action'     => 'save',
     ]
 );
+
 
 /* user */
 $router->add('/admin/user',
