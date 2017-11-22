@@ -336,7 +336,7 @@ $router->add('/admin/link',
         'controller' => 'link',
         'action'     => 'index',
     ]
-);
+)->setName('list-link');
 $router->add('/admin/link/new',
     [
         'module'     => 'admin',
@@ -351,6 +351,29 @@ $router->add('/admin/link/save',
         'action'     => 'save',
     ]
 );
+$router->add('/admin/link/edit/{id:[0-9]+}',
+    [
+        'module'     => 'admin',
+        'controller' => 'link',
+        'action'     => 'edit',
+        'id'         => 1,
+    ]
+)->setName('edit-link');
+$router->add('/admin/link/update',
+    [
+        'module'     => 'admin',
+        'controller' => 'link',
+        'action'     => 'update',
+    ]
+)->setName('update-link');
+$router->add('/admin/link/delete/{id:[0-9]+}',
+    [
+        'module'     => 'admin',
+        'controller' => 'link',
+        'action'     => 'delete',
+        'id'         => 1,
+    ]
+)->setName('delete-link');
 
 
 /* user */

@@ -4,8 +4,6 @@ namespace ZPhal\Modules\Admin\Controllers;
 
 use ZPhal\Models\Posts;
 use ZPhal\Models\Postmeta;
-use ZPhal\Models\Subjects;
-use ZPhal\Models\SubjectRelationships;
 use ZPhal\Models\Services\Service\PostService;
 use ZPhal\Models\Services\Service\PostmetaService;
 
@@ -29,7 +27,6 @@ class PageController extends ControllerBase
         $this->tag->prependTitle("页面 - ");
 
         $currentPage = $this->request->getQuery('page', 'int'); // GET
-        $categorySelected = $this->request->get('categorySelected', 'int'); // POST
         $dateSelected = $this->request->get('dateSelected'); // POST
         $search = $this->request->get('search', ['string', 'trim']); // POST
 
@@ -55,7 +52,6 @@ class PageController extends ControllerBase
                 'dateSelected' => $dateSelected,
                 'search' => $search,
                 'pager' => $pager,
-                'str' => $str
             ]
         );
     }

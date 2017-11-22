@@ -50,6 +50,7 @@ class TaxonomyService extends AbstractService
      * @param $objectId
      * @param string $type category|tag 默认全部
      * @return array
+     * TODO 有bug 会查询到link的数据(因为没有根据term_taxonomy_id而是根据objectid来查)
      */
     public function getPostTaxonomy($objectId, $type='')
     {

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Host: mysql-db
--- Generation Time: 2017-10-19 01:07:11
--- 服务器版本： 5.7.19-log
--- PHP Version: 7.1.10
+-- Host: 127.0.0.1
+-- Generation Time: 2017-11-22 05:23:53
+-- 服务器版本： 10.1.22-MariaDB
+-- PHP Version: 7.1.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -74,10 +74,20 @@ CREATE TABLE `zp_links` (
   `link_owner` int(11) UNSIGNED NOT NULL DEFAULT '1' COMMENT '所属用户',
   `link_rating` int(11) NOT NULL DEFAULT '0' COMMENT '评分',
   `link_updated` datetime NOT NULL COMMENT '更新时间',
-  `link_rel` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '链接关系',
-  `link_notes` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '备注',
+  `link_notes` mediumtext COLLATE utf8mb4_unicode_ci COMMENT '备注',
   `link_rss` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'rss地址'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 转存表中的数据 `zp_links`
+--
+
+INSERT INTO `zp_links` (`link_id`, `link_url`, `link_name`, `link_image`, `link_target`, `link_description`, `link_visible`, `link_owner`, `link_rating`, `link_updated`, `link_notes`, `link_rss`) VALUES
+(1, 'http://www.a.com', 'guo', '', '', '', 'Y', 13, 0, '2017-11-22 04:58:48', '', ''),
+(2, 'https://regex101.com/', 'Fotor', 'https://regex101.com/', '_blank', '爱仕达', 'Y', 13, 0, '2017-11-22 04:59:18', 'https://regex101.com/', 'https://regex101.com/'),
+(3, 'https://www.processon.com/', 'ProcessOn', '', '', '开源中国开发设计人员在线工具', 'Y', 13, 0, '2017-11-22 05:00:01', '', ''),
+(4, 'http://study.163.com/', 'Stack Overflow', '', '', '基佬聚集地', 'N', 13, 0, '2017-11-22 05:00:22', '', ''),
+(5, 'https://regex101.com/', 'ProcessOn', '', '', '', 'N', 13, 0, '2017-11-22 05:01:07', '', '');
 
 -- --------------------------------------------------------
 
@@ -254,7 +264,10 @@ CREATE TABLE `zp_postmeta` (
 --
 
 INSERT INTO `zp_postmeta` (`meta_id`, `post_id`, `meta_key`, `meta_value`) VALUES
-(1, 2, '_wp_page_template', 'default');
+(1, 2, '_wp_page_template', 'l'),
+(2, 42, 'description', '保存草稿'),
+(3, 44, 'description', 'jjj'),
+(4, 46, 'description', '1122');
 
 -- --------------------------------------------------------
 
@@ -290,7 +303,54 @@ CREATE TABLE `zp_posts` (
 INSERT INTO `zp_posts` (`ID`, `post_author`, `post_date`, `post_date_gmt`, `post_content`, `post_title`, `post_status`, `comment_status`, `post_name`, `post_modified`, `post_modified_gmt`, `post_parent`, `guid`, `cover_picture`, `post_type`, `post_mime_type`, `comment_count`, `view_count`) VALUES
 (1, 1, '2017-08-23 00:13:01', '2017-08-22 16:13:02', '欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！', '世界，您好！', 'publish', 'open', 'hello-world', '2017-08-23 00:13:01', '2017-08-22 16:13:02', 0, 'http://localhost/wordpress/?p=1', '', 'post', '', 1, 0),
 (2, 1, '2017-08-23 00:13:01', '2017-08-22 16:13:02', '这是示范页面。页面和博客文章不同，它的位置是固定的，通常会在站点导航栏显示。很多用户都创建一个“关于”页面，向访客介绍自己。例如：\n\n<blockquote>欢迎！我白天是个邮递员，晚上就是个有抱负的演员。这是我的博客。我住在天朝的帝都，有条叫做Jack的狗。</blockquote>\n\n……或这个：\n\n<blockquote>XYZ Doohickey公司成立于1971年，自从建立以来，我们一直向社会贡献着优秀doohickies。我们的公司总部位于天朝魔都，有着超过两千名员工，对魔都政府税收有着巨大贡献。</blockquote>\n\n而您，作为一个WordPress用户，我们建议您访问<a href=\"http://localhost/wordpress/wp-admin/\">控制板</a>，删除本页面，然后添加您自己的页面。祝您使用愉快！', '示例页面', 'publish', 'closed', 'sample-page', '2017-08-23 00:13:01', '2017-08-22 16:13:02', 0, 'http://localhost/wordpress/?page_id=2', '', 'page', '', 0, 0),
-(3, 1, '2017-08-23 00:13:19', '0000-00-00 00:00:00', '', '自动草稿', 'auto-draft', 'open', '', '2017-08-23 00:13:19', '0000-00-00 00:00:00', 0, 'http://localhost/wordpress/?p=3', '', 'post', '', 0, 0);
+(3, 1, '2017-08-23 00:13:19', '0000-00-00 00:00:00', '', '自动草稿', 'auto-draft', 'open', '', '2017-08-23 00:13:19', '0000-00-00 00:00:00', 0, 'http://localhost/wordpress/?p=3', '', 'post', '', 0, 0),
+(4, 13, '2017-10-23 09:07:56', '2017-10-23 09:07:56', '# 啊是大大\r\n123\r\n123\r\n123444', '啊哈', 'publish', 'open', '', '2017-10-23 09:07:56', '2017-10-23 09:07:56', 0, '', '', 'post', '', 0, 0),
+(5, 13, '2017-10-24 03:00:37', '2017-10-24 03:00:37', '啊哈啊哈啊哈啊哈啊哈啊哈', '啊哈啊哈', 'draft', 'open', '', '2017-10-24 03:00:37', '2017-10-24 03:00:37', 0, '', '', 'post', '', 0, 0),
+(6, 13, '2017-10-24 09:28:20', '2017-10-24 09:28:20', '# 啊啊啊啊嗄\n可以啊\n!!!\n', '测试', 'auto-draft', 'open', '', '2017-10-24 09:28:20', '2017-10-24 09:28:20', 0, '/article/6.html', '', 'post', '', 0, 0),
+(7, 13, '2017-10-30 04:05:44', '2017-10-30 04:05:44', '# 测试计数\r\n测试计数', '测试计数', 'publish', 'open', '', '2017-10-30 04:05:44', '2017-10-30 04:05:44', 0, '', '', 'post', '', 0, 0),
+(8, 13, '2017-10-30 04:09:21', '2017-10-30 04:09:21', '# 测试分类again\r\n测试分类again', '测试分类again', 'publish', 'open', '', '2017-10-30 04:09:21', '2017-10-30 04:09:21', 0, '', '', 'post', '', 0, 0),
+(9, 13, '2017-10-30 04:13:12', '2017-10-30 04:13:12', '###### 测试叠加\r\n测试叠加', '测试叠加', 'publish', 'open', '', '2017-10-30 04:13:12', '2017-10-30 04:13:12', 0, '', '', 'post', '', 0, 0),
+(10, 13, '2017-12-21 16:50:23', '2017-12-21 16:50:23', '# 测试URL\r\n测试URL测试URL', '测试URL', 'publish', 'open', '', '2017-12-21 16:50:23', '2017-12-21 16:50:23', 0, '', '', 'post', '', 0, 0),
+(11, 13, '2017-10-30 08:55:26', '2017-10-30 08:55:26', '# 测试URL\n测试URL测试URL', '测试URL', 'auto-draft', 'open', '', '2017-10-30 08:55:26', '2017-10-30 08:55:26', 0, '', '', 'post', '', 0, 0),
+(12, 13, '2017-10-30 08:57:26', '2017-10-30 08:57:26', '# 测试URL\n测试URL测试URL', '测试URL', 'auto-draft', 'open', '', '2017-10-30 08:57:26', '2017-10-30 08:57:26', 0, '', '', 'post', '', 0, 0),
+(13, 13, '2017-10-30 08:59:26', '2017-10-30 08:59:26', '# 测试URL\n测试URL测试URL', '测试URL', 'auto-draft', 'open', '', '2017-10-30 08:59:26', '2017-10-30 08:59:26', 0, '', '', 'post', '', 0, 0),
+(14, 13, '2017-10-30 09:01:25', '2017-10-30 09:01:25', '# 测试URL\n测试URL测试URL', '测试URL', 'auto-draft', 'open', '', '2017-10-30 09:01:25', '2017-10-30 09:01:25', 0, '', '', 'post', '', 0, 0),
+(15, 13, '2017-09-27 01:05:08', '2017-09-27 01:05:08', 'utlutl', 'utlutlutl', 'publish', 'open', '', '2017-09-27 01:05:08', '2017-09-27 01:05:08', 0, '', '', 'post', '', 0, 0),
+(16, 13, '2017-10-30 09:13:34', '2017-10-30 09:13:34', 'aaaaa', 'aaaaa', 'publish', 'open', '', '2017-10-30 09:13:34', '2017-10-30 09:13:34', 0, '', '', 'post', '', 0, 0),
+(17, 13, '2017-10-30 09:16:07', '2017-10-30 09:16:07', '测试di utl测试di utl', '测试di utl', 'publish', 'open', '', '2017-10-30 09:16:07', '2017-10-30 09:16:07', 0, '', '', 'post', '', 0, 0),
+(18, 13, '2017-10-30 09:17:29', '2017-10-30 09:17:29', '测试 测his', '测试 测his', 'publish', 'open', '', '2017-10-30 09:17:29', '2017-10-30 09:17:29', 0, '/article/18.html', '', 'post', '', 0, 0),
+(19, 13, '2017-10-30 09:25:53', '2017-10-30 09:25:53', '测试 测hisaa', '测试 测hisaa', 'publish', 'open', '', '2017-10-30 09:25:53', '2017-10-30 09:25:53', 0, '', '', 'post', '', 0, 0),
+(20, 13, '2017-10-30 09:33:59', '2017-10-30 09:33:59', '/ 生成连接', '/ 生成连接', 'publish', 'open', '', '2017-10-30 09:33:59', '2017-10-30 09:33:59', 0, '/article/20.html', '', 'post', '', 0, 0),
+(21, 13, '2017-10-30 09:45:45', '2017-10-30 09:45:45', '# generateUrl\r\n## generateUrlgenerateUrlgenerateUrlgenerateUrlgenerateUrl\r\n', 'generateUrl', 'publish', 'open', '', '2017-10-30 09:45:45', '2017-10-30 09:45:45', 0, '/article/21.html', '', 'post', '', 0, 0),
+(22, 13, '2017-10-30 10:06:39', '2017-10-30 10:06:39', 'asdadasd', '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊大大亲亲我我我我我我我WAd啊大大的哇啊啊啊啊啊的祈晴娃娃A网单位', 'publish', 'open', '', '2017-10-30 10:06:39', '2017-10-30 10:06:39', 0, '/article/22.html', 'https://www.gzpblog.com/wp-content/themes/SaltedFish/public/images/jumbotron_self.png', 'post', '', 0, 0),
+(23, 13, '2017-10-30 10:33:22', '2017-10-30 10:33:22', 'utlutlutlutlutlutlutlutlutlutlutlutl', 'utlutlutlutlutlutl', 'publish', 'open', '', '2017-10-30 10:33:22', '2017-10-30 10:33:22', 0, '/article/23.html', '', 'post', '', 0, 0),
+(24, 13, '2017-10-30 10:36:29', '2017-10-30 10:36:29', 'kekeke', 'kekkk', 'publish', 'open', '', '2017-10-30 10:36:29', '2017-10-30 10:36:29', 0, '/article/24.html', '', 'post', '', 0, 0),
+(25, 13, '2017-10-31 02:32:04', '2017-10-31 02:32:04', 'print_r($allId);', '啊哈啊哈', 'publish', 'open', '', '2017-10-31 02:32:04', '2017-10-31 02:32:04', 0, '/article/25.html', '', 'post', '', 0, 0),
+(26, 13, '2017-10-31 02:52:12', '2017-10-31 02:52:12', 'print_r($allId);', '啊哈啊哈', 'publish', 'open', '', '2017-10-31 02:52:12', '2017-10-31 02:52:12', 0, '/article/26.html', '', 'post', '', 0, 0),
+(27, 13, '2017-10-31 02:53:05', '2017-10-31 02:53:05', 'testtest', 'testtest', 'publish', 'open', '', '2017-10-31 02:53:05', '2017-10-31 02:53:05', 0, '/article/27.html', '', 'post', '', 0, 0),
+(28, 13, '2017-10-31 03:00:34', '2017-10-31 03:00:34', '啊哈', '啊哈', 'publish', 'open', '', '2017-10-31 03:00:34', '2017-10-31 03:00:34', 0, '/article/28.html', '', 'post', '', 0, 0),
+(29, 13, '2017-10-31 03:02:16', '2017-10-31 03:02:16', 'asdasd', '啊哈啊哈', 'publish', 'open', '', '2017-11-13 08:52:46', '2017-11-13 08:52:46', 0, '/article/29.html', '', 'post', '', 0, 0),
+(30, 13, '2017-10-31 03:33:13', '2017-10-31 03:33:13', '啊哈', '啊哈', 'publish', 'open', '', '2017-10-31 03:33:13', '2017-10-31 03:33:13', 0, '/article/30.html', '', 'post', '', 0, 0),
+(31, 13, '2017-10-31 03:34:39', '2017-10-31 03:34:39', '啊哈', '啊哈', 'publish', 'open', '', '2017-10-31 03:34:39', '2017-10-31 03:34:39', 0, '/article/31.html', '', 'post', '', 0, 0),
+(32, 13, '2017-10-31 03:37:42', '2017-10-31 03:37:42', '啊哈', '啊哈', 'auto-draft', 'open', '', '2017-10-31 03:39:43', '2017-10-31 03:39:43', 0, '/article/32.html', '', 'post', '', 0, 0),
+(33, 13, '2017-10-31 03:45:05', '2017-10-31 03:45:05', 'asdasd', 'asdasda', 'publish', 'open', '', '2017-10-31 03:45:05', '2017-10-31 03:45:05', 0, '/article/33.html', '', 'post', '', 0, 0),
+(34, 13, '2017-10-31 04:06:59', '2017-10-31 04:06:59', 'asdasd', 'asdasda', 'publish', 'open', '', '2017-10-31 04:06:59', '2017-10-31 04:06:59', 0, '/article/34.html', '', 'post', '', 0, 0),
+(35, 13, '2017-10-31 04:07:31', '2017-10-31 04:07:31', 'asdasd', 'asdasda', 'publish', 'open', '', '2017-10-31 04:07:31', '2017-10-31 04:07:31', 0, '/article/35.html', '', 'post', '', 0, 0),
+(36, 13, '2017-10-31 04:10:11', '2017-10-31 04:10:11', '$parent', '啊哈啊哈', 'publish', 'open', '', '2017-10-31 04:10:11', '2017-10-31 04:10:11', 0, '/article/36.html', '', 'post', '', 0, 0),
+(37, 13, '2017-10-31 04:15:30', '2017-10-31 04:15:30', 'asd', '啊哈', 'publish', 'open', '', '2017-10-31 04:15:30', '2017-10-31 04:15:30', 0, '/article/37.html', '', 'post', '', 0, 0),
+(38, 13, '2017-11-10 15:14:44', '2017-11-10 15:14:44', '啊哈啊哈啊哈啊哈', '啊哈啊哈', 'publish', 'open', '', '2017-11-10 10:29:14', '2017-11-10 10:29:14', 0, '/article/38.html', '', 'post', '', 0, 0),
+(39, 13, '2017-11-07 10:21:59', '2017-11-07 10:21:59', 'asdaasd', 'sdasda', 'publish', 'open', '', '2017-11-07 10:21:59', '2017-11-07 10:21:59', 0, '/article/39.html', '', 'post', '', 0, 0),
+(40, 13, '1000-01-01 00:00:00', '1000-01-01 00:00:00', '草稿草稿', '草稿', 'draft', 'open', '', '2017-11-07 10:26:35', '2017-11-07 10:26:35', 0, '/article/40.html', '', 'post', '', 0, 0),
+(41, 13, '2017-11-10 15:31:17', '2017-11-10 15:31:17', '123123', '更新资料时,学校没法填', 'publish', 'open', '', '2017-11-10 07:37:20', '2017-11-10 07:37:20', 0, '/article/41.html', '', 'post', '', 0, 0),
+(42, 13, '2017-08-10 07:38:10', '2017-08-10 07:38:10', '保存草稿', '保存草稿', 'publish', 'open', '', '2017-11-10 07:40:15', '2017-11-10 07:40:15', 0, '/article/42.html', '', 'post', '', 0, 0),
+(43, 13, '2017-02-10 15:28:48', '2017-02-10 15:28:48', '# 保存草稿iooooasdasd', '保存草稿oasdasdasdad', 'draft', 'open', '', '2017-11-14 09:19:46', '2017-11-14 09:19:46', 0, '/article/43.html', '', 'post', '', 0, 0),
+(44, 13, '2017-11-10 08:23:12', '2017-11-10 07:23:12', '阿萨', '啊啊啊', 'publish', 'open', '', '2017-11-21 03:49:48', '2017-11-21 02:49:48', 0, '/article/44.html', '', 'post', '', 0, 0),
+(45, 13, '2017-11-20 11:11:27', '2017-11-20 10:11:27', '888', '888', 'publish', 'open', '', '2017-11-20 11:14:14', '2017-11-20 10:14:14', 0, '/article/45.html', '', 'post', '', 0, 0),
+(46, 13, '2017-11-10 09:46:09', '2017-11-10 09:46:09', ' 1122', '1122', 'publish', 'open', '', '2017-11-13 08:52:22', '2017-11-13 08:52:22', 0, '/article/46.html', '', 'post', '', 0, 0),
+(47, 13, '1000-01-01 00:00:00', '1000-01-01 00:00:00', '爱仕达爱仕达', '啊打算', 'draft', 'open', 'adhj', '2017-11-17 04:50:22', '2017-11-17 03:50:22', 0, '/page/', '', 'page', '', 0, 0),
+(48, 13, '1000-01-01 00:00:00', '1000-01-01 00:00:00', 'gdfg', '无题', 'draft', 'open', '', '2017-11-17 09:29:48', '2017-11-17 08:29:48', 0, '/page/', '', 'page', '', 0, 0),
+(49, 13, '1000-01-01 00:00:00', '1000-01-01 00:00:00', '爱仕达', 'ddddd', 'draft', 'open', 'dd', '2017-11-17 11:16:02', '2017-11-17 10:16:02', 0, '/page/dd', '', 'page', '', 0, 0),
+(50, 13, '1000-01-01 00:00:00', '1000-01-01 00:00:00', 'sdfs\n', '无题', 'draft', 'open', '', '2017-11-17 11:22:01', '2017-11-17 10:22:01', 0, '/page/', '', 'page', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -357,10 +417,10 @@ CREATE TABLE `zp_subjects` (
 --
 
 INSERT INTO `zp_subjects` (`subject_id`, `subject_name`, `subject_slug`, `subject_image`, `subject_description`, `count`, `last_updated`, `parent`) VALUES
-(1, '编程', 'code', 'uploads/cover/20141272313028441.jpg', '666', 0, '2017-10-05 22:14:24', 0),
-(2, 'PHP', 'php', 'uploads/cover/c5131475jw1f9fxxjv7clj209h0az752.jpg', '111', 0, '2017-10-06 01:02:05', 1),
-(3, 'golang', 'go', 'uploads/cover/default-zp3 (2).jpg', '666', 0, '2017-10-06 01:09:30', 1),
-(4, 'thinkphp', 'thinkphp', 'uploads/cover/九里台.jpg', '', 0, '1000-01-01 00:00:00', 2);
+(1, '编程', 'code', 'uploads/cover/20141272313028441.jpg', '666', 16, '2017-11-13 09:46:17', 0),
+(2, 'PHP', 'php', 'uploads/cover/c5131475jw1f9fxxjv7clj209h0az752.jpg', '111', 6, '2017-11-13 09:45:40', 1),
+(3, 'golang', 'go', 'uploads/cover/default-zp3 (2).jpg', '666', 3, '2017-11-13 09:45:53', 1),
+(4, 'thinkphp', 'thinkphp', 'uploads/cover/九里台.jpg', '', 5, '2017-11-13 09:23:13', 2);
 
 -- --------------------------------------------------------
 
@@ -373,6 +433,25 @@ CREATE TABLE `zp_subject_relationships` (
   `subject_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
   `order` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='专题关系表';
+
+--
+-- 转存表中的数据 `zp_subject_relationships`
+--
+
+INSERT INTO `zp_subject_relationships` (`object_id`, `subject_id`, `order`) VALUES
+(7, 4, 0),
+(8, 4, 0),
+(9, 1, 0),
+(23, 4, 0),
+(27, 4, 0),
+(28, 1, 0),
+(29, 1, 0),
+(36, 4, 0),
+(38, 3, 0),
+(43, 0, 0),
+(44, 1, 0),
+(45, 0, 0),
+(46, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -415,14 +494,19 @@ INSERT INTO `zp_terms` (`term_id`, `name`, `slug`, `term_group`) VALUES
 (43, 'python', 'python', 0),
 (44, 'python2', 'python2', 0),
 (45, 'python3', 'python3', 0),
-(46, 'python4', 'python4', 0),
 (47, 'python5', 'python5', 0),
-(48, 'python6', 'python6', 0),
+(48, 'python66', 'python66', 0),
 (49, '生活', '生活', 0),
 (50, '吐槽', '吐槽', 0),
 (51, '变态', '变态', 0),
 (52, '科学', '科学', 0),
-(53, '好变态', '好变态', 0);
+(53, '好变态', '好变态', 0),
+(54, '超变态', '超变态', 0),
+(55, '一般变态', '一般变态', 0),
+(56, '很变态哦', 'henbiantai', 0),
+(57, 'go', 'go', 0),
+(58, '代码', 'code', 0),
+(59, '友链', 'youlian', 0);
 
 -- --------------------------------------------------------
 
@@ -441,7 +525,81 @@ CREATE TABLE `zp_term_relationships` (
 --
 
 INSERT INTO `zp_term_relationships` (`object_id`, `term_taxonomy_id`, `term_order`) VALUES
-(1, 1, 0);
+(1, 1, 0),
+(2, 30, 0),
+(3, 30, 0),
+(3, 31, 0),
+(4, 1, 0),
+(4, 2, 0),
+(4, 3, 0),
+(4, 9, 0),
+(4, 30, 0),
+(4, 31, 0),
+(5, 1, 0),
+(7, 5, 0),
+(8, 9, 0),
+(8, 10, 0),
+(8, 15, 0),
+(8, 24, 0),
+(8, 26, 0),
+(9, 9, 0),
+(9, 10, 0),
+(9, 26, 0),
+(16, 1, 0),
+(17, 1, 0),
+(18, 1, 0),
+(19, 1, 0),
+(20, 1, 0),
+(21, 1, 0),
+(22, 5, 0),
+(22, 21, 0),
+(23, 3, 0),
+(23, 5, 0),
+(24, 0, 0),
+(24, 3, 0),
+(27, 2, 0),
+(27, 3, 0),
+(27, 5, 0),
+(28, 9, 0),
+(28, 10, 0),
+(28, 25, 0),
+(28, 26, 0),
+(29, 25, 0),
+(29, 26, 0),
+(36, 9, 0),
+(36, 10, 0),
+(36, 15, 0),
+(36, 21, 0),
+(36, 23, 0),
+(36, 25, 0),
+(36, 26, 0),
+(37, 21, 0),
+(37, 23, 0),
+(37, 25, 0),
+(37, 26, 0),
+(38, 2, 0),
+(38, 4, 0),
+(38, 9, 0),
+(38, 10, 0),
+(38, 15, 0),
+(38, 21, 0),
+(38, 23, 0),
+(38, 26, 0),
+(39, 1, 0),
+(40, 1, 0),
+(41, 1, 0),
+(42, 1, 0),
+(43, 1, 0),
+(44, 2, 0),
+(44, 9, 0),
+(44, 20, 0),
+(45, 3, 0),
+(45, 5, 0),
+(46, 3, 0),
+(46, 5, 0),
+(46, 9, 0),
+(46, 10, 0),
+(46, 17, 0);
 
 -- --------------------------------------------------------
 
@@ -464,24 +622,28 @@ CREATE TABLE `zp_term_taxonomy` (
 
 INSERT INTO `zp_term_taxonomy` (`term_taxonomy_id`, `term_id`, `taxonomy`, `description`, `parent`, `count`) VALUES
 (1, 1, 'category', '', 0, 1),
-(2, 2, 'category', '骄傲了=', 0, 0),
-(3, 3, 'category', '最好的语言', 0, 0),
-(4, 4, 'category', 'Javascript', 2, 0),
-(5, 5, 'category', 'thinkphpthinkphpthinkphpthinkphp', 3, 0),
-(8, 11, 'category', '最好的语言', 0, 0),
-(9, 12, 'tag', 'php哦', 0, 0),
-(10, 13, 'tag', 'go', 0, 0),
-(15, 43, 'tag', ' ', 0, 0),
+(2, 2, 'category', '骄傲了=', 0, 3),
+(3, 3, 'category', '最好的语言', 0, 7),
+(4, 4, 'category', 'Javascript', 2, 1),
+(5, 5, 'category', 'thinkphpthinkphpthinkphpthinkphp', 3, 6),
+(9, 12, 'tag', 'php哦', 0, 7),
+(10, 13, 'tag', 'go', 0, 6),
+(15, 43, 'tag', ' ', 0, 3),
 (16, 44, 'tag', ' ', 0, 0),
-(17, 45, 'tag', ' ', 0, 0),
-(18, 46, 'tag', ' ', 0, 0),
+(17, 45, 'tag', ' ', 0, 1),
 (19, 47, 'tag', ' ', 0, 0),
-(20, 48, 'tag', 'asdasdads', 0, 0),
-(21, 49, 'category', ' ', 0, 0),
+(20, 48, 'tag', 'asdasdads666', 0, 1),
+(21, 49, 'category', ' ', 0, 6),
 (22, 50, 'category', ' ', 21, 0),
-(23, 51, 'category', ' ', 21, 0),
-(24, 52, 'category', ' ', 0, 0),
-(25, 53, 'category', '好变态噢', 23, 0);
+(23, 51, 'category', ' ', 21, 5),
+(24, 52, 'category', ' ', 0, 1),
+(25, 53, 'category', '好变态噢', 23, 6),
+(26, 54, 'category', ' ', 25, 7),
+(27, 55, 'category', ' ', 23, 0),
+(28, 56, 'category', '1', 23, 0),
+(29, 57, 'tag', 'gogogo', 0, 0),
+(30, 58, 'linkCategory', '代码手册', 0, 3),
+(31, 59, 'linkCategory', '有联表', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -694,85 +856,71 @@ ALTER TABLE `zp_users`
 --
 ALTER TABLE `zp_commentmeta`
   MODIFY `meta_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- 使用表AUTO_INCREMENT `zp_comments`
 --
 ALTER TABLE `zp_comments`
   MODIFY `comment_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '评论id';
-
 --
 -- 使用表AUTO_INCREMENT `zp_links`
 --
 ALTER TABLE `zp_links`
-  MODIFY `link_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '链接id';
-
+  MODIFY `link_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '链接id', AUTO_INCREMENT=6;
 --
 -- 使用表AUTO_INCREMENT `zp_options`
 --
 ALTER TABLE `zp_options`
   MODIFY `option_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '配置id', AUTO_INCREMENT=144;
-
 --
 -- 使用表AUTO_INCREMENT `zp_postmeta`
 --
 ALTER TABLE `zp_postmeta`
-  MODIFY `meta_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+  MODIFY `meta_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- 使用表AUTO_INCREMENT `zp_posts`
 --
 ALTER TABLE `zp_posts`
-  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id', AUTO_INCREMENT=4;
-
+  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id', AUTO_INCREMENT=51;
 --
 -- 使用表AUTO_INCREMENT `zp_resourcemeta`
 --
 ALTER TABLE `zp_resourcemeta`
   MODIFY `meta_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- 使用表AUTO_INCREMENT `zp_resources`
 --
 ALTER TABLE `zp_resources`
   MODIFY `resource_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '资源id', AUTO_INCREMENT=4;
-
 --
 -- 使用表AUTO_INCREMENT `zp_subjects`
 --
 ALTER TABLE `zp_subjects`
   MODIFY `subject_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '专题 id', AUTO_INCREMENT=5;
-
 --
 -- 使用表AUTO_INCREMENT `zp_termmeta`
 --
 ALTER TABLE `zp_termmeta`
   MODIFY `meta_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id';
-
 --
 -- 使用表AUTO_INCREMENT `zp_terms`
 --
 ALTER TABLE `zp_terms`
-  MODIFY `term_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '条件id', AUTO_INCREMENT=54;
-
+  MODIFY `term_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '条件id', AUTO_INCREMENT=60;
 --
 -- 使用表AUTO_INCREMENT `zp_term_taxonomy`
 --
 ALTER TABLE `zp_term_taxonomy`
-  MODIFY `term_taxonomy_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '分类方式id', AUTO_INCREMENT=26;
-
+  MODIFY `term_taxonomy_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '分类方式id', AUTO_INCREMENT=32;
 --
 -- 使用表AUTO_INCREMENT `zp_usermeta`
 --
 ALTER TABLE `zp_usermeta`
   MODIFY `umeta_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id', AUTO_INCREMENT=20;
-
 --
 -- 使用表AUTO_INCREMENT `zp_users`
 --
 ALTER TABLE `zp_users`
-  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id', AUTO_INCREMENT=15;
-COMMIT;
+  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id', AUTO_INCREMENT=15;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

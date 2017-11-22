@@ -6,8 +6,7 @@
         </div>
     </div>
     <h1>
-        新链接
-        <small>添加一个新的链接</small>
+        编辑链接
     </h1>
 </section>
 
@@ -17,7 +16,7 @@
             <form class="form-horizontal" action="<?= $this->url->get("/admin/link/save"); ?>" method="post">
                 <div class="box box-default box-solid">
                     <div class="box-header with-border">
-                        <h3 class="box-title">新链接信息</h3>
+                        <h3 class="box-title">编辑链接信息</h3>
                     </div>
 
                     <div class="box-body">
@@ -25,7 +24,7 @@
                             <div class="form-group">
                                 <label for="inputUser" class="col-sm-2 control-label">名称<span class="text-red"> * </span></label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="link_name" class="form-control" id="name" placeholder="名称" autocomplete="on">
+                                    <input type="text" name="link_name" class="form-control" id="name" placeholder="名称" autocomplete="on" value="<?= $linkInfo['link_name'] ?>">
                                     <span class="help-block">链接的名称，例如：ZPhal官方网站。</span>
                                 </div>
                             </div>
@@ -33,7 +32,7 @@
                             <div class="form-group">
                                 <label for="inputEmail" class="col-sm-2 control-label">Web地址<span class="text-red"> * </span></label>
                                 <div class="col-sm-6">
-                                    <input type="url" name="link_url" class="form-control" id="url" placeholder="Web地址" autocomplete="on">
+                                    <input type="url" name="link_url" class="form-control" id="url" placeholder="Web地址" autocomplete="on" value="<?= $linkInfo['link_url'] ?>">
                                     <span class="help-block">例如：http://www.zphal.com/；不要忘了 http:// 或 https:// 。</span>
                                 </div>
                             </div>
@@ -41,7 +40,7 @@
                             <div class="form-group">
                                 <label for="desc" class="col-sm-2 control-label">描述</label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="link_description" class="form-control" id="description" placeholder="描述" autocomplete="on">
+                                    <input type="text" name="link_description" class="form-control" id="description" placeholder="描述" autocomplete="on" value="<?= $linkInfo['link_description'] ?>">
                                     <span class="help-block">简短的描述。例如：高效快速的博客CMS，为性能而开发。</span>
                                 </div>
                             </div>
@@ -52,15 +51,15 @@
                                     <div id="link-catergory" class="form-control-static" style="max-height:200px; overflow:auto">
                                         <ul id="link-catergory-ul" style="list-style-type:none;">
                                             <?php foreach ($linkCategory as $cate){ ?>
-                                            <li id="link-category-<?= $cate['term_taxonomy_id'] ?>">
-                                                <label for="in-link-category-<?= $cate['term_taxonomy_id'] ?>">
-                                                    <input value="<?= $cate['term_taxonomy_id'] ?>" name="link_category[]" id="in-link-category-<?= $cate['term_taxonomy_id'] ?>" type="checkbox">
-                                                    <?= $cate['name'] ?>
-                                                </label>
-                                            </li>
+                                                <li id="link-category-<?= $cate['term_taxonomy_id'] ?>">
+                                                    <label for="in-link-category-<?= $cate['term_taxonomy_id'] ?>">
+                                                        <input value="<?= $cate['term_taxonomy_id'] ?>" name="link_category[]" id="in-link-category-<?= $cate['term_taxonomy_id'] ?>" type="checkbox">
+                                                        <?= $cate['name'] ?>
+                                                    </label>
+                                                </li>
                                             <?php } ?>
                                         </ul>
-                                     </div>
+                                    </div>
                                     <span class="help-block">选择对应的分类目录；可不选。</span>
                                 </div>
                             </div>
@@ -70,15 +69,15 @@
                                 <div class="col-sm-8">
                                     <fieldset class="form-control-static">
                                         <p><label for="link_target_blank" class="selectit">
-                                                <input id="link_target_blank" name="link_target" value="_blank" type="radio" checked>
+                                                <input id="link_target_blank" name="link_target" value="_blank" type="radio" <?php if ($linkInfo['link_target'] == '_blank') echo 'checked' ?>>
                                                 <code>_blank</code> — 新窗口或新标签。
                                             </label></p>
                                         <p><label for="link_target_top" class="selectit">
-                                                <input id="link_target_top" name="link_target" value="_top" type="radio">
+                                                <input id="link_target_top" name="link_target" value="_top" type="radio" <?php if ($linkInfo['link_target'] == '_top') echo 'checked' ?>>
                                                 <code>_top</code> — 不包含框架的当前窗口或标签。
                                             </label></p>
                                         <p><label for="link_target_none" class="selectit">
-                                                <input id="link_target_none" name="link_target" value="" type="radio">
+                                                <input id="link_target_none" name="link_target" value="" type="radio" <?php if ($linkInfo['link_target'] == '') echo 'checked' ?>>
                                                 <code>_none</code> — 同一窗口或标签。
                                             </label></p>
                                     </fieldset>
@@ -89,7 +88,7 @@
                             <div class="form-group">
                                 <label for="inputEmail" class="col-sm-2 control-label">图像地址</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="link_image" class="form-control" id="link_image" placeholder="图像地址" autocomplete="on">
+                                    <input type="text" name="link_image" class="form-control" id="link_image" placeholder="图像地址" autocomplete="on" value="<?= $linkInfo['link_image'] ?>">
                                     <span class="help-block">链接相关的图片，可能用于展示。</span>
                                 </div>
                             </div>
@@ -97,7 +96,7 @@
                             <div class="form-group">
                                 <label for="inputEmail" class="col-sm-2 control-label">RSS地址</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="link_rss" class="form-control" id="link_rss" placeholder="RSS地址" autocomplete="on">
+                                    <input type="text" name="link_rss" class="form-control" id="link_rss" placeholder="RSS地址" autocomplete="on" value="<?= $linkInfo['link_rss'] ?>">
                                     <span class="help-block">该链接的RSS地址。</span>
                                 </div>
                             </div>
@@ -105,7 +104,7 @@
                             <div class="form-group">
                                 <label for="inputEmail" class="col-sm-2 control-label">备注</label>
                                 <div class="col-sm-6">
-                                    <textarea class="form-control" id="link_notes" rows="3" placeholder="写一点东西吧..." name="link_notes" autocomplete="on"></textarea>
+                                    <textarea class="form-control" id="link_notes" rows="3" placeholder="写一点东西吧..." name="link_notes" autocomplete="on"><?= $linkInfo['link_notes'] ?></textarea>
                                 </div>
                             </div>
 
@@ -114,10 +113,10 @@
                                 <div class="col-sm-8">
                                     <fieldset class="form-control-static">
                                         <label for="link_visible_show">
-                                            <input id="link_visible_show" name="link_visible" value="Y" type="radio" checked>公开链接
+                                            <input id="link_visible_show" name="link_visible" value="Y" type="radio" <?php if ($linkInfo['link_visible'] == 'Y') echo 'checked' ?>>公开链接
                                         </label>
                                         <label for="link_visible_hide">
-                                            <input id="link_visible_hide" name="link_visible" value="N" type="radio">私密链接
+                                            <input id="link_visible_hide" name="link_visible" value="N" type="radio" <?php if ($linkInfo['link_visible'] == 'N') echo 'checked' ?>>私密链接
                                         </label>
                                     </fieldset>
                                     <span class="help-block">为链接选择目标框架。</span>
