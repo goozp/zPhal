@@ -308,7 +308,8 @@ class PostController extends ControllerBase
          * 分类,标签
          */
         // 当前分类标签
-        $taxonomy = $postService->getPostTaxonomy($id);
+        $taxonomyService = container(TaxonomyService::class);
+        $taxonomy = $taxonomyService->getPostTaxonomy($id);
 
         // 分类列表
         $taxonomyService = container(TaxonomyService::class);
@@ -462,7 +463,11 @@ class PostController extends ControllerBase
                 );
                 $beforeCategories = [];
                 foreach($TermRelationships as $term){
-                    $beforeCategories[] = $term->term_taxonomy_id;
+                    // 确保不是link的记录
+                    $termTaxonomy = $term->TermTaxonomy;
+                    if ($termTaxonomy->taxonomy == ($termTaxonomy::TAXONOMY_CATEGORY || $termTaxonomy::TAXONOMY_TAG)){
+                        $beforeCategories[] = $term->term_taxonomy_id;
+                    }
                 }
 
                 // 进行比对,选择性增删改
@@ -472,7 +477,6 @@ class PostController extends ControllerBase
                 // 删
                 foreach($TermRelationships as $term){
                     if(in_array($term->term_taxonomy_id, $delete)){
-                        echo $term->term_taxonomy_id;
                         $term->delete();
                     }
                 }
@@ -708,6 +712,12 @@ class PostController extends ControllerBase
             ]);
             if ($terms){
                 foreach ($terms as $term){
+                    // 确保不是link的记录
+                    $termTaxonomy = $term->TermTaxonomy;
+                    if ($termTaxonomy->taxonomy != ($termTaxonomy::TAXONOMY_CATEGORY || $termTaxonomy::TAXONOMY_TAG)){
+                        continue;
+                    }
+
                     if ($term->delete() === false){
                         $this->db->rollback();
 

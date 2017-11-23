@@ -50,7 +50,6 @@ class TaxonomyService extends AbstractService
      * @param $objectId
      * @param string $type category|tag 默认全部
      * @return array
-     * TODO 有bug 会查询到link的数据(因为没有根据term_taxonomy_id而是根据objectid来查)
      */
     public function getPostTaxonomy($objectId, $type='')
     {
@@ -75,5 +74,24 @@ class TaxonomyService extends AbstractService
         }
 
         return $output;
+    }
+
+    /**
+     * 获取链接的链接分类
+     * @param $objectId int 链接id
+     * @return mixed
+     */
+    public function getLinkTaxonomy($objectId)
+    {
+        $taxonomy = self::$modelsManager->createBuilder()
+            ->columns("tr.term_taxonomy_id")
+            ->from(['tr' => 'ZPhal\Models\TermRelationships'])
+            ->leftJoin('ZPhal\Models\TermTaxonomy', 'tt.term_taxonomy_id = tr.term_taxonomy_id', "tt")
+            ->where("tr.object_id = :id:", ["id" => $objectId])
+            ->andWhere("tt.taxonomy = 'linkCategory'")
+            ->getQuery()
+            ->execute()
+            ->toArray();
+        return $taxonomy;
     }
 }

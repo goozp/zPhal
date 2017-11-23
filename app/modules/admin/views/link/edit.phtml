@@ -13,7 +13,7 @@
 <section class="content">
     <div class="row">
         <div class="col-md-12">
-            <form class="form-horizontal" action="<?= $this->url->get("/admin/link/save"); ?>" method="post">
+            <form class="form-horizontal" action="<?= $this->url->get(["for"=>"update-link", "id"=>$linkInfo['link_id']]); ?>" method="post">
                 <div class="box box-default box-solid">
                     <div class="box-header with-border">
                         <h3 class="box-title">编辑链接信息</h3>
@@ -53,7 +53,8 @@
                                             <?php foreach ($linkCategory as $cate){ ?>
                                                 <li id="link-category-<?= $cate['term_taxonomy_id'] ?>">
                                                     <label for="in-link-category-<?= $cate['term_taxonomy_id'] ?>">
-                                                        <input value="<?= $cate['term_taxonomy_id'] ?>" name="link_category[]" id="in-link-category-<?= $cate['term_taxonomy_id'] ?>" type="checkbox">
+                                                        <input value="<?= $cate['term_taxonomy_id'] ?>" name="link_category[]" id="in-link-category-<?= $cate['term_taxonomy_id'] ?>" type="checkbox"
+                                                        <?php if (in_array($cate['term_taxonomy_id'],$category)) echo 'checked' ?>>
                                                         <?= $cate['name'] ?>
                                                     </label>
                                                 </li>
@@ -126,7 +127,9 @@
                     </div>
 
                     <div class="box-footer  text-center">
-                        <button type="submit" class="btn btn-info">添加链接</button>
+                        <button type="submit" class="btn btn-info">确定修改</button>
+                        &nbsp;&nbsp;&nbsp;
+                        <button type="reset" class="btn btn-default">重置</button>
                     </div>
                 </div>
             </form>

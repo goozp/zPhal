@@ -359,11 +359,12 @@ $router->add('/admin/link/edit/{id:[0-9]+}',
         'id'         => 1,
     ]
 )->setName('edit-link');
-$router->add('/admin/link/update',
+$router->add('/admin/link/update/{id:[0-9]+}',
     [
         'module'     => 'admin',
         'controller' => 'link',
         'action'     => 'update',
+        'id'         => 1,
     ]
 )->setName('update-link');
 $router->add('/admin/link/delete/{id:[0-9]+}',
