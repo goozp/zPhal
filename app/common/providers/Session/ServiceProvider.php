@@ -3,7 +3,7 @@
 namespace ZPhal\Providers\Session;
 
 use ZPhal\Providers\AbstractServiceProvider;
-use Phalcon\Session\Adapter\Files as SessionAdapter;
+use Phalcon\Session\Adapter\Redis as SessionAdapter;
 
 /**
  * Class ServiceProvider
@@ -32,7 +32,16 @@ class ServiceProvider extends AbstractServiceProvider
         $this->di->setShared(
             $this->serviceName,
             function () {
-                $session = new SessionAdapter();
+                $session = new SessionAdapter([
+                    "uniqueId"   => "zphal",
+                    "host"       => "localhost",
+                    "port"       => 6379,
+                    // "auth"       => "foobared", redis密码
+                    "persistent" => false,
+                    "lifetime"   => 3600,
+                    "prefix"     => "zPhalSession",
+                    "index"      => 1,
+                ]);
                 $session->start();
 
                 return $session;
