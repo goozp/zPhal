@@ -3,7 +3,6 @@
 namespace ZPhal\Providers\Session;
 
 use ZPhal\Providers\AbstractServiceProvider;
-use Phalcon\Session\Adapter\Redis as SessionAdapter;
 
 /**
  * Class ServiceProvider
@@ -32,16 +31,19 @@ class ServiceProvider extends AbstractServiceProvider
         $this->di->setShared(
             $this->serviceName,
             function () {
-                $session = new SessionAdapter([
-                    "uniqueId"   => "zphal",
-                    "host"       => "localhost",
-                    "port"       => 6379,
-                    // "auth"       => "foobared", redis密码
-                    "persistent" => false,
-                    "lifetime"   => 3600,
-                    "prefix"     => "zPhalSession",
-                    "index"      => 1,
-                ]);
+                $config = container('config')->session;
+
+                $driver   = $config->drivers->{$config->default};
+                $adapter  = '\Phalcon\Session\Adapter\\' . $driver->adapter;
+                // 公共配置参数,将用于与adapter配置参数合并
+                $defaults = [
+                    'prefix'   => $config->prefix,
+                    'uniqueId' => $config->uniqueId,
+                    'lifetime' => $config->lifetime,
+                ];
+
+                /** @var \Phalcon\Session\AdapterInterface $session */
+                $session = new $adapter(array_merge($driver->toArray(), $defaults));
                 $session->start();
 
                 return $session;

@@ -99,3 +99,48 @@ if (!function_exists('environment')) {
         return container()->getEnvironment();
     }
 }
+
+if (!function_exists('app_path')) {
+    /**
+     * 获取应用路径
+     * Get the application path.
+     *
+     * @param  string $path
+     * @return string
+     */
+    function app_path($path = '')
+    {
+        //return dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+        return dirname(dirname(__DIR__)) . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+    }
+}
+
+if (!function_exists('cache_path')) {
+    /**
+     * 获取缓存路径
+     * Get the cache path.
+     *
+     * @param  string $path
+     * @return string
+     */
+    function cache_path($path = '')
+    {
+        //return app_path('cache') . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+        return dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . 'cache' . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+    }
+}
+
+if (!function_exists('config_path')) {
+    /**
+     * 获取配置路径
+     * Get the configuration path.
+     *
+     * @param  string $path
+     * @return string
+     */
+    function config_path($path = '')
+    {
+        //return app_path('config') . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+        return dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'config' . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+    }
+}
