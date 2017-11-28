@@ -2,7 +2,7 @@
 
 namespace ZPhal\Models;
 
-class Comments extends \Phalcon\Mvc\Model
+class Comments extends ModelBase
 {
 
     public $comment_id;
@@ -36,7 +36,7 @@ class Comments extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("zphaldb");
+        parent::initialize();
         $this->setSource("zp_comments");
     }
 
@@ -58,27 +58,4 @@ class Comments extends \Phalcon\Mvc\Model
         $this->comment_date = date('Y-m-d H:i:s', time());
         $this->comment_date_gmt = gmdate('Y-m-d H:i:s', time());
     }
-
-    /**
-     * Allows to query a set of records that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return ZpComments[]|ZpComments|\Phalcon\Mvc\Model\ResultSetInterface
-     */
-    public static function find($parameters = null)
-    {
-        return parent::find($parameters);
-    }
-
-    /**
-     * Allows to query the first record that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return ZpComments|\Phalcon\Mvc\Model\ResultInterface
-     */
-    public static function findFirst($parameters = null)
-    {
-        return parent::findFirst($parameters);
-    }
-
 }

@@ -21,6 +21,8 @@ return [
             ZPhal\Providers\Router\ServiceProvider::class, // 路由
             ZPhal\Providers\Session\ServiceProvider::class, // session
             ZPhal\Providers\Url\ServiceProvider::class, // Url
+            ZPhal\Providers\ViewCache\ServiceProvider::class, // viewCache(前台缓存,后台删除更新)
+            ZPhal\Providers\ModelsCache\ServiceProvider::class, // modelsCache
         ],
 
         /**

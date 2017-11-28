@@ -2,7 +2,6 @@
 
 namespace ZPhal\Models;
 
-use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Behavior\SoftDelete;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness as UniquenessValidator;;
@@ -10,7 +9,7 @@ use Phalcon\Validation\Validator\InclusionIn as InclusionValidator;
 use Phalcon\Validation\Validator\Email as EmailValidator;
 
 
-class Users extends Model
+class Users extends ModelBase
 {
     const DELETED = 1;
 
@@ -43,7 +42,7 @@ class Users extends Model
      */
     public function initialize()
     {
-        $this->setSchema("zphaldb");
+        parent::initialize();
         $this->setSource("zp_users");
 
         $this->hasMany(
@@ -135,27 +134,4 @@ class Users extends Model
             $this->user_registered = date('Y-m-d H:i:s', time());
         }
     }
-
-    /**
-     * Allows to query a set of records that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return ZpUsers[]|ZpUsers|\Phalcon\Mvc\Model\ResultSetInterface
-     */
-    public static function find($parameters = null)
-    {
-        return parent::find($parameters);
-    }
-
-    /**
-     * Allows to query the first record that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return ZpUsers|\Phalcon\Mvc\Model\ResultInterface
-     */
-    public static function findFirst($parameters = null)
-    {
-        return parent::findFirst($parameters);
-    }
-
 }

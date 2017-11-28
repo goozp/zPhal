@@ -2,7 +2,7 @@
 
 namespace ZPhal\Models;
 
-class Options extends \Phalcon\Mvc\Model
+class Options extends ModelBase
 {
 
     public $option_id;
@@ -18,7 +18,7 @@ class Options extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("zphaldb");
+        parent::initialize();
         $this->setSource("zp_options");
     }
 
@@ -31,27 +31,4 @@ class Options extends \Phalcon\Mvc\Model
     {
         return 'zp_options';
     }
-
-    /**
-     * Allows to query a set of records that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return ZpOptions[]|ZpOptions|\Phalcon\Mvc\Model\ResultSetInterface
-     */
-    public static function find($parameters = null)
-    {
-        return parent::find($parameters);
-    }
-
-    /**
-     * Allows to query the first record that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return ZpOptions|\Phalcon\Mvc\Model\ResultInterface
-     */
-    public static function findFirst($parameters = null)
-    {
-        return parent::findFirst($parameters);
-    }
-
 }

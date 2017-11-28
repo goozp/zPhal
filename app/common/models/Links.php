@@ -2,7 +2,7 @@
 
 namespace ZPhal\Models;
 
-class Links extends \Phalcon\Mvc\Model
+class Links extends ModelBase
 {
 
     public $link_id;
@@ -40,7 +40,7 @@ class Links extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("zphaldb");
+        parent::initialize();
         $this->setSource("zp_links");
     }
 
@@ -61,27 +61,4 @@ class Links extends \Phalcon\Mvc\Model
     {
         $this->link_updated = date('Y-m-d H:i:s', time());
     }
-
-    /**
-     * Allows to query a set of records that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return ZpLinks[]|ZpLinks|\Phalcon\Mvc\Model\ResultSetInterface
-     */
-    public static function find($parameters = null)
-    {
-        return parent::find($parameters);
-    }
-
-    /**
-     * Allows to query the first record that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return ZpLinks|\Phalcon\Mvc\Model\ResultInterface
-     */
-    public static function findFirst($parameters = null)
-    {
-        return parent::findFirst($parameters);
-    }
-
 }

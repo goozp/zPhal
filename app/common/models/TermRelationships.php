@@ -2,7 +2,7 @@
 
 namespace ZPhal\Models;
 
-class TermRelationships extends \Phalcon\Mvc\Model
+class TermRelationships extends ModelBase
 {
 
     public $object_id;
@@ -17,7 +17,7 @@ class TermRelationships extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("zphaldb");
+        parent::initialize();
         $this->setSource("zp_term_relationships");
 
         $this->belongsTo(
@@ -79,28 +79,4 @@ class TermRelationships extends \Phalcon\Mvc\Model
     {
         return 'zp_term_relationships';
     }
-
-
-    /**
-     * Allows to query a set of records that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return ZpTermRelationships[]|ZpTermRelationships|\Phalcon\Mvc\Model\ResultSetInterface
-     */
-    public static function find($parameters = null)
-    {
-        return parent::find($parameters);
-    }
-
-    /**
-     * Allows to query the first record that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return ZpTermRelationships|\Phalcon\Mvc\Model\ResultInterface
-     */
-    public static function findFirst($parameters = null)
-    {
-        return parent::findFirst($parameters);
-    }
-
 }

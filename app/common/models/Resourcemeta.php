@@ -2,7 +2,7 @@
 
 namespace ZPhal\Models;
 
-class Resourcemeta extends \Phalcon\Mvc\Model
+class Resourcemeta extends ModelBase
 {
 
     public $meta_id;
@@ -18,7 +18,7 @@ class Resourcemeta extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("zphaldb");
+        parent::initialize();
         $this->setSource("zp_resourcemeta");
 
         $this->belongsTo(
@@ -37,27 +37,4 @@ class Resourcemeta extends \Phalcon\Mvc\Model
     {
         return 'zp_resourcemeta';
     }
-
-    /**
-     * Allows to query a set of records that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return ZpResourcemeta[]|ZpResourcemeta|\Phalcon\Mvc\Model\ResultSetInterface
-     */
-    public static function find($parameters = null)
-    {
-        return parent::find($parameters);
-    }
-
-    /**
-     * Allows to query the first record that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return ZpResourcemeta|\Phalcon\Mvc\Model\ResultInterface
-     */
-    public static function findFirst($parameters = null)
-    {
-        return parent::findFirst($parameters);
-    }
-
 }

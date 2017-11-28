@@ -5,7 +5,7 @@ namespace ZPhal\Models;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness as UniquenessValidator;;
 
-class Subjects extends \Phalcon\Mvc\Model
+class Subjects extends ModelBase
 {
     public $subject_id;
 
@@ -28,7 +28,7 @@ class Subjects extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("zphaldb");
+        parent::initialize();
         $this->setSource("zp_subjects");
 
         $this->hasMany(
@@ -136,27 +136,5 @@ class Subjects extends \Phalcon\Mvc\Model
         if ($update->parent>0){
             $this->updateDeleteStatus($update->parent);
         }
-    }
-
-    /**
-     * Allows to query a set of records that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return ZpTermmeta[]|ZpTermmeta|\Phalcon\Mvc\Model\ResultSetInterface
-     */
-    public static function find($parameters = null)
-    {
-        return parent::find($parameters);
-    }
-
-    /**
-     * Allows to query the first record that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return ZpTermmeta|\Phalcon\Mvc\Model\ResultInterface
-     */
-    public static function findFirst($parameters = null)
-    {
-        return parent::findFirst($parameters);
     }
 }
