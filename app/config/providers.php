@@ -23,6 +23,7 @@ return [
             ZPhal\Providers\Url\ServiceProvider::class, // Url
             ZPhal\Providers\ViewCache\ServiceProvider::class, // viewCache(前台缓存,后台删除更新)
             ZPhal\Providers\ModelsCache\ServiceProvider::class, // modelsCache
+            ZPhal\Providers\Redis\ServiceProvider::class, // redis
         ],
 
         /**
