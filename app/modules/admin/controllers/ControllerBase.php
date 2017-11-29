@@ -2,6 +2,7 @@
 namespace ZPhal\Modules\Admin\Controllers;
 
 use Phalcon\Mvc\Controller;
+use ZPhal\Library\Option\Option;
 
 class ControllerBase extends Controller
 {
