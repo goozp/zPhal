@@ -2,8 +2,6 @@
 
 namespace ZPhal\Modules\Frontend\Controllers;
 
-use ZPhal\Library\Options\Redis;
-
 class IndexController extends ControllerBase
 {
 
@@ -16,10 +14,8 @@ class IndexController extends ControllerBase
 
     public function indexAction()
     {
-        $options = Redis::getInstance();
-
-        $this->tag->setTitle($options->get('blogdescription'));
-        $this->tag->prependTitle($options->get('blogname') . " - ");
+        $this->tag->setTitle($this->option->get('blogdescription'));
+        $this->tag->prependTitle($this->option->get('blogname') . " - ");
     }
 
 }

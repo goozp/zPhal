@@ -2,19 +2,16 @@
 namespace ZPhal\Modules\Admin\Controllers;
 
 use Phalcon\Mvc\Controller;
-use ZPhal\Library\Options\Redis;
 
 class ControllerBase extends Controller
 {
     public function initialize()
     {
-        $options = Redis::getInstance()->query();
-
         $this->checkLogin();
         $this->initValues();
         $this->staticResource();
 
-        $this->tag->setTitle($options['blogname'] . " | ZPhal");
+        $this->tag->setTitle($this->option->get('blogname') . " | ZPhal");
     }
 
     /**

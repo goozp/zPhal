@@ -24,6 +24,7 @@ return [
             ZPhal\Providers\ViewCache\ServiceProvider::class, // viewCache(前台缓存,后台删除更新)
             ZPhal\Providers\ModelsCache\ServiceProvider::class, // modelsCache
             ZPhal\Providers\Redis\ServiceProvider::class, // redis
+            ZPhal\Providers\Option\ServiceProvider::class, // option读取配置参数
         ],
 
         /**
