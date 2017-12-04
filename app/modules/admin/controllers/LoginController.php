@@ -4,13 +4,15 @@ namespace ZPhal\Modules\Admin\Controllers;
 
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Controller;
+use ZPhal\Library\Options\Redis;
 
 class LoginController extends Controller
 {
     public function initialize()
     {
-        // TODO 读取配置获取网站名称
-        $this->tag->setTitle("ZPhal后台管理");
+        $options = Redis::getInstance()->query();
+
+        $this->tag->setTitle($options['blogname'] . " | ZPhal");
     }
 
     /**

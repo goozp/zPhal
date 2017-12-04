@@ -2,18 +2,19 @@
 namespace ZPhal\Modules\Admin\Controllers;
 
 use Phalcon\Mvc\Controller;
-use ZPhal\Library\Option\Option;
+use ZPhal\Library\Options\Redis;
 
 class ControllerBase extends Controller
 {
     public function initialize()
     {
+        $options = Redis::getInstance()->query();
+
         $this->checkLogin();
         $this->initValues();
         $this->staticResource();
 
-        // TODO 读取配置获取网站名称
-        $this->tag->setTitle("ZPhal后台管理");
+        $this->tag->setTitle($options['blogname'] . " | ZPhal");
     }
 
     /**

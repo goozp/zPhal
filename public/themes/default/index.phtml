@@ -7,7 +7,9 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>瓜子皮 - Goozp's Blog</title>
+    <!-- title -->
+    <?php echo $this->tag->getTitle(); ?>
+
     <?php
     /* HTML 头部资源 */
     echo $this->tag->stylesheetLink("themes/default/public/library/bootstrap/css/bootstrap.min.css"); // Bootstrap
