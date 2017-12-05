@@ -15,13 +15,13 @@
 <section class="content">
 
         <div class="box box-default  box-solid">
-            <form class="form-horizontal">
+            <form class="form-horizontal" action="<?= $this->url->get("admin/setting/saveGeneral"); ?>" method="post">
                 <div class="box-body">
                     <div class="form-group">
                         <label for="site_name" class="col-sm-2 control-label">站点标题</label>
 
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="site_name" placeholder="输入站点标题">
+                            <input type="text" class="form-control" name="blogname" placeholder="输入站点标题" value="<?= $blogname ?>">
                             <span class="help-block">即站点的名称</span>
                         </div>
                     </div>
@@ -30,8 +30,8 @@
                         <label for="" class="col-sm-2 control-label">副标题</label>
 
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="" placeholder="副标题">
-                            <span class="help-block">用简洁的文字描述本站点。</span>
+                            <input type="text" class="form-control" name="blogdescription" placeholder="副标题" value="<?= $blogdescription ?>">
+                            <span class="help-block">用简洁的文字描述本站点，用于站点副标题。</span>
                         </div>
                     </div>
 
@@ -39,7 +39,7 @@
                         <label for="" class="col-sm-2 control-label">站点地址（URL）</label>
 
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="">
+                            <input type="text" class="form-control" name="siteurl" placeholder="输入站点的地址" value="<?= $siteurl ?>" >
                             <span class="help-block">如：https://www.zphal.com</span>
                         </div>
                     </div>
@@ -48,16 +48,7 @@
                         <label for="" class="col-sm-2 control-label">电子邮件地址</label>
 
                         <div class="col-sm-4">
-                            <input type="email" class="form-control" id="" placeholder="">
-                            <span class="help-block">此地址被用作管理用途，如新用户通知。</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="" class="col-sm-2 control-label">电子邮件地址</label>
-
-                        <div class="col-sm-4">
-                            <input type="email" class="form-control" id="" placeholder="">
+                            <input type="email" class="form-control" name="admin_email" placeholder="输入电子邮件地址" value="<?= $admin_email ?>">
                             <span class="help-block">此地址被用作管理用途，如新用户通知。</span>
                         </div>
                     </div>
@@ -67,8 +58,14 @@
 
                         <div class="col-sm-4">
                             <div class="checkbox">
-                                <label><input type="checkbox">是</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label><input type="checkbox">否</label>
+                                <label>
+                                    <input name="users_can_register" type="radio" value="1" <?php if ($users_can_register == 1) echo 'checked' ?>>
+                                    是
+                                </label>
+                                <label>
+                                    <input name="users_can_register" type="radio" value="0" <?php if ($users_can_register == 0) echo 'checked' ?>>
+                                    否
+                                </label>
                                 <span class="help-block">是否开放站点的注册功能。</span>
                             </div>
                         </div>
@@ -87,8 +84,8 @@
                         <label class="col-sm-2 control-label">时区</label>
 
                         <div class="col-sm-2">
-                            <select class="form-control" name="displayName">
-                                <option value="" >上海</option>
+                            <select class="form-control" name="timezone_string">
+                                <option value="Asia/Shanghai" <?php if($timezone_string == "Asia/Shanghai") echo 'selected' ?> >亚洲/上海</option>
                             </select>
                             <span class="help-block">选择与您在同一时区的城市。</span>
                         </div>

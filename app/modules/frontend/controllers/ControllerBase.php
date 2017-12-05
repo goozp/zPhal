@@ -5,8 +5,15 @@ use Phalcon\Mvc\Controller;
 
 class ControllerBase extends Controller
 {
-    public function initialize()
+    public function onConstruct()
     {
 
+    }
+
+    public function initialize()
+    {
+        if ($timezone = $this->option->get('timezone_string')){
+            date_default_timezone_set($timezone);
+        }
     }
 }

@@ -14,15 +14,15 @@
 <!-- 主内容 -->
 <section class="content">
     <div class="box box-default  box-solid">
-        <form class="form-horizontal">
+        <form class="form-horizontal" action="<?= $this->url->get("admin/setting/saveDiscuss"); ?>" method="post">
             <div class="box-body">
                 <div class="form-group">
                     <label for="" class="col-sm-2 control-label">是否开启评论</label>
 
                     <div class="col-sm-4">
                         <div class="checkbox">
-                            <label><input type="checkbox">文章</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="checkbox">页面</label>
+                            <label><input type="checkbox" name="post_comment_status" value="1" <?php if($post_comment_status == 'open') echo 'checked' ?>>文章</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="checkbox" name="page_comment_status" value="1" <?php if($page_comment_status == 'open') echo 'checked' ?>>页面</label>
                             <span class="help-block">开启评论功能让用户进行评论。</span>
                         </div>
                     </div>
@@ -35,32 +35,32 @@
                         <div class="row">
                             <div class="checkbox">
                                 <div class="col-sm-12">
-                                    <label><input type="checkbox">用户必须注册并登录才可以发表评论</label>
+                                    <label><input name="comment_need_register" value="1" type="checkbox" <?php if ($comment_need_register == 1) echo 'checked' ?>>用户必须注册并登录才可以发表评论</label>
                                 </div>
                                 <div class="col-sm-12">
                                     <label>
-                                        <input type="checkbox">分页显示评论，
+                                        <input name="show_comment_page" value="1" type="checkbox" <?php if ($show_comment_page == 1) echo 'checked' ?>>分页显示评论，
                                     </label>
                                     每页显示
-                                    <select name="">
-                                        <option value="" >5</option>
-                                        <option value="" >10</option>
-                                        <option value="" >15</option>
-                                        <option value="" >20</option>
-                                        <option value="" >25</option>
+                                    <select name="comment_per_page">
+                                        <option value="5" <?php if ($comment_per_page == 5) echo 'selected' ?>>5</option>
+                                        <option value="10" <?php if ($comment_per_page == 10) echo 'selected' ?>>10</option>
+                                        <option value="15" <?php if ($comment_per_page == 15) echo 'selected' ?>>15</option>
+                                        <option value="20" <?php if ($comment_per_page == 20) echo 'selected' ?>>20</option>
+                                        <option value="25" <?php if ($comment_per_page == 25) echo 'selected' ?>>25</option>
                                     </select>
                                     条评论，默认显示
-                                    <select name="">
-                                        <option value="" >最后</option>
-                                        <option value="" >最前</option>
+                                    <select name="comment_page_first">
+                                        <option value="last" <?php if ($comment_page_first == 'last') echo 'selected' ?> >最后</option>
+                                        <option value="front" <?php if ($comment_page_first == 'front') echo 'selected' ?> >最前</option>
                                     </select>
                                     一页
                                 </div>
                                 <div class="col-sm-12">
                                     在每个页面顶部显示
-                                    <select name="">
-                                        <option value="" >旧的</option>
-                                        <option value="" >新的</option>
+                                    <select name="comment_page_top">
+                                        <option value="old" <?php if ($comment_page_top == 'old') echo 'selected' ?> >旧的</option>
+                                        <option value="new" <?php if ($comment_page_top == 'new') echo 'selected' ?> >新的</option>
                                     </select>
                                     评论
                                 </div>
@@ -74,11 +74,10 @@
                     <label for="" class="col-sm-2 control-label">在评论显示之前</label>
 
                     <div class="col-sm-4">
-                        <div class="checkbox">
-                            <label><input type="checkbox">评论必须经人工批准</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="checkbox">评论者先前须有评论通过了审核</label>
-                            <span class="help-block">评论展示条件。</span>
-                        </div>
+                        <label><input name="comment_before_show" value="must_approve" type="radio" <?php if ($comment_before_show == 'must_approve') echo 'checked' ?>>评论必须经人工批准</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label><input name="comment_before_show" value="approve_before"  type="radio" <?php if ($comment_before_show == 'approve_before') echo 'checked' ?>>评论者先前须有评论通过了审核</label>
+                        <label><input name="comment_before_show" value="directly"  type="radio" <?php if ($comment_before_show == 'directly') echo 'checked' ?>>直接显示</label>
+                        <span class="help-block">评论展示条件。</span>
                     </div>
                 </div>
 
@@ -91,7 +90,7 @@
 
                     <div class="col-sm-4">
                         <div class="checkbox">
-                            <label><input type="checkbox">显示头像</label>
+                            <label><input name="show_avatar" type="checkbox" value="1" <?php if ($show_avatar == 1) echo 'checked' ?>>显示头像</label>
                         </div>
                     </div>
                 </div>

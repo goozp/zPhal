@@ -429,11 +429,25 @@ $router->add('/admin/setting/general',
         'action'     => 'general',
     ]
 );
+$router->add('/admin/setting/saveGeneral',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'saveGeneral',
+    ]
+);
 $router->add('/admin/setting/writing',
     [
         'module'     => 'admin',
         'controller' => 'setting',
         'action'     => 'writing',
+    ]
+);
+$router->add('/admin/setting/saveWriting',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'saveWriting',
     ]
 );
 $router->add('/admin/setting/reading',
@@ -443,11 +457,25 @@ $router->add('/admin/setting/reading',
         'action'     => 'reading',
     ]
 );
+$router->add('/admin/setting/saveReading',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'saveReading',
+    ]
+);
 $router->add('/admin/setting/discuss',
     [
         'module'     => 'admin',
         'controller' => 'setting',
         'action'     => 'discuss',
+    ]
+);
+$router->add('/admin/setting/saveDiscuss',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'saveDiscuss',
     ]
 );
 $router->add('/admin/setting/media',

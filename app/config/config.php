@@ -65,7 +65,7 @@ return [
             ],
         ],
 
-        'prefix' => env('CACHE_PREFIX', 'zphal_cache_'),
+        'prefix' => env('CACHE_PREFIX', '_zphal_cache_'),
 
         'lifetime' => env('CACHE_LIFETIME', 86400),
     ],
@@ -87,7 +87,7 @@ return [
             ],
         ],
 
-        'prefix'   => env('SESSION_PREFIX', 'zphal_session_'),
+        'prefix'   => env('SESSION_PREFIX', '_zphal_session_'),
 
         'uniqueId' => env('SESSION_UNIQUE_ID', 'zphalcms_'),
 

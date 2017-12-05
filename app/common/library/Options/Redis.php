@@ -25,7 +25,7 @@ class Redis extends Component{
     /**
      * @var string redisKey
      */
-    public static $optionKey = 'zphal_option';
+    public static $optionKey = '_zphal_option';
 
     /**
      * Redis constructor.

@@ -5,12 +5,19 @@ use Phalcon\Mvc\Controller;
 
 class ControllerBase extends Controller
 {
-    public function initialize()
+    public function onConstruct()
     {
         $this->checkLogin();
         $this->initValues();
-        $this->staticResource();
+    }
 
+    public function initialize()
+    {
+        if ($timezone = $this->option->get('timezone_string')){
+            date_default_timezone_set($timezone);
+        }
+
+        $this->staticResource();
         $this->tag->setTitle($this->option->get('blogname') . " | ZPhal");
     }
 
