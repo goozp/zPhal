@@ -7,6 +7,7 @@ class ErrorController extends ControllerBase
 {
     public function route404Action()
     {
+        $this->tag->prependTitle("404 - ");
         echo '404 not found';
     }
 

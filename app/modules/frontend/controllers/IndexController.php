@@ -14,8 +14,8 @@ class IndexController extends ControllerBase
 
     public function indexAction()
     {
-        $this->tag->setTitle($this->option->get('blogdescription'));
         $this->tag->prependTitle($this->option->get('blogname') . " - ");
+        $this->tag->setTitle($this->option->get('blogdescription'));
     }
 
 }

@@ -158,7 +158,7 @@ class SettingController extends ControllerBase
             ]
         );
     }
-    
+
     /**
      * 保存讨论设置
      * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
