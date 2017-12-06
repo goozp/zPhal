@@ -6,7 +6,7 @@ body {
   background-color: #F4F4F4;
 }
 body {
-  font-size: 16px;
+  font-size: 14px;
   font-family: "Lucida Grande", Lucida Sans Unicode, Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -25,18 +25,14 @@ a:hover {
 }
 
 /**
- * top
+ * header
  */
-.top{
-  padding: 0;
-  background-color: #ffffff;
-  border-top: solid 4px #000000;
-  border-bottom: solid 1px #DDDDDD;
-}
 .author{
-  width: 100%;
+  font-size: 16px;
+  background-color: #ffffff;
   padding-top: 10px;
   padding-bottom: 10px;
+  border-top: solid 4px #000000;
 }
 .author-word{
   padding: 20px 0 0 0;
@@ -44,11 +40,21 @@ a:hover {
 .author-name, .author-desc{
   margin-top: 5px;
 }
+
+.navbar{
+  padding: 5px;
+  background-color: #ffffff;
+  border-top: solid 1px #DDDDDD;
+  border-bottom: solid 1px #DDDDDD;
+}
 .nav-item{
   margin-right: 15px;
 }
-.navbar{
-  border-top: solid 1px #DDDDDD;
+.navbar-toggler{
+  height: 30px;
+}
+.navbar-toggler-icon{
+  height: 100%;
 }
 
 /**
@@ -88,14 +94,6 @@ a:hover {
 }
 
 /**
- * sidebar
- */
-.right-sidebar{
-  padding: 10px;
-}
-
-
-/**
  * footer
  */
 .footer{
@@ -132,6 +130,33 @@ a:hover {
     padding-right: 5px;
     padding-left: 15px;
   }
+
+  /**
+   * sidebar
+   */
+  .right-sidebar{
+    padding: 10px;
+  }
+
+  .sidebar, .widget{
+    margin-bottom: 10px;
+  }
+
+  @supports ((position: -webkit-sticky) or (position: sticky)) {
+    .sticky-sidebar{
+      position: -webkit-sticky;
+      position: sticky;
+      top: 60px;
+      z-index: 1010;
+    }
+  }
+
+  .widget{
+    background-color: #ffffff;
+    padding: 5px;
+    border: solid 1px #DDDDDD;
+  }
+
 }
 
 /*Large devices (desktops, 992px and up)*/

@@ -19,6 +19,7 @@ class Module implements ModuleDefinitionInterface
         $loader->registerNamespaces([
             'ZPhal\Modules\Frontend\Controllers' => __DIR__ . '/controllers/',
             'ZPhal\Modules\Frontend\Models' => __DIR__ . '/models/',
+            'ZPhal\Modules\Frontend\Libraries' => __DIR__ . '/libraries/',
             'ZPhal\Modules\Frontend\Plugins' => __DIR__ . '/plugins/',
             'ZPhal\Modules\Frontend\Providers' => __DIR__ . '/providers/',
         ]);
