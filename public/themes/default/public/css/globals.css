@@ -35,10 +35,7 @@ a:hover {
   border-top: solid 4px #000000;
 }
 .author-word{
-  padding: 20px 0 0 0;
-}
-.author-name, .author-desc{
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 .navbar{

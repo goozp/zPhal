@@ -1,20 +1,23 @@
-<div class="author row justify-content-center">
-    <div class="author-img col-xs-12 col-md-4 col-lg-2">
-        <?php echo $this->tag->image([
-            "themes/default/public/images/self.png",
-            "class"=>"img-thumbnail rounded-circle mx-auto d-block img-fluid ",
-            "alt" => "img",
-            "height" => 120,
-            "width" => 120
-        ]);?>
+<div class="author col-12">
+    <div class="row justify-content-center">
+        <div class="author-img col-xs-12 col-md-4 col-lg-2">
+            <?php echo $this->tag->image([
+                "themes/default/public/images/self.png",
+                "class"=>"img-thumbnail rounded-circle mx-auto d-block img-fluid ",
+                "alt" => "img",
+                "height" => 120,
+                "width" => 120
+            ]);?>
+        </div>
+        <div class="author-word col-xs-12 col-md-4 col-lg-2">
+            <h4 class="author-name col-xs-12 text-center text-md-left"><strong><?= $blogname; ?></strong></h4>
+            <p class="author-desc col-xs-12 text-center text-md-left"><?= $blogdescription; ?></p>
+        </div>
     </div>
-    <div class="author-word col-xs-12 col-md-4 col-lg-2">
-        <h4 class="author-name col-xs-12 text-center text-md-left"><strong><?= $blogname; ?></strong></h4>
-        <p class="author-desc col-xs-12 text-center text-md-left"><?= $blogdescription; ?></p>
-    </div>
+
 </div>
 
-<nav class="navbar navbar-light navbar-expand-md sticky-top">
+<nav class="navbar navbar-light navbar-expand-md col-12 sticky-top">
     <div class="container">
         <!--<a class="navbar-brand" href="#">Navbar</a>-->
         <div class="collapse navbar-collapse col-md-10" id="navbarNavDropdown">
