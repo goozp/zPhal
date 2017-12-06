@@ -24,5 +24,8 @@ class Widget
 
     }
 
+    public function getCommentList()
+    {
 
+    }
 }
