@@ -21,6 +21,7 @@ a{
 }
 a:focus,
 a:hover {
+  text-decoration: none;
   color: #FF5722;
 }
 
@@ -151,9 +152,53 @@ a:hover {
   .widget{
     background-color: #ffffff;
     padding: 5px;
-    border: solid 1px #DDDDDD;
+    border: 1px solid #DDDDDD;
+  }
+  .widget a{
+    color: #000000;
+  }
+  .widget a:hover{
+    color: #2196F3;
+  }
+  .widget h4{
+    margin: -5px 0 2px -6px;
+    padding: 5px 0 0 10px;
+    color: #9E9E9E;
+    font-size: 16px;
+    border-left: 3px solid #9E9E9E;
   }
 
+  .widget-category a{
+    display: block;
+    float: left;
+    padding: 0 4px;
+    margin-right: 5px;
+    margin-top: 5px;
+    font-size: 12px;
+    border: 1px solid #9E9E9E;
+    color: #000000;
+    -webkit-transition: all 0.35s ease-in-out;
+    -moz-transition: all 0.35s ease-in-out;
+    transition: all 0.35s ease-in-out;
+  }
+  .widget-category a:hover{
+    -webkit-transition: all 0.35s ease-in-out;
+    -moz-transition: all 0.35s ease-in-out;
+    transition: all 0.35s ease-in-out;
+  }
+
+  .category-list .category-item a:hover{
+    background-color: #6C757D;
+    color: #ffffff;
+  }
+  .category-sub-list .category-item a:hover{
+    background-color: #9E9E9E;
+    color: #ffffff;
+  }
+
+  .news-item p{
+    margin: 5px 0;
+  }
 }
 
 /*Large devices (desktops, 992px and up)*/
