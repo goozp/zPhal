@@ -13,6 +13,7 @@
 
     <?php
     /* HTML 头部资源 */
+    $this->assets->outputCss(); // 加载zphal默认加载的css
     echo $this->tag->stylesheetLink("themes/default/public/library/bootstrap/css/bootstrap.min.css"); // Bootstrap
     echo $this->tag->stylesheetLink("themes/default/public/library/font-awesome-4.7.0/css/font-awesome.min.css"); // Bootstrap
     echo $this->tag->stylesheetLink("themes/default/public/css/globals.css");
@@ -40,6 +41,7 @@
         echo $this->tag->javascriptInclude("themes/default/public/js/vendor/popper.min.js");
         echo $this->tag->javascriptInclude("themes/default/public/library/bootstrap/js/bootstrap.min.js");
         echo $this->tag->javascriptInclude("themes/default/public/js/ie10-viewport-bug-workaround.js");
+        $this->assets->outputJs(); // 加载zphal默认加载的js
     ?>
 </body>
 </html>

@@ -199,6 +199,12 @@ a:hover {
   .news-item p{
     margin: 5px 0;
   }
+
+  .widget-toc .markdown-toc-list{
+    padding: 5px 0 0 20px;
+    overflow:auto;
+    height: 88vh;
+  }
 }
 
 /*Large devices (desktops, 992px and up)*/
