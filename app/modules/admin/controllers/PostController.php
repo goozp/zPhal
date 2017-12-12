@@ -146,7 +146,8 @@ class PostController extends ControllerBase
             // 获取表单数据
             $postId = $this->request->getPost('post_id');
             $title = $this->request->getPost('title', 'trim');
-            $mr_content = $this->request->getPost('mr_content');
+            $mr_content = $this->request->getPost('editormd-markdown-doc');
+            $html_content = $this->request->getPost('editormd-html-code');
             $cover_image = $this->request->getPost('cover_image');
             // 以下需要判断
             $description = $this->request->getPost('description', ['string', 'trim']);
@@ -167,6 +168,7 @@ class PostController extends ControllerBase
 
             $post->post_author = $this->getUserId();
             $post->post_content = $mr_content;
+            $post->post_html_content = $html_content;
             $post->post_title = $title ? $title : '无题';
             $post->comment_status = $ifComment == 'yes' ? $post::COMMENT_OPEN : $post::COMMENT_CLOSE;
             $post->post_parent = 0;
@@ -364,7 +366,8 @@ class PostController extends ControllerBase
             // 获取表单数据
             $postId = $this->request->getPost('post_id');
             $title = $this->request->getPost('title', 'trim');
-            $mr_content = $this->request->getPost('mr_content');
+            $mr_content = $this->request->getPost('editormd-markdown-doc');
+            $html_content = $this->request->getPost('editormd-html-code');
             $cover_image = $this->request->getPost('cover_image');
             // 以下需要判断
             $description = $this->request->getPost('description', ['string', 'trim']);
@@ -381,6 +384,7 @@ class PostController extends ControllerBase
 
             $post = Posts::findFirst($postId);
             $post->post_content = $mr_content;
+            $post->post_html_content = $html_content;
             $post->post_title = $title ? $title : '无题';
             $post->comment_status = $ifComment == 'yes' ? $post::COMMENT_OPEN : $post::COMMENT_CLOSE;
             $post->cover_picture = $cover_image;
@@ -758,6 +762,7 @@ class PostController extends ControllerBase
     {
         if ($this->request->isPost()) {
             $markdownWord = $this->request->getPost('markdownWord');
+            $htmlWord = $this->request->getPost('htmlWord');
             $title = $this->request->getPost('title', 'trim');
             $postId = $this->request->getPost('postId', 'int', 0);
 
@@ -766,6 +771,7 @@ class PostController extends ControllerBase
                 $post = new Posts();
                 $post->post_author = $this->getUserId();
                 $post->post_content = $markdownWord;
+                $post->post_html_content = $htmlWord;
                 $post->post_title = $title ? $title : '无题';
                 $post->comment_status = $post::COMMENT_OPEN;
                 $post->post_parent = 0;

@@ -6,5 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'TOC\\' => array($vendorDir . '/caseyamcl/toc/src', $vendorDir . '/caseyamcl/toc/tests'),
+    'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
+    'Knp\\Menu\\' => array($vendorDir . '/knplabs/knp-menu/src/Knp/Menu'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
+    'Cocur\\Slugify\\' => array($vendorDir . '/cocur/slugify/src'),
 );

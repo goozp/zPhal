@@ -12,16 +12,49 @@ class ComposerStaticInit64ed87fc396ee7c86e680a4984a402fb
     );
 
     public static $prefixLengthsPsr4 = array (
+        'T' => 
+        array (
+            'TOC\\' => 4,
+        ),
+        'M' => 
+        array (
+            'Masterminds\\' => 12,
+        ),
+        'K' => 
+        array (
+            'Knp\\Menu\\' => 9,
+        ),
         'D' => 
         array (
             'Dotenv\\' => 7,
         ),
+        'C' => 
+        array (
+            'Cocur\\Slugify\\' => 14,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'TOC\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/caseyamcl/toc/src',
+            1 => __DIR__ . '/..' . '/caseyamcl/toc/tests',
+        ),
+        'Masterminds\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/masterminds/html5/src',
+        ),
+        'Knp\\Menu\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/knplabs/knp-menu/src/Knp/Menu',
+        ),
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+        'Cocur\\Slugify\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/cocur/slugify/src',
         ),
     );
 

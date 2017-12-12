@@ -15,6 +15,8 @@ class Posts extends ModelBase
 
     public $post_content;
 
+    public $post_html_content;
+
     public $post_title;
 
     public $post_status;

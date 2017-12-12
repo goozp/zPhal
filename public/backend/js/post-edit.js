@@ -7,7 +7,10 @@ $(function () {
         width: "100%",
         height: 640,
         syncScrolling: "single",
+        //toc : false,
         path: "/backend/plugins/editor.md/lib/",
+        saveHTMLToTextarea : true,
+        tex : true, // 开启科学公式TeX语言支持
         onload: function () {
             // 加载成功, 编辑状态下只有草稿才执行定时器自动保存草稿
             if (now_status == 'draft') {
@@ -241,6 +244,7 @@ function appendZero(obj) {
  */
 function autoDraft() {
     var markdownWord = Editormd.getMarkdown();
+    var htmlWord = Editormd.getHTML();
     var title = $("#title").val();
     var postId = $("#post_id").val();
 
@@ -248,7 +252,7 @@ function autoDraft() {
         var autoDraftUrl = $("#ajaxUri").val() + 'admin/post/autodraft';
         $.post(
             autoDraftUrl,
-            {markdownWord: markdownWord, title: title, postId: postId},
+            {markdownWord: markdownWord, htmlWord: htmlWord, title: title, postId: postId},
             function (result) {
                 res = JSON.parse(result);
                 if (res.status == 'success') {

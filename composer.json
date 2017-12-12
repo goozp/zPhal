@@ -23,7 +23,8 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "ext-phalcon": "~3.0",
-        "vlucas/phpdotenv": "^2.4"
+        "vlucas/phpdotenv": "^2.4",
+        "caseyamcl/toc": "~1.0"
     },
     "autoload": {
         "files": [
