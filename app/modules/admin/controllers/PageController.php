@@ -105,7 +105,8 @@ class PageController extends ControllerBase
             // 获取表单数据
             $postId = $this->request->getPost('post_id');
             $title = $this->request->getPost('title', 'trim');
-            $mr_content = $this->request->getPost('mr_content');
+            $mr_content = $this->request->getPost('editormd-markdown-doc');
+            $html_content = $this->request->getPost('editormd-html-code');
             $description = $this->request->getPost('description', ['string', 'trim']);
             $publishDate = $this->request->getPost('publishDate');
             $ifPublic = $this->request->getPost('ifPublic'); // TODO
@@ -123,6 +124,7 @@ class PageController extends ControllerBase
 
             $post->post_author = $this->getUserId();
             $post->post_content = $mr_content;
+            $post->post_html_content = $html_content;
             $post->post_title = $title ? $title : '无题';
             $post->comment_status = $ifComment == 'yes' ? $post::COMMENT_OPEN : $post::COMMENT_CLOSE;
             $post->post_parent = $parent;
@@ -203,6 +205,7 @@ class PageController extends ControllerBase
     {
         if ($this->request->isPost()) {
             $markdownWord = $this->request->getPost('markdownWord');
+            $htmlWord = $this->request->getPost('htmlWord');
             $title = $this->request->getPost('title', 'trim');
             $postId = $this->request->getPost('postId', 'int', 0);
             $slugName = $this->request->getPost('slugName', 'trim', '');
@@ -212,6 +215,7 @@ class PageController extends ControllerBase
                 $post = new Posts();
                 $post->post_author = $this->getUserId();
                 $post->post_content = $markdownWord;
+                $post->post_html_content = $htmlWord;
                 $post->post_title = $title ? $title : '无题';
                 $post->comment_status = $post::COMMENT_OPEN;
                 $post->post_parent = 0;
@@ -248,6 +252,7 @@ class PageController extends ControllerBase
 
                 if ($post) {
                     $post->post_content = $markdownWord;
+                    $post->post_html_content = $htmlWord;
                     $post->post_title = $title ? $title : '无题';
                     $post->post_modified = date('Y-m-d H:i:s', time());
                     $post->post_modified_gmt = gmdate('Y-m-d H:i:s', time());
@@ -369,7 +374,8 @@ class PageController extends ControllerBase
             // 获取表单数据
             $postId = $this->request->getPost('post_id');
             $title = $this->request->getPost('title', 'trim');
-            $mr_content = $this->request->getPost('mr_content');
+            $mr_content = $this->request->getPost('editormd-markdown-doc');
+            $html_content = $this->request->getPost('editormd-html-code');
             $description = $this->request->getPost('description', ['string', 'trim']);
             $publishDate = $this->request->getPost('publishDate');
             $ifPublic = $this->request->getPost('ifPublic'); // TODO
@@ -383,6 +389,7 @@ class PageController extends ControllerBase
 
             $post = Posts::findFirst($postId);
             $post->post_content = $mr_content;
+            $post->post_html_content = $html_content;
             $post->post_title = $title ? $title : '无题';
             $post->comment_status = $ifComment == 'yes' ? $post::COMMENT_OPEN : $post::COMMENT_CLOSE;
             $post->post_parent = $parent;

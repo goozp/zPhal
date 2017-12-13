@@ -8,6 +8,7 @@ $(function () {
         height: 640,
         syncScrolling: "single",
         path: "/backend/plugins/editor.md/lib/",
+        saveHTMLToTextarea : true,
         onload: function () {
             // 加载成功, 编辑状态下只有草稿才执行定时器自动保存草稿
             if (now_status == 'draft') {
@@ -178,6 +179,7 @@ function appendZero(obj) {
  */
 function autoDraft() {
     var markdownWord = Editormd.getMarkdown();
+    var htmlWord = Editormd.getHTML();
     var title = $("#title").val();
     var postId = $("#post_id").val();
     var slugName = $("#slugName").val();
@@ -186,7 +188,7 @@ function autoDraft() {
         var autoDraftUrl = $("#ajaxUri").val() + 'admin/page/autodraft';
         $.post(
             autoDraftUrl,
-            {markdownWord: markdownWord, title: title, postId: postId, slugName: slugName},
+            {markdownWord: markdownWord, htmlWord: htmlWord, title: title, postId: postId, slugName: slugName},
             function (result) {
                 res = JSON.parse(result);
                 if (res.status == 'success') {
