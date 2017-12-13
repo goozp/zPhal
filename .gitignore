@@ -1,7 +1,6 @@
 .idea
 .phalcon
 .env
-/vendor/
 /public/uploads/*
 /public/robots.txt
 /public/sitemap.xml

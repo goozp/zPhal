@@ -111,6 +111,37 @@ a:hover {
   color: #2196F3;
 }
 
+/**
+ * post
+ */
+.main-contain{
+  margin: 0;
+  padding: 0;
+}
+.post-container,
+.post-state{
+  padding:10px;
+  border: solid 1px #DDDDDD;
+}
+.post-title{
+  font-size: 22px;
+}
+.post_meta,
+.post_meta a,
+.post-tags,
+.post-tags a{
+  color: rgba(0,0,0,.5);
+}
+.post_meta a:hover,
+.post-tags a:hover{
+  color: #2196F3;
+}
+.post-content{
+  margin: 5px 0;
+}
+.markdown-body {
+  box-sizing: border-box;
+}
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
@@ -121,6 +152,16 @@ a:hover {
 
 /*Medium devices (tablets, 768px and up)*/
 @media (min-width: 768px) {
+  .main-contain{
+    padding: 10px;
+  }
+  .post-container{
+    padding: 10px 20px;
+  }
+  .post-title{
+    font-size: 28px;
+  }
+
   .author-word{
     padding: 20px 0 20px 0;
   }
@@ -200,10 +241,16 @@ a:hover {
     margin: 5px 0;
   }
 
-  .widget-toc .markdown-toc-list{
-    padding: 5px 0 0 20px;
+  #custom-toc-container{
     overflow:auto;
     height: 88vh;
+  }
+  #custom-toc-container a
+  {
+    text-decoration: none;
+  }
+  #custom-toc-container ul{
+    padding-left: 20px;
   }
 }
 

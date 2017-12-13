@@ -28,7 +28,7 @@ class ArticlesController extends ControllerBase
         $this->assets->addJs("backend/library/katex/katex.min.js", true); // 科学公式KaTeX
         $this->assets->addJs("themes/default/public/js/article.js", true); // 文章页面js
 
-        $markupFixer  = new \TOC\MarkupFixer();
+        $markupFixer  = new \TOC\MarkupFixer();// 标签加id
         $tocGenerator = new \TOC\TocGenerator();
 
         $this->view->setVars([
