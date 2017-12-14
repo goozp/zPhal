@@ -17,6 +17,7 @@ class ErrorController extends Controller
 
     public function route404Action()
     {
-        echo 123;
+        // 发送一个HTTP 404 响应的header
+        $this->response->setStatusCode(404, "Not Found");
     }
 }

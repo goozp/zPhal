@@ -10,7 +10,7 @@ class ArticlesController extends ControllerBase
     {
         parent::initialize();
 
-        $this->view->setTemplateAfter("Article");
+        $this->view->setTemplateAfter("article");
     }
 
     public function indexAction($id)
