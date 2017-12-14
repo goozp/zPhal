@@ -143,6 +143,16 @@ a:hover {
   box-sizing: border-box;
 }
 
+/**
+ * subject
+ */
+.subject-body .card-title a{
+  color: #000000;
+}
+.subject-body .card-title a:hover{
+  color: #2196F3;
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
   .button-detail{

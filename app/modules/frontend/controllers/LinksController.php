@@ -1,7 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2017/12/14
- * Time: 14:41
- */
+namespace ZPhal\Modules\Frontend\Controllers;
+
+class LinksController extends ControllerBase
+{
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->view->setTemplateAfter("link");
+    }
+
+    public function indexAction()
+    {
+        $this->tag->prependTitle('链接' . " - ");
+
+    }
+
+}

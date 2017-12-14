@@ -11,7 +11,7 @@ $router->add('/',
         'controller' => 'index',
         'action'     => 'index',
     ]
-);
+)->setName('index');
 $router->add("/page/:params",
     [
         'module'     => 'frontend',
@@ -28,7 +28,43 @@ $router->add("/article/{id:[0-9]+}.html",
         "id"     => 1,
     ]
 )->setName('article');
-
+$router->add("/subject/:params",
+    [
+        'module'     => 'frontend',
+        'controller' => 'subjects',
+        'action'     => 'subject',
+        "params"   => 1,
+    ]
+)->setName('subject');
+$router->add("/subject/item/:params",
+    [
+        'module'     => 'frontend',
+        'controller' => 'subjects',
+        'action'     => 'detail',
+        "params"   => 1,
+    ]
+)->setName('subject-detail');
+$router->add("/archive",
+    [
+        'module'     => 'frontend',
+        'controller' => 'archives',
+        'action'     => 'index',
+    ]
+)->setName('archive');
+$router->add("/product",
+    [
+        'module'     => 'frontend',
+        'controller' => 'products',
+        'action'     => 'index',
+    ]
+)->setName('product');
+$router->add("/link",
+    [
+        'module'     => 'frontend',
+        'controller' => 'links',
+        'action'     => 'index',
+    ]
+)->setName('link');
 
 $router->add('/login',
     [

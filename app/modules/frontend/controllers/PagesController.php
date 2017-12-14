@@ -10,7 +10,7 @@ class PagesController extends ControllerBase
     {
         parent::initialize();
 
-        $this->view->setTemplateAfter("Page");
+        $this->view->setTemplateAfter("page");
     }
 
     public function indexAction($param='')
