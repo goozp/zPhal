@@ -94,4 +94,24 @@ class TaxonomyService extends AbstractService
             ->toArray();
         return $taxonomy;
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function separateTaxonomyById($id)
+    {
+        $idArray = explode(',', $id);
+
+        $taxonomy = self::$modelsManager->createBuilder()
+            ->columns("tt.term_taxonomy_id, tt.taxonomy, t.name, t.slug")
+            ->from(['tt' => 'ZPhal\Models\TermTaxonomy'])
+            ->join('ZPhal\Models\Terms', 'tt.term_id = t.term_id', "t")
+            ->inWhere("tt.term_taxonomy_id", $idArray)
+            ->getQuery()
+            ->execute()
+            ->toArray();
+
+        return $taxonomy;
+    }
 }

@@ -39,8 +39,7 @@ class LinkService extends AbstractService
             ->from(['l' => 'ZPhal\Models\Links'])
             ->leftJoin('ZPhal\Models\TermRelationships', 'ts.object_id = l.link_id', 'ts')
             ->leftJoin('ZPhal\Models\TermTaxonomy', 'tt.term_taxonomy_id = ts.term_taxonomy_id', 'tt')
-            ->leftJoin('ZPhal\Models\Terms', "t.term_id = tt.term_id and tt.taxonomy = 'linkCategory'", 't')
-            ;
+            ->leftJoin('ZPhal\Models\Terms', "t.term_id = tt.term_id and tt.taxonomy = 'linkCategory'", 't');
 
         if ($condition['categorySelected']){
             $builder->andWhere("tt.term_taxonomy_id = :categorySelected:", [ "categorySelected" => $condition['categorySelected']]);
