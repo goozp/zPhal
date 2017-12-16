@@ -52,72 +52,6 @@
         ]
     },
     {
-        "name": "knplabs/knp-menu",
-        "version": "2.3.0",
-        "version_normalized": "2.3.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/KnpLabs/KnpMenu.git",
-            "reference": "655630a1db0b72108262d1a844de3b1ba0885be5"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://files.phpcomposer.com/files/KnpLabs/KnpMenu/655630a1db0b72108262d1a844de3b1ba0885be5.zip",
-            "reference": "655630a1db0b72108262d1a844de3b1ba0885be5",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.6.0"
-        },
-        "require-dev": {
-            "psr/container": "^1.0",
-            "symfony/http-foundation": "~2.4|~3.0|^4.0",
-            "symfony/phpunit-bridge": "~3.3|^4.0",
-            "symfony/routing": "~2.3|~3.0|^4.0",
-            "twig/twig": "~1.16|~2.0"
-        },
-        "suggest": {
-            "twig/twig": "for the TwigRenderer and the integration with your templates"
-        },
-        "time": "2017-11-18T20:49:26+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.3-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Knp\\Menu\\": "src/Knp/Menu"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Christophe Coevoet",
-                "email": "stof@notk.org"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://github.com/KnpLabs/KnpMenu/contributors"
-            },
-            {
-                "name": "KnpLabs",
-                "homepage": "https://knplabs.com"
-            }
-        ],
-        "description": "An object oriented menu library",
-        "homepage": "https://knplabs.com",
-        "keywords": [
-            "menu",
-            "tree"
-        ]
-    },
-    {
         "name": "cocur/slugify",
         "version": "v1.4.1",
         "version_normalized": "1.4.1.0",
@@ -302,6 +236,72 @@
         "keywords": [
             "TOC",
             "table of contents"
+        ]
+    },
+    {
+        "name": "knplabs/knp-menu",
+        "version": "2.3.0",
+        "version_normalized": "2.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/KnpLabs/KnpMenu.git",
+            "reference": "655630a1db0b72108262d1a844de3b1ba0885be5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/KnpLabs/KnpMenu/655630a1db0b72108262d1a844de3b1ba0885be5.zip",
+            "reference": "655630a1db0b72108262d1a844de3b1ba0885be5",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.6.0"
+        },
+        "require-dev": {
+            "psr/container": "^1.0",
+            "symfony/http-foundation": "~2.4|~3.0|^4.0",
+            "symfony/phpunit-bridge": "~3.3|^4.0",
+            "symfony/routing": "~2.3|~3.0|^4.0",
+            "twig/twig": "~1.16|~2.0"
+        },
+        "suggest": {
+            "twig/twig": "for the TwigRenderer and the integration with your templates"
+        },
+        "time": "2017-11-18T20:49:26+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.3-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Knp\\Menu\\": "src/Knp/Menu"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Christophe Coevoet",
+                "email": "stof@notk.org"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://github.com/KnpLabs/KnpMenu/contributors"
+            },
+            {
+                "name": "KnpLabs",
+                "homepage": "https://knplabs.com"
+            }
+        ],
+        "description": "An object oriented menu library",
+        "homepage": "https://knplabs.com",
+        "keywords": [
+            "menu",
+            "tree"
         ]
     }
 ]

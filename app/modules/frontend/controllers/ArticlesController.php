@@ -17,7 +17,7 @@ class ArticlesController extends ControllerBase
     {
         $this->tag->prependTitle('文章标题'.$id . " - ");
 
-        $post = Posts::findFirst(53);
+        $post = Posts::findFirst($id);
 
         /* 静态资源 */
         $this->assets->addCss("backend/library/github-markdown-css/github-markdown.css", true); // markdown样式
