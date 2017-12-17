@@ -82,7 +82,7 @@ class IndexController extends ControllerBase
 
         $this->view->setVars([
             'posts' => $postList,
-            '$taxonomy' => $taxonomy,
+            'taxonomy' => $taxonomy,
             'page' => $page,
         ]);
     }

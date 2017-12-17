@@ -175,3 +175,21 @@ if(!function_exists('subjectTreeHtml')){
         return $output;
     }
 }
+
+if(!function_exists('articleExcerpt')){
+    /**
+     * 文章截取
+     *
+     * @param string $content
+     * @param int    $limit
+     * @return string
+     */
+    function articleExcerpt( $content, $limit = 330 ) {
+        if ( $content ) {
+            $content = preg_replace( "/\[.*?\].*?\[\/.*?\]/is", "", $content );
+            $content = mb_strimwidth( strip_tags( $content ), 0, $limit, "..." );
+        }
+
+        return strip_tags( $content );
+    }
+}

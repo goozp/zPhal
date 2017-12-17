@@ -15,14 +15,14 @@ class Bootstrap extends Layout
      *
      * @var string
      */
-    protected $template = '<li><a href="{%url}">{%page}</a></li>';
+    protected $template = '<li class="page-item"><a class="page-link" href="{%url}">{%page}</a></li>';
 
     /**
      * {@inheritdoc}
      *
      * @var string
      */
-    protected $selectedTemplate = '<li class="#"><span>{%page}</span></li>';
+    protected $selectedTemplate = '<li class="page-item active"><a class="page-link" href="#"><span>{%page}</span></a></li>';
 
     /**
      * {@inheritdoc}
@@ -36,10 +36,9 @@ class Bootstrap extends Layout
         $totalPage   = $this->pager->getLastPage();
         $totalNumber = $this->pager->count();
 
-        $result = '<span>当前第 '.$currentPage.' 页，共 '.$totalPage.' 页，共 '.$totalNumber.' 条数据</span>
-        <ul class="pagination pagination-sm no-margin pull-right">';
+        $result = '<ul class="pagination justify-content-center">';
 
-        $bootstrapSelected = '<li class="disabled"><span>{%page}</span></li>';
+        $bootstrapSelected = '<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">{%page}</a></li>';
         $originTemplate = $this->selectedTemplate;
         $this->selectedTemplate = $bootstrapSelected;
 

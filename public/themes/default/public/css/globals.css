@@ -78,9 +78,9 @@ a:hover {
 .card-subtitle a{
   color: #868E96;
 }
-.article-card a:hover{
+.card-subtitle a:hover,
+.card-title a:hover{
   color: #2196F3;
-  text-decoration:none;
 }
 .flex-column-item{
   border-bottom: solid 1px #DDDDDD;

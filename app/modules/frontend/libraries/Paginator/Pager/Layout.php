@@ -28,7 +28,7 @@ class Layout
      * @link https://github.com/doctrine/doctrine1/blob/master/lib/Doctrine/Pager/Layout.php#L46
      * @var string
      */
-    protected $template = '[<a href="{%url}">{%page}</a>]';
+    protected $template = '[<a  href="{%url}">{%page}</a>]';
 
     /**
      * @link https://github.com/doctrine/doctrine1/blob/master/lib/Doctrine/Pager/Layout.php#L52
