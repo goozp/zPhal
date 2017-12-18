@@ -96,10 +96,11 @@ class TaxonomyService extends AbstractService
     }
 
     /**
+     * 根据一串di字符串查找出taxonomy值
      * @param $id
      * @return mixed
      */
-    public function separateTaxonomyById($id)
+    public function getTaxonomyByIdStr($id)
     {
         $idArray = explode(',', $id);
 

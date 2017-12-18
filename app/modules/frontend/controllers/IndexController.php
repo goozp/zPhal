@@ -21,6 +21,36 @@ class IndexController extends ControllerBase
         $this->tag->prependTitle($this->option->get('blogname') . " - ");
         $this->tag->setTitle($this->option->get('blogdescription'));
 
+        $show = $this->option->get('show_on_front');
+        if ($show == 'posts'){
+
+            $this->dispatcher->forward(
+                [
+                    "action"    => "article",
+                ]
+            );
+        }elseif($show == 'page'){
+
+            $this->dispatcher->forward(
+                [
+                    "action"    => "page",
+                    "params" => [$this->option->get('show_on_front_page')]
+                ]
+            );
+        }
+
+
+    }
+
+    /**
+     * list for articles
+     * 文章列表
+     */
+    public function articleAction()
+    {
+        /**
+         * sql for post list
+         */
         $builder = $this
             ->modelsManager
             ->createBuilder()
@@ -42,12 +72,15 @@ class IndexController extends ControllerBase
             ->where("post_status = 'publish' AND post_type = 'post' ")
             ->orderBy('post_date DESC');
 
-        // 分页查询
+        /**
+         * get data page
+         * 数据做分页
+         */
         $pager = new Pager(
             new PaginatorQueryBuilder(
                 [
                     'builder' => $builder,
-                    'limit'   => 10,
+                    'limit'   => $this->option->get('posts_per_page'),
                     'page'    => $this->request->getQuery('page', 'int', 1),
                 ]
             ),
@@ -58,13 +91,27 @@ class IndexController extends ControllerBase
             ]
         );
 
+        // if current page over total page
+        $totalPages = $pager->getTotalPage();
+        if ($this->request->getQuery('page', 'int', 1) > $totalPages){
+            $this->dispatcher->forward(
+                [
+                    "controller" => "error",
+                    "action"    => "route404"
+                ]
+            );
+        }
+
+        // the post list
         $postList = $pager->getIterator()->toArray();
 
-
+        /**
+         * get categories and tags
+         */
         $taxonomyService = container(TaxonomyService::class);
         $taxonomy = [];
         foreach ($postList as $value){
-            $taxonomyArray = $taxonomyService->separateTaxonomyById($value['terms_id']);
+            $taxonomyArray = $taxonomyService->getTaxonomyByIdStr($value['terms_id']);
             foreach ($taxonomyArray as $item){
                 $itemInfo = [
                     'term_taxonomy_id' => $item['term_taxonomy_id'],
@@ -76,10 +123,16 @@ class IndexController extends ControllerBase
             }
         }
 
+        /**
+         * get page output
+         */
         if ($pager->haveToPaginate()) {
             $page = $pager->getLayout();
         }
 
+        /**
+         * set values
+         */
         $this->view->setVars([
             'posts' => $postList,
             'taxonomy' => $taxonomy,
@@ -87,5 +140,13 @@ class IndexController extends ControllerBase
         ]);
     }
 
+    /**
+     * list for page
+     * 展示页面
+     */
+    public function pageAction($id)
+    {
+        echo "page id = ".$id;
+    }
 }
 

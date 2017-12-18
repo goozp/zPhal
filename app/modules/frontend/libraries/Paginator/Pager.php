@@ -73,6 +73,16 @@ class Pager implements \IteratorAggregate, \Countable
     }
 
     /**
+     * return the total page
+     *
+     * @return mixed
+     */
+    public function getTotalPage()
+    {
+        return $this->paginateResult->total_pages;
+    }
+
+    /**
      * Returns the current page.
      *
      * @return integer

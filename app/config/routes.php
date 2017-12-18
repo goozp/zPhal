@@ -12,12 +12,12 @@ $router->add('/',
         'action'     => 'index',
     ]
 )->setName('index');
-$router->add("/page/:params",
+$router->add("/{param:[a-zA-Z]+}",
     [
         'module'     => 'frontend',
         'controller' => 'pages',
         'action'     => 'index',
-        "params"   => 1,
+        "param"   => 1,
     ]
 )->setName('page');
 $router->add("/article/{id:[0-9]+}.html",
@@ -536,4 +536,3 @@ $router->notFound(
         'action'     => 'route404',
     ]
 );
-
