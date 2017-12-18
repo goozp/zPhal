@@ -104,11 +104,12 @@
         </div>
     <?php } ?>
 
-    <div class="col-12">
-        <nav aria-label="Page navigation">
-            <?= $page ?>
-        </nav>
-    </div>
-
+    <?php if (isset($page)){?>
+        <div class="col-12">
+            <nav aria-label="Page navigation">
+                <?= $page ?>
+            </nav>
+        </div>
+    <?php } ?>
 </div>
 
