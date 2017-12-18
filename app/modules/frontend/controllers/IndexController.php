@@ -38,8 +38,6 @@ class IndexController extends ControllerBase
                 ]
             );
         }
-
-
     }
 
     /**
@@ -86,8 +84,8 @@ class IndexController extends ControllerBase
             ),
             [
                 'layoutClass' => 'ZPhal\Modules\Frontend\Libraries\Paginator\Pager\Layout\Bootstrap', // 样式类
-                'rangeLength' => 5, // 分页长度
-                'urlMask'     => '?page={%page_number}', // 额外url传参
+                'rangeLength' => 6, // 分页长度
+                'urlMask'     => 'article?page={%page_number}', // 额外url传参
             ]
         );
 
@@ -128,6 +126,7 @@ class IndexController extends ControllerBase
          */
         if ($pager->haveToPaginate()) {
             $page = $pager->getLayout();
+            $this->view->setVar('page', $page);
         }
 
         /**
@@ -136,7 +135,6 @@ class IndexController extends ControllerBase
         $this->view->setVars([
             'posts' => $postList,
             'taxonomy' => $taxonomy,
-            'page' => $page,
         ]);
     }
 

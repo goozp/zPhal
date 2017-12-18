@@ -65,7 +65,7 @@ a:hover {
 /* article-card */
 .article-card{
   background-color: #ffffff;
-  margin: 10px 10px 10px 10px;
+  margin: 0 10px 20px 0;
   border: solid 1px #DDDDDD;
 }
 .article-card-body a{
@@ -92,13 +92,24 @@ a:hover {
 }
 
 /**
+ * pagination
+ */
+.pagination .page-link{
+  color: #2C3E50;
+}
+.pagination .active .page-link{
+  background-color:  #2C3E50;
+  border-color:  #2C3E50;
+}
+
+/**
  * footer
  */
 .footer{
   margin-top: 20px;
   padding: 10px 0 10px 0;
   color: #dddddd;
-  background-color: #607D8B;
+  background-color: #2C3E50;
 }
 .footer p{
   margin: 5px;

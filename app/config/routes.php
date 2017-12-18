@@ -20,6 +20,31 @@ $router->add("/{param:[a-zA-Z]+}",
         "param"   => 1,
     ]
 )->setName('page');
+$router->add('/article',
+    [
+        'module'     => 'frontend',
+        'controller' => 'index',
+        'action'     => 'article',
+    ]
+)->setName('index-article');
+
+$router->add('/category/:params',
+    [
+        'module'     => 'frontend',
+        'controller' => 'taxonomy',
+        'action'     => 'category',
+        'params'     => 1,
+    ]
+)->setName('index-category');
+$router->add('/tag/:params',
+    [
+        'module'     => 'frontend',
+        'controller' => 'taxonomy',
+        'action'     => 'tag',
+        'params'     => 1,
+    ]
+)->setName('index-tag');
+
 $router->add("/article/{id:[0-9]+}.html",
     [
         'module'     => 'frontend',

@@ -32,11 +32,7 @@ class Bootstrap extends Layout
      */
     public function getRendered(array $options = [])
     {
-        $currentPage = $this->pager->getCurrentPage();
-        $totalPage   = $this->pager->getLastPage();
-        $totalNumber = $this->pager->count();
-
-        $result = '<ul class="pagination justify-content-center">';
+        $result = '<ul class="pagination pagination-sm justify-content-center">';
 
         $bootstrapSelected = '<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">{%page}</a></li>';
         $originTemplate = $this->selectedTemplate;
