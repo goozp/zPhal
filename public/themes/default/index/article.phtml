@@ -13,7 +13,7 @@
                                 if (isset($taxonomy[$post['post_id']]['category'])){
                                     $categoryStr = '';
                                     foreach ($taxonomy[$post['post_id']]['category'] as $item){
-                                        $categoryStr .= "<a href=\"#\">" .$item['name']. "</a>，"?>
+                                        $categoryStr .= "<a href=\"". $this->url->get(["for"=>"index-category", "params"=>$item['slug']]) ."\">" .$item['name']. "</a>，"?>
                                     <? }
                                     echo substr($categoryStr, 0, -3);
                                 } ?>
@@ -48,7 +48,7 @@
                             <?php
                             if (isset($taxonomy[$post['post_id']]['tag'])){
                                 foreach ($taxonomy[$post['post_id']]['tag'] as $item){?>
-                                    <div class="p-1"><a href="#" class="badge badge-pill badge-secondary"><span><?= $item['name'] ?></span></a></div>
+                                    <div class="p-1"><a href="<?= $this->url->get(["for"=>"index-tag", "params"=>$item['slug']]) ?>" class="badge badge-pill badge-secondary"><span><?= $item['name'] ?></span></a></div>
                                 <? }
                             } ?>
                             <a class="button-detail ml-auto btn btn-outline-dark" href="<?= $post['post_url'] ?>">阅读全文</a>
@@ -67,7 +67,7 @@
                                 if (isset($taxonomy[$post['post_id']]['category'])){
                                     $categoryStr = '';
                                     foreach ($taxonomy[$post['post_id']]['category'] as $item){
-                                        $categoryStr .= "<a href=\"#\">" .$item['name']. "</a>，"?>
+                                        $categoryStr .= "<a href=\"". $this->url->get(["for"=>"index-category", "params"=>$item['slug']]) ."\">" .$item['name']. "</a>，"?>
                                     <? }
                                     echo substr($categoryStr, 0, -3);
                                 } ?>
@@ -89,7 +89,7 @@
                             <?php
                             if (isset($taxonomy[$post['post_id']]['tag'])){
                                 foreach ($taxonomy[$post['post_id']]['tag'] as $item){?>
-                                    <div class="p-1"><a href="#" class="badge badge-pill badge-secondary"><span><?= $item['name'] ?></span></a></div>
+                                    <div class="p-1"><a href="<?= $this->url->get(["for"=>"index-tag", "params"=>$item['slug']]) ?>" class="badge badge-pill badge-secondary"><span><?= $item['name'] ?></span></a></div>
                                 <? }
                             } ?>
                             <a class="button-detail ml-auto btn btn-outline-dark" href="<?= $post['post_url'] ?>">阅读全文</a>

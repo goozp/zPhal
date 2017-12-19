@@ -46,7 +46,7 @@ class TaxonomyService extends AbstractService
     }
 
     /**
-     * 获取post的分类或标签
+     * 获取post的分类或标签id
      * @param $objectId
      * @param string $type category|tag 默认全部
      * @return array

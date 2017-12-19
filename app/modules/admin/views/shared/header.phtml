@@ -196,6 +196,11 @@
                             <i class="fa fa-circle-o"></i> 常规
                         </a>
                     </li>
+                    <li <?php if ($controllerName=='setting' && $actionName=='property') echo 'class="active"'; ?>>
+                        <a href="<?php echo $this->url->get("admin/setting/property"); ?>">
+                            <i class="fa fa-circle-o"></i> 网站属性
+                        </a>
+                    </li>
                     <li <?php if ($controllerName=='setting' && $actionName=='writing') echo 'class="active"'; ?>>
                         <a href="<?php echo $this->url->get("admin/setting/writing"); ?>">
                             <i class="fa fa-circle-o"></i> 撰写
@@ -219,6 +224,11 @@
                     <li <?php if ($controllerName=='setting' && $actionName=='permalink') echo 'class="active"'; ?>>
                         <a href="<?php echo $this->url->get("admin/setting/permalink"); ?>">
                             <i class="fa fa-circle-o"></i> 固定链接
+                        </a>
+                    </li>
+                    <li <?php if ($controllerName=='setting' && $actionName=='product') echo 'class="active"'; ?>>
+                        <a href="<?php echo $this->url->get("admin/setting/product"); ?>">
+                            <i class="fa fa-github"></i> 作品
                         </a>
                     </li>
                 </ul>

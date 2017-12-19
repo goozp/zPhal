@@ -49,6 +49,41 @@ class SettingController extends ControllerBase
     }
 
     /**
+     * 网站属性设置
+     */
+    public function propertyAction()
+    {
+        $this->tag->prependTitle("网站属性设置 - ");
+
+        $this->view->setVars(
+            [
+                "siteDescription" => $this->option->get('site_description'),
+                "siteKeywords" => $this->option->get('site_keywords'),
+                "footerCopyright" => $this->option->get('footer_copyright'),
+            ]
+        );
+    }
+
+    /**
+     * 保存网站属性设置
+     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     */
+    public function savePropertyAction()
+    {
+        try {
+            $this->option->save('site_description', $this->request->get('site_description', ['string', 'trim']));
+            $this->option->save('site_keywords', $this->request->get('site_keywords', ['string', 'trim']));
+            $this->option->save('footer_copyright', $this->request->get('footer_copyright'));
+
+            $this->flash->success("保存成功!");
+            return $this->response->redirect("admin/setting/property");
+        } catch (\Exception $e) {
+            $this->flash->error('保存出错：' . $e);
+            return $this->response->redirect("admin/setting/property");
+        }
+    }
+
+    /**
      * 撰写设置
      */
     public function writingAction()
@@ -189,8 +224,28 @@ class SettingController extends ControllerBase
         $this->tag->prependTitle("媒体设置 - ");
     }
 
+    public function saveMediaAction()
+    {
+
+    }
+
     public function permalinkAction()
     {
         $this->tag->prependTitle("固定链接设置 - ");
+    }
+
+    public function savePermalinkAction()
+    {
+
+    }
+
+    public function productAction()
+    {
+
+    }
+
+    public function saveProductAction()
+    {
+
     }
 }

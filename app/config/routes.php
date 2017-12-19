@@ -32,7 +32,8 @@ $router->add('/category/:params',
     [
         'module'     => 'frontend',
         'controller' => 'taxonomy',
-        'action'     => 'category',
+        'action'     => 'list',
+        'type'    => 'category',
         'params'     => 1,
     ]
 )->setName('index-category');
@@ -40,7 +41,8 @@ $router->add('/tag/:params',
     [
         'module'     => 'frontend',
         'controller' => 'taxonomy',
-        'action'     => 'tag',
+        'action'     => 'list',
+        'type'    => 'tag',
         'params'     => 1,
     ]
 )->setName('index-tag');
@@ -497,6 +499,20 @@ $router->add('/admin/setting/saveGeneral',
         'action'     => 'saveGeneral',
     ]
 );
+$router->add('/admin/setting/property',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'property',
+    ]
+);
+$router->add('/admin/setting/saveProperty',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'saveProperty',
+    ]
+);
 $router->add('/admin/setting/writing',
     [
         'module'     => 'admin',
@@ -546,11 +562,39 @@ $router->add('/admin/setting/media',
         'action'     => 'media',
     ]
 );
+$router->add('/admin/setting/saveMedia',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'saveMedia',
+    ]
+);
 $router->add('/admin/setting/permalink',
     [
         'module'     => 'admin',
         'controller' => 'setting',
         'action'     => 'permalink',
+    ]
+);
+$router->add('/admin/setting/savePermalink',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'savePermalink',
+    ]
+);
+$router->add('/admin/setting/product',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'product',
+    ]
+);
+$router->add('/admin/setting/saveProduct',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'saveProduct',
     ]
 );
 

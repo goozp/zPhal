@@ -112,31 +112,37 @@ class Redis extends Component{
      */
     public function save($key, $value, $autoload='')
     {
-        $option = Options::findFirst(
-            [
-                "option_name = :name: ",
-                "bind"       => [
-                    'name' => $key,
+        if (!empty($value)){
+            $option = Options::findFirst(
+                [
+                    "option_name = :name: ",
+                    "bind"       => [
+                        'name' => $key,
+                    ]
                 ]
-            ]
-        );
+            );
 
-        if ($option){
-            $option->option_value = $value;
-            if ($autoload != ''){
-                $option->autoload = $autoload;
+            if ($option){
+                $option->option_value = $value;
+                if ($autoload != ''){
+                    $option->autoload = $autoload;
+                }
+                $option->save();
+            }else{
+                $option = new Options();
+                $option->option_name = $key;
+                $option->option_value = $value;
+                $option->autoload = $autoload ?: Options::AUTO_NO;
+                $option->create();
             }
-            $option->save();
-        }else{
-            $option = new Options();
-            $option->option_name = $key;
-            $option->option_value = $value;
-            $option->autoload = $autoload ?: Options::AUTO_NO;
-            $option->create();
-        }
 
-        if ($option->autoload == Options::AUTO_YES){
-            self::saveCache($key, $value);
+            if ($option->autoload == Options::AUTO_YES){
+                self::saveCache($key, $value);
+            }
+
+            return true;
+        }else{
+            return false;
         }
     }
 

@@ -11,8 +11,15 @@ class ControllerBase extends Controller
             [
                 "blogname" => $this->option->get('blogname'),
                 "blogdescription" => $this->option->get('blogdescription'),
+                "siteDescription" => $this->option->get('site_description'),
+                "siteKeywords" => $this->option->get('site_keywords'),
+                "footer" => $this->option->get('footer_copyright'),
             ]
         );
+
+        $this->tag->setTitle($this->option->get('blogname'));
+
+        // TODO general description and keywords
     }
 
     public function initialize()
@@ -20,7 +27,5 @@ class ControllerBase extends Controller
         if ($timezone = $this->option->get('timezone_string')){
             date_default_timezone_set($timezone);
         }
-
-        $this->tag->setTitle($this->option->get('blogname'));
     }
 }
