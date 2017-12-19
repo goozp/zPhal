@@ -2,10 +2,11 @@
 
 namespace ZPhal\Library\Options;
 
-use Phalcon\Mvc\User\Component;
+use Phalcon\Mvc\User\Plugin;
 use ZPhal\Models\Options;
 
-class Redis extends Component{
+class Redis extends Plugin
+{
 
     /**
      * @var object Singleton 单例

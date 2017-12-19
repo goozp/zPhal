@@ -239,12 +239,12 @@ class SettingController extends ControllerBase
 
     }
 
-    public function productAction()
+    public function projectAction()
     {
 
     }
 
-    public function saveProductAction()
+    public function saveProjectAction()
     {
 
     }

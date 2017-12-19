@@ -6,8 +6,11 @@ use ZPhal\Modules\Frontend\Libraries\Widget\Part\Taxonomy;
 
 class Category extends Taxonomy
 {
+    protected static $type = 'category';
+
     public function getList()
     {
-        // TODO: Implement getList() method.
+        $categoryList = $this->query(self::$type);
+        print_r($categoryList);exit;
     }
 }

@@ -14,6 +14,8 @@ class IndexController extends ControllerBase
         parent::initialize();
 
         $this->view->setTemplateAfter("common");
+
+        $this->widget->getCategoryList();
     }
 
     public function indexAction()

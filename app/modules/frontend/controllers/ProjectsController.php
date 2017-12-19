@@ -1,7 +1,7 @@
 <?php
 namespace ZPhal\Modules\Frontend\Controllers;
 
-class ProductsController extends ControllerBase
+class ProjectsController extends ControllerBase
 {
     public function initialize()
     {

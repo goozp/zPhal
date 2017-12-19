@@ -45,6 +45,7 @@ return [
         "frontend" => [
             ZPhal\Modules\Frontend\Providers\Dispatcher\ServiceProvider::class, // 分发器
             ZPhal\Modules\Frontend\Providers\View\ServiceProvider::class,  // 视图
+            ZPhal\Modules\Frontend\Providers\Widget\ServiceProvider::class,  // Widget
         ]
     ],
 

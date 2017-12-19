@@ -78,13 +78,13 @@ $router->add("/archive",
         'action'     => 'index',
     ]
 )->setName('archive');
-$router->add("/product",
+$router->add("/project",
     [
         'module'     => 'frontend',
-        'controller' => 'products',
+        'controller' => 'projects',
         'action'     => 'index',
     ]
-)->setName('product');
+)->setName('project');
 $router->add("/link",
     [
         'module'     => 'frontend',
@@ -583,18 +583,18 @@ $router->add('/admin/setting/savePermalink',
         'action'     => 'savePermalink',
     ]
 );
-$router->add('/admin/setting/product',
+$router->add('/admin/setting/project',
     [
         'module'     => 'admin',
         'controller' => 'setting',
-        'action'     => 'product',
+        'action'     => 'project',
     ]
 );
-$router->add('/admin/setting/saveProduct',
+$router->add('/admin/setting/saveProject',
     [
         'module'     => 'admin',
         'controller' => 'setting',
-        'action'     => 'saveProduct',
+        'action'     => 'saveProject',
     ]
 );
 
