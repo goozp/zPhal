@@ -12,14 +12,7 @@ $router->add('/',
         'action'     => 'index',
     ]
 )->setName('index');
-$router->add("/{param:[a-zA-Z]+}",
-    [
-        'module'     => 'frontend',
-        'controller' => 'pages',
-        'action'     => 'index',
-        "param"   => 1,
-    ]
-)->setName('page');
+
 $router->add('/article',
     [
         'module'     => 'frontend',
@@ -46,6 +39,15 @@ $router->add('/tag/:params',
         'params'     => 1,
     ]
 )->setName('index-tag');
+
+$router->add("/{param:[a-zA-Z]+}",
+    [
+        'module'     => 'frontend',
+        'controller' => 'pages',
+        'action'     => 'index',
+        "param"   => 1,
+    ]
+)->setName('page');
 
 $router->add("/article/{id:[0-9]+}.html",
     [
@@ -598,6 +600,8 @@ $router->add('/admin/setting/saveProject',
     ]
 );
 
+
+//$router->addGet('/404', 'Error::route404')->setName('error-404');
 
 $router->notFound(
     [

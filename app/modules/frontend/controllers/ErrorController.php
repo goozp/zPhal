@@ -19,6 +19,13 @@ class ErrorController extends ControllerBase
         parent::initialize();
 
         $this->view->setTemplateAfter("common");
+
+        /**
+         * widget for the template
+         */
+        $this->view->setVars([
+            'widgetCategory' => $this->widget->getCategoryList(),
+        ]);
     }
 
     public function route400Action()

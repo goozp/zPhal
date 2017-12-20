@@ -6,6 +6,8 @@ defined('THEMES_PATH') || define('THEMES_PATH', BASE_PATH . DIRECTORY_SEPARATOR 
 
 return [
     'version' => '1.0',
+    'debug' => env('APP_DEBUG', false),
+    'environment' =>env('APP_ENV', 'production'),
 
     'database' => [
         'adapter'  => env('DB_ADAPTER', 'Mysql'),

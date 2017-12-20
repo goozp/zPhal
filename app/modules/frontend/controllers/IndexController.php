@@ -15,9 +15,17 @@ class IndexController extends ControllerBase
 
         $this->view->setTemplateAfter("common");
 
-        $this->widget->getCategoryList();
+        /**
+         * widget for the template
+         */
+        $this->view->setVars([
+            'widgetCategory' => $this->widget->getCategoryList(),
+        ]);
     }
 
+    /**
+     * dispatch index
+     */
     public function indexAction()
     {
         $this->tag->prependTitle($this->option->get('blogname') . " - ");

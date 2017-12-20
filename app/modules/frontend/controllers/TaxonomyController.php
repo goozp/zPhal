@@ -13,8 +13,20 @@ class TaxonomyController extends ControllerBase
         parent::initialize();
 
         $this->view->setTemplateAfter("common");
+
+        /**
+         * widget for the template
+         */
+        $this->view->setVars([
+            'widgetCategory' => $this->widget->getCategoryList(),
+        ]);
     }
 
+    /**
+     * 根据taxonomy获取post列表
+     *
+     * @param string $param
+     */
     public function listAction($param='')
     {
         $type = $this->dispatcher->getParam("type");
@@ -66,16 +78,20 @@ class TaxonomyController extends ControllerBase
                 ]
             );
 
-            // if current page over total page
+            // if current page over total page when total item is more than 0
             $totalPages = $pager->getTotalPage();
-            if ($this->request->getQuery('page', 'int', 1) > $totalPages){
-                $this->dispatcher->forward(
-                    [
-                        "controller" => "error",
-                        "action"    => "route404"
-                    ]
-                );
+            $totalItems = $pager->count();
+            if ($totalItems != 0){
+                if ($this->request->getQuery('page', 'int', 1) > $totalPages){
+                    $this->dispatcher->forward(
+                        [
+                            "controller" => "error",
+                            "action"    => "route404"
+                        ]
+                    );
+                }
             }
+
 
             // the post list
             $postList = $pager->getIterator()->toArray();
