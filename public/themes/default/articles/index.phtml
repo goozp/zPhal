@@ -1,37 +1,38 @@
 <div class="row post-container bg-white no-gutters mb-3">
     <div class="col-12 post-header">
-        <h1 class="post-title">Guzzle：PHP的HTTP客户端</h1>
+        <h1 class="post-title"><?= $post['post_title'] ?></h1>
     </div>
 
     <div class="col-12 post_meta">
         <ul class="post_meta_ul list-unstyled">
             <li class="inline-li float-left mr-2">
                 <i class="fa fa-calendar-check-o"></i>
-                2017-07-31 16:09
+                <?= $post['post_date'] ?>
             </li>
             <li class="inline-li float-left mr-2">
                 <span class="post-span"> | </span>
             </li>
             <li class="inline-li float-left mr-2">
                 <i class="fa fa-tags"></i>
-                <a href="https://www.gzpblog.com/category/code/code-about/php" rel="category tag">PHP</a> ,
-                <a href="https://www.gzpblog.com/category/code/code-learning" rel="category tag">学习笔记</a>
+                <?= $category ?>
             </li>
             <li class="inline-li float-left mr-2">
                 <span class="post-span"> | </span>
             </li>
             <li class="inline-li float-left mr-2">
-                292         阅读
+                <i class="fa fa-eye"></i>
+                <?= $post['view_count'] ?> 阅读&nbsp;&nbsp;
             </li>
+
             <li class="inline-li float-left mr-2">
                 <i class="fa fa-comments-o"></i>
-                <a href="https://www.gzpblog.com/20170731/1175.html#comments">1 回复</a>
+                <a href="#comments"><?= $post['comment_count'] ?> 回复</a>
             </li>
         </ul>
     </div>
 
     <div id="editormd-view" class="col-12 post-content editormd">
-        <div class="editormd-html-textarea markdown-body" name="editormd-view-html-code"><?= $content ?></div>
+        <div class="editormd-html-textarea markdown-body" name="editormd-view-html-code"><?= $post['post_html_content'] ?></div>
     </div>
 
     <div class="col-12">
@@ -40,9 +41,7 @@
 
     <div class="col-12 post-tags">
         <i class="fa fa-tags"></i> 标签：
-        <a href="https://www.gzpblog.com/tag/guzzle" rel="tag">Guzzle</a>，
-        <a href="https://www.gzpblog.com/tag/http" rel="tag">HTTP</a>，
-        <a href="https://www.gzpblog.com/tag/php" rel="tag">PHP</a>
+        <?= $tag ?>
     </div>
 </div>
 
@@ -54,16 +53,16 @@
     </div>
     <div class="col-12">
         <span>
-            <b><i class="fa fa-link" aria-hidden="true"></i> 本文链接：</b><a href="https://www.gzpblog.com/20170731/1175.html" title="Guzzle：PHP的HTTP客户端">https://www.gzpblog.com/20170731/1175.html</a>
+            <b><i class="fa fa-link" aria-hidden="true"></i> 本文链接：</b><a href="<?= $post['guid'] ?>" title="<?= $post['post_title'] ?>"><?= $post['guid'] ?></a>
         </span>
     </div>
 </div>
 
 <div class="row post-lastAndNext no-gutters mb-3">
     <div class="col-xs-12 col-sm-6 lastAndNext-left">
-        <p class="float-left mb-0">上一篇：<a href="https://www.gzpblog.com/20170801/1186.html" rel="prev">火狐浏览器X-Content-Type-Options导致Images类型无法加载</a></p>
+        <p class="float-left mb-0">上一篇：<?php if ($last) echo $last; else echo '没有了，已经是最后文章';  ?></p>
     </div>
     <div class="col-xs-12 col-sm-6 lastAndNext-right">
-        <p class="float-xs-left float-md-right mb-0">下一篇：没有了，已经是最新文章</p>
+        <p class="float-xs-left float-md-right mb-0">下一篇：<?php if ($next) echo $next; else echo '没有了，已经是最新文章'; ?></p>
     </div>
 </div>

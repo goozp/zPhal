@@ -13,14 +13,6 @@ $router->add('/',
     ]
 )->setName('index');
 
-$router->add('/article',
-    [
-        'module'     => 'frontend',
-        'controller' => 'index',
-        'action'     => 'article',
-    ]
-)->setName('index-article');
-
 $router->add('/category/:params',
     [
         'module'     => 'frontend',
@@ -48,6 +40,14 @@ $router->add("/{param:[a-zA-Z]+}",
         "param"   => 1,
     ]
 )->setName('page');
+
+$router->add('/article',
+    [
+        'module'     => 'frontend',
+        'controller' => 'index',
+        'action'     => 'article',
+    ]
+)->setName('index-article');
 
 $router->add("/article/{id:[0-9]+}.html",
     [

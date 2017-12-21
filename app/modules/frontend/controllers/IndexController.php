@@ -20,6 +20,10 @@ class IndexController extends ControllerBase
          */
         $this->view->setVars([
             'widgetCategory' => $this->widget->getCategoryList(),
+            'widgetNewArticle' => $this->widget->getNewArticles([
+                'ulClass' => 'fa-ul ml-4 mb-0',
+                'before' => '<i class="fa-li fa fa-angle-double-right"></i>'
+            ])
         ]);
     }
 

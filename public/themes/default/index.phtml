@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
     <?php echo $this->tag->getTitle(); ?>
-    <meta name="description" content="<?= $siteDescription ?>">
-    <meta name="keywords" content="<?= $siteKeywords ?>" />
+    <meta name="description" content="<?php if (isset($coverDescription)){ echo $coverDescription; }else{ echo $siteDescription; } ?>">
+    <meta name="keywords" content="<?php if (isset($coverKeywords)){ echo $coverKeywords; }else{ echo $siteKeywords; } ?>" />
     <link rel="icon" href="../../../../favicon.ico">
 
     <?php

@@ -126,6 +126,17 @@ class Posts extends ModelBase
     }
 
     /**
+     * Returns table name mapped in the model.
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return 'zp_posts';
+    }
+
+
+    /**
      * 生成url
      */
     public function generateUrl()
@@ -139,14 +150,55 @@ class Posts extends ModelBase
         $this->save();
     }
 
+    /**
+     * 获取下一篇
+     *
+     * @return array|bool
+     */
+    public function getNextPublish()
+    {
+        $last = self::findFirst(
+            [
+                "conditions" => "ID > :id: AND post_status='publish' AND post_type=:type: ",
+                "columns" => "ID, post_title, guid",
+                "order" => "post_date ASC",
+                "bind"       => [
+                    'id' => $this->ID,
+                    'type' => $this->post_type
+                ]
+            ]
+        );
+
+        if ($last){
+            return $last->toArray();
+        }else{
+            return false;
+        }
+    }
 
     /**
-     * Returns table name mapped in the model.
+     * 获取上一篇
      *
-     * @return string
+     * @return array|bool
      */
-    public function getSource()
+    public function getLastPublish()
     {
-        return 'zp_posts';
+        $next = self::findFirst(
+            [
+                "conditions" => "ID < :id: AND post_status='publish' AND post_type=:type: ",
+                "columns" => "ID, post_title, guid",
+                "order" => "post_date DESC",
+                "bind"       => [
+                    'id' => $this->ID,
+                    'type' => $this->post_type
+                ]
+            ]
+        );
+
+        if ($next){
+            return $next->toArray();
+        }else{
+            return false;
+        }
     }
 }
