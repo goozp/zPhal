@@ -3,8 +3,6 @@
 </p>
 
 <p align="center">
-    <img src="https://travis-ci.org/ZpGuo/zPhal.svg?branch=master" alt="Build Status" />
-    <a href='https://coveralls.io/github/ZpGuo/zPhal?branch=master'><img src='https://coveralls.io/repos/github/ZpGuo/zPhal/badge.svg?branch=master' alt='Coverage Status' /></a>
     <a href='https://secure.php.net/'><img src='https://img.shields.io/badge/php-%E2%89%A5%207.0-blue.svg?style=flat-square' alt='Supported PHP versions' /></a>
     <a href='https://phalconphp.com/'><img src='https://img.shields.io/badge/Phalcon-%E2%89%A5%203.0-blue.svg?style=flat-square' alt='Supported Phalcon versions' /></a>
     <img src="https://img.shields.io/badge/License-BSD3-000000.svg?style=flat-square" alt="License" />
