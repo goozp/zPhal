@@ -32,7 +32,7 @@ $router->add('/tag/:params',
     ]
 )->setName('index-tag');
 
-$router->add("/{param:[a-zA-Z]+}",
+$router->add("/{param:[a-zA-Z_-]+}",
     [
         'module'     => 'frontend',
         'controller' => 'pages',

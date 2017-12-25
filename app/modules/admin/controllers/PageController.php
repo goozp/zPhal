@@ -134,7 +134,7 @@ class PageController extends ControllerBase
             }else{
                 $post->post_name = $title ? $title : '';
             }
-            $post->guid = $this->url->get(['for' => 'page', 'params' => $post->post_name]);
+            $post->guid = $this->url->get(['for' => 'page', 'param' => $post->post_name]);
             
             // 编辑时间
             $now = time();
@@ -261,7 +261,7 @@ class PageController extends ControllerBase
                     }else{
                         $post->post_name = $title ? $title : '';
                     }
-                    $post->guid = $this->url->get(['for' => 'page', 'params' => $post->post_name]);
+                    $post->guid = $this->url->get(['for' => 'page', 'param' => $post->post_name]);
                     if ($post->update()) {
                         $data = [
                             'post_id' => $postId,
@@ -398,7 +398,7 @@ class PageController extends ControllerBase
             }else{
                 $post->post_name = $title ? $title : '';
             }
-            $post->guid = $this->url->get(['for' => 'page', 'params' => $post->post_name]);
+            $post->guid = $this->url->get(['for' => 'page', 'param' => $post->post_name]);
             
             // 编辑时间
             $now = time();

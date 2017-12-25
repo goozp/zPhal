@@ -201,4 +201,13 @@ class Posts extends ModelBase
             return false;
         }
     }
+
+    /**
+     * 更新浏览量
+     */
+    public function updateView()
+    {
+        $this->view_count++;
+        $this->update();
+    }
 }

@@ -193,3 +193,23 @@ if(!function_exists('articleExcerpt')){
         return strip_tags( $content );
     }
 }
+
+if(!function_exists('getClientIp')){
+    /**
+     * 获取客户端IP
+     *
+     * @return string
+     */
+    function getClientIp(){
+        if(isset($_SERVER["HTTP_CLIENT_IP"]) and strcasecmp($_SERVER["HTTP_CLIENT_IP"], "unknown")){
+            return $_SERVER["HTTP_CLIENT_IP"];
+        }
+        if(isset($_SERVER["HTTP_X_FORWARDED_FOR"]) and strcasecmp($_SERVER["HTTP_X_FORWARDED_FOR"], "unknown")){
+            return $_SERVER["HTTP_X_FORWARDED_FOR"];
+        }
+        if(isset($_SERVER["REMOTE_ADDR"])){
+            return $_SERVER["REMOTE_ADDR"];
+        }
+        return "";
+    }
+}

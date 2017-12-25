@@ -11,22 +11,73 @@ class PagesController extends ControllerBase
         parent::initialize();
 
         $this->view->setTemplateAfter("page");
+
+        /**
+         * widget for the template
+         */
+        $this->view->setVars([
+            'widgetCategory' => $this->widget->getCategoryList(),
+            'widgetNewArticle' => $this->widget->getNewArticles([
+                'ulClass' => 'fa-ul ml-4 mb-0',
+                'before' => '<i class="fa-li fa fa-angle-double-right"></i>'
+            ])
+        ]);
     }
 
     public function indexAction($param='')
     {
-        $this->tag->prependTitle('页面标题' . " - ");
 
         $post = Posts::findFirst([
-            "post_name='{$param}'"
+            "conditions" => "post_name = ?1 AND post_status = 'publish' AND post_type = 'page'",
+            "bind"       => [
+                1 => $param,
+            ]
         ]);
 
-        /* 静态资源 */
-        $this->assets->addCss("backend/library/github-markdown-css/github-markdown.css", true); // markdown样式
+        if ($post){
 
-        $this->view->setVars([
-            'content' => $post->post_html_content,
-        ]);
+            $this->tag->prependTitle($post->post_title . " - ");
+
+            /**
+             * Get postmeta
+             */
+            $postMeta =  $post->PostMeta->toArray();
+
+            $newPostMeta = [];
+            foreach ($postMeta as $meta){
+                $newPostMeta[$meta['meta_key']] = $meta['meta_value'];
+            }
+
+            /**
+             * make description
+             */
+            if (isset($newPostMeta['description']) && !empty($newPostMeta['description'])){
+                $coverDescription = $newPostMeta['description'];
+            }else{
+                $coverDescription = null;
+            }
+
+            $post = $post->toArray();
+            $post['post_date'] = date('Y-m-d H:i', strtotime($post['post_date']));
+
+            $this->view->setVars([
+                'post' => $post,
+                'postMeta' => $newPostMeta,
+                'coverDescription' => $coverDescription,
+            ]);
+
+            /**
+             * TODO 判断$newPostMeta['_zp_page_template']赋值到不同的模板
+             */
+
+        }else{
+            $this->dispatcher->forward(
+                [
+                    "controller" => "error",
+                    "action"    => "route404"
+                ]
+            );
+        }
     }
 
 }
