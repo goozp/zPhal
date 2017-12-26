@@ -60,8 +60,6 @@ class SubjectsController extends ControllerBase
 
     public function detailAction($id=0)
     {
-        $this->tag->prependTitle('专题' . " - ");
-
         $subject = Subjects::findFirst([
             "subject_id = ?1",
             "bind"       => [
@@ -70,15 +68,24 @@ class SubjectsController extends ControllerBase
         ]);
 
         if ($subject){
+            $this->tag->prependTitle($subject->subject_name . " - ");
 
-            // TODO 
-            $relations = $subject->SubjectRelation;
-            $post = [];
-            foreach ($relations as $item){
-                $post[] = $item->Post->toArray();
-            }
-            print_r($post);exit;
+            $posts = $this->modelsManager->createBuilder()
+                ->columns("p.ID, p.post_html_content, p.post_title, p.post_date, p.guid, p.comment_count, p.view_count")
+                ->from(['sr' => 'ZPhal\Models\SubjectRelationships'])
+                ->leftJoin('ZPhal\Models\Posts', 'p.ID = sr.object_id', "p")
+                ->where("sr.subject_id = :id: AND p.post_type = 'post' AND p.post_status = 'publish'", ["id" => $subject->subject_id])
+                ->orderBy("sr.order_num ASC")
+                ->getQuery()
+                ->execute()
+                ->toArray();
 
+            $this->view->setVars([
+                'posts' => $posts,
+                'total' => count($posts),
+                'subjectName' => $subject->subject_name,
+                'subjectDescription' => $subject->subject_description
+            ]);
         }else{
             $this->dispatcher->forward(
                 [

@@ -9,15 +9,14 @@
 <div class="subject-body card-columns">
     <?php foreach ($subjects as $subject){ ?>
         <div class="card text-center">
-            <a href=""><?php echo $this->tag->image([
-                    $subject['subject_image'],
-                    "class"=>"card-img-top",
-                    "alt" => "Card image cap",
-                    "width" => 300,
-                    "height" => 150,
-                ]);?></a>
+            <?php echo $this->tag->image([
+                $subject['subject_image'],
+                "class"=>"card-img-top d-block",
+                "alt" => $subject['subject_slug'],
+                "height" => 180,
+            ]);?>
             <div class="card-body">
-                <h4 class="card-title"><a href=""><?= $subject['subject_name'] ?></a></h4>
+                <h4 class="card-title"><a href="<?= $subject['link'] ?>"><?= $subject['subject_name'] ?></a></h4>
                 <p class="card-subtitle mb-2 text-muted"><?= $subject['count'] ?> 篇文章</p>
                 <p class="card-text"><?= $subject['subject_description'] ?></p>
                 <a href="<?= $subject['link'] ?>" class="card-button btn btn-sm btn-outline-primary">查看专题</a>
