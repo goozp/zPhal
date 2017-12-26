@@ -8,6 +8,7 @@ return [
         ZPhal\Providers\Config\ServiceProvider::class, // 配置
         ZPhal\Providers\Db\ServiceProvider::class, // 数据库
         ZPhal\Providers\ModelsMetadata\ServiceProvider::class, // 模型元数据
+        ZPhal\Providers\Crypt\ServiceProvider::class, // 模型元数据
     ],
 
     /**
@@ -46,6 +47,7 @@ return [
             ZPhal\Modules\Frontend\Providers\Dispatcher\ServiceProvider::class, // 分发器
             ZPhal\Modules\Frontend\Providers\View\ServiceProvider::class,  // 视图
             ZPhal\Modules\Frontend\Providers\Widget\ServiceProvider::class,  // Widget
+            ZPhal\Modules\Frontend\Providers\VisitCounter\ServiceProvider::class,  //VisitCounter浏览量计算
         ]
     ],
 

@@ -96,6 +96,12 @@ return [
         'lifetime' => env('SESSION_LIFETIME', 86400),
     ],
 
+    'security' => [
+        'crypt' => [
+            'key' => '#zp3hal11$=e?.go3od//j2ob$',
+        ],
+    ],
+
     /**
      * if true, then we print a new line at the end of each CLI execution
      *

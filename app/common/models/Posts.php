@@ -205,9 +205,18 @@ class Posts extends ModelBase
     /**
      * 更新浏览量
      */
-    public function updateView()
+    public function updateView($num=0)
     {
-        $this->view_count++;
-        $this->update();
+        if ($num!=0){
+            $this->view_count = $this->view_count+$num;
+        }else{
+            $this->view_count++;
+        }
+
+        if ($this->update()){
+            return true;
+        }
+
+        return false;
     }
 }

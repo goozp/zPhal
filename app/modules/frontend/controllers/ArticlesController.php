@@ -28,6 +28,7 @@ class ArticlesController extends ControllerBase
         ]);
 
         if ($post){
+            $this->visitCounter->calculate($post);
 
             $this->tag->prependTitle($post->post_title . " - ");
 
@@ -143,60 +144,5 @@ class ArticlesController extends ControllerBase
             );
         }
     }
-
-    protected function checkViewer($post)
-    {
-        $id = $post->ID;
-
-        // 检测cookie之前有没被设置过
-//        if ($this->cookies->has("post_views")) {
-//            // 获取cookie
-//            $postCookie = $this->cookies->get("post_views");
-//
-//            // 获取cookie的值
-//            $viewsId = json_decode($postCookie->getValue(), true);
-//
-//            if (!in_array($id, $viewsId)){
-//
-//                // 没读过
-//                if ($this->redis->exists("post_views_".$id)){
-//
-//                    $postView = $this->redis->get("post_views_".$id);
-//
-//                    if( $this->redis->get('post_views_last_update_time_'.$id) < (time()-600)  ) {
-//
-//                        // 初始化锁参数
-//                        $key = 'lockUpdateView'; //锁
-//                        $random = md5( uniqid(getmypid().'_'.mt_rand().'_', true) ); //随机值
-//                        $lifetime = 10; // 有效时间，单位秒
-//
-//                        if (!$this->redis->exists($key)){
-//                            $this->redis->set($key, $random, $lifetime); // 加锁
-//
-//                            // 执行浏览量添加操作
-//                            if( $post->updateView() ) { // 操作成功
-//                                $this->redis->delete($key); // 删除锁
-//                                $this->redis->set('post_views_last_update_time_'.$id, time());
-//                            }
-//
-//                            //加入随机值判断是为了避免删除到其他操作的锁
-//                            if($this->redis->get($key) == $random) {
-//                                $this->redis->delete($key); // 删除锁
-//                            }
-//                        }
-//                    }else{
-//
-//                    }
-//                }
-//            }
-//        }else{
-//            $this->cookies->set(
-//                "post_views",
-//                "some value",
-//                time() + 86400
-//            );
-//        }
-    }
-
 }
 
