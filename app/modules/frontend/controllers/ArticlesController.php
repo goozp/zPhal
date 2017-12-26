@@ -28,7 +28,7 @@ class ArticlesController extends ControllerBase
         ]);
 
         if ($post){
-            $this->visitCounter->calculate($post);
+            $this->visitCounter->calculate($post); // 访问量计算
 
             $this->tag->prependTitle($post->post_title . " - ");
 

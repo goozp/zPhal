@@ -26,6 +26,15 @@ class SubjectRelationships extends ModelBase
                 "alias" => "Subject",
             ]
         );
+
+        $this->belongsTo(
+            "object_id",
+            "ZPhal\\Models\\Posts",
+            "ID",
+            [
+                "alias" => "Post",
+            ]
+        );
     }
 
     public function afterCreate()

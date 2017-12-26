@@ -18,21 +18,19 @@
     echo $this->tag->stylesheetLink("themes/default/public/css/globals.css");
     ?>
 </head>
-<body>
-    <div class="container-fluid">
-        <!-- 加载header -->
-        <?php $this->partial("shared/header"); ?>
+<body class="d-flex flex-column">
+    <!-- 加载header -->
+    <?php $this->partial("shared/header"); ?>
 
-        <!-- 加载common模块 -->
-        <div class="content col-12">
-            <?php echo $this->getContent(); ?>
-        </div>
-
-        <!-- 加载footer -->
-        <footer class="footer col-12">
-            <?php $this->partial("shared/footer"); ?>
-        </footer>
+    <!-- 加载common模块 -->
+    <div class="content col-12 flex-grow">
+        <?php echo $this->getContent(); ?>
     </div>
+
+    <!-- 加载footer -->
+    <footer class="footer col-12">
+        <?php $this->partial("shared/footer"); ?>
+    </footer>
 
     <?php
         /* HTML尾部资源 */

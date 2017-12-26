@@ -9,10 +9,15 @@ body {
   font-size: 14px;
   font-family: "Lucida Grande", Lucida Sans Unicode, Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
 }
 
 .container-fluid{
   padding: 0;
+}
+
+.flex-grow {
+   flex: 1;
 }
 
 /* Links */
@@ -157,6 +162,9 @@ a:hover {
 /**
  * subject
  */
+.subject-body{
+  font-family: Segoe UI,Lucida Grande,Helvetica,Arial,Microsoft YaHei,FreeSans,Arimo,Droid Sans,wenquanyi micro hei,Hiragino Sans GB,Hiragino Sans GB W3,sans-serif;
+}
 .subject-body .card-title a{
   color: #000000;
 }

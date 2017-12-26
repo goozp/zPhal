@@ -57,6 +57,7 @@ $router->add("/article/{id:[0-9]+}.html",
         "id"     => 1,
     ]
 )->setName('article');
+
 $router->add("/subject/:params",
     [
         'module'     => 'frontend',
@@ -73,6 +74,7 @@ $router->add("/subject/item/:params",
         "params"   => 1,
     ]
 )->setName('subject-detail');
+
 $router->add("/archive",
     [
         'module'     => 'frontend',
@@ -102,6 +104,7 @@ $router->add('/login',
         'action'     => 'index',
     ]
 )->setName('admin-login');
+
 
 /**
  * 后台路由

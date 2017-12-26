@@ -213,3 +213,36 @@ if(!function_exists('getClientIp')){
         return "";
     }
 }
+
+if (!function_exists('calculateDateDiff')){
+    /**
+     * 计算时间差
+     *
+     * @param $before
+     * @return string
+     */
+    function calculateDateDiff($before)
+    {
+        if (!$before){
+            return "未知";
+        }
+
+        $startDate = strtotime($before);
+        $endDate = time();
+
+        $day = floor(($endDate-$startDate)/86400);
+        $hour= floor(($endDate-$startDate)%86400/3600);
+        $minute=floor(($endDate-$startDate)%86400/60);
+        $second=floor(($endDate-$startDate)%86400%60);
+
+        if ($day>=1){
+            return $day . " 天前";
+        }elseif($day<1 && $hour>=1){
+            return $hour . " 小时前";
+        }elseif($day<1 && $hour<1 && $minute>=1 ){
+            return $minute . " 分钟前";
+        }else{
+            return $second . " 秒前";
+        }
+    }
+}
