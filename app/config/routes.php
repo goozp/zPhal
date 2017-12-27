@@ -82,6 +82,7 @@ $router->add("/archive",
         'action'     => 'index',
     ]
 )->setName('archive');
+
 $router->add("/project",
     [
         'module'     => 'frontend',

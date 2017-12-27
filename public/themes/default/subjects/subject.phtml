@@ -1,23 +1,25 @@
-<nav aria-label="breadcrumb" role="navigation">
-    <ol class="breadcrumb bg-light">
-        <li class="breadcrumb-item"><a href="#">专题</a></li>
-        <li class="breadcrumb-item"><a href="#">PHP</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Phalcon</li>
-    </ol>
-</nav>
+<?php if ($self){ ?>
+<div class="subject-header card mb-3">
+    <div class="card-body">
+        <h4 class="card-title"><?= $self['subject_name'] ?></h4>
+        <p class="card-text text-muted"><?= $self['subject_description'] ?>
+            <a href="<?= $this->url->get(["for" => "subject", "params" => $parent ]) ?>" class="btn btn-sm btn-outline-dark card-link float-right"><i class="fa fa-rotate-left"></i> 返回上级</a>
+        </p>
+    </div>
+</div>
+<?php } ?>
 
 <div class="subject-body card-columns">
     <?php foreach ($subjects as $subject){ ?>
         <div class="card text-center">
-            <a href=""><?php echo $this->tag->image([
-                    $subject['subject_image'],
-                    "class"=>"card-img-top",
-                    "alt" => "Card image cap",
-                    "width" => 300,
-                    "height" => 150,
-                ]);?></a>
+            <?php echo $this->tag->image([
+                $subject['subject_image'],
+                "class"=>"card-img-top d-block",
+                "alt" => $subject['subject_slug'],
+                "height" => 180,
+            ]);?>
             <div class="card-body">
-                <h4 class="card-title"><a href=""><?= $subject['subject_name'] ?></a></h4>
+                <h4 class="card-title"><a href="<?= $subject['link'] ?>"><?= $subject['subject_name'] ?></a></h4>
                 <p class="card-subtitle mb-2 text-muted"><?= $subject['count'] ?> 篇文章</p>
                 <p class="card-text"><?= $subject['subject_description'] ?></p>
                 <a href="<?= $subject['link'] ?>" class="card-button btn btn-sm btn-outline-primary">查看专题</a>

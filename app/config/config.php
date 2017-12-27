@@ -26,9 +26,9 @@ return [
         'themesDir'      => THEMES_PATH. DIRECTORY_SEPARATOR, // 主题目录
         'uploadDir'      => BASE_PATH . DIRECTORY_SEPARATOR. 'public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR,
 
-        // 动态写法(不支持nginx配置public下为根目录):
+        // 动态URI动态写法(不支持nginx配置public下为根目录):
         // 'baseUri'        => preg_replace('/([\/\\\\])index.php$/', '', $_SERVER["PHP_SELF"]),
-        // 静态写法(需设置host或配置域名, 否则为/zPhal/等其它情况) :
+        // 动态URI静态写法(需设置host或配置域名, 否则为/zPhal/等其它情况) :
         'baseUri'        => '/',
     ],
 

@@ -171,6 +171,9 @@ a:hover {
 .subject-body .card-title a:hover{
   color: #2196F3;
 }
+.subject-body .card .card-img-top{
+  background-color: #F8F9FA;
+}
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {

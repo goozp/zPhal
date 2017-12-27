@@ -8,7 +8,7 @@ class SubjectRelationships extends ModelBase
 
     public $subject_id;
 
-    public $order;
+    public $order_num;
 
     /**
      * Initialize method for model.
