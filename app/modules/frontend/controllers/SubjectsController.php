@@ -71,7 +71,7 @@ class SubjectsController extends ControllerBase
 
         if ($subject){
 
-            // TODO 
+            // TODO
             $relations = $subject->SubjectRelation;
             $post = [];
             foreach ($relations as $item){
