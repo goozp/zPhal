@@ -5,6 +5,13 @@ namespace ZPhal\Library\Options;
 use Phalcon\Mvc\User\Plugin;
 use ZPhal\Models\Options;
 
+/**
+ * Options参数的redis缓存服务类
+ * TODO bug 不自动加载的配置没有读取，也就get不到
+ *
+ * Class Redis
+ * @package ZPhal\Library\Options
+ */
 class Redis extends Plugin
 {
 

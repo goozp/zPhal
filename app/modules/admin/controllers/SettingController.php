@@ -28,6 +28,7 @@ class SettingController extends ControllerBase
 
     /**
      * 保存常规设置
+     *
      * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
     public function saveGeneralAction()
@@ -66,6 +67,7 @@ class SettingController extends ControllerBase
 
     /**
      * 保存网站属性设置
+     *
      * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
     public function savePropertyAction()
@@ -112,6 +114,7 @@ class SettingController extends ControllerBase
 
     /**
      * 保存撰写设置
+     *
      * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
     public function saveWritingAction()
@@ -154,6 +157,7 @@ class SettingController extends ControllerBase
 
     /**
      * 保存阅读设置
+     *
      * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
     public function saveReadingAction()
@@ -196,6 +200,7 @@ class SettingController extends ControllerBase
 
     /**
      * 保存讨论设置
+     *
      * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
     public function saveDiscussAction()
@@ -239,13 +244,37 @@ class SettingController extends ControllerBase
 
     }
 
+    /**
+     * 作品配置
+     */
     public function projectAction()
     {
+        $this->tag->prependTitle("作品设置 - ");
 
+        $this->view->setVars(
+            [
+                'showProject' => $this->option->get('show_project'),
+                'GitHubUser' => $this->option->get('github_user'),
+            ]
+        );
     }
 
+    /**
+     * 保存作品配置
+     *
+     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     */
     public function saveProjectAction()
     {
+        try {
+            $this->option->save('show_project', $this->request->get('show_project'));
+            $this->option->save('github_user', $this->request->get('github_name', ['string', 'trim']));
 
+            $this->flash->success("保存成功!");
+            return $this->response->redirect("admin/setting/project");
+        } catch (\Exception $e) {
+            $this->flash->error('保存出错：' . $e);
+            return $this->response->redirect("admin/setting/project");
+        }
     }
 }

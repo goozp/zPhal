@@ -1,0 +1,52 @@
+<!-- 页头 -->
+<section class="content-header">
+    <div class="msgTip col-md-12">
+        <div class="row">
+            <?php $this->flash->output(); ?>
+        </div>
+    </div>
+    <h1>
+        作品
+        <small>设置要展示的作品（Github）</small>
+    </h1>
+</section>
+
+<!-- 主内容 -->
+<section class="content">
+    <div class="box box-default  box-solid">
+        <form class="form-horizontal" action="<?= $this->url->get("admin/setting/saveProject"); ?>" method="post">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">开启GitHub repo展示</label>
+
+                    <div class="col-sm-4">
+                        <div class="checkbox">
+                            <label>
+                                <input name="show_project" type="radio" value="1" <?php if ($showProject == 1) echo 'checked' ?>>
+                                是
+                            </label>
+                            <label>
+                                <input name="show_project" type="radio" value="0" <?php if ($showProject == 0) echo 'checked' ?>>
+                                否
+                            </label>
+                            <span class="help-block">是否开启GitHub repositories展示功能。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="site_name" class="col-sm-2 control-label">GitHub User</label>
+
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="github_name" placeholder="github 用户名" value="<?= $GitHubUser ?>">
+                        <span class="help-block">GitHub账户的用户名</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <button type="submit" class="btn bg-purple col-sm-offset-2">保存更改</button>
+            </div>
+        </form>
+    </div>
+</section>
