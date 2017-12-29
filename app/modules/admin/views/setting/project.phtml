@@ -10,10 +10,12 @@
         <small>设置要展示的作品（Github）</small>
     </h1>
 </section>
+<style>
 
+</style>
 <!-- 主内容 -->
 <section class="content">
-    <div class="box box-default  box-solid">
+    <div class="box box-default box-solid">
         <form class="form-horizontal" action="<?= $this->url->get("admin/setting/saveProject"); ?>" method="post">
             <div class="box-body">
                 <div class="form-group">
@@ -48,5 +50,61 @@
                 <button type="submit" class="btn bg-purple col-sm-offset-2">保存更改</button>
             </div>
         </form>
+    </div>
+
+    <div class="col-md-12 bg-gray">
+
+            <div class="row">
+                <h4 class="col-md-12">
+                    设置要展示的repo
+                    <small>将要展示的拖拽到右边</small>
+                </h4>
+
+                <div class="col-md-4">
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">所有repos</h3>
+                        </div>
+
+                        <div class="box-body">
+                            <div id="left-defaults" class="list-group">
+                                <?php if ($allRepo){ foreach ($allRepo as $item){ ?>
+                                    <div class="list-group-item">
+                                        <?= $item['full_name'] ?>
+                                        <input type="hidden" name="showRepo[]" value="<?= $item['full_name'] ?>">
+                                    </div>
+                                <?php } }else{ echo "获取失败；可能超过每日获取上限。"; }  ?>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <form class="form-horizontal" action="<?= $this->url->get("admin/setting/saveShowRepo"); ?>" method="post">
+                    <div class="col-md-4">
+                        <div class="box box-default">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">要展示的repos</h3>
+                            </div>
+
+                            <div class="box-body">
+                                <div id="right-defaults" class="list-group" style="min-height: 50px">
+                                    <?php if ($showRepo){ foreach ($showRepo as $item){ ?>
+                                        <div class="list-group-item">
+                                            <?= $item['full_name'] ?>
+                                            <input type="hidden" name="showRepo[]" value="<?= $item['full_name'] ?>">
+                                        </div>
+                                    <?php } } ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <button type="submit" class="btn bg-purple" style="margin-bottom: 10px">提交</button>
+                    </div>
+                </form>
+            </div>
+
     </div>
 </section>

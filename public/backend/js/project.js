@@ -1,0 +1,1 @@
+dragula([document.getElementById("left-defaults"), document.getElementById("right-defaults")]);

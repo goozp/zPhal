@@ -7,7 +7,6 @@ use ZPhal\Models\Options;
 
 /**
  * Options参数的redis缓存服务类
- * TODO bug 不自动加载的配置没有读取，也就get不到
  *
  * Class Redis
  * @package ZPhal\Library\Options
@@ -92,12 +91,41 @@ class Redis extends Plugin
     /**
      * 获取某个key对应的值
      *
-     * @param $key
-     * @return mixed
+     * @param string $key option key
+     * @param string $autoload 是否是自动加载option；默认为是
+     * @param bool $ifCache 如果是非自动加载option，读取后是否进行缓存；默认为是
+     * @return bool|mixed|\Phalcon\Mvc\Model\Resultset|\Phalcon\Mvc\Phalcon\Mvc\Model
      */
-    public function get($key)
+    public function get($key, $autoload=true, $ifCache=true)
     {
-        return self::$options[$key];
+        if ($autoload) {
+            return self::$options[$key];
+        } else {
+
+            if ($this->exist($key)){
+                return self::$options[$key];
+            }else{
+                $option = Options::findFirst(
+                    [
+                        "option_name = :name: AND autoload = 'no' ",
+                        "bind"       => [
+                            'name' => $key,
+                        ]
+                    ]
+                );
+
+                if ($option){
+                    if ($ifCache){
+                        $this->saveCache($key, $option->option_value);
+                    }
+
+                    return $option->option_value;
+                }else{
+
+                    return false;
+                }
+            }
+        }
     }
 
     /**
@@ -116,11 +144,11 @@ class Redis extends Plugin
      *
      * @param $key
      * @param $value
-     * @param string $autoload
+     * @param bool $autoload 是否自动加载；默认为否
      */
-    public function save($key, $value, $autoload='')
+    public function save($key, $value, $autoload=false)
     {
-        if (!empty($value)){
+        if (isset($value) && $value!=""){
             $option = Options::findFirst(
                 [
                     "option_name = :name: ",
@@ -132,20 +160,31 @@ class Redis extends Plugin
 
             if ($option){
                 $option->option_value = $value;
-                if ($autoload != ''){
-                    $option->autoload = $autoload;
+                if ($autoload){
+                    $option->autoload = Options::AUTO_YES;
+                }else{
+                    $option->autoload = Options::AUTO_NO;
                 }
                 $option->save();
             }else{
                 $option = new Options();
                 $option->option_name = $key;
                 $option->option_value = $value;
-                $option->autoload = $autoload ?: Options::AUTO_NO;
+                if ($autoload){
+                    $option->autoload = Options::AUTO_YES;
+                }else{
+                    $option->autoload = Options::AUTO_NO;
+                }
                 $option->create();
             }
 
             if ($option->autoload == Options::AUTO_YES){
                 self::saveCache($key, $value);
+            }else{
+                // 非自动缓存的先检查是否缓存中存在，存在的话刷新
+                if ($this->exist($key)){
+                    self::saveCache($key, $value);
+                }
             }
 
             return true;

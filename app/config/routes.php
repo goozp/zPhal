@@ -603,6 +603,13 @@ $router->add('/admin/setting/saveProject',
         'action'     => 'saveProject',
     ]
 );
+$router->add('/admin/setting/saveShowRepo',
+    [
+        'module'     => 'admin',
+        'controller' => 'setting',
+        'action'     => 'saveShowRepo',
+    ]
+);
 
 
 //$router->addGet('/404', 'Error::route404')->setName('error-404');

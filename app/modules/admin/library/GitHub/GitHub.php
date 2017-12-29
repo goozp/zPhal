@@ -2,23 +2,61 @@
 
 namespace ZPhal\Modules\Admin\Library\GitHub;
 
+/**
+ * Class GitHub
+ * TODO 加入获取OAUTH验证，增加可调用次数；深度封装
+ *
+ * @package ZPhal\Modules\Admin\Library\GitHub
+ */
 class GitHub{
 
     protected $baseUrl = 'https://api.github.com';
 
-    protected static $url;
-
-    public function __construct($username)
+    /**
+     * 获取用户的所有repo列表
+     *
+     * @param $userName
+     * @return bool|mixed
+     */
+    public function getRepoList($userName)
     {
-        self::$url = $this->baseUrl . '/' . $username;
+        $userUrl = $this->baseUrl . '/users/' . $userName;
+
+        $user = json_decode($this->cUrl($userUrl), true);
+        if (isset($user['message'])){
+            return false;
+        }
+
+        $repos = json_decode($this->cUrl($user['repos_url']), true);
+        if (isset($repos['message'])){
+            return false;
+        }
+        return $repos;
     }
 
-    public function get()
+    /**
+     * 获取repo的详细信息
+     *
+     * @param $repoName
+     * @return bool|mixed
+     */
+    public function getRepo($repoName)
     {
-        $content = $this->cUrl(self::$url);
-        print_r($content);
+        $repoUrl = $this->baseUrl . '/repos/' . $repoName;
+
+        $repo = json_decode($this->cUrl($repoUrl), true);
+        if (isset($repo['message'])){
+            return false;
+        }
+        return $repo;
     }
 
+    /**
+     * 调用接口获取数据
+     *
+     * @param $url
+     * @return mixed
+     */
     public function cUrl($url)
     {
         $ch = curl_init();
@@ -26,6 +64,7 @@ class GitHub{
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.2) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.2.149.27 Safari/525.13');
 
         //执行并获取HTML文档内容
         $output = curl_exec($ch);

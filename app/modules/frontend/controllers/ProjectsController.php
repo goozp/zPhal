@@ -7,13 +7,41 @@ class ProjectsController extends ControllerBase
     {
         parent::initialize();
 
-        $this->view->setTemplateAfter("product");
+        $this->view->setTemplateAfter("project");
+
+        /**
+         * widget for the template
+         */
+        $this->view->setVars([
+            'widgetCategory' => $this->widget->getCategoryList(),
+            'widgetNewArticle' => $this->widget->getNewArticles([
+                'ulClass' => 'fa-ul ml-4 mb-0',
+                'before' => '<i class="fa-li fa fa-angle-double-right"></i>'
+            ])
+        ]);
     }
 
     public function indexAction()
     {
         $this->tag->prependTitle('作品' . " - ");
 
+        if ($this->option->get('show_project')){
+            $ifShow = true;
+
+            $showRepos = $this->option->get('github_show_repo', false, true);
+            if ($showRepos){
+                $showRepos = json_decode($showRepos, true);
+            }
+
+
+        }else{
+            $ifShow = false;
+        }
+
+        $this->view->setVars([
+            'ifShow' => $ifShow,
+            'showRepos' => $showRepos,
+        ]);
     }
 
 }
