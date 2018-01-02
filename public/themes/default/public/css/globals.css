@@ -175,10 +175,80 @@ a:hover {
   background-color: #F8F9FA;
 }
 
+/**
+ * project
+ */
+.project-card-columns {
+  column-count: 1;
+}
+.project-card{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: #586069;
+  height: 150px;
+}
+.project-body{
+  height: 100%;
+}
+.project-title{
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+.project-link{
+  color: #0366D6;
+}
+.project-link:hover{
+  text-decoration: underline;
+}
+.project-description{
+  height: 50%;
+}
+.project-description,
+.project-meta{
+  font-size: 12px;
+}
+.project-language-PHP{
+  color:#4F5D95;
+}
+.project-language-go{
+  color:#375eab;
+}
+.project-language-JavaScript{
+  color:#f1e05a;
+}
+.project-language-Shell{
+  color:#89e051;
+}
+.project-language-Java{
+  color:#b07219;
+}
+.project-language-Python{
+  color:#3572A5;
+}
+.project-language-C\+\+{
+  color:#f34b7d;
+}
+.project-language-C\#{
+  color:#178600;
+}
+.project-language-C{
+  color:#555555;
+}
+.project-language-HTML{
+  color:#e34c26;
+}
+.project-language-CSS{
+  color:#563d7c;
+}
+
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
   .button-detail{
     border-left: solid 1px #DDDDDD;
+  }
+  .project-card-columns {
+    column-count: 2;
   }
 }
 

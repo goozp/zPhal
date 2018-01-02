@@ -2,7 +2,26 @@
 if ($ifShow){
     if ($showRepos){?>
 
-        <!-- TODO 展示 -->
+        <div class="card-columns project-card-columns">
+            <?php foreach ($showRepos as $repo){ ?>
+                <div class="card project-card">
+                    <div class="card-body project-body">
+                        <p class="card-title project-title"><a href="<?= $repo['html_url'] ?>" target="_blank" class="project-link"><?= $repo['full_name'] ?></a></p>
+                        <p class="card-text project-description"><?= $repo['description'] ?></p>
+                        <p class="card-text project-meta">
+                            <span class="mr-3"><i class="fa fa-circle project-language-<?= $repo['language'] ?>"></i>
+                            <?= $repo['language'] ?></span>
+
+                            <span class="mr-3"><i class="fa fa-star"></i>
+                            <?= $repo['watchers'] ?></span>
+
+                            <span class="mr-3"><i class="fa fa-code-fork"></i>
+                            <?= $repo['forks'] ?></span>
+                        </p>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
 
     <?php }else{?>
         <div>
