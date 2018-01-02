@@ -35,7 +35,7 @@ class ServiceProvider extends AbstractServiceProvider
                 $adapter = '\Phalcon\Cache\Backend\\' . $driver->adapter;
                 $default = [
                     'statsKey' => 'SVC:'.substr(md5($config->prefix), 0, 16).'_',
-                    'prefix'   => 'PVC_'.$config->prefix,
+                    'prefix'   => 'views'.$config->prefix,
                 ];
 
                 return new $adapter(

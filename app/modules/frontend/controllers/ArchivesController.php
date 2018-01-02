@@ -23,27 +23,39 @@ class ArchivesController extends ControllerBase
         ]);
     }
 
+    /**
+     * 归档页面
+     */
     public function indexAction()
     {
-        $this->tag->prependTitle('归档' . " - ");
+        if (!$this->view->getCache()->exists('archives')) {
 
-        $posts = Posts::find([
-            "conditions" => "post_status = 'publish' AND post_type = 'post' ",
-            "columns" => "ID, post_date, post_title, guid, comment_count",
-            "order" => "post_date DESC"
-        ])->toArray();
+            $this->tag->prependTitle('归档' . " - ");
+
+            $posts = Posts::find([
+                "conditions" => "post_status = 'publish' AND post_type = 'post' ",
+                "columns" => "ID, post_date, post_title, guid, comment_count",
+                "order" => "post_date DESC"
+            ])->toArray();
 
 
-        $arr = [];
-        foreach ($posts as $key => $post){
-            $date = $this->checkDate($post['post_date']);
-            $posts[$key]['theDay'] = $date['day'];
-            $arr[$date['year']][$date['month']][] = $posts[$key];
+            $arr = [];
+            foreach ($posts as $key => $post){
+                $date = $this->checkDate($post['post_date']);
+                $posts[$key]['theDay'] = $date['day'];
+                $arr[$date['year']][$date['month']][] = $posts[$key];
+            }
+
+            $this->view->setVars([
+                'list' => $arr,
+            ]);
         }
 
-        $this->view->setVars([
-            'list' => $arr,
-        ]);
+        $this->view->cache(
+            [
+                'key' => 'archives',
+            ]
+        );
     }
 
     /**

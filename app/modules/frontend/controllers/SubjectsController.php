@@ -30,48 +30,55 @@ class SubjectsController extends ControllerBase
      */
     public function subjectAction($parent=0)
     {
-        $this->tag->prependTitle('专题' . " - ");
+        if (!$this->view->getCache()->exists('subject-'.$parent)) {
 
-        // Get Breadcrumb
+            $this->tag->prependTitle('专题' . " - ");
 
-        $subjects = Subjects::find([
-            "parent = ?1",
-            "bind"       => [
-                1 => $parent,
-            ]
-        ])->toArray();
-
-        if ($subjects){
-            foreach ($subjects as $key => $subject){
-                $subjects[$key]['last_updated'] = calculateDateDiff($subject['last_updated']);
-                $subjects[$key]['link'] = $this->url->get(["for"=>"subject", "params" => $subject['subject_id']]);
-            }
-
-            // Get self Info
-            if ($parent>0){
-                $self = Subjects::findFirst($parent);
-                if ($self){
-                    $self = $self->toArray();
-                }
-            }else{
-                $self = false;
-            }
-
-            $this->view->setVars([
-                'self' => $self,
-                'subjects' => $subjects,
-            ]);
-        }else{
-            $this->dispatcher->forward(
-                [
-                    "controller" => "subjects",
-                    "action" => "detail",
-                    [
-                        "params"    => $parent
-                    ]
+            $subjects = Subjects::find([
+                "parent = ?1",
+                "bind"       => [
+                    1 => $parent,
                 ]
-            );
+            ])->toArray();
+
+            if ($subjects){
+                foreach ($subjects as $key => $subject){
+                    $subjects[$key]['last_updated'] = calculateDateDiff($subject['last_updated']);
+                    $subjects[$key]['link'] = $this->url->get(["for"=>"subject", "params" => $subject['subject_id']]);
+                }
+
+                // Get self Info
+                if ($parent>0){
+                    $self = Subjects::findFirst($parent);
+                    if ($self){
+                        $self = $self->toArray();
+                    }
+                }else{
+                    $self = false;
+                }
+
+                $this->view->setVars([
+                    'self' => $self,
+                    'subjects' => $subjects,
+                ]);
+            }else{
+                $this->dispatcher->forward(
+                    [
+                        "controller" => "subjects",
+                        "action" => "detail",
+                        [
+                            "params"    => $parent
+                        ]
+                    ]
+                );
+            }
         }
+
+        $this->view->cache(
+            [
+                'key' => 'subject-'.$parent,
+            ]
+        );
     }
 
     /**

@@ -3,7 +3,7 @@
     <div class="card-body">
         <h4 class="card-title"><?= $self['subject_name'] ?></h4>
         <p class="card-text text-muted"><?= $self['subject_description'] ?>
-            <a href="<?= $this->url->get(["for" => "subject", "params" => $parent ]) ?>" class="btn btn-sm btn-outline-dark card-link float-right"><i class="fa fa-rotate-left"></i> 返回上级</a>
+            <a href="<?= $this->url->get(["for" => "subject", "params" => $self['parent'] ]) ?>" class="btn btn-sm btn-outline-dark card-link float-right"><i class="fa fa-rotate-left"></i> 返回上级</a>
         </p>
     </div>
 </div>

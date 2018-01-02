@@ -23,25 +23,34 @@ class ProjectsController extends ControllerBase
 
     public function indexAction()
     {
-        $this->tag->prependTitle('作品' . " - ");
+        if (!$this->view->getCache()->exists('projects')) {
 
-        if ($this->option->get('show_project')){
-            $ifShow = true;
+            $this->tag->prependTitle('作品' . " - ");
 
-            $showRepos = $this->option->get('github_show_repo', false, true);
-            if ($showRepos){
-                $showRepos = json_decode($showRepos, true);
+            if ($this->option->get('show_project')){
+                $ifShow = true;
+
+                $showRepos = $this->option->get('github_show_repo', false, true);
+                if ($showRepos){
+                    $showRepos = json_decode($showRepos, true);
+                }
+
+
+            }else{
+                $ifShow = false;
             }
 
-
-        }else{
-            $ifShow = false;
+            $this->view->setVars([
+                'ifShow' => $ifShow,
+                'showRepos' => $showRepos,
+            ]);
         }
 
-        $this->view->setVars([
-            'ifShow' => $ifShow,
-            'showRepos' => $showRepos,
-        ]);
+        $this->view->cache(
+            [
+                'key' => 'projects',
+            ]
+        );
     }
 
 }
