@@ -123,6 +123,7 @@ class ArticlesController extends ControllerBase
                 $tocGenerator = new \TOC\TocGenerator();
                 $post['post_date'] = date('Y-m-d H:i', strtotime($post['post_date']));
                 $post['post_html_content'] = $markupFixer->fix($post['post_html_content']);
+                $post['guid'] = $this->option->get('siteurl').$post['guid'];
                 $post['toc'] = $tocGenerator->getHtmlMenu($post['post_html_content']);
 
                 $this->view->setVars([
