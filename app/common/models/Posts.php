@@ -235,6 +235,9 @@ class Posts extends ModelBase
         return false;
     }
 
+    /**
+     * 清除缓存
+     */
     public function clearCache()
     {
         if ($this->ID) {
@@ -244,18 +247,17 @@ class Posts extends ModelBase
 
                 $viewCache->delete('articles-'. $this->ID);
 
+                // TODO 这里失败
+//                $keys = $viewCache->queryKeys();
+//
+//                foreach ($keys as $key) {
+//                    $viewCache->delete($key);
+//                }
+
             } elseif ($this->post_type == 'page'){
 
                 $viewCache->delete('pages-'. $this->post_name);
             }
-
-            $keys = $viewCache->queryKeys('index');
-            $keys = $viewCache->queryKeys('');
-print_r($keys);
-//            foreach ($keys as $key) {
-//                $cache->delete($key);
-//            }
-            exit;
         }
     }
 }

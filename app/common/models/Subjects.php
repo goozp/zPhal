@@ -73,6 +73,22 @@ class Subjects extends ModelBase
     }
 
     /**
+     * 保存之后
+     */
+    public function afterSave()
+    {
+        $this->clearCache();
+    }
+
+    /**
+     * 删除之后
+     */
+    public function afterDelete()
+    {
+        $this->clearCache();
+    }
+
+    /**
      * 获取上次更新时间
      * @return string
      */
@@ -136,5 +152,14 @@ class Subjects extends ModelBase
         if ($update->parent>0){
             $this->updateDeleteStatus($update->parent);
         }
+    }
+
+    /**
+     * 清除缓存
+     */
+    public function clearCache()
+    {
+        $viewCache = $this->getDI()->getShared('viewCache');
+        $viewCache->delete('subject-'. $this->parent);
     }
 }

@@ -290,6 +290,9 @@ class SettingController extends ControllerBase
             $this->option->save('show_project', $this->request->get('show_project'), true);
             $this->option->save('github_user', $this->request->get('github_name', ['string', 'trim']));
 
+            $viewCache = $this->getDI()->getShared('viewCache');
+            $viewCache->delete('projects');
+
             $this->flash->success("保存成功!");
             return $this->response->redirect("admin/setting/project");
         } catch (\Exception $e) {
@@ -325,6 +328,9 @@ class SettingController extends ControllerBase
                 }
             }
             $this->option->save('github_show_repo', json_encode($arr));
+
+            $viewCache = $this->getDI()->getShared('viewCache');
+            $viewCache->delete('projects');
 
             $this->flash->success("保存成功!");
             return $this->response->redirect("admin/setting/project");
