@@ -135,6 +135,21 @@ class Posts extends ModelBase
         return 'zp_posts';
     }
 
+    /**
+     * 保存之后
+     */
+    public function afterSave()
+    {
+        $this->clearCache();
+    }
+
+    /**
+     * 删除之后
+     */
+    public function afterDelete()
+    {
+        $this->clearCache();
+    }
 
     /**
      * 生成url
@@ -218,5 +233,29 @@ class Posts extends ModelBase
         }
 
         return false;
+    }
+
+    public function clearCache()
+    {
+        if ($this->ID) {
+            $viewCache = $this->getDI()->getShared('viewCache');
+
+            if ($this->post_type == 'post'){
+
+                $viewCache->delete('articles-'. $this->ID);
+
+            } elseif ($this->post_type == 'page'){
+
+                $viewCache->delete('pages-'. $this->post_name);
+            }
+
+            $keys = $viewCache->queryKeys('index');
+            $keys = $viewCache->queryKeys('');
+print_r($keys);
+//            foreach ($keys as $key) {
+//                $cache->delete($key);
+//            }
+            exit;
+        }
     }
 }

@@ -1,0 +1,3 @@
+data/*
+views/*
+!.gitignore
