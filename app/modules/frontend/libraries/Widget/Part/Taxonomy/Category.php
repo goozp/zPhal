@@ -15,10 +15,25 @@ class Category extends Taxonomy
      */
     public function getList()
     {
-        // get data without uncategory(1)
-        $categoryList = $this->query(self::$type, [1]);
+        $cache_key = 'widget-taxonomy-category-list';
+        $modelsCache = container('modelsCache');
 
-        return $this->layout($categoryList)['html'];
+        if ($modelsCache && $modelsCache->exists($cache_key)){
+
+            $output = $modelsCache->get($cache_key);
+            return $output;
+
+        }else{
+
+            // get data without uncategory(1)
+            $categoryList = $this->query(self::$type, [1]);
+
+            $output = $this->layout($categoryList)['html'];
+
+            $modelsCache->save($cache_key, $output); // save the cache
+
+            return $output;
+        }
     }
 
     /**

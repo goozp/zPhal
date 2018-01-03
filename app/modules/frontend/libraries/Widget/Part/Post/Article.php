@@ -13,23 +13,37 @@ class Article extends Post
      *
      * @param $extra
      * @param $num
-     * @return bool|string
+     * @return bool|mixed|string
      */
     public function getNewList($extra, $num)
     {
-        $post = parent::$modelsManager->createBuilder()
-            ->columns("ID, post_title, post_date, guid")
-            ->from('ZPhal\Models\Posts')
-            ->where("post_status = 'publish' AND post_type = 'post' ")
-            ->orderBy("post_date DESC")
-            ->limit($num)
-            ->getQuery()
-            ->execute();
+        $cache_key = 'widget-articles-new-list';
+        $modelsCache = container('modelsCache');
 
-        if ($post){
-            return $this->getLayout($post->toArray(), $extra);
+        if ($modelsCache && $modelsCache->exists($cache_key)){
+
+            $output = $modelsCache->get($cache_key);
+            return $output;
+
         }else{
-            return false;
+            $post = parent::$modelsManager->createBuilder()
+                ->columns("ID, post_title, post_date, guid")
+                ->from('ZPhal\Models\Posts')
+                ->where("post_status = 'publish' AND post_type = 'post' ")
+                ->orderBy("post_date DESC")
+                ->limit($num)
+                ->getQuery()
+                ->execute();
+
+            if ($post){
+                $output = $this->getLayout($post->toArray(), $extra);
+
+                $modelsCache->save($cache_key, $output); // save the cache
+
+                return $output;
+            }else{
+                return false;
+            }
         }
     }
 }

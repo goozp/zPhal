@@ -40,7 +40,7 @@ class ServiceProvider extends AbstractServiceProvider
                             "lifetime" => $config->lifetime,
                         ]
                     ),
-                    array_merge($driver->toArray())
+                    $driver->toArray()
                 );
 
                 return $redis;

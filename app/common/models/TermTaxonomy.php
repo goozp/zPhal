@@ -62,6 +62,22 @@ class TermTaxonomy extends ModelBase
     }
 
     /**
+     * 保存之后
+     */
+    public function afterSave()
+    {
+        $this->clearCache();
+    }
+
+    /**
+     * 删除之后
+     */
+    public function afterDelete()
+    {
+        $this->clearCache();
+    }
+
+    /**
      * 获取父id
      * @return mixed
      */
@@ -87,5 +103,36 @@ class TermTaxonomy extends ModelBase
             }
         }
         return $allId;
+    }
+
+    /**
+     * 清除缓存
+     */
+    public function clearCache()
+    {
+        /**
+         * 清除view缓存
+         */
+        $viewCache = $this->getDI()->getShared('viewCache');
+
+        $keys = $viewCache->queryKeys('index');
+        if ($keys){
+            foreach ($keys as $key) {
+                $viewCache->delete($key);
+            }
+        }
+
+        $keys = $viewCache->queryKeys('taxonomy');
+        if ($keys){
+            foreach ($keys as $key) {
+                $viewCache->delete($key);
+            }
+        }
+
+        /**
+         * 清除data缓存
+         */
+        $modelsCache = $this->getDI()->getShared('modelsCache');
+        $modelsCache->delete('widget-taxonomy-category-list'); // widget
     }
 }

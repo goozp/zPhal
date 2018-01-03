@@ -241,23 +241,48 @@ class Posts extends ModelBase
     public function clearCache()
     {
         if ($this->ID) {
+
+            /**
+             * 清除view缓存
+             */
             $viewCache = $this->getDI()->getShared('viewCache');
 
             if ($this->post_type == 'post'){
 
                 $viewCache->delete('articles-'. $this->ID);
+                $viewCache->delete('archives');
 
-                // TODO 这里失败
-//                $keys = $viewCache->queryKeys();
-//
-//                foreach ($keys as $key) {
-//                    $viewCache->delete($key);
-//                }
+                $keys = $viewCache->queryKeys('index');
+                if ($keys){
+                    foreach ($keys as $key) {
+                        $viewCache->delete($key);
+                    }
+                }
+
+                $keys = $viewCache->queryKeys('taxonomy');
+                if ($keys){
+                    foreach ($keys as $key) {
+                        $viewCache->delete($key);
+                    }
+                }
+
+                $keys = $viewCache->queryKeys('subject');
+                if ($keys){
+                    foreach ($keys as $key) {
+                        $viewCache->delete($key);
+                    }
+                }
 
             } elseif ($this->post_type == 'page'){
 
                 $viewCache->delete('pages-'. $this->post_name);
             }
+
+            /**
+             * 清除data缓存
+             */
+            $modelsCache = $this->getDI()->getShared('modelsCache');
+            $modelsCache->delete('widget-articles-new-list'); // widget
         }
     }
 }

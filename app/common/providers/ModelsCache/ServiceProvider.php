@@ -33,10 +33,17 @@ class ServiceProvider extends AbstractServiceProvider
 
                 $driver  = $config->drivers->{$config->default};
                 $adapter = '\Phalcon\Cache\Backend\\' . $driver->adapter;
-                $default = [
-                    'statsKey' => 'SMC:'.substr(md5($config->prefix), 0, 16).'_',
-                    'prefix'   => 'PMC_'.$config->prefix,
-                ];
+
+                if ($driver->adapter == 'Redis'){
+                    $default = [
+                        'statsKey' => 'SMC:'.substr(md5($config->prefix), 0, 16).'_',
+                        'prefix'   => 'ZD_'.$config->prefix,
+                    ];
+                }else{
+                    $default = [
+                        'prefix'   => 'ZD_'.$config->prefix,
+                    ];
+                }
 
                 return new $adapter(
                     new Data(['lifetime' => $config->lifetime]),
