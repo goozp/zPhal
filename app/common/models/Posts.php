@@ -37,8 +37,6 @@ class Posts extends ModelBase
 
     public $post_type;
 
-    public $post_mime_type;
-
     public $comment_count;
 
     public $view_count;
