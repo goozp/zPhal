@@ -1,5 +1,7 @@
 .idea
 .phalcon
 .env
+/cache/*
 /public/robots.txt
 /public/sitemap.xml
+/public/uploads/*

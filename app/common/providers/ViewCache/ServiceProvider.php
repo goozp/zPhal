@@ -34,6 +34,10 @@ class ServiceProvider extends AbstractServiceProvider
                 $driver  = $config->drivers->{$config->views};
                 $adapter = '\Phalcon\Cache\Backend\\' . $driver->adapter;
 
+                if (!file_exists($driver->cacheDir)) {
+                    mkdir($driver->cacheDir, 0777, true);
+                }
+
                 return new $adapter(
                     new Output(['lifetime' => $config->lifetime]),
                     $driver->toArray()

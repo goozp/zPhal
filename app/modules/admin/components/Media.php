@@ -44,8 +44,12 @@ class Media implements EventsAwareInterface
         $config = Di::getDefault()->getConfig();
         $uploadBaseDir = $config->application->uploadDir; // 上传路径
 
+        if (!file_exists($uploadBaseDir)) {
+            mkdir($uploadBaseDir, 0777);
+        }
+
         if ($uploadType == 'resource') {
-            //当前时间
+            // 当前时间
             $now = time();
             $year = date('Y', $now);
             $month = date('m', $now);

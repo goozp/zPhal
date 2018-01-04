@@ -40,6 +40,10 @@ class ServiceProvider extends AbstractServiceProvider
                         'prefix'   => 'ZD_'.$config->prefix,
                     ];
                 }else{
+                    if (!file_exists($driver->cacheDir)) {
+                        mkdir($driver->cacheDir, 0777, true);
+                    }
+
                     $default = [
                         'prefix'   => 'ZD_'.$config->prefix,
                     ];
