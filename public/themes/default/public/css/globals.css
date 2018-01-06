@@ -345,7 +345,7 @@ a:hover {
 
   #custom-toc-container{
     overflow:auto;
-    height: 88vh;
+    max-height: 88vh;
   }
   #custom-toc-container a
   {

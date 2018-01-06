@@ -79,7 +79,7 @@ class ArticlesController extends ControllerBase
 
                 /* 静态资源 */
                 $this->assets->addCss("backend/library/github-markdown-css/github-markdown.css", true); // markdown样式
-                $this->assets->addCss("backend/library/highlight/styles/Github.css", true); // 代码高亮highlight主题; TODO 可配置
+                $this->assets->addCss("backend/library/highlight/styles/github.css", true); // 代码高亮highlight主题; TODO 可配置
                 $this->assets->addCss("backend/library/katex/katex.min.css", true); // 科学公式KaTeX
 
                 $this->assets->addJs("backend/library/highlight/highlight.pack.js", true); // 代码高亮highlight
@@ -124,7 +124,7 @@ class ArticlesController extends ControllerBase
                 $post['post_date'] = date('Y-m-d H:i', strtotime($post['post_date']));
                 $post['post_html_content'] = $markupFixer->fix($post['post_html_content']);
                 $post['guid'] = $this->option->get('siteurl').$post['guid'];
-                $post['toc'] = $tocGenerator->getHtmlMenu($post['post_html_content']);
+                $post['toc'] = $tocGenerator->getHtmlMenu($post['post_html_content']) ?: '无';
 
                 $this->view->setVars([
                     'post' => $post,
