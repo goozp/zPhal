@@ -281,6 +281,7 @@ class Posts extends ModelBase
              */
             $modelsCache = $this->getDI()->getShared('modelsCache');
             $modelsCache->delete('widget-articles-new-list'); // widget
+            $modelsCache->delete('article-'. $this->ID); // widget
         }
     }
 }

@@ -227,7 +227,7 @@ if (!function_exists('calculateDateDiff')){
             return "未知";
         }
 
-        if($before = '1000-01-01 00:00:00'){
+        if($before == '1000-01-01 00:00:00'){
             return '暂无';
         }
 

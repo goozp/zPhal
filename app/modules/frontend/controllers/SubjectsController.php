@@ -61,6 +61,12 @@ class SubjectsController extends ControllerBase
                     'self' => $self,
                     'subjects' => $subjects,
                 ]);
+
+                $this->view->cache(
+                    [
+                        'key' => 'subject-'.$parent,
+                    ]
+                );
             }else{
                 $this->dispatcher->forward(
                     [
@@ -72,13 +78,13 @@ class SubjectsController extends ControllerBase
                     ]
                 );
             }
+        }else{
+            $this->view->cache(
+                [
+                    'key' => 'subject-'.$parent,
+                ]
+            );
         }
-
-        $this->view->cache(
-            [
-                'key' => 'subject-'.$parent,
-            ]
-        );
     }
 
     /**
@@ -115,6 +121,12 @@ class SubjectsController extends ControllerBase
                 'subjectDescription' => $subject->subject_description,
                 'parent' => $subject->parent
             ]);
+
+            $this->view->cache(
+                [
+                    'key' => 'subject-'.$id,
+                ]
+            );
         }else{
             $this->dispatcher->forward(
                 [
@@ -124,5 +136,4 @@ class SubjectsController extends ControllerBase
             );
         }
     }
-
 }

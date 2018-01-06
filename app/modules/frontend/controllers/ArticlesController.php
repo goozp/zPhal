@@ -20,16 +20,19 @@ class ArticlesController extends ControllerBase
      */
     public function indexAction($id)
     {
-        if (!$this->view->getCache()->exists('articles-'.$id)) {
-            $post = Posts::findFirst([
-                "conditions" => "ID = ?1 AND post_status = 'publish' AND post_type = 'post' ",
-                "bind"       => [
-                    1 => $id,
-                ]
-            ]);
+        $post = Posts::findFirst([
+            "conditions" => "ID = ?1 AND post_status = 'publish' AND post_type = 'post' ",
+            "bind"       => [
+                1 => $id,
+            ],
+            "cache" => ["key" => "article-".$id]
+        ]);
 
-            if ($post){
-                $this->visitCounter->calculate($post); // 访问量计算
+        if ($post) {
+
+            $this->visitCounter->calculate($post); // 访问量计算
+
+            if (!$this->view->getCache()->exists('articles-'.$id)) {
 
                 $this->tag->prependTitle($post->post_title . " - ");
 
@@ -136,22 +139,21 @@ class ArticlesController extends ControllerBase
                     'coverDescription' => $coverDescription,
                     'coverKeywords' => $coverKeywords,
                 ]);
-
-            }else{
-                $this->dispatcher->forward(
-                    [
-                        "controller" => "error",
-                        "action"    => "route404"
-                    ]
-                );
             }
-        }
 
-        $this->view->cache(
-            [
-                'key' => 'articles-'.$id,
-            ]
-        );
+            $this->view->cache(
+                [
+                    'key' => 'articles-'.$id,
+                ]
+            );
+        }else{
+            $this->dispatcher->forward(
+                [
+                    "controller" => "error",
+                    "action"    => "route404"
+                ]
+            );
+        }
     }
 }
 

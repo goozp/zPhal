@@ -24,52 +24,69 @@ class PagesController extends ControllerBase
         ]);
     }
 
+    /**
+     * 页面
+     *
+     * @param string $param
+     */
     public function indexAction($param='')
     {
-        if ($param!= '' && !$this->view->getCache()->exists('pages-'.$param)) {
+        if ($param != ''){
             $post = Posts::findFirst([
                 "conditions" => "post_name = ?1 AND post_status = 'publish' AND post_type = 'page'",
                 "bind"       => [
                     1 => $param,
-                ]
+                ],
+                "cache" => ["key" => "page-".$param]
             ]);
 
             if ($post){
                 $this->visitCounter->calculate($post); // 访问量计算
 
-                $this->tag->prependTitle($post->post_title . " - ");
+                if (!$this->view->getCache()->exists('pages-'.$param)) {
 
-                /**
-                 * Get postmeta
-                 */
-                $postMeta =  $post->PostMeta->toArray();
+                    $this->tag->prependTitle($post->post_title . " - ");
 
-                $newPostMeta = [];
-                foreach ($postMeta as $meta){
-                    $newPostMeta[$meta['meta_key']] = $meta['meta_value'];
+                    /**
+                     * Get postmeta
+                     */
+                    $postMeta =  $post->PostMeta->toArray();
+
+                    $newPostMeta = [];
+                    foreach ($postMeta as $meta){
+                        $newPostMeta[$meta['meta_key']] = $meta['meta_value'];
+                    }
+
+                    /**
+                     * make description
+                     */
+                    if (isset($newPostMeta['description']) && !empty($newPostMeta['description'])){
+                        $coverDescription = $newPostMeta['description'];
+                    }else{
+                        $coverDescription = null;
+                    }
+
+                    $post = $post->toArray();
+                    $post['post_date'] = date('Y-m-d H:i', strtotime($post['post_date']));
+
+                    $this->view->setVars([
+                        'post' => $post,
+                        'postMeta' => $newPostMeta,
+                        'coverDescription' => $coverDescription,
+                    ]);
+
+                    /**
+                     * TODO 判断$newPostMeta['_zp_page_template']赋值到不同的模板
+                     */
+
+
                 }
 
-                /**
-                 * make description
-                 */
-                if (isset($newPostMeta['description']) && !empty($newPostMeta['description'])){
-                    $coverDescription = $newPostMeta['description'];
-                }else{
-                    $coverDescription = null;
-                }
-
-                $post = $post->toArray();
-                $post['post_date'] = date('Y-m-d H:i', strtotime($post['post_date']));
-
-                $this->view->setVars([
-                    'post' => $post,
-                    'postMeta' => $newPostMeta,
-                    'coverDescription' => $coverDescription,
-                ]);
-
-                /**
-                 * TODO 判断$newPostMeta['_zp_page_template']赋值到不同的模板
-                 */
+                $this->view->cache(
+                    [
+                        'key' => 'pages-'.$param,
+                    ]
+                );
 
             }else{
                 $this->dispatcher->forward(
@@ -80,12 +97,6 @@ class PagesController extends ControllerBase
                 );
             }
         }
-
-        $this->view->cache(
-            [
-                'key' => 'pages-'.$param,
-            ]
-        );
     }
 
 }
