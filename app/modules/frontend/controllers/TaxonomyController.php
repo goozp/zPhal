@@ -115,12 +115,13 @@ class TaxonomyController extends ControllerBase
                 }
 
                 //set title
+                $preTitle = isset($postList[0]['taxonomy_name']) ? $postList[0]['taxonomy_name'] : $param;
                 if($type == 'category'){
-                    $this->tag->prependTitle($postList[0]['taxonomy_name'].' - 分类' . " - ");
+                    $this->tag->prependTitle($preTitle.' - 分类' . " - ");
                 }elseif($type == 'tag'){
-                    $this->tag->prependTitle($postList[0]['taxonomy_name'].' - 标签' . " - ");
+                    $this->tag->prependTitle($preTitle.' - 标签' . " - ");
                 }else{
-                    $this->tag->prependTitle($postList[0]['taxonomy_name']. " - ");
+                    $this->tag->prependTitle($preTitle. " - ");
                 }
 
 
