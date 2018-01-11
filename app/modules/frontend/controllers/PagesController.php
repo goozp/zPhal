@@ -69,6 +69,9 @@ class PagesController extends ControllerBase
                     $post = $post->toArray();
                     $post['post_date'] = date('Y-m-d H:i', strtotime($post['post_date']));
 
+                    /* 静态资源 */
+                    $this->assets->addCss("backend/library/github-markdown-css/github-markdown.css", true); // markdown样式
+
                     $this->view->setVars([
                         'post' => $post,
                         'postMeta' => $newPostMeta,

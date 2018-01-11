@@ -240,10 +240,8 @@ class Posts extends ModelBase
     {
         if ($this->ID) {
 
-            /**
-             * 清除view缓存
-             */
-            $viewCache = $this->getDI()->getShared('viewCache');
+            $viewCache = $this->getDI()->getShared('viewCache'); // view 缓存
+            $modelsCache = $this->getDI()->getShared('modelsCache');  // data 缓存
 
             if ($this->post_type == 'post'){
 
@@ -271,17 +269,17 @@ class Posts extends ModelBase
                     }
                 }
 
+                $modelsCache->delete('widget-articles-new-list'); // widget
+                $modelsCache->delete('article-'. $this->ID); // widget
+
             } elseif ($this->post_type == 'page'){
 
                 $viewCache->delete('pages-'. $this->post_name);
+
+                $modelsCache->delete('page-'. $this->post_name);            
             }
 
-            /**
-             * 清除data缓存
-             */
-            $modelsCache = $this->getDI()->getShared('modelsCache');
-            $modelsCache->delete('widget-articles-new-list'); // widget
-            $modelsCache->delete('article-'. $this->ID); // widget
+            
         }
     }
 }
