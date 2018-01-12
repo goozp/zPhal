@@ -22,32 +22,29 @@
         <!--<a class="navbar-brand" href="#">Navbar</a>-->
         <div class="collapse navbar-collapse col-md-10" id="navbarNavDropdown">
             <ul class="navbar-nav">
-                <li class="nav-item active">
+           
+                <li class="nav-item <?php if($this->router->getRewriteUri() == $this->url->get(["for"=>"index"])) echo 'active'  ?>">
                     <a class="nav-link" href="<?= $this->url->get(["for"=>"index"]); ?>"><i class="fa fa-home"></i> 首页 <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item <?php if($this->router->getRewriteUri() == $this->url->get(["for"=>"subject"])) echo 'active'  ?>">
                     <a class="nav-link" href="<?= $this->url->get(["for"=>"subject"]); ?>"><i class="fa fa-flask"></i> 专题</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item <?php if($this->router->getRewriteUri() == $this->url->get(["for"=>"archive"])) echo 'active'  ?>">
                     <a class="nav-link" href="<?= $this->url->get(["for"=>"archive"]); ?>"><i class="fa fa-archive"></i> 归档</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item <?php if($this->router->getRewriteUri() == $this->url->get(["for"=>"project"])) echo 'active'  ?>">
                     <a class="nav-link" href="<?= $this->url->get(["for"=>"project"]); ?>"><i class="fa fa-github-alt"></i> 作品</a>
                 </li>
                 <!--<li class="nav-item">
                     <a class="nav-link" href="#"><i class="fa fa-fire"></i> 工具</a>
                 </li>-->
-                <li class="nav-item">
+                <li class="nav-item <?php if($this->router->getRewriteUri() == $this->url->get(["for"=>"link"])) echo 'active'  ?>">
                     <a class="nav-link" href="<?= $this->url->get(["for"=>"link"]); ?>"><i class="fa fa-link"></i> 友链</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li class="nav-item <?php if($this->router->getRewriteUri() == $this->url->get(["for"=>"page", "param" => 'about-me'])) echo 'active'  ?>">
+                    <a class="nav-link" href="<?= $this->url->get(["for"=>"page", "param" => 'about-me']); ?>">
                         <i class="fa fa-leaf"></i> 关于
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">关于我</a>
-                        <a class="dropdown-item" href="#">本博客</a>
-                    </div>
                 </li>
             </ul>
         </div>
