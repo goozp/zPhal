@@ -5,15 +5,15 @@
 
     <?php
     if ($list){ ?>
-    <ul class="list-group">
+    <ul class="list-group" id="archives">
         <?php foreach ($list as $yearKey => $year){ ?>
             <li class="list-group-item border-0">
                 <h4 class="mb-2"><?= $yearKey ?> 年</h4>
                 <ul class="list-group p-1">
                     <?php foreach ($year as $monthKey => $month){ ?>
-                        <li class="list-group-item archive-month pb-4 pt-4">
+                        <li class="list-group-item archive-month border border-1">
                             <h5><?= $monthKey ?> 月<small class="float-right text-muted"><?= count($month) ?> 篇文章</small></h5>
-                            <ul class="list-group list-group-flush">
+                            <ul class="list-group list-group-flush month_items">
                                 <?php foreach ($month as $day) { ?>
                                     <li class="list-group-item">
                                         <?= $day['theDay'] ?> 日：<a href="<?= $day['guid'] ?>"><?= $day['post_title'] ?></a>

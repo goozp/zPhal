@@ -10,11 +10,11 @@
     </div>
 </div>
 
-<div class="list-group">
+<div class="subject-detail-body list-group">
     <?php foreach ($posts as $post){ ?>
         <a href="<?= $post['guid'] ?>" class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1"><?= $post['post_title'] ?></h5>
+                <h5 class="subject-detail-title mb-1"><?= $post['post_title'] ?></h5>
                 <small><?= date('Y-m-d H:i', strtotime($post['post_date'])); ?></small>
             </div>
             <p class="mb-1"><?= articleExcerpt($post['post_html_content'], 150) ?></p>

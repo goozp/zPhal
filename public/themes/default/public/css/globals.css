@@ -165,7 +165,8 @@ a:hover {
 .subject-body{
   font-family: Segoe UI,Lucida Grande,Helvetica,Arial,Microsoft YaHei,FreeSans,Arimo,Droid Sans,wenquanyi micro hei,Hiragino Sans GB,Hiragino Sans GB W3,sans-serif;
 }
-.subject-body .card-title a{
+.subject-body .card-title a,
+.subject-detail-title{
   color: #000000;
 }
 .subject-body .card-title a:hover{
