@@ -242,6 +242,10 @@ a:hover {
   color:#563d7c;
 }
 
+/* 返回顶部 */
+.bottom-tools{
+  display: none;
+}
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
@@ -354,6 +358,31 @@ a:hover {
   }
   #custom-toc-container ul{
     padding-left: 20px;
+  }
+
+  /* 返回顶部 */
+  .bottom-tools{
+    display: none;
+    position: fixed;
+    bottom: 100px;
+    right: 15px;
+    border-radius: 5px;
+    z-index: 2000;
+  }
+  .bottom-tools:hover{
+    cursor: pointer;
+    background-color: #DDDDDD;
+  }
+  #back-to-top{
+    margin: 10px 15px;
+    display: block;
+    width: 40px;
+    height: 40px;
+    background: url("../images/back-to-top.png") no-repeat;
+    -moz-background-size:100% 100%;
+    -webkit-background-size:100% 100%;
+    -o-background-size:100% 100%;
+    background-size:100% 100%;
   }
 }
 
