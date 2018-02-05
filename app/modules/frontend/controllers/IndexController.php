@@ -32,9 +32,6 @@ class IndexController extends ControllerBase
      */
     public function indexAction()
     {
-        $this->tag->prependTitle($this->option->get('blogname') . " - ");
-        $this->tag->setTitle($this->option->get('blogdescription'));
-
         $show = $this->option->get('show_on_front');
         if ($show == 'posts'){
 
@@ -60,6 +57,9 @@ class IndexController extends ControllerBase
      */
     public function articleAction()
     {
+        $this->tag->prependTitle($this->option->get('blogname') . " - ");
+        $this->tag->setTitle($this->option->get('blogdescription'));
+
         $nowPage = $this->request->getQuery('page', 'int', 1);
 
         if (!$this->view->getCache()->exists('index-article-list-page-'.$nowPage)) {
@@ -169,6 +169,9 @@ class IndexController extends ControllerBase
      */
     public function pageAction($id)
     {
+        $this->tag->prependTitle($this->option->get('blogname') . " - ");
+        $this->tag->setTitle($this->option->get('blogdescription'));
+        
         echo "page id = ".$id;
     }
 }
