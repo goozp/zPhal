@@ -9,9 +9,11 @@ if ($ifShow){
                         <p class="card-title project-title"><a href="<?= $repo['html_url'] ?>" target="_blank" class="project-link"><?= $repo['full_name'] ?></a></p>
                         <p class="card-text project-description"><?= $repo['description'] ?></p>
                         <p class="card-text project-meta">
-                            <span class="mr-3"><i class="fa fa-circle project-language-<?= $repo['language'] ?>"></i>
-                            <?= $repo['language'] ?></span>
-
+                        	<?php if ($repo['language']) {?>
+                        		<span class="mr-3"><i class="fa fa-circle project-language-<?= $repo['language'] ?>"></i>
+                            	<?= $repo['language'] ?></span>
+                        	<?php } ?>
+                            
                             <span class="mr-3"><i class="fa fa-star"></i>
                             <?= $repo['watchers'] ?></span>
 
