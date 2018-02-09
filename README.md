@@ -16,6 +16,8 @@ Open-sourced blog system for building high performance experience base on Phalco
 
 基于Phalcon开发的开源博客系统。
 
+<img src="public/backend/img/show-demo.gif"/>
+
 ------------
 
 # 运行环境

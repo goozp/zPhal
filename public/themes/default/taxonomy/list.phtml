@@ -2,98 +2,90 @@
     <?php if (count($posts)){
         foreach ($posts as $post){
             if ($post['cover_picture']){?>
-                <div class="article-card article-img-card col-12">
-                    <div class="d-flex flex-column">
-                        <div class="p-2 flex-column-item">
-                            <h6 class="card-subtitle mt-1 text-muted">
-                                <i class="fa fa-calendar-check-o"></i> <?= $post['post_date'] ?>
-                                &nbsp;&nbsp;
-                                <i class="fa fa-tags"></i>
-                                <?php
-                                if (isset($taxonomy[$post['post_id']]['category'])){
-                                    $categoryStr = '';
-                                    foreach ($taxonomy[$post['post_id']]['category'] as $item){
-                                        $categoryStr .= "<a href=\"". $this->url->get(["for"=>"index-category", "params"=>$item['slug']]) ."\">" .$item['name']. "</a>，"?>
-                                    <? }
-                                    echo substr($categoryStr, 0, -3);
-                                } ?>
-                                &nbsp;
-                                <i class="fa fa-eye"></i> <?= $post['view_count']?> 阅读
-                                &nbsp;
-                                <i class="fa fa-comments-o"></i> <?= $post['comment_count'] ?>条回复
-                            </h6>
-                        </div>
-                        <div class="article-card-body">
-                            <div class="p-2 flex-column-item">
-                                <div class="row no-gutters">
-                                    <div class="article-card-img col-xs-12 text-xs-center col-md-3 m-auto">
-                                        <a href="#">
-                                            <?php echo $this->tag->image([
-                                                $post['cover_picture'],
-                                                "class"=>"img-thumbnail img-fluid mx-auto d-block",
-                                                "alt" => "img",
-                                                "height" => 150,
-                                                "width" => 150
-                                            ]);?>
-                                        </a>
-                                    </div>
-                                    <div class="article-card-body col-xs-12 col-md-9 mt-2">
-                                        <h4 class="card-title"><a href="<?= $post['post_url'] ?>"><?= $post['post_title'] ?></a></h4>
-                                        <p class="card-text"><?= articleExcerpt($post['post_content']) ?></p>
-                                    </div>
-                                </div>
+                <div class="article-card article-img-card col-12 p-3" onclick="window.open('<?= $post['post_url'] ?>', '_self')">
+                    <div class="article-card-body">
+                        <div class="row no-gutters">
+                            <div class="article-card-img col-xs-12 text-xs-center col-md-3 m-auto">
+                                <?php echo $this->tag->image([
+                                    $post['cover_picture'],
+                                    "class"=>"img-thumbnail img-fluid mx-auto d-block",
+                                    "alt" => "img",
+                                    "height" => 170,
+                                    "width" => 170
+                                ]);?>
                             </div>
-                        </div>
-                        <div class="d-flex justify-content-start flex-wrap">
-                            <?php
-                            if (isset($taxonomy[$post['post_id']]['tag'])){
-                                foreach ($taxonomy[$post['post_id']]['tag'] as $item){?>
-                                    <div class="p-1"><a href="<?= $this->url->get(["for"=>"index-tag", "params"=>$item['slug']]) ?>" class="badge badge-pill badge-secondary"><span><?= $item['name'] ?></span></a></div>
-                                <? }
-                            } ?>
-                            <a class="button-detail ml-auto btn btn-outline-dark" href="<?= $post['post_url'] ?>">阅读全文</a>
+                            <div class="article-card-body col-xs-12 col-md-9 m-auto">
+                                <h4 class="card-title mb-2 text-center text-md-left"><a href="<?= $post['post_url'] ?>"><?= $post['post_title'] ?></a></h4>
+
+                                <p class="card-subtitle mb-2 text-muted text-center text-md-left">
+                                    <i class="fa fa-calendar-check-o"></i> <?= $post['post_date'] ?>
+                                    &nbsp;&nbsp;
+                                    <i class="fa fa-tags"></i>
+                                    <?php
+                                    if (isset($taxonomy[$post['post_id']]['category'])){
+                                        $categoryStr = '';
+                                        foreach ($taxonomy[$post['post_id']]['category'] as $item){
+                                            $categoryStr .= "<a href=\"". $this->url->get(["for"=>"index-category", "params"=>$item['slug']]) ."\">" .$item['name']. "</a>，"?>
+                                        <? }
+                                        echo substr($categoryStr, 0, -3);
+                                    } ?>
+                                    &nbsp;
+                                    <i class="fa fa-eye"></i> <?= $post['view_count']?> 阅读
+                                    &nbsp;
+                                    <i class="fa fa-comments-o"></i> <?= $post['comment_count'] ?>条回复
+                                </p>
+
+                                <p class="card-text"><?= articleExcerpt($post['post_content']) ?></p>
+
+                                <?php
+                                if (isset($taxonomy[$post['post_id']]['tag'])){?>
+                                    <ul class="tags p-0 pl-2 mt-2">
+                                        <?php
+                                        foreach ($taxonomy[$post['post_id']]['tag'] as $item){?>
+                                            <li class="mr-3"><a href="<?= $this->url->get(["for"=>"index-tag", "params"=>$item['slug']]) ?>" class="tag"><span><?= $item['name'] ?></span></a></li>
+                                        <? }?>
+                                    </ul>
+                                <?php } ?>
+                            </div>
                         </div>
                     </div>
                 </div>
             <?}else{ ?>
-                <div class="article-card article-word-card col-12">
-                    <div class="d-flex flex-column">
-                        <div class="p-2 flex-column-item">
-                            <h6 class="card-subtitle mt-1 text-muted">
-                                <i class="fa fa-calendar-check-o"></i> <?= $post['post_date'] ?>
-                                &nbsp;&nbsp;
-                                <i class="fa fa-tags"></i>
-                                <?php
-                                if (isset($taxonomy[$post['post_id']]['category'])){
-                                    $categoryStr = '';
-                                    foreach ($taxonomy[$post['post_id']]['category'] as $item){
-                                        $categoryStr .= "<a href=\"". $this->url->get(["for"=>"index-category", "params"=>$item['slug']]) ."\">" .$item['name']. "</a>，"?>
-                                    <? }
-                                    echo substr($categoryStr, 0, -3);
-                                } ?>
-                                &nbsp;
-                                <i class="fa fa-eye"></i> <?= $post['view_count']?> 阅读
-                                &nbsp;
-                                <i class="fa fa-comments-o"></i> <?= $post['comment_count'] ?>条回复
-                            </h6>
-                        </div>
-                        <div class="article-card-body">
-                            <div class="p-2 flex-column-item">
-                                <div class="mt-2">
-                                    <h4 class="card-title"><a href="<?= $post['post_url'] ?>"><?= $post['post_title'] ?></a></h4>
-                                    <p class="card-text"><?= articleExcerpt($post['post_content']) ?></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-start flex-wrap">
+                <div class="article-card article-word-card col-12 p-3" onclick="window.open('<?= $post['post_url'] ?>', '_self')">
+                    <div class="article-card-body">
+                        <h4 class="card-title mb-2 text-center"><a href="<?= $post['post_url'] ?>"><?= $post['post_title'] ?></a></h4>
+
+                        <p class="card-subtitle mb-2 text-muted text-center">
+                            <i class="fa fa-calendar-check-o"></i> <?= $post['post_date'] ?>
+                            &nbsp;&nbsp;
+                            <i class="fa fa-tags"></i>
                             <?php
-                            if (isset($taxonomy[$post['post_id']]['tag'])){
-                                foreach ($taxonomy[$post['post_id']]['tag'] as $item){?>
-                                    <div class="p-1"><a href="<?= $this->url->get(["for"=>"index-tag", "params"=>$item['slug']]) ?>" class="badge badge-pill badge-secondary"><span><?= $item['name'] ?></span></a></div>
+                            if (isset($taxonomy[$post['post_id']]['category'])){
+                                $categoryStr = '';
+                                foreach ($taxonomy[$post['post_id']]['category'] as $item){
+                                    $categoryStr .= "<a href=\"". $this->url->get(["for"=>"index-category", "params"=>$item['slug']]) ."\">" .$item['name']. "</a>，"?>
                                 <? }
+                                echo substr($categoryStr, 0, -3);
                             } ?>
-                            <a class="button-detail ml-auto btn btn-outline-dark" href="<?= $post['post_url'] ?>">阅读全文</a>
-                        </div>
+                            &nbsp;
+                            <i class="fa fa-eye"></i> <?= $post['view_count']?> 阅读
+                            &nbsp;
+                            <i class="fa fa-comments-o"></i> <?= $post['comment_count'] ?>条回复
+                        </p>
+
+                        <p class="card-text"><?= articleExcerpt($post['post_content']) ?></p>
+                    </div>
+
+                    <div class="card-bottom">
+                        <?php
+                        if (isset($taxonomy[$post['post_id']]['tag'])){?>
+                            <ul class="tags p-0 pl-2 mt-2">
+                                <?php
+                                foreach ($taxonomy[$post['post_id']]['tag'] as $item){?>
+                                    <li class="mr-3"><a href="<?= $this->url->get(["for"=>"index-tag", "params"=>$item['slug']]) ?>" class="tag"><span><?= $item['name'] ?></span></a></li>
+                                <? }?>
+                            </ul>
+                        <?php } ?>
                     </div>
                 </div>
             <?php }
