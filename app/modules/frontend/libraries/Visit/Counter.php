@@ -132,7 +132,11 @@ class Counter extends Plugin
         $this->cookies->set(
             $this->cookieName,
             $value,
-            $this->lifetime
+            $this->lifetime,
+            "/",
+            false,
+            null,
+            true
         );
     }
 
