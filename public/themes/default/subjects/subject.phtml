@@ -1,5 +1,5 @@
 <?php if ($self){ ?>
-<div class="subject-header card mb-3">
+<div class="subject-header card rounded-0 mb-3">
     <div class="card-body">
         <h4 class="card-title"><?= $self['subject_name'] ?></h4>
         <p class="card-text text-muted"><?= $self['subject_description'] ?>
@@ -11,10 +11,10 @@
 
 <div class="subject-body card-columns">
     <?php foreach ($subjects as $subject){ ?>
-        <div class="card text-center">
+        <div class="card rounded-0 text-center">
             <?php echo $this->tag->image([
                 $subject['subject_image'],
-                "class"=>"card-img-top d-block",
+                "class"=>"card-img-top d-block rounded-0",
                 "alt" => $subject['subject_slug'],
                 "height" => 180,
             ]);?>

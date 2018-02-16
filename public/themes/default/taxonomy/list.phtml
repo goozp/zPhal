@@ -15,9 +15,9 @@
                                 ]);?>
                             </div>
                             <div class="article-card-body col-xs-12 col-md-9 m-auto">
-                                <h4 class="card-title mb-2 text-center text-md-left"><a href="<?= $post['post_url'] ?>"><?= $post['post_title'] ?></a></h4>
+                                <h4 class="card-title mb-2"><a href="<?= $post['post_url'] ?>"><?= $post['post_title'] ?></a></h4>
 
-                                <p class="card-subtitle mb-2 text-muted text-center text-md-left">
+                                <p class="card-subtitle mb-2 text-muted">
                                     <i class="fa fa-calendar-check-o"></i> <?= $post['post_date'] ?>
                                     &nbsp;&nbsp;
                                     <i class="fa fa-tags"></i>
@@ -53,9 +53,9 @@
             <?}else{ ?>
                 <div class="article-card article-word-card col-12 p-3" onclick="window.open('<?= $post['post_url'] ?>', '_self')">
                     <div class="article-card-body">
-                        <h4 class="card-title mb-2 text-center"><a href="<?= $post['post_url'] ?>"><?= $post['post_title'] ?></a></h4>
+                        <h4 class="card-title mb-2"><a href="<?= $post['post_url'] ?>"><?= $post['post_title'] ?></a></h4>
 
-                        <p class="card-subtitle mb-2 text-muted text-center">
+                        <p class="card-subtitle mb-2 text-muted">
                             <i class="fa fa-calendar-check-o"></i> <?= $post['post_date'] ?>
                             &nbsp;&nbsp;
                             <i class="fa fa-tags"></i>
@@ -104,4 +104,3 @@
         </div>
     <?php } ?>
 </div>
-

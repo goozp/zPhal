@@ -245,8 +245,19 @@ a:hover {
 /**
  * subject
  */
-.subject-body {
+.subject-body,{
     font-family: Segoe UI, Lucida Grande, Helvetica, Arial, Microsoft YaHei, FreeSans, Arimo, Droid Sans, wenquanyi micro hei, Hiragino Sans GB, Hiragino Sans GB W3, sans-serif;
+}
+
+.subject-header,
+.subject-body .card,
+.subject-detail-body{
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
+}
+
+.subject-body .card:hover{
+    cursor: pointer;
+    box-shadow: 5px 5px 25px rgba(128, 128, 128, .3);
 }
 
 .subject-body .card-title a,
@@ -262,6 +273,18 @@ a:hover {
     background-color: #F8F9FA;
 }
 
+.subject-body .card:hover .card-img-top{
+    filter:Alpha(Opacity=60);
+    opacity:0.8;
+}
+
+/**
+ * archives
+ */
+.archives-body {
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
+}
+
 /**
  * project
  */
@@ -273,6 +296,7 @@ a:hover {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     color: #586069;
     height: 150px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
 }
 
 .project-body {

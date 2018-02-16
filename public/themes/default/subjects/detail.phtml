@@ -1,4 +1,4 @@
-<div class="subject-header card mb-3">
+<div class="subject-header card rounded-0 mb-3">
     <div class="card-body">
         <h4 class="card-title"><?= $subjectName ?></h4>
         <p class="card-text text-muted"><?= $subjectDescription ?></p>
@@ -12,7 +12,7 @@
 
 <div class="subject-detail-body list-group">
     <?php foreach ($posts as $post){ ?>
-        <a href="<?= $post['guid'] ?>" class="list-group-item list-group-item-action flex-column align-items-start">
+        <a href="<?= $post['guid'] ?>" class="list-group-item list-group-item-action flex-column align-items-start rounded-0">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="subject-detail-title mb-1"><?= $post['post_title'] ?></h5>
                 <small><?= date('Y-m-d H:i', strtotime($post['post_date'])); ?></small>
